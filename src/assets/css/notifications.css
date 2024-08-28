@@ -1,0 +1,11 @@
+.text-counter{
+    margin-top: -15px;
+}
+.my-border{
+    padding-bottom: 20px;
+}
+@media only screen and (max-width: 576px) {
+    .my-border{
+        padding-bottom: 5px;
+    }
+}

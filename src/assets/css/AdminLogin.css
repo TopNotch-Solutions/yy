@@ -1,0 +1,154 @@
+.left-box {
+    background: white;
+    color: white;
+    padding: 30px;
+    /* border-radius: 10px 10px 0 10px; */
+  }
+  .text-header{
+    color: #3D434A;
+    text-align: center;
+  }
+  .error{
+    color: red;
+  }
+  .place-holder{
+    color: rgb(84, 85, 88);
+  }
+.forgot-div{
+    margin-top: -12px;
+}
+ span{
+    font-size: 14px;
+    cursor: pointer;
+}
+
+  .portal-text{
+    color: #3D434A;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.25)
+  }
+  .container-f {
+    width: 100%;
+    height: 100vh;
+    background: white;
+  }
+  .fullrow {
+    width: 100%;
+  }
+  .login-box {
+   background: white;
+    padding: 10px;
+  }
+  .login-box .form-group {
+    position: relative;
+  }
+  .login-box .form-group .show-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  .left-panel {
+    background: #aaf0c9;
+    color: white;
+    padding: 30px;
+    /* border-radius: 10px 10px 0 10px; */
+  }
+  .left-panel img {
+    max-width: 100%;
+  }
+  .logo-image {
+    padding: 30px;
+  }
+  .back-to-login:hover{
+    cursor: pointer;
+  }
+  .mtc-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .outer-container {
+    background-color: red;
+    width: 75%;
+    padding: 30px 40px;
+    height: 540px;
+    position: relative;
+    /* height: 70vh;  remove after done */
+  }
+  .inner-container {
+    /* background-color: black; */
+    width: 100%;
+    padding: 30px;
+    height: 480px;
+    z-index: 99;
+    position: relative;
+    /* height: 60vh; remove after done*/
+  }
+  .behide-image {
+    position: absolute;
+    width: 20px;
+  }
+  .r150 {
+    top: 80px;
+    left: -50px;
+    width: 150px;
+  }
+  .riphone {
+    top: -65px;
+    right: -40px;
+    width: 150px;
+  }
+  .r180 {
+    bottom: 70px;
+    right: -40px;
+    width: 150px;
+  }
+  .submission{
+      width:100%;
+      cursor: pointer;
+      padding: 12px 0;
+      outline: none;
+      font-family: "Outfit", sans-serif;
+      font-weight: 700;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      background: #009548;
+  }
+  .show-password{
+    top: 54%;
+    right: 14px;
+  }
+  .show-password-top{
+    position: absolute;
+    top: 37px;
+    right: 12px;
+  }
+  .error-class{
+    margin-top: -20px;
+  }
+  .loader {
+    border: 4px solid white;
+    border-left-color: rgba(21, 78, 138, 1);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media only screen and (max-width: 576px) {
+    .riphone {
+      top: -85px;
+      right: -30px;
+      width: 150px;
+  
+    }
+  }

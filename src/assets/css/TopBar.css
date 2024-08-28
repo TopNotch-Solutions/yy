@@ -1,0 +1,28 @@
+.wapper-topbar{
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-top: 10px;
+    text-align: center;
+}
+.wapper-topbar-line{
+
+    display: flex;
+    align-items: center;
+    margin-left: auto 10px auto 10px;
+    
+}
+.username-text{
+    font-weight: bold;
+    font-size: 17px;
+}
+.role-text{
+    margin-top: -23px;
+    font-size: 13px;
+}
+
+
+@media (max-width: 576px) {
+    .mtop{
+        margin-right: 10px;
+    }
+}

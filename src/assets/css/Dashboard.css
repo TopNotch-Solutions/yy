@@ -1,0 +1,59 @@
+.digit{
+    margin: auto 0 auto 10px;
+    font-size: 23px;
+    font-weight: 600;
+}
+.list-group{
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.25)
+}
+.my-container{
+    height: 500px;
+}
+.dashboard{
+    width: fit-content;
+    font-weight: 600;
+}
+.listing-msme{ 
+    margin-top: 10px;
+}
+.msme-table{
+    overflow-x: auto;
+}
+.status-pending {
+  color: rgb(234, 156, 0);
+}
+
+.status-rejected {
+  color: rgba(221, 44, 33, 1);
+}
+
+.status-approved {
+  color: rgba(0, 149, 71, 1);
+}
+.text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; 
+  }
+  .pointer{
+    cursor: pointer;
+  }
+  .padding-right{
+    padding-left: 25px;
+  }
+  .circle {
+    width: 15px;            
+    height: 15px;           
+    border-radius: 50%;       
+  }
+  .small-padding{
+    padding-left: 5px;
+    margin-top: -4px;
+  }
+  .header-padding{
+    padding-bottom: 10px;
+  }
