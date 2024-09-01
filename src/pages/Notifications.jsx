@@ -25,6 +25,7 @@ import NViewButton from "../components/commons/NViewButton";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { updateToken } from "../redux/reducers/authReducer";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { login } from "../redux/reducers/authReducer";
 
@@ -88,6 +89,8 @@ function Notifications() {
   const [singleAdminNotification, setSingleAdminNotification] = useState([]);
   const [openModel, setOpenModel] = useState(false);
   const [openModelView, setOpenModelView] = useState(false);
+
+  const tokenHeader = currentUser.token;
   const handleOpen = () => setOpenModel(true);
   const handleOpenView = () => setOpenModelView(true);
   const handleClose = () => {
@@ -111,12 +114,17 @@ function Notifications() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -159,12 +167,17 @@ function Notifications() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
             body: JSON.stringify(requestData),
           }
         );
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           setOpenModel(false);
@@ -224,11 +237,17 @@ function Notifications() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
         }
       );
+
       const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
       if (response.ok) {
         setIsSubmitting(false);
         setUpdatedId(id);
@@ -285,12 +304,17 @@ function Notifications() {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `${tokenHeader}`,
               },
               credentials: "include",
             }
           );
-
+  
           const data = await response.json();
+          const newTokenHeader = response.headers.get('Authorization');
+          dispatch(updateToken({
+            token: newTokenHeader
+          }));
           console.log(data);
           if (response.ok) {
             Swal.fire({
@@ -345,12 +369,17 @@ function Notifications() {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
         }
       );
 
       const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
       console.log(data);
       if (response.ok) {
         setIsSubmitting(false);
@@ -499,7 +528,17 @@ function Notifications() {
                       }
                       onClick={() => setButonActive(2)}
                     >
-                      Inbox
+                      Unread
+                    </button>
+                    <button
+                      className={
+                        buttonActive === 2
+                          ? "btn btn-success m-1 p-2 p-xl-3 flex-grow-1"
+                          : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
+                      }
+                      onClick={() => setButonActive(2)}
+                    >
+                      Read
                     </button>
                     <button
                       className={
@@ -573,7 +612,7 @@ function Notifications() {
                       {/* rgba(245, 246, 248, 1) */}
                       <InputBase
                         sx={{ ml: 2, flex: 1 }}
-                        placeholder="Search for sent notification"
+                        placeholder="Search for unread notification"
                         //onChange={handleSearchChange}
                       />
                       <IconButton type="button" sx={{ p: 1 }}>
@@ -585,7 +624,7 @@ function Notifications() {
                     </div>
                   </div>
                   <div className="col-12 mt-1">
-                    <p className="list-group">Sent List</p>
+                    <p className="list-group">All Unread Notification List</p>
                     <Box sx={{ height: 400, width: "100%" }}>
                       <DataGrid
                         rows={rows}
@@ -618,7 +657,7 @@ function Notifications() {
                       {/* rgba(245, 246, 248, 1) */}
                       <InputBase
                         sx={{ ml: 2, flex: 1 }}
-                        placeholder="Search for inbox notification"
+                        placeholder="Search for sent notification"
                         //onChange={handleSearchChange}
                       />
                       <IconButton type="button" sx={{ p: 1 }}>
@@ -630,7 +669,7 @@ function Notifications() {
                     </div>
                   </div>
                   <div className="col-12 mt-1">
-                    <p className="list-group">Inbox List</p>
+                    <p className="list-group">Sent Notification List</p>
                     <Box sx={{ height: 400, width: "100%" }}>
                       <DataGrid
                         rows={rows}

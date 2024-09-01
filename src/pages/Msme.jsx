@@ -23,6 +23,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import ModelButton from "../components/commons/ModelButton";
 import { useNavigate } from "react-router-dom";
+import { updateToken } from "../redux/reducers/authReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { login } from "../redux/reducers/authReducer";
@@ -279,6 +280,8 @@ function Msme() {
   const [saturdayDetailsError, setSaturdayDetailsError] = useState("");
   const [sundayDetailsError, setSundayDetailsError] = useState("");
 
+  const tokenHeader = currentUser.token;
+
   const handleOpen = () => setOpenModel(true);
   const handleClose = () => {
     setOpenModel(false);
@@ -297,12 +300,17 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -333,12 +341,17 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -369,12 +382,17 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -405,12 +423,17 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -439,11 +462,17 @@ function Msme() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -473,12 +502,17 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -509,12 +543,17 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -545,12 +584,17 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -579,11 +623,17 @@ function Msme() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -612,11 +662,17 @@ function Msme() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -646,12 +702,17 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -681,12 +742,17 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -716,12 +782,17 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -1118,11 +1189,17 @@ function Msme() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
         }
       );
+
       const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
       console.log("Login successful", data.data);
       if (response.ok) {
         console.log("Login successful", data.data);
@@ -1221,7 +1298,7 @@ function Msme() {
     {
       field: "status",
       headerName: "Status",
-      width: isSmallScreen ? 120 : 140,
+      width: isSmallScreen ? 100 : 120,
       cellClassName: (params) => {
         switch (params.value) {
           case "Pending":
@@ -1229,6 +1306,21 @@ function Msme() {
           case "Rejected":
             return "status-rejected";
           case "Approved":
+            return "status-approved";
+          default:
+            return "";
+        }
+      },
+    },
+    {
+      field: "isBlocked",
+      headerName: "Blocked",
+      width: isSmallScreen ? 100 : 120,
+      cellClassName: (params) => {
+        switch (params.value) {
+          case true:
+            return "status-rejected";
+          case false:
             return "status-approved";
           default:
             return "";
@@ -1253,13 +1345,14 @@ function Msme() {
   const rowsAll = allMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo.email,
+    email: msme.contactInfo?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
     annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo.founderName,
+    foundersName: msme.founderInfo?.founderName,
     status: msme.status,
+    isBlocked: msme.isBlocked
   }));
   const filteredRows = rowsAll.filter((row) =>
     Object.values(row).some((value) =>
@@ -1269,35 +1362,38 @@ function Msme() {
   const rowsPending = pendingMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo.email,
+    email: msme.contactInfo?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
     annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo.founderName,
+    foundersName: msme.founderInfo?.founderName,
     status: msme.status,
+    isBlocked: msme.isBlocked
   }));
   const rowsRejected = rejectedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo.email,
+    email: msme.contactInfo?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
     annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo.founderName,
+    foundersName: msme.founderInfo?.founderName,
     status: msme.status,
+    isBlocked: msme.isBlocked
   }));
   const rowsApproved = approvedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo.email,
+    email: msme.contactInfo?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
     annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo.founderName,
+    foundersName: msme.founderInfo?.founderName,
     status: msme.status,
+    isBlocked: msme.isBlocked
   }));
 
   const typeOfBusinessOptions = [
@@ -1387,16 +1483,20 @@ function Msme() {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
+                  Authorization: `${tokenHeader}`,
                 },
                 credentials: "include",
                 body: JSON.stringify({
                   status: "Approved",
-                  userId: currentUser.id
                 }),
               }
             );
 
             const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
             console.log(data);
 
             if (response.ok) {
@@ -1474,16 +1574,20 @@ function Msme() {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
+                  Authorization: `${tokenHeader}`,
                 },
                 credentials: "include",
                 body: JSON.stringify({
                   status: "Rejected",
-                  userId: currentUser.id
                 }),
               }
             );
 
             const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
             console.log(data);
 
             if (response.ok) {
@@ -1561,6 +1665,7 @@ function Msme() {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
+                  Authorization: `${tokenHeader}`,
                 },
                 credentials: "include",
                 body: JSON.stringify({
@@ -1570,6 +1675,10 @@ function Msme() {
             );
 
             const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
             console.log(data);
 
             if (response.ok) {
@@ -1647,6 +1756,7 @@ function Msme() {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
+                  Authorization: `${tokenHeader}`,
                 },
                 credentials: "include",
                 body: JSON.stringify({
@@ -1656,6 +1766,10 @@ function Msme() {
             );
 
             const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
             console.log(data);
 
             if (response.ok) {

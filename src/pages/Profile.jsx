@@ -23,6 +23,7 @@ import { updateProfileImage } from "../redux/reducers/authReducer";
 import { login } from "../redux/reducers/authReducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { updateToken } from "../redux/reducers/authReducer";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 
 function Profile() {
@@ -51,6 +52,7 @@ function Profile() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   let profileImage;
 
+  const tokenHeader = currentUser.token;
   const [data, setData] = useState([]);
   const [employeeData, setEmployeeData] = useState([]);
   const buttonStyle = {
@@ -131,8 +133,7 @@ function Profile() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
           body: JSON.stringify({
@@ -140,20 +141,25 @@ function Profile() {
           }),
         }
       );
-
-      if (!response.ok) {
-        setIsSubmitting(false);
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title: `Something went wrong during data update`,
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      
+      
 
       const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
+        if (!response.ok) {
+          setIsSubmitting(false);
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: `Something went wrong during data update`,
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
       setIsSubmitting(false);
       Swal.fire({
         position: "center",
@@ -210,6 +216,7 @@ function Profile() {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
             body: JSON.stringify({
@@ -221,6 +228,10 @@ function Profile() {
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           setIsSubmitting(false);
@@ -295,11 +306,12 @@ function Profile() {
         try {
           setIsSubmitting(true);
           const response = await fetch(
-            `http://localhost:4000/auth/admin/update/details/${currentUser.id}`,
+            `http://localhost:4000/auth/admin/update/details`,
             {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `${tokenHeader}`,
               },
               credentials: "include",
               body: JSON.stringify({
@@ -313,6 +325,10 @@ function Profile() {
           );
 
           const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
           if (response.ok) {
             setIsSubmitting(false);

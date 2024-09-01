@@ -12,7 +12,8 @@ import DownloadButton from "../components/commons/DownloadButton";
 import ViewButton from "../components/commons/ViewButton";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateToken } from "../redux/reducers/authReducer";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { login } from "../redux/reducers/authReducer";
 
@@ -26,8 +27,12 @@ function Reporting() {
   const [allMSMEList,setAllMSMEList] = useState([]);
   const [allMSMEPendingList,setAllMSMEPendingList] = useState([]);
   const [allMSMERejectedList,setAllMSMERejectedList] = useState([]);
+  const [allMSMEBlockedList,setAllMSMEBlockedList] = useState([]);
   const [allUserList,setAllUserList] = useState([]);
   const [allBSOList,setAllBSOList] = useState([]);
+
+  const currentUser = useSelector((state) => state.auth.user);
+  const tokenHeader = currentUser.token;
 
   useEffect(() => {
     const fetchMsmeAllMSME = async () => {
@@ -36,25 +41,31 @@ function Reporting() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setAllMSMEList(data.data);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -68,25 +79,31 @@ function Reporting() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setAllMSMEPendingList(data.data);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -100,30 +117,74 @@ function Reporting() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setAllMSMERejectedList(data.data);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
 
     fetchMsmeAllMSMERejected();
+  }, []);
+  useEffect(() => {
+    const fetchMsmeAllMSMEBlocked = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/msme/admin/all/blocked", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
+          },
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
+
+        if (response.ok) {
+          console.log("Login successful", data);
+          setAllMSMEBlockedList(data.data);
+        } else {
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
+        }
+      } catch (error) {}
+    };
+
+    fetchMsmeAllMSMEBlocked();
   }, []);
   useEffect(() => {
     const fetchMsmeAllBSO = async () => {
@@ -132,25 +193,31 @@ function Reporting() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setAllBSOList(data.data);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -164,25 +231,31 @@ function Reporting() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setAllUserList(data.data);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -191,12 +264,35 @@ function Reporting() {
   }, []);
   const columns1 = [
     { field: "registrationName", headerName: "Registration Name", width: isSmallScreen ? 130 : 160 },
-    { field: "email", headerName: "Email", width: isSmallScreen ? 140 : 160 },
+    { field: "registrationNumber", headerName: "Registration Number", width: isSmallScreen ? 130 : 160 },
+    { field: "displayName", headerName: "Display Name", width: isSmallScreen ? 130 : 160 },
+    { field: "typeOfBusiness", headerName: "Type of Business", width: isSmallScreen ? 140 : 160 },
+    { field: "description", headerName: "Description", width: isSmallScreen ? 140 : 160 },
+    { field: "yearOfEstablishment", headerName: "Year of Establishment", width: isSmallScreen ? 140 : 160 },
     { field: "region", headerName: "Region", width: isSmallScreen ? 120 : 160 },
     { field: "town", headerName: "Town", width: isSmallScreen ? 120 : 160},
     { field: "primaryIndustry", headerName: "Primary Industry", width: isSmallScreen ? 120 : 180 },
     { field: "annualTurnover", headerName: "Annual Turnover(N$)", width: isSmallScreen ? 120 : 180 },
     { field: "foundersName", headerName: "Founders Name", width: isSmallScreen ? 120 : 180 },
+    { field: "foundersGender", headerName: "Founders Gender", width: isSmallScreen ? 120 : 180 },
+    { field: "foundersAge", headerName: "Founders Age", width: isSmallScreen ? 120 : 180 },
+    { field: "businessAddress", headerName: "Business Address", width: isSmallScreen ? 120 : 180 },
+    { field: "phoneNumber", headerName: "Phone Number", width: isSmallScreen ? 120 : 180 },
+    { field: "whatsAppNumber", headerName: "WhatsApp Number", width: isSmallScreen ? 120 : 180 },
+    { field: "email", headerName: "Business Email", width: isSmallScreen ? 120 : 180 },
+    { field: "website", headerName: "Website Link", width: isSmallScreen ? 120 : 180 },
+    { field: "twitter", headerName: "Twitter Link", width: isSmallScreen ? 120 : 180 },
+    { field: "facebook", headerName: "Facebook Link", width: isSmallScreen ? 120 : 180 },
+    { field: "instagram", headerName: "Instagram Link", width: isSmallScreen ? 120 : 180 },
+    { field: "linkedln", headerName: "LinkedIn Link", width: isSmallScreen ? 120 : 180 },
+    { field: "monday", headerName: "Monday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "tuesday", headerName: "Tuesday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "wednesday", headerName: "Wednesday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "thursday", headerName: "Thursday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "friday", headerName: "Friday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "saturday", headerName: "Saturday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "sunday", headerName: "Sunday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "numberOfEmployees", headerName: "Number of Employees", width: isSmallScreen ? 120 : 180 },
     { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellClassName: (params) => {
       switch (params.value) {
         case "Pending":
@@ -208,26 +304,90 @@ function Reporting() {
         default:
           return '';
       }}},
-  ];
-  const rowsAll = allMSMEList.map((msme) => ({
-    id: msme.id,
-    registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo.email,
-    region: msme.region,
-    town: msme.town,
-    primaryIndustry: msme.primaryIndustry,
-    annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo.founderName,
-    status: msme.status,
-  }));
+    {
+      field: "isBlocked",
+      headerName: "Blocked",
+      width: isSmallScreen ? 100 : 120,
+      cellClassName: (params) => {
+        switch (params.value) {
+          case true:
+            return "status-rejected";
+          case false:
+            return "status-approved";
+          default:
+            return "";
+        }
+      },
+    },
+];
+
+const rowsAll = allMSMEList.map((msme) => ({
+  id: msme.id,
+  registrationName: msme.businessRegistrationName,
+  registrationNumber: msme.registrationNumber,
+  displayName: msme.displayName,
+  typeOfBusiness: msme.typeOfBusiness,
+  description: msme.description,
+  annualTurnover: msme.annualTurnOver,
+  yearOfEstablishment: msme.yearOfEstablishment,
+  email: msme.businessEmail, // Fixed duplicate "email" field
+  region: msme.region,
+  town: msme.town,
+  primaryIndustry: msme.primaryIndustry,
+  foundersName: msme.foundersName,
+  foundersGender: msme.foundersGender,
+  foundersAge: msme.foundersAge,
+  businessAddress: msme.businessAddress,
+  phoneNumber: msme.phoneNumber,
+  whatsAppNumber: msme.whatsAppNumber,
+  website: msme.website,
+  twitter: msme.twitter,
+  facebook: msme.facebook,
+  instagram: msme.instagram,
+  linkedln: msme.linkedln,
+  monday: msme.monday,
+  tuesday: msme.tuesday,
+  wednesday: msme.wednesday,
+  thursday: msme.thursday,
+  friday: msme.friday,
+  saturday: msme.saturday,
+  sunday: msme.sunday,
+  numberOfEmployees: msme.numberOfEmployees,
+  status: msme.status,
+  isBlocked: msme.isBlocked
+}));
+
   const columns2 = [
     { field: "registrationName", headerName: "Registration Name", width: isSmallScreen ? 130 : 160 },
-    { field: "email", headerName: "Email", width: isSmallScreen ? 140 : 160 },
+    { field: "registrationNumber", headerName: "Registration Number", width: isSmallScreen ? 130 : 160 },
+    { field: "displayName", headerName: "Display Name", width: isSmallScreen ? 130 : 160 },
+    { field: "typeOfBusiness", headerName: "Type of Business", width: isSmallScreen ? 140 : 160 },
+    { field: "description", headerName: "Description", width: isSmallScreen ? 140 : 160 },
+    { field: "yearOfEstablishment", headerName: "Year of Establishment", width: isSmallScreen ? 140 : 160 },
     { field: "region", headerName: "Region", width: isSmallScreen ? 120 : 160 },
     { field: "town", headerName: "Town", width: isSmallScreen ? 120 : 160},
     { field: "primaryIndustry", headerName: "Primary Industry", width: isSmallScreen ? 120 : 180 },
     { field: "annualTurnover", headerName: "Annual Turnover(N$)", width: isSmallScreen ? 120 : 180 },
     { field: "foundersName", headerName: "Founders Name", width: isSmallScreen ? 120 : 180 },
+    { field: "foundersGender", headerName: "Founders Gender", width: isSmallScreen ? 120 : 180 },
+    { field: "foundersAge", headerName: "Founders Age", width: isSmallScreen ? 120 : 180 },
+    { field: "businessAddress", headerName: "Business Address", width: isSmallScreen ? 120 : 180 },
+    { field: "phoneNumber", headerName: "Phone Number", width: isSmallScreen ? 120 : 180 },
+    { field: "whatsAppNumber", headerName: "WhatsApp Number", width: isSmallScreen ? 120 : 180 },
+    { field: "email", headerName: "Business Email", width: isSmallScreen ? 120 : 180 },
+    { field: "website", headerName: "Website Link", width: isSmallScreen ? 120 : 180 },
+    { field: "twitter", headerName: "Twitter Link", width: isSmallScreen ? 120 : 180 },
+    { field: "facebook", headerName: "Facebook Link", width: isSmallScreen ? 120 : 180 },
+    { field: "instagram", headerName: "Instagram Link", width: isSmallScreen ? 120 : 180 },
+    { field: "linkedln", headerName: "LinkedIn Link", width: isSmallScreen ? 120 : 180 },
+    { field: "monday", headerName: "Monday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "tuesday", headerName: "Tuesday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "wednesday", headerName: "Wednesday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "thursday", headerName: "Thursday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "friday", headerName: "Friday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "saturday", headerName: "Saturday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "sunday", headerName: "Sunday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "numberOfEmployees", headerName: "Number of Employees", width: isSmallScreen ? 120 : 180 },
     { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellClassName: (params) => {
       switch (params.value) {
         case "Pending":
@@ -239,26 +399,88 @@ function Reporting() {
         default:
           return '';
       }}},
+    {
+      field: "isBlocked",
+      headerName: "Blocked",
+      width: isSmallScreen ? 100 : 120,
+      cellClassName: (params) => {
+        switch (params.value) {
+          case true:
+            return "status-rejected";
+          case false:
+            return "status-approved";
+          default:
+            return "";
+        }
+      },
+    },
   ];
   const rowsAllPending = allMSMEPendingList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo.email,
+    registrationNumber: msme.registrationNumber,
+    displayName: msme.displayName,
+    typeOfBusiness: msme.typeOfBusiness,
+    description: msme.description,
+    annualTurnover: msme.annualTurnOver,
+    yearOfEstablishment: msme.yearOfEstablishment,
+    email: msme.businessEmail, // Fixed duplicate "email" field
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
-    annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo.founderName,
+    foundersName: msme.foundersName,
+    foundersGender: msme.foundersGender,
+    foundersAge: msme.foundersAge,
+    businessAddress: msme.businessAddress,
+    phoneNumber: msme.phoneNumber,
+    whatsAppNumber: msme.whatsAppNumber,
+    website: msme.website,
+    twitter: msme.twitter,
+    facebook: msme.facebook,
+    instagram: msme.instagram,
+    linkedln: msme.linkedln,
+    monday: msme.monday,
+    tuesday: msme.tuesday,
+    wednesday: msme.wednesday,
+    thursday: msme.thursday,
+    friday: msme.friday,
+    saturday: msme.saturday,
+    sunday: msme.sunday,
+    numberOfEmployees: msme.numberOfEmployees,
     status: msme.status,
+    isBlocked: msme.isBlocked
   }));
   const columns3 = [
     { field: "registrationName", headerName: "Registration Name", width: isSmallScreen ? 130 : 160 },
-    { field: "email", headerName: "Email", width: isSmallScreen ? 140 : 160 },
+    { field: "registrationNumber", headerName: "Registration Number", width: isSmallScreen ? 130 : 160 },
+    { field: "displayName", headerName: "Display Name", width: isSmallScreen ? 130 : 160 },
+    { field: "typeOfBusiness", headerName: "Type of Business", width: isSmallScreen ? 140 : 160 },
+    { field: "description", headerName: "Description", width: isSmallScreen ? 140 : 160 },
+    { field: "yearOfEstablishment", headerName: "Year of Establishment", width: isSmallScreen ? 140 : 160 },
     { field: "region", headerName: "Region", width: isSmallScreen ? 120 : 160 },
     { field: "town", headerName: "Town", width: isSmallScreen ? 120 : 160},
     { field: "primaryIndustry", headerName: "Primary Industry", width: isSmallScreen ? 120 : 180 },
     { field: "annualTurnover", headerName: "Annual Turnover(N$)", width: isSmallScreen ? 120 : 180 },
     { field: "foundersName", headerName: "Founders Name", width: isSmallScreen ? 120 : 180 },
+    { field: "foundersGender", headerName: "Founders Gender", width: isSmallScreen ? 120 : 180 },
+    { field: "foundersAge", headerName: "Founders Age", width: isSmallScreen ? 120 : 180 },
+    { field: "businessAddress", headerName: "Business Address", width: isSmallScreen ? 120 : 180 },
+    { field: "phoneNumber", headerName: "Phone Number", width: isSmallScreen ? 120 : 180 },
+    { field: "whatsAppNumber", headerName: "WhatsApp Number", width: isSmallScreen ? 120 : 180 },
+    { field: "email", headerName: "Business Email", width: isSmallScreen ? 120 : 180 },
+    { field: "website", headerName: "Website Link", width: isSmallScreen ? 120 : 180 },
+    { field: "twitter", headerName: "Twitter Link", width: isSmallScreen ? 120 : 180 },
+    { field: "facebook", headerName: "Facebook Link", width: isSmallScreen ? 120 : 180 },
+    { field: "instagram", headerName: "Instagram Link", width: isSmallScreen ? 120 : 180 },
+    { field: "linkedln", headerName: "LinkedIn Link", width: isSmallScreen ? 120 : 180 },
+    { field: "monday", headerName: "Monday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "tuesday", headerName: "Tuesday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "wednesday", headerName: "Wednesday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "thursday", headerName: "Thursday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "friday", headerName: "Friday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "saturday", headerName: "Saturday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "sunday", headerName: "Sunday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "numberOfEmployees", headerName: "Number of Employees", width: isSmallScreen ? 120 : 180 },
     { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellClassName: (params) => {
       switch (params.value) {
         case "Pending":
@@ -270,17 +492,56 @@ function Reporting() {
         default:
           return '';
       }}},
+    {
+      field: "isBlocked",
+      headerName: "Blocked",
+      width: isSmallScreen ? 100 : 120,
+      cellClassName: (params) => {
+        switch (params.value) {
+          case true:
+            return "status-rejected";
+          case false:
+            return "status-approved";
+          default:
+            return "";
+        }
+      },
+    },
   ];
   const rowsRejected = allMSMERejectedList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo.email,
+    registrationNumber: msme.registrationNumber,
+    displayName: msme.displayName,
+    typeOfBusiness: msme.typeOfBusiness,
+    description: msme.description,
+    annualTurnover: msme.annualTurnOver,
+    yearOfEstablishment: msme.yearOfEstablishment,
+    email: msme.businessEmail, // Fixed duplicate "email" field
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
-    annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo.founderName,
+    foundersName: msme.foundersName,
+    foundersGender: msme.foundersGender,
+    foundersAge: msme.foundersAge,
+    businessAddress: msme.businessAddress,
+    phoneNumber: msme.phoneNumber,
+    whatsAppNumber: msme.whatsAppNumber,
+    website: msme.website,
+    twitter: msme.twitter,
+    facebook: msme.facebook,
+    instagram: msme.instagram,
+    linkedln: msme.linkedln,
+    monday: msme.monday,
+    tuesday: msme.tuesday,
+    wednesday: msme.wednesday,
+    thursday: msme.thursday,
+    friday: msme.friday,
+    saturday: msme.saturday,
+    sunday: msme.sunday,
+    numberOfEmployees: msme.numberOfEmployees,
     status: msme.status,
+    isBlocked: msme.isBlocked
   }));
   const column4 = [
     { field: "Name", headerName: "Name", width: isSmallScreen ? 120 : 160 },
@@ -327,10 +588,104 @@ function Reporting() {
     role: admin.role,
     createdAt: admin.createdAt
   }));
+  const columns6 = [
+    { field: "registrationName", headerName: "Registration Name", width: isSmallScreen ? 130 : 160 },
+    { field: "registrationNumber", headerName: "Registration Number", width: isSmallScreen ? 130 : 160 },
+    { field: "displayName", headerName: "Display Name", width: isSmallScreen ? 130 : 160 },
+    { field: "typeOfBusiness", headerName: "Type of Business", width: isSmallScreen ? 140 : 160 },
+    { field: "description", headerName: "Description", width: isSmallScreen ? 140 : 160 },
+    { field: "yearOfEstablishment", headerName: "Year of Establishment", width: isSmallScreen ? 140 : 160 },
+    { field: "region", headerName: "Region", width: isSmallScreen ? 120 : 160 },
+    { field: "town", headerName: "Town", width: isSmallScreen ? 120 : 160},
+    { field: "primaryIndustry", headerName: "Primary Industry", width: isSmallScreen ? 120 : 180 },
+    { field: "annualTurnover", headerName: "Annual Turnover(N$)", width: isSmallScreen ? 120 : 180 },
+    { field: "foundersName", headerName: "Founders Name", width: isSmallScreen ? 120 : 180 },
+    { field: "foundersGender", headerName: "Founders Gender", width: isSmallScreen ? 120 : 180 },
+    { field: "foundersAge", headerName: "Founders Age", width: isSmallScreen ? 120 : 180 },
+    { field: "businessAddress", headerName: "Business Address", width: isSmallScreen ? 120 : 180 },
+    { field: "phoneNumber", headerName: "Phone Number", width: isSmallScreen ? 120 : 180 },
+    { field: "whatsAppNumber", headerName: "WhatsApp Number", width: isSmallScreen ? 120 : 180 },
+    { field: "email", headerName: "Business Email", width: isSmallScreen ? 120 : 180 },
+    { field: "website", headerName: "Website Link", width: isSmallScreen ? 120 : 180 },
+    { field: "twitter", headerName: "Twitter Link", width: isSmallScreen ? 120 : 180 },
+    { field: "facebook", headerName: "Facebook Link", width: isSmallScreen ? 120 : 180 },
+    { field: "instagram", headerName: "Instagram Link", width: isSmallScreen ? 120 : 180 },
+    { field: "linkedln", headerName: "LinkedIn Link", width: isSmallScreen ? 120 : 180 },
+    { field: "monday", headerName: "Monday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "tuesday", headerName: "Tuesday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "wednesday", headerName: "Wednesday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "thursday", headerName: "Thursday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "friday", headerName: "Friday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "saturday", headerName: "Saturday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "sunday", headerName: "Sunday Hours", width: isSmallScreen ? 120 : 180 },
+    { field: "numberOfEmployees", headerName: "Number of Employees", width: isSmallScreen ? 120 : 180 },
+    { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellClassName: (params) => {
+      switch (params.value) {
+        case "Pending":
+          return 'status-pending';
+        case "Rejected":
+          return 'status-rejected';
+        case "Approved":
+          return 'status-approved';
+        default:
+          return '';
+      }}},
+    {
+      field: "isBlocked",
+      headerName: "Blocked",
+      width: isSmallScreen ? 100 : 120,
+      cellClassName: (params) => {
+        switch (params.value) {
+          case true:
+            return "status-rejected";
+          case false:
+            return "status-approved";
+          default:
+            return "";
+        }
+      },
+    },
+  ];
+  const rowsAllBlocked = allMSMEBlockedList.map((msme) => ({
+    id: msme.id,
+    registrationName: msme.businessRegistrationName,
+    registrationNumber: msme.registrationNumber,
+    displayName: msme.displayName,
+    typeOfBusiness: msme.typeOfBusiness,
+    description: msme.description,
+    annualTurnover: msme.annualTurnOver,
+    yearOfEstablishment: msme.yearOfEstablishment,
+    email: msme.businessEmail, // Fixed duplicate "email" field
+    region: msme.region,
+    town: msme.town,
+    primaryIndustry: msme.primaryIndustry,
+    foundersName: msme.foundersName,
+    foundersGender: msme.foundersGender,
+    foundersAge: msme.foundersAge,
+    businessAddress: msme.businessAddress,
+    phoneNumber: msme.phoneNumber,
+    whatsAppNumber: msme.whatsAppNumber,
+    website: msme.website,
+    twitter: msme.twitter,
+    facebook: msme.facebook,
+    instagram: msme.instagram,
+    linkedln: msme.linkedln,
+    monday: msme.monday,
+    tuesday: msme.tuesday,
+    wednesday: msme.wednesday,
+    thursday: msme.thursday,
+    friday: msme.friday,
+    saturday: msme.saturday,
+    sunday: msme.sunday,
+    numberOfEmployees: msme.numberOfEmployees,
+    status: msme.status,
+    isBlocked: msme.isBlocked
+  }));
   const lines = [
     "All MSMEs(Approved) Report",
     "All MSMEs(Pending) Report",
     "All MSMEs(Rejected) Report",
+    "All MSMEs(Blocked) Report",
     "All BSOs Report",
     "All System Users",
   ];
@@ -423,6 +778,23 @@ function Reporting() {
       var ws = XLSX.utils.json_to_sheet(allUserList);
       XLSX.utils.book_append_sheet(wb,ws, "All System User List");
       XLSX.writeFile(wb,"All_System_Users.xlsx");
+    }catch(error){
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `Check your internet connection and try again!`,
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }
+  }
+  const handleDownloadAllBlocked =() =>{
+    try{
+      console.log(allMSMEBlockedList)
+      var wb = XLSX.utils.book_new();
+      var ws = XLSX.utils.json_to_sheet(allMSMEBlockedList);
+      XLSX.utils.book_append_sheet(wb,ws, "All Blocked MSME List");
+      XLSX.writeFile(wb,"All_Blocked_MSME.xlsx");
     }catch(error){
       Swal.fire({
         position: "center",
@@ -592,7 +964,7 @@ function Reporting() {
                 </>
               }
               {
-                activeTab === 4 &&<>
+                activeTab === 5 &&<>
                 <div className="col-12 mt-1">
                 <p className="list-group text-center">All BSO Report</p>
                 <div className="w-100 d-flex justify-content-between">
@@ -620,7 +992,7 @@ function Reporting() {
                 </>
               }
               {
-                activeTab === 5 &&<>
+                activeTab === 6 &&<>
                 <div className="col-12 mt-1">
                 <p className="list-group text-center">All System Users</p>
                 <div className="w-100 d-flex justify-content-between">
@@ -631,6 +1003,34 @@ function Reporting() {
                   <DataGrid
                     rows={rowsUsers}
                     columns={columns5}
+        
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 5,
+                        },
+                      },
+                    }}
+                    pageSizeOptions={[5]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                  />
+                </Box>
+              </div>
+                </>
+              }
+              {
+                activeTab === 4 &&<>
+                <div className="col-12 mt-1">
+                <p className="list-group text-center">All Blocked MSMEs Report</p>
+                <div className="w-100 d-flex justify-content-between">
+                  <BackButton onClick={() =>setActiveTab(0)}/>
+                  <DownloadButton onClick={handleDownloadAllBlocked}/>
+                </div>
+                <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
+                  <DataGrid
+                    rows={rowsAllBlocked}
+                    columns={columns6}
         
                     initialState={{
                       pagination: {

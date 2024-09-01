@@ -24,6 +24,7 @@ import StepLabel from "@mui/material/StepLabel";
 import ModelButton from "../components/commons/ModelButton";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { useNavigate} from "react-router-dom";
+import { updateToken } from "../redux/reducers/authReducer";
 import DeleteButton from "../components/commons/DeleteButton";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/reducers/authReducer";
@@ -109,6 +110,7 @@ function User() {
   const [updatingDetails, setUpdatingDetails] = useState([]);
 
   const [updatingFail, setUpdatingFail] = useState("");
+  const tokenHeader = currentUser.token;
   
   const [searchQuery, setSearchQuery] = useState("");
   const [openModel, setOpenModel] = useState(false);
@@ -156,12 +158,17 @@ function User() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -192,12 +199,17 @@ function User() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -228,12 +240,17 @@ function User() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -264,12 +281,17 @@ function User() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -299,12 +321,17 @@ function User() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -334,6 +361,7 @@ function User() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
           body: JSON.stringify({
@@ -343,6 +371,10 @@ function User() {
       );
 
       const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
       if (response.ok) {
         console.log("Login successful", data);
@@ -405,12 +437,17 @@ function User() {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `${tokenHeader}`,
               },
               credentials: "include",
               body: JSON.stringify({ email }),
             });
     
             const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
             console.log(data)
             if (response.ok) {
               dispatch(toggleSidebarfalse());
@@ -471,12 +508,17 @@ function User() {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
             body: JSON.stringify({ email }),
           });
   
           const data = await response.json();
+          const newTokenHeader = response.headers.get('Authorization');
+          dispatch(updateToken({
+            token: newTokenHeader
+          }));
           console.log(data)
           if (response.ok) {
             Swal.fire({
@@ -670,12 +712,17 @@ function User() {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
             body: JSON.stringify(requestData) 
           });
     
           const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
     
           if (response.ok) {
             
@@ -712,15 +759,15 @@ function User() {
             setDepartmentDetails("");
             setRoleDetails("");
 
-            if(!data.isAuthenticated){
-              dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-            }
+            // if(!data.isAuthenticated){
+            //   dispatch(toggleSidebarfalse());
+            // dispatch(
+            //   login({
+            //     user: {},
+            //   })
+            // );
+            // navigate("/");
+            // }
           }
         } catch (error) {
           setIsSubmitting(false);
@@ -755,12 +802,17 @@ function User() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
           body: JSON.stringify(requestData) 
         });
   
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
   
         if (response.ok) {
           

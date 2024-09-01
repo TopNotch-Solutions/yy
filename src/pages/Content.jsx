@@ -29,7 +29,8 @@ import Swal from "sweetalert2";
 import UpdateButton from "../components/commons/UpdateButton";
 import DeleteButton from "../components/commons/DeleteButton";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { updateToken } from "../redux/reducers/authReducer";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { login } from "../redux/reducers/authReducer";
 
@@ -75,6 +76,8 @@ function Content() {
   const inputRef = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.auth.user);
+  const tokenHeader = currentUser.token;
 
   const [file, setFile] = useState(null);
   const [fileMobileImage, setFileMobileImage] = useState(null);
@@ -164,26 +167,31 @@ function Content() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setOpportunitiesList(data.data);
         } else {
-          if (!data.isAuthenticated) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          // if (!data.isAuthenticated) {
+          //   dispatch(toggleSidebarfalse());
+          //   dispatch(
+          //     login({
+          //       user: {},
+          //     })
+          //   );
+          //   navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -199,26 +207,31 @@ function Content() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setMobileImagesList(data.data);
         } else {
-          if (!data.isAuthenticated) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          // if (!data.isAuthenticated) {
+          //   dispatch(toggleSidebarfalse());
+          //   dispatch(
+          //     login({
+          //       user: {},
+          //     })
+          //   );
+          //   navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -243,13 +256,12 @@ function Content() {
           `http://localhost:4000/opportunities/admin/create`,
           {
             method: "POST",
-            credentials: "include",
             body: formData,
           }
         );
 
         const data = await response.json();
-
+       
         if (response.ok) {
           Swal.fire({
             position: "center",
@@ -363,11 +375,17 @@ function Content() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
         }
       );
+
       const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
       if (response.ok) {
         console.log("Login successful", data);
@@ -415,11 +433,17 @@ function Content() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
         }
       );
+
       const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
       if (response.ok) {
         console.log("Login successful", data);
@@ -478,12 +502,17 @@ function Content() {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `${tokenHeader}`,
               },
               credentials: "include",
             }
           );
-
+  
           const data = await response.json();
+          const newTokenHeader = response.headers.get('Authorization');
+          dispatch(updateToken({
+            token: newTokenHeader
+          }));
           console.log(data);
 
           if (response.ok) {
@@ -547,12 +576,17 @@ function Content() {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `${tokenHeader}`,
               },
               credentials: "include",
             }
           );
-
+  
           const data = await response.json();
+          const newTokenHeader = response.headers.get('Authorization');
+          dispatch(updateToken({
+            token: newTokenHeader
+          }));
           console.log(data);
 
           if (response.ok) {
@@ -933,8 +967,8 @@ function Content() {
               body: formData,
             }
           );
-          const data = await response.json();
-
+          
+        const data = await response.json();
           if (response.ok) {
             setOpenModelEdit(false);
             setIsSubmitting(false);

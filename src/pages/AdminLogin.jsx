@@ -5,11 +5,13 @@ import mtclogo from "../assets/images/banner.png";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import in4msme_Logo_Blk from "../assets/images/in4msme_Logo_Blk.png";
 import { toast } from "react-toastify";
 import { toggleSidebarTrue } from "../redux/reducers/sidebarReducer";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateToken } from "../redux/reducers/authReducer";
 import { login } from "../redux/reducers/authReducer";
 import { toggleActiveTab } from "../redux/reducers/tabsReducer";
 
@@ -24,6 +26,9 @@ const AdminLogin = () => {
   const [twoFactorDigits, setTwoFactorDigits] = useState("");
   const [twoFactorDigitsError, setTwoFactorDigitsError] = useState("");
   const [userId, setUserId] = useState(null);
+  const currentUser = useSelector((state) => state.auth.user);
+  const tokenHeader = currentUser.token;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -187,17 +192,23 @@ const AdminLogin = () => {
         );
 
         const data = await response.json();
+        //const newTokenHeader = response.headers.get('Authorization');
+       
 
         if (response.ok) {
           console.log("Login successful", data);
           //console.log(data.currentUser.role);
-
+          
           dispatch(toggleSidebarTrue());
           dispatch(
             login({
               user: data.currentUser,
             })
           );
+          dispatch(updateToken({
+            token: `Bearer ${data.currentUser.token}`
+          }));
+          console.log("I am the current user",currentUser)
           navigate("/Dashboard");
         } else {
           setIsSubmitting(false);
@@ -227,12 +238,12 @@ const AdminLogin = () => {
             <div className="m-auto col-11 col-md-10 col-lg-6 col-xl-5 d-flex flex-column justify-content-center align-items-center">
               <div className="d-flex align-items-center">
                 <h3 className="portal-text">IN4MSME Portal</h3>
-                <img
-                  src={mtclogo}
+                {/* <img
+                  src={in4msme_Logo_Blk}
                   alt="Illustration"
                   className="img-fluid"
-                  style={{ width: 100, height: 100 }}
-                />
+                  style={{ width: 50, height: 50 }}
+                /> */}
               </div>
               <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
                 <form>
@@ -298,14 +309,14 @@ const AdminLogin = () => {
         ) : (
           <>
             <div className="m-auto col-11 col-md-10 col-lg-6 col-xl-5 d-flex flex-column justify-content-center align-items-center">
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center"> 
                 <h3 className="portal-text">IN4MSME Portal</h3>
-                <img
-                  src={mtclogo}
+                {/* <img
+                  src={in4msme_Logo_Blk}
                   alt="Illustration"
                   className="img-fluid"
-                  style={{ width: 100, height: 100 }}
-                />
+                  style={{ width: 50, height: 50 }}
+                /> */}
               </div>
               <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
                 <form>

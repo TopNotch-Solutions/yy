@@ -75,9 +75,6 @@ function SubmitEmail() {
     }
     return valid;
   };
-  const handleForgotPassword = async () => {
-
-  }
   return (
     <div className="">
       <div className="d-flex vh-100 w-100 ">

@@ -60,6 +60,9 @@
   .logo-image {
     padding: 30px;
   }
+  /* .mtc-logo-login{
+    height: 700px;
+  } */
   .back-to-login:hover{
     cursor: pointer;
   }

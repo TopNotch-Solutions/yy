@@ -12,6 +12,7 @@ import { CapitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
 import { toggleSidebarfalse } from "../../redux/reducers/sidebarReducer";
 import { login } from "../../redux/reducers/authReducer";
 import { useNavigate } from "react-router-dom";
+import { updateToken } from "../../redux/reducers/authReducer";
 import { toggleActiveTab } from "../../redux/reducers/tabsReducer";
 import Swal from "sweetalert2";
 
@@ -21,6 +22,7 @@ const Topbar = ({ OpenSidebar }) => {
   const currentUser = useSelector((state) => state.auth.user);
   const [isSubmitting, setIsSubmitting] = useState(false);
   let fullName = currentUser?.firstName + currentUser?.lastName;
+  const tokenHeader = currentUser.token;
   const [allNotificationsCount,setAllNotificationsCount] = useState(0);
   let firstLetter = CapitalizeFirstLetter(currentUser?.firstName);
   let secondLetter = CapitalizeFirstLetter(currentUser?.lastName);
@@ -34,12 +36,17 @@ const Topbar = ({ OpenSidebar }) => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
@@ -58,11 +65,16 @@ const Topbar = ({ OpenSidebar }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `${tokenHeader}`,
         },
         credentials: "include",
       });
 
       const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
       if (response.ok) {
         console.log("Login successful", data);

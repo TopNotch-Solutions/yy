@@ -23,7 +23,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContain
 import { Line as RCLine } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip as RCTooltip, Legend as RCLegend } from 'chart.js';
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
-import { useDispatch } from "react-redux";
+import { updateToken } from "../redux/reducers/authReducer";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/reducers/authReducer";
 import { useNavigate } from "react-router-dom";
 
@@ -109,58 +110,11 @@ function Dashboard() {
   const [fifthElement, setFifthElement] = useState({});
   const [lineData, setLineData] = useState([]);
 
+  const currentUser = useSelector((state) => state.auth.user);
+  const tokenHeader = currentUser.token;
+
   const datamy = lineData;
   console.log(lineData)
-
-  const data2my = {
-    labels: ['2024-06', '2024-07', '2024-08'],
-    datasets: [
-      {
-        label: 'Current Month',
-        data: [30, 45, 50],
-        borderColor: 'rgba(75,192,192,1)',
-        backgroundColor: 'rgba(75,192,192,0.2)',
-        tension: 0.4,
-        fill: true,
-      },
-      {
-        label: 'Previous Month',
-        data: [20, 35, 40],
-        borderColor: 'rgba(153,102,255,1)',
-        backgroundColor: 'rgba(153,102,255,0.2)',
-        tension: 0.4,
-        fill: true,
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Monthly Data Comparison',
-      },
-    },
-    scales: {
-      x: {
-        type: 'category',
-        title: {
-          display: true,
-          text: 'Date',
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: 'Customers',
-        },
-      },
-    },
-  };
 
   const [openModel, setOpenModel] = useState(false);
   const handleOpen = () => setOpenModel(true);
@@ -174,26 +128,31 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
-
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
+        console.log("Header header",newTokenHeader,tokenHeader,currentUser);
         if (response.ok) {
           console.log("Login successful", data);
           setLineData(data.data);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -210,26 +169,30 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
-
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
         if (response.ok) {
           console.log("Login successful", data);
           setTotalRegistration(data.count);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -246,26 +209,31 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setPendingRegistration(data.count);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -282,26 +250,31 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setRejectedRegistration(data.count);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -318,26 +291,30 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
-
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
         if (response.ok) {
           console.log("Login successful", data);
           setIApprovedRegistration(data.count);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -351,25 +328,30 @@ function Dashboard() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
-
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
         if (response.ok) {
           console.log("Login successful", data);
           setAllMSMEList(data.data);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -385,12 +367,17 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
+        const newTokenHeader = response.headers.get('Authorization');
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
 
         if (response.ok) {
           setTopCategory(data.data);
@@ -407,15 +394,15 @@ function Dashboard() {
           console.log("Fourth Element:", data.data[3]);
           console.log("Fifth Element:", data.data[4]);
         } else {
-          if(!data.isAuthenticated){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          // if(!data.isAuthenticated){
+          //   dispatch(toggleSidebarfalse());
+          // dispatch(
+          //   login({
+          //     user: {},
+          //   })
+          // );
+          // navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -464,6 +451,21 @@ function Dashboard() {
         }
       },
     },
+    {
+      field: "isBlocked",
+      headerName: "Blocked",
+      width: isSmallScreen ? 120 : 140,
+      cellClassName: (params) => {
+        switch (params.value) {
+          case true:
+            return "status-rejected";
+          case false:
+            return "status-approved";
+          default:
+            return "";
+        }
+      },
+    },
   ];
   console.log(allMSMEList);
   const rows = allMSMEList.map((msme) => ({
@@ -476,6 +478,7 @@ function Dashboard() {
     annualTurnover: msme.annualTurnover,
     foundersName: msme.founderInfo.founderName,
     status: msme.status,
+    isBlocked: msme.isBlocked
   }));
   const data = [
     {

@@ -26,7 +26,8 @@ import Swal from "sweetalert2";
 import DeleteButton from "../components/commons/DeleteButton";
 import UpdateButton from "../components/commons/UpdateButton";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateToken } from "../redux/reducers/authReducer";
 import { login } from "../redux/reducers/authReducer";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 
@@ -108,6 +109,9 @@ function Bso() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openModel, setOpenModel] = useState(false);
   const [openModelEdit, setOpenModelEdit] = useState(false);
+
+  const currentUser = useSelector((state) => state.auth.user);
+  const tokenHeader = currentUser.token;
   const handleOpen = () => setOpenModel(true);
   const handleClose = () => {
     setNameError("");
@@ -137,25 +141,31 @@ function Bso() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setTotalBsos(data.data);
         } else {
-          if (!data.isAuthenticated) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          // if (!data.isAuthenticated) {
+          //   dispatch(toggleSidebarfalse());
+          //   dispatch(
+          //     login({
+          //       user: {},
+          //     })
+          //   );
+          //   navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -170,25 +180,31 @@ function Bso() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        });
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
         if (response.ok) {
           console.log("Login successful", data);
           setBsoList(data.data);
         } else {
-          if (!data.isAuthenticated) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          // if (!data.isAuthenticated) {
+          //   dispatch(toggleSidebarfalse());
+          //   dispatch(
+          //     login({
+          //       user: {},
+          //     })
+          //   );
+          //   navigate("/");
+          // }
         }
       } catch (error) {}
     };
@@ -274,7 +290,6 @@ function Bso() {
           body: formData,
         });
         const data = await response.json();
-
         if (response.ok) {
           setOpenModel(false);
           setIsSubmitting(false);
@@ -309,15 +324,15 @@ function Bso() {
           setEmail("");
           setWebsite("");
           setLogo("");
-          if (!data.isAuthenticated) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          // if (!data.isAuthenticated) {
+          //   dispatch(toggleSidebarfalse());
+          //   dispatch(
+          //     login({
+          //       user: {},
+          //     })
+          //   );
+          //   navigate("/");
+          // }
         }
       } catch (error) {
         setIsSubmitting(false);
@@ -399,12 +414,17 @@ function Bso() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
           },
           credentials: "include",
         }
       );
 
       const data = await response.json();
+      const newTokenHeader = response.headers.get('Authorization');
+      dispatch(updateToken({
+        token: newTokenHeader
+      }));
 
       if (response.ok) {
         console.log("Login successful", data);
@@ -426,15 +446,15 @@ function Bso() {
           showConfirmButton: false,
           timer: 4000,
         });
-        if (!data.isAuthenticated) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        // if (!data.isAuthenticated) {
+        //   dispatch(toggleSidebarfalse());
+        //   dispatch(
+        //     login({
+        //       user: {},
+        //     })
+        //   );
+        //   navigate("/");
+        // }
       }
     } catch (error) {
       Swal.fire({
@@ -467,12 +487,17 @@ function Bso() {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
+                  Authorization: `${tokenHeader}`,
                 },
                 credentials: "include",
               }
             );
-
+    
             const data = await response.json();
+            const newTokenHeader = response.headers.get('Authorization');
+            dispatch(updateToken({
+              token: newTokenHeader
+            }));
             console.log(data);
 
             if (response.ok) {
@@ -491,15 +516,15 @@ function Bso() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if (!data.isAuthenticated) {
-                dispatch(toggleSidebarfalse());
-                dispatch(
-                  login({
-                    user: {},
-                  })
-                );
-                navigate("/");
-              }
+              // if (!data.isAuthenticated) {
+              //   dispatch(toggleSidebarfalse());
+              //   dispatch(
+              //     login({
+              //       user: {},
+              //     })
+              //   );
+              //   navigate("/");
+              // }
             }
           } catch (error) {
             console.error("Network Error:", error);
@@ -587,15 +612,15 @@ function Bso() {
             setDesciptionDetails("");
             setWebsiteDetails("");
             setLogoDetails("");
-            if (!data.isAuthenticated) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            // if (!data.isAuthenticated) {
+            //   dispatch(toggleSidebarfalse());
+            //   dispatch(
+            //     login({
+            //       user: {},
+            //     })
+            //   );
+            //   navigate("/");
+            // }
           }
         } catch (error) {
           setIsSubmitting(false);
