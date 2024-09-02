@@ -144,17 +144,27 @@ function Dashboard() {
           console.log("Login successful", data);
           setLineData(data.data);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchTotalCount();
@@ -184,17 +194,27 @@ function Dashboard() {
           console.log("Login successful", data);
           setTotalRegistration(data.count);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchLineGraph();
@@ -225,17 +245,27 @@ function Dashboard() {
           console.log("Login successful", data);
           setPendingRegistration(data.count);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchPendingCount();
@@ -266,17 +296,27 @@ function Dashboard() {
           console.log("Login successful", data);
           setRejectedRegistration(data.count);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchRejectedCount();
@@ -306,17 +346,27 @@ function Dashboard() {
           console.log("Login successful", data);
           setIApprovedRegistration(data.count);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchApprovedCount();
@@ -343,17 +393,27 @@ function Dashboard() {
           console.log("Login successful", data);
           setAllMSMEList(data.data);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmeAllMSME();
@@ -394,17 +454,27 @@ function Dashboard() {
           console.log("Fourth Element:", data.data[3]);
           console.log("Fifth Element:", data.data[4]);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchTop5();

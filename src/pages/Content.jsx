@@ -183,17 +183,27 @@ function Content() {
           console.log("Login successful", data);
           setOpportunitiesList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchOpportunities();
@@ -223,17 +233,27 @@ function Content() {
           console.log("Login successful", data);
           setMobileImagesList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMobileImages();
@@ -281,11 +301,15 @@ function Content() {
             timer: 3000,
           });
 
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(login({ user: {} }));
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       } catch (error) {
         Swal.fire({
@@ -295,6 +319,15 @@ function Content() {
           showConfirmButton: false,
           timer: 3000,
         });
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       } finally {
         setIsSubmitting(false);
         setOpenModel(false);
@@ -343,15 +376,15 @@ function Content() {
           });
           setDescriptionImage("");
           setImageImage("");
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       } catch (error) {
         setIsSubmitting(false);
@@ -363,6 +396,15 @@ function Content() {
           showConfirmButton: false,
           timer: 3000,
         });
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     }
   };
@@ -405,15 +447,15 @@ function Content() {
           showConfirmButton: false,
           timer: 4000,
         });
-        // if(!data.isAuthenticated){
-        //   dispatch(toggleSidebarfalse());
-        // dispatch(
-        //   login({
-        //     user: {},
-        //   })
-        // );
-        // navigate("/");
-        // }
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     } catch (error) {
       Swal.fire({
@@ -423,6 +465,15 @@ function Content() {
         showConfirmButton: false,
         timer: 4000,
       });
+      if(!currentUser.token){
+        dispatch(toggleSidebarfalse());
+      dispatch(
+        login({
+          user: {},
+        })
+      );
+      navigate("/");
+      }
     }
   };
   const handleUpdateImage = async (id) => {
@@ -462,15 +513,15 @@ function Content() {
           showConfirmButton: false,
           timer: 4000,
         });
-        // if (!data.isAuthenticated) {
-        //   dispatch(toggleSidebarfalse());
-        //   dispatch(
-        //     login({
-        //       user: {},
-        //     })
-        //   );
-        //   navigate("/");
-        // }
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     } catch (error) {
       Swal.fire({
@@ -480,6 +531,15 @@ function Content() {
         showConfirmButton: false,
         timer: 4000,
       });
+      if(!currentUser.token){
+        dispatch(toggleSidebarfalse());
+      dispatch(
+        login({
+          user: {},
+        })
+      );
+      navigate("/");
+      }
     }
   };
   const handleDeletion = async (id) => {
@@ -531,15 +591,15 @@ function Content() {
               showConfirmButton: false,
               timer: 3000,
             });
-            // if (!data.isAuthenticated) {
-            //   dispatch(toggleSidebarfalse());
-            //   dispatch(
-            //     login({
-            //       user: {},
-            //     })
-            //   );
-            //   navigate("/");
-            // }
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           }
         } catch (error) {
           console.error("Network Error:", error);
@@ -550,6 +610,15 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         } finally {
           setIsSubmitting(false);
         }
@@ -605,15 +674,15 @@ function Content() {
               showConfirmButton: false,
               timer: 3000,
             });
-            // if (!data.isAuthenticated) {
-            //   dispatch(toggleSidebarfalse());
-            //   dispatch(
-            //     login({
-            //       user: {},
-            //     })
-            //   );
-            //   navigate("/");
-            // }
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           }
         } catch (error) {
           console.error("Network Error:", error);
@@ -624,6 +693,15 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         } finally {
           setIsSubmitting(false);
         }
@@ -995,15 +1073,15 @@ function Content() {
             setDescriptionDetails("");
             setUserDetails("");
             setImageDetails("");
-            // if (!data.isAuthenticated) {
-            //   dispatch(toggleSidebarfalse());
-            //   dispatch(
-            //     login({
-            //       user: {},
-            //     })
-            //   );
-            //   navigate("/");
-            // }
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           }
         } catch (error) {
           setIsSubmitting(false);
@@ -1015,6 +1093,15 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       }
     }
@@ -1067,15 +1154,15 @@ function Content() {
             });
             setDescriptionImageDetails("");
             setImageImageDetails("");
-            // if(!data.isAuthenticated){
-            //   dispatch(toggleSidebarfalse());
-            // dispatch(
-            //   login({
-            //     user: {},
-            //   })
-            // );
-            // navigate("/");
-            // }
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           }
         } catch (error) {
           setIsSubmitting(false);
@@ -1087,6 +1174,15 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       }
     }
@@ -1146,15 +1242,15 @@ function Content() {
             setDescriptionDetails("");
             setUserDetails("");
             setImageDetails("");
-            // if (!data.isAuthenticated) {
-            //   dispatch(toggleSidebarfalse());
-            //   dispatch(
-            //     login({
-            //       user: {},
-            //     })
-            //   );
-            //   navigate("/");
-            // }
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           }
         } catch (error) {
           setIsSubmitting(false);
@@ -1166,6 +1262,15 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       }
     }

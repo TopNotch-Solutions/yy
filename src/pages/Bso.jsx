@@ -157,17 +157,27 @@ function Bso() {
           console.log("Login successful", data);
           setTotalBsos(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchTotalCount();
@@ -196,17 +206,27 @@ function Bso() {
           console.log("Login successful", data);
           setBsoList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchApprovedCount();
@@ -324,15 +344,15 @@ function Bso() {
           setEmail("");
           setWebsite("");
           setLogo("");
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if (!data.isAuthenticated) {
+            dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
         }
       } catch (error) {
         setIsSubmitting(false);
@@ -344,6 +364,15 @@ function Bso() {
           showConfirmButton: false,
           timer: 3000,
         });
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     }
   };
@@ -446,15 +475,15 @@ function Bso() {
           showConfirmButton: false,
           timer: 4000,
         });
-        // if (!data.isAuthenticated) {
-        //   dispatch(toggleSidebarfalse());
-        //   dispatch(
-        //     login({
-        //       user: {},
-        //     })
-        //   );
-        //   navigate("/");
-        // }
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     } catch (error) {
       Swal.fire({
@@ -464,6 +493,15 @@ function Bso() {
         showConfirmButton: false,
         timer: 4000,
       });
+      if(!currentUser.token){
+        dispatch(toggleSidebarfalse());
+      dispatch(
+        login({
+          user: {},
+        })
+      );
+      navigate("/");
+      }
     }
   };
   const handleDeletion = (id) => {
@@ -516,15 +554,15 @@ function Bso() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              // if (!data.isAuthenticated) {
-              //   dispatch(toggleSidebarfalse());
-              //   dispatch(
-              //     login({
-              //       user: {},
-              //     })
-              //   );
-              //   navigate("/");
-              // }
+              if(!currentUser.token){
+                dispatch(toggleSidebarfalse());
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
+              }
             }
           } catch (error) {
             console.error("Network Error:", error);
@@ -535,6 +573,15 @@ function Bso() {
               showConfirmButton: false,
               timer: 3000,
             });
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           } finally {
             setIsSubmitting(false);
           }
@@ -612,15 +659,15 @@ function Bso() {
             setDesciptionDetails("");
             setWebsiteDetails("");
             setLogoDetails("");
-            // if (!data.isAuthenticated) {
-            //   dispatch(toggleSidebarfalse());
-            //   dispatch(
-            //     login({
-            //       user: {},
-            //     })
-            //   );
-            //   navigate("/");
-            // }
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           }
         } catch (error) {
           setIsSubmitting(false);
@@ -632,6 +679,15 @@ function Bso() {
             showConfirmButton: false,
             timer: 3000,
           });
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       }
     }
@@ -713,6 +769,9 @@ function Bso() {
   const handleCameraClick = () => {
     inputRef.current.click();
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return isSubmitting ? (
     <Backdrop
       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}

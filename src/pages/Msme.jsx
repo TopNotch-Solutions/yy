@@ -292,6 +292,9 @@ function Msme() {
     setOpenModelView(false);
   };
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  useEffect(() => {
     const fetchTotalCount = async () => {
       try {
         const response = await fetch(
@@ -316,17 +319,27 @@ function Msme() {
           console.log("Login successful", data);
           setTotalRegistration(data.count);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchTotalCount();
@@ -357,17 +370,27 @@ function Msme() {
           console.log("Login successful", data);
           setPendingRegistration(data.count);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchPendingCount();
@@ -398,17 +421,27 @@ function Msme() {
           console.log("Login successful", data);
           setRejectedRegistration(data.count);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchRejectedCount();
@@ -439,17 +472,27 @@ function Msme() {
           console.log("Login successful", data);
           setIApprovedRegistration(data.count);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchApprovedCount();
@@ -478,17 +521,27 @@ function Msme() {
           console.log("Login successful", data);
           setAllMSMEList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmeAllMSME();
@@ -518,17 +571,27 @@ function Msme() {
           console.log("Login successful", data);
           setPendingMSMEList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmePendingMSME();
@@ -559,17 +622,27 @@ function Msme() {
           console.log("Login successful", data);
           setRejectedMSMEList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmeRejectedMSME();
@@ -600,17 +673,27 @@ function Msme() {
           console.log("Login successful", data);
           setApprovedMSMEList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmeApprovedMSME();
@@ -639,17 +722,27 @@ function Msme() {
           console.log("Login successful", data);
           setRegionList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchAllRegions();
@@ -678,17 +771,27 @@ function Msme() {
           console.log("Login successful", data);
           setTownList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchAllTowns();
@@ -718,17 +821,27 @@ function Msme() {
           console.log("Login successful", data);
           setPrimaryIndustryList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchAllPrimaryIndustryList();
@@ -758,17 +871,27 @@ function Msme() {
           console.log("Login successful", data);
           setSecondaryList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchAllSeconaryList();
@@ -798,17 +921,27 @@ function Msme() {
           console.log("Login successful", data);
           setAllUserList(data.data);
         } else {
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchAllUser();
@@ -1143,15 +1276,15 @@ function Msme() {
           });
           //setOpenModel(true);
           console.error("Submission failed:", data);
-          // if (!data.isAuthenticated) {
-          //   dispatch(toggleSidebarfalse());
-          //   dispatch(
-          //     login({
-          //       user: {},
-          //     })
-          //   );
-          //   navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       } catch (error) {
         setIsSubmitting(false);
@@ -1164,6 +1297,15 @@ function Msme() {
           timer: 3000,
         });
         //setOpenModel(true);
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
         console.error("An error occurred:", error);
       }
     }
@@ -1247,15 +1389,15 @@ function Msme() {
           showConfirmButton: false,
           timer: 4000,
         });
-        // if (!data.isAuthenticated) {
-        //   dispatch(toggleSidebarfalse());
-        //   dispatch(
-        //     login({
-        //       user: {},
-        //     })
-        //   );
-        //   navigate("/");
-        // }
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     } catch (error) {
       setIsSubmitting(false);
@@ -1267,6 +1409,15 @@ function Msme() {
         showConfirmButton: false,
         timer: 3000,
       });
+      if(!currentUser.token){
+        dispatch(toggleSidebarfalse());
+      dispatch(
+        login({
+          user: {},
+        })
+      );
+      navigate("/");
+      }
     }
   };
   const rowsIncomplete = [];
@@ -1517,15 +1668,15 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              // if (!data.isAuthenticated) {
-              //   dispatch(toggleSidebarfalse());
-              //   dispatch(
-              //     login({
-              //       user: {},
-              //     })
-              //   );
-              //   navigate("/");
-              // }
+              if(!currentUser.token){
+                dispatch(toggleSidebarfalse());
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
+              }
             }
           } catch (error) {
             console.error("Network Error:", error);
@@ -1536,6 +1687,15 @@ function Msme() {
               showConfirmButton: false,
               timer: 3000,
             });
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           } finally {
             setIsSubmitting(false);
           }
@@ -1608,15 +1768,15 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              // if (!data.isAuthenticated) {
-              //   dispatch(toggleSidebarfalse());
-              //   dispatch(
-              //     login({
-              //       user: {},
-              //     })
-              //   );
-              //   navigate("/");
-              // }
+              if(!currentUser.token){
+                dispatch(toggleSidebarfalse());
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
+              }
             }
           } catch (error) {
             console.error("Network Error:", error);
@@ -1627,6 +1787,15 @@ function Msme() {
               showConfirmButton: false,
               timer: 3000,
             });
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           } finally {
             setIsSubmitting(false);
           }
@@ -1699,15 +1868,15 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              // if (!data.isAuthenticated) {
-              //   dispatch(toggleSidebarfalse());
-              //   dispatch(
-              //     login({
-              //       user: {},
-              //     })
-              //   );
-              //   navigate("/");
-              // }
+              if(!currentUser.token){
+                dispatch(toggleSidebarfalse());
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
+              }
             }
           } catch (error) {
             console.error("Network Error:", error);
@@ -1718,6 +1887,15 @@ function Msme() {
               showConfirmButton: false,
               timer: 3000,
             });
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           } finally {
             setIsSubmitting(false);
           }
@@ -1791,6 +1969,15 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
+              if(!currentUser.token){
+                dispatch(toggleSidebarfalse());
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
+              }
             }
           } catch (error) {
             console.error("Network Error:", error);
@@ -1801,6 +1988,15 @@ function Msme() {
               showConfirmButton: false,
               timer: 3000,
             });
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           } finally {
             setIsSubmitting(false);
           }

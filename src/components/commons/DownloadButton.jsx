@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import { IconButton, useTheme, useMediaQuery } from "@mui/material";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 
-const DownloadButton = ({ onClick }) => {
+const DownloadButton = ({ onClick,data }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (

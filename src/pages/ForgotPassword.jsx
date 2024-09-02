@@ -95,6 +95,8 @@ function ForgotPassword() {
         if (response.ok) {
           console.log("Login successful", data);
           setIsSubmitting(false);
+          setPassword("");
+          setConfirmPassword("");
           setSuccess(true);
           toast.success(data.message);
         } else {
@@ -117,12 +119,12 @@ function ForgotPassword() {
         <div className="m-auto col-11 col-md-10 col-lg-6 col-xl-5 d-flex flex-column justify-content-center align-items-center">
           <div className="d-flex align-items-center">
             <h3 className="portal-text">IN4MSME Portal</h3>
-            <img
+            {/* <img
               src={mtclogo}
               alt="Illustration"
               className="img-fluid"
               style={{ width: 100, height: 100 }}
-            />
+            /> */}
           </div>
           <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
             <form onSubmit={handleForgotPassword}>

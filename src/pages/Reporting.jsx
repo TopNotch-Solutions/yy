@@ -57,17 +57,27 @@ function Reporting() {
           console.log("Login successful", data);
           setAllMSMEList(data.data);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmeAllMSME();
@@ -95,17 +105,27 @@ function Reporting() {
           console.log("Login successful", data);
           setAllMSMEPendingList(data.data);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmeAllMSMEPending();
@@ -133,17 +153,27 @@ function Reporting() {
           console.log("Login successful", data);
           setAllMSMERejectedList(data.data);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmeAllMSMERejected();
@@ -171,17 +201,27 @@ function Reporting() {
           console.log("Login successful", data);
           setAllMSMEBlockedList(data.data);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmeAllMSMEBlocked();
@@ -209,17 +249,27 @@ function Reporting() {
           console.log("Login successful", data);
           setAllBSOList(data.data);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmeAllBSO();
@@ -247,17 +297,27 @@ function Reporting() {
           console.log("Login successful", data);
           setAllUserList(data.data);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchMsmeAllUsers();
@@ -855,7 +915,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <p className="list-group text-center">All MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
-                  <DownloadButton onClick={handleDownloadAllMSME}/>
+                    {allMSMEList ? <><DownloadButton onClick={handleDownloadAllMSME}/></> :<></>}
                 </div>
                 <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
@@ -893,7 +953,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <p className="list-group text-center">All Pending MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
-                  <DownloadButton onClick={handleDownloadAllMSMEPending}/>
+                    {allMSMEPendingList ? <><DownloadButton onClick={handleDownloadAllMSMEPending}/></> :<></>}
                 </div>
                 <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
@@ -931,7 +991,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <p className="list-group text-center">All Rejected MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
-                  <DownloadButton onClick={handleDownloadAllMSMERejected}/>
+                  {allMSMERejectedList ? <><DownloadButton onClick={handleDownloadAllMSMERejected}/></> : <></>}
                 </div>
                 <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
@@ -969,7 +1029,10 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <p className="list-group text-center">All BSO Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
-                  <DownloadButton onClick={handleDownloadAllBSO}/>
+                    {
+                      allBSOList ? <><DownloadButton onClick={handleDownloadAllBSO}/></> : <></>
+                    }
+                  
                 </div>
                 <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
@@ -997,7 +1060,9 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <p className="list-group text-center">All System Users</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
-                  <DownloadButton onClick={handleDownloadAllUsers}/>
+                    {
+                      allUserList ? <><DownloadButton onClick={handleDownloadAllUsers}/></> : <></>
+                    }
                 </div>
                 <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
@@ -1025,7 +1090,9 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <p className="list-group text-center">All Blocked MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
-                  <DownloadButton onClick={handleDownloadAllBlocked}/>
+                    {
+                      allMSMEBlockedList ? <><DownloadButton onClick={handleDownloadAllBlocked}/></>:<></>
+                    }
                 </div>
                 <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
                   <DataGrid

@@ -174,17 +174,27 @@ function User() {
           console.log("Login successful", data);
           setTotalSystemUsers(data.count);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchTotalCount();
@@ -215,17 +225,27 @@ function User() {
           console.log("Login successful", data);
           setTotalSuperUser(data.count);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchPendingCount();
@@ -256,17 +276,27 @@ function User() {
           console.log("Login successful", data);
           setTotalAdmins(data.count);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchRejectedCount();
@@ -297,17 +327,27 @@ function User() {
           console.log("Login successful", data);
           setTotalAppUsers(data.count);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchApprovedCount();
@@ -337,17 +377,27 @@ function User() {
           console.log("Login successful", data);
           setAdminList(data.data);
         } else {
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
     };
 
     fetchApprovedCount();
@@ -395,15 +445,15 @@ function User() {
           showConfirmButton: false,
           timer: 4000
         });
-        // if(!data.isAuthenticated){
-        //   dispatch(toggleSidebarfalse());
-        // dispatch(
-        //   login({
-        //     user: {},
-        //   })
-        // );
-        // navigate("/");
-        // }
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     } catch (error) {
       
@@ -414,6 +464,15 @@ function User() {
         showConfirmButton: false,
         timer: 4000
       });
+      if(!currentUser.token){
+        dispatch(toggleSidebarfalse());
+      dispatch(
+        login({
+          user: {},
+        })
+      );
+      navigate("/");
+      }
     }
     //setOpenModelEditing(true)
   }
@@ -466,15 +525,15 @@ function User() {
                 showConfirmButton: false,
                 timer: 3000
               });
-              // if(!data.isAuthenticated){
-              //   dispatch(toggleSidebarfalse());
-              // dispatch(
-              //   login({
-              //     user: {},
-              //   })
-              // );
-              // navigate("/");
-              // }
+              if(!currentUser.token){
+                dispatch(toggleSidebarfalse());
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
+              }
             }
           } catch (error) {
             console.error("Network Error:", error);
@@ -485,6 +544,15 @@ function User() {
               showConfirmButton: false,
               timer: 3000
             });
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           } finally {
             setIsSubmitting(false);
           }
@@ -537,15 +605,15 @@ function User() {
               showConfirmButton: false,
               timer: 3000
             });
-            // if(!data.isAuthenticated){
-            //   dispatch(toggleSidebarfalse());
-            // dispatch(
-            //   login({
-            //     user: {},
-            //   })
-            // );
-            // navigate("/");
-            // }
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           }
         } catch (error) {
           console.error("Network Error:", error);
@@ -556,6 +624,15 @@ function User() {
             showConfirmButton: false,
             timer: 3000
           });
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         } finally {
           setIsSubmitting(false);
         }
@@ -759,15 +836,15 @@ function User() {
             setDepartmentDetails("");
             setRoleDetails("");
 
-            // if(!data.isAuthenticated){
-            //   dispatch(toggleSidebarfalse());
-            // dispatch(
-            //   login({
-            //     user: {},
-            //   })
-            // );
-            // navigate("/");
-            // }
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           }
         } catch (error) {
           setIsSubmitting(false);
@@ -779,6 +856,15 @@ function User() {
             showConfirmButton: false,
             timer: 3000
           });
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       }
     }
@@ -848,15 +934,15 @@ function User() {
           setContactNumber("");
           setDepartment("");
           setRole("");
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       } catch (error) {
         setIsSubmitting(false);
@@ -868,6 +954,15 @@ function User() {
           showConfirmButton: false,
           timer: 3000
         });
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     }
   };

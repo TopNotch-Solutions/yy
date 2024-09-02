@@ -72,7 +72,7 @@ function Notifications() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [buttonActive, setButonActive] = useState(1);
+  const [buttonActive, setButonActive] = useState(4);
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState("");
   const [notification, setNotification] = useState("");
@@ -86,12 +86,18 @@ function Notifications() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [allAdminNotifications, setAllAdminNotifications] = useState([]);
+  const [allUnread, setAllUnread] = useState([]);
+  const [allRead, setAllRead] = useState([]);
+  const [allSent, setAllSent] = useState([]);
   const [singleAdminNotification, setSingleAdminNotification] = useState([]);
+  const [sentAdminNotification, setSentAdminNotification] = useState({});
   const [openModel, setOpenModel] = useState(false);
+  const [openModelSent, setOpenModelSent] = useState(false);
   const [openModelView, setOpenModelView] = useState(false);
 
   const tokenHeader = currentUser.token;
   const handleOpen = () => setOpenModel(true);
+  const handleOpenSent = () => setOpenModelSent(true);
   const handleOpenView = () => setOpenModelView(true);
   const handleClose = () => {
     setTitle("");
@@ -103,6 +109,9 @@ function Notifications() {
   };
   const handleCloseView = () => {
     setOpenModelView(false);
+  };
+  const handleCloseSent = () => {
+    setOpenModelSent(false);
   };
   useEffect(() => {
     const fetchAllAdminNotifications = async () => {
@@ -121,32 +130,208 @@ function Notifications() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setAllAdminNotifications(data.data);
         } else {
           setIsSubmitting(false);
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       } catch (error) {
         setIsSubmitting(false);
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     };
 
     fetchAllAdminNotifications();
+  }, [isSubmitting]);
+  useEffect(() => {
+    const fetchAllUnread = async () => {
+      try {
+        setIsSubmitting(true);
+        const response = await fetch(
+          `http://localhost:4000/notifications/admin/all/unread-notification`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
+            },
+            credentials: "include",
+          }
+        );
+
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+
+        if (response.ok) {
+          console.log("Login successful", data);
+          setAllUnread(data.data);
+        } else {
+          setIsSubmitting(false);
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
+        }
+      } catch (error) {
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+        setIsSubmitting(false);
+      }
+    };
+
+    fetchAllUnread();
+  }, [isSubmitting]);
+  useEffect(() => {
+    const fetchAllSent = async () => {
+      try {
+        setIsSubmitting(true);
+        const response = await fetch(
+          `http://localhost:4000/notifications/admin/all/sent-by-admin`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
+            },
+            credentials: "include",
+          }
+        );
+
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+
+        if (response.ok) {
+          console.log("Login successful", data);
+          setAllSent(data.data);
+        } else {
+          setIsSubmitting(false);
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
+        }
+      } catch (error) {
+        setIsSubmitting(false);
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
+    };
+
+    fetchAllSent();
+  }, [isSubmitting]);
+  useEffect(() => {
+    const fetchAllRead = async () => {
+      try {
+        setIsSubmitting(true);
+        const response = await fetch(
+          `http://localhost:4000/notifications/admin/all/read-notification`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
+            },
+            credentials: "include",
+          }
+        );
+
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+
+        if (response.ok) {
+          console.log("Login successful", data);
+          setAllRead(data.data);
+        } else {
+          setIsSubmitting(false);
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
+        }
+      } catch (error) {
+        setIsSubmitting(false);
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
+    };
+
+    fetchAllRead();
   }, [isSubmitting]);
 
   const handleStep5 = async () => {
@@ -174,10 +359,12 @@ function Notifications() {
           }
         );
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           setOpenModel(false);
@@ -205,15 +392,15 @@ function Notifications() {
           setTitle("");
           setPriority("");
           setNotification("");
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       } catch (error) {
         setIsSubmitting(false);
@@ -225,6 +412,15 @@ function Notifications() {
           showConfirmButton: false,
           timer: 3000,
         });
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     }
   };
@@ -244,14 +440,16 @@ function Notifications() {
       );
 
       const data = await response.json();
-      const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
+      const newTokenHeader = response.headers.get("Authorization");
+      dispatch(
+        updateToken({
+          token: newTokenHeader,
+        })
+      );
       if (response.ok) {
         setIsSubmitting(false);
         setUpdatedId(id);
-        setSingleAdminNotification(data.data)
+        setSingleAdminNotification(data.data);
         setOpenModelView(true);
       } else {
         setIsSubmitting(false);
@@ -262,15 +460,15 @@ function Notifications() {
           showConfirmButton: false,
           timer: 3000,
         });
-        // if(!data.isAuthenticated){
-        //   dispatch(toggleSidebarfalse());
-        // dispatch(
-        //   login({
-        //     user: {},
-        //   })
-        // );
-        // navigate("/");
-        // }
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     } catch (error) {
       setIsSubmitting(false);
@@ -282,6 +480,82 @@ function Notifications() {
         showConfirmButton: false,
         timer: 3000,
       });
+      if(!currentUser.token){
+        dispatch(toggleSidebarfalse());
+      dispatch(
+        login({
+          user: {},
+        })
+      );
+      navigate("/");
+      }
+    }
+  };
+  const handleViewSent = async (id) => {
+    try {
+      setIsSubmitting(true);
+      const response = await fetch(
+        `http://localhost:4000/notifications/admin/single/sent-by-admin/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${tokenHeader}`,
+          },
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+      const newTokenHeader = response.headers.get("Authorization");
+      dispatch(
+        updateToken({
+          token: newTokenHeader,
+        })
+      );
+      console.log("This is the data: ", data)
+      if (response.ok) {
+        setIsSubmitting(false);
+        setSentAdminNotification(data.data);
+        setOpenModelSent(true);
+      } else {
+        setIsSubmitting(false);
+        await Swal.fire({
+          position: "center",
+          icon: "error",
+          title: `${data.message}`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
+      }
+    } catch (error) {
+      setIsSubmitting(false);
+      setOpenModel(false);
+      Swal.fire({
+        position: "center",
+        icon: "question",
+        title: "Check your internet connection and try again!",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+      if(!currentUser.token){
+        dispatch(toggleSidebarfalse());
+      dispatch(
+        login({
+          user: {},
+        })
+      );
+      navigate("/");
+      }
     }
   };
   const handleDeletion = (id) => {
@@ -309,12 +583,14 @@ function Notifications() {
               credentials: "include",
             }
           );
-  
+
           const data = await response.json();
-          const newTokenHeader = response.headers.get('Authorization');
-          dispatch(updateToken({
-            token: newTokenHeader
-          }));
+          const newTokenHeader = response.headers.get("Authorization");
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
           console.log(data);
           if (response.ok) {
             Swal.fire({
@@ -333,15 +609,15 @@ function Notifications() {
               showConfirmButton: false,
               timer: 3000,
             });
-            // if(!data.isAuthenticated){
-            //   dispatch(toggleSidebarfalse());
-            // dispatch(
-            //   login({
-            //     user: {},
-            //   })
-            // );
-            // navigate("/");
-            // }
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           }
         } catch (error) {
           console.error("Network Error:", error);
@@ -352,14 +628,22 @@ function Notifications() {
             showConfirmButton: false,
             timer: 3000,
           });
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         } finally {
           setIsSubmitting(false);
         }
       }
     });
-    
   };
-  const handleNoticationDeletion =async (id) =>{
+  const handleNoticationDeletion = async (id) => {
     try {
       setIsSubmitting(true);
 
@@ -376,10 +660,12 @@ function Notifications() {
       );
 
       const data = await response.json();
-      const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
+      const newTokenHeader = response.headers.get("Authorization");
+      dispatch(
+        updateToken({
+          token: newTokenHeader,
+        })
+      );
       console.log(data);
       if (response.ok) {
         setIsSubmitting(false);
@@ -394,37 +680,46 @@ function Notifications() {
         });
       } else {
         setIsSubmitting(false);
-        // if(!data.isAuthenticated){
-        //   dispatch(toggleSidebarfalse());
-        // dispatch(
-        //   login({
-        //     user: {},
-        //   })
-        // );
-        // navigate("/");
-        // }
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     } catch (error) {
       setIsSubmitting(false);
-  }
-  }
+      if(!currentUser.token){
+        dispatch(toggleSidebarfalse());
+      dispatch(
+        login({
+          user: {},
+        })
+      );
+      navigate("/");
+      }
+    }
+  };
   const columns = [
     {
       field: "notification",
       headerName: "Notification",
       width: isSmallScreen ? 180 : 300,
     },
-    { field: "type", headerName: "Type", width: isSmallScreen ? 100 : 130 },
+    { field: "type", headerName: "Type", width: isSmallScreen ? 100 : 100 },
     {
       field: "priority",
       headerName: "Priority",
-      width: isSmallScreen ? 100 : 130,
+      width: isSmallScreen ? 100 : 100,
     },
-    { field: "viewed", headerName: "Viewed", width: isSmallScreen ? 100 : 130 },
+    { field: "viewed", headerName: "Viewed", width: isSmallScreen ? 100 : 100 },
     {
       field: "createdAt",
       headerName: "Created_At",
-      width: isSmallScreen ? 130 : 300,
+      width: isSmallScreen ? 130 : 200,
     },
     {
       field: "action",
@@ -434,6 +729,34 @@ function Notifications() {
         <>
           <NViewButton onClick={() => handleView(params.row.id)} />
           <DeleteButton onClick={() => handleDeletion(params.row.id)} />
+        </>
+      ),
+    },
+  ];
+  const columnSent = [
+    {
+      field: "notification",
+      headerName: "Notification",
+      width: isSmallScreen ? 180 : 300,
+    },
+    { field: "type", headerName: "Type", width: isSmallScreen ? 100 : 100 },
+    {
+      field: "priority",
+      headerName: "Priority",
+      width: isSmallScreen ? 100 : 100,
+    },
+    {
+      field: "createdAt",
+      headerName: "Created_At",
+      width: isSmallScreen ? 130 : 200,
+    },
+    {
+      field: "action",
+      headerName: "",
+      width: isSmallScreen ? 230 : 450,
+      renderCell: (params) => (
+        <>
+          <NViewButton onClick={() => handleViewSent(params.row.id)} />
         </>
       ),
     },
@@ -452,6 +775,45 @@ function Notifications() {
       value.toString().toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
+  const rowsUnread = allUnread.map((admin) => ({
+    id: admin.id,
+    notification: admin.notification,
+    type: admin.type,
+    priority: admin.priority,
+    viewed: admin.viewed,
+    createdAt: admin.createdAt,
+  }));
+  const filteredRowsUnread = rowsUnread.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+  const rowsRead = allRead.map((admin) => ({
+    id: admin.id,
+    notification: admin.notification,
+    type: admin.type,
+    priority: admin.priority,
+    viewed: admin.viewed,
+    createdAt: admin.createdAt,
+  }));
+  const filteredRowsRead = rowsRead.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+  const rowsSent = allSent.map((admin) => ({
+    id: admin.id,
+    notification: admin.notification,
+    type: admin.type,
+    priority: admin.priority,
+    createdAt: admin.createdAt,
+  }));
+  const filteredRowsSent = rowsSent.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+
   const notificationsOptions = [
     {
       value: "High",
@@ -510,7 +872,7 @@ function Notifications() {
               <div className="container-fluid">
                 <div className="row justify-content-center">
                   <div className="col-12 col-lg-12 col-xxl-9 mx-auto border d-flex flex-wrap justify-content-between p-1">
-                    <button
+                    {/* <button
                       className={
                         buttonActive === 1
                           ? "btn btn-success m-1 p-2 p-xl-3 flex-grow-1"
@@ -519,14 +881,14 @@ function Notifications() {
                       onClick={() => setButonActive(1)}
                     >
                       All
-                    </button>
+                    </button> */}
                     <button
                       className={
-                        buttonActive === 2
+                        buttonActive === 4
                           ? "btn btn-success m-1 p-2 p-xl-3 flex-grow-1"
                           : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                       }
-                      onClick={() => setButonActive(2)}
+                      onClick={() => setButonActive(4)}
                     >
                       Unread
                     </button>
@@ -555,49 +917,50 @@ function Notifications() {
               </div>
 
               {buttonActive === 1 && (
-                <>
-                  <div className="col-12 col-lg-12 col-xxl-9 mx-auto mt-4 d-flex justify-content-end">
-                    <Box
-                      display="flex"
-                      backgroundColor="rgba(245, 246, 248, 1)"
-                      borderRadius="3px"
-                      width="300px"
-                      marginRight="10px"
-                    >
-                      {/* rgba(245, 246, 248, 1) */}
-                      <InputBase
-                        sx={{ ml: 2, flex: 1 }}
-                        placeholder="Search for a notification"
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                      />
-                      <IconButton type="button" sx={{ p: 1 }}>
-                        <SearchIcon />
-                      </IconButton>
-                    </Box>
-                    <div onClick={handleOpen}>
-                      <MyButton text="New Notification" />
-                    </div>
-                  </div>
-                  <div className="col-12 mt-1">
-                    <p className="list-group">All Notification List</p>
-                    <Box sx={{ height: 400, width: "100%" }}>
-                      <DataGrid
-                        rows={filteredRows}
-                        columns={columns}
-                        initialState={{
-                          pagination: {
-                            paginationModel: {
-                              pageSize: 5,
-                            },
-                          },
-                        }}
-                        pageSizeOptions={[5]}
-                        checkboxSelection
-                        disableRowSelectionOnClick
-                      />
-                    </Box>
-                  </div>
-                </>
+                <></>
+                // <>
+                //   <div className="col-12 col-lg-12 col-xxl-9 mx-auto mt-4 d-flex justify-content-end">
+                //     <Box
+                //       display="flex"
+                //       backgroundColor="rgba(245, 246, 248, 1)"
+                //       borderRadius="3px"
+                //       width="300px"
+                //       marginRight="10px"
+                //     >
+                //       {/* rgba(245, 246, 248, 1) */}
+                //       <InputBase
+                //         sx={{ ml: 2, flex: 1 }}
+                //         placeholder="Search for a notification"
+                //         onChange={(e) => setSearchQuery(e.target.value)}
+                //       />
+                //       <IconButton type="button" sx={{ p: 1 }}>
+                //         <SearchIcon />
+                //       </IconButton>
+                //     </Box>
+                //     <div onClick={handleOpen}>
+                //       <MyButton text="New Notification" />
+                //     </div>
+                //   </div>
+                //   <div className="col-12 mt-1">
+                //     <p className="list-group">All Notification List</p>
+                //     <Box sx={{ height: 400, width: "100%" }}>
+                //       <DataGrid
+                //         rows={filteredRows}
+                //         columns={columns}
+                //         initialState={{
+                //           pagination: {
+                //             paginationModel: {
+                //               pageSize: 5,
+                //             },
+                //           },
+                //         }}
+                //         pageSizeOptions={[5]}
+                //         checkboxSelection
+                //         disableRowSelectionOnClick
+                //       />
+                //     </Box>
+                //   </div>
+                // </>
               )}
               {buttonActive === 2 && (
                 <>
@@ -612,8 +975,8 @@ function Notifications() {
                       {/* rgba(245, 246, 248, 1) */}
                       <InputBase
                         sx={{ ml: 2, flex: 1 }}
-                        placeholder="Search for unread notification"
-                        //onChange={handleSearchChange}
+                        placeholder="Search for read notification"
+                        onChange={(e) => setSearchQuery(e.target.value)}
                       />
                       <IconButton type="button" sx={{ p: 1 }}>
                         <SearchIcon />
@@ -624,10 +987,10 @@ function Notifications() {
                     </div>
                   </div>
                   <div className="col-12 mt-1">
-                    <p className="list-group">All Unread Notification List</p>
+                    <p className="list-group">All Read Notification List</p>
                     <Box sx={{ height: 400, width: "100%" }}>
                       <DataGrid
-                        rows={rows}
+                        rows={filteredRowsRead}
                         columns={columns}
                         initialState={{
                           pagination: {
@@ -658,7 +1021,7 @@ function Notifications() {
                       <InputBase
                         sx={{ ml: 2, flex: 1 }}
                         placeholder="Search for sent notification"
-                        //onChange={handleSearchChange}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                       />
                       <IconButton type="button" sx={{ p: 1 }}>
                         <SearchIcon />
@@ -672,7 +1035,52 @@ function Notifications() {
                     <p className="list-group">Sent Notification List</p>
                     <Box sx={{ height: 400, width: "100%" }}>
                       <DataGrid
-                        rows={rows}
+                        rows={filteredRowsSent}
+                        columns={columnSent}
+                        initialState={{
+                          pagination: {
+                            paginationModel: {
+                              pageSize: 5,
+                            },
+                          },
+                        }}
+                        pageSizeOptions={[5]}
+                        checkboxSelection
+                        disableRowSelectionOnClick
+                      />
+                    </Box>
+                  </div>
+                </>
+              )}
+              {buttonActive === 4 && (
+                <>
+                  <div className="col-12 col-lg-12 col-xxl-9 mx-auto mt-4 d-flex justify-content-end">
+                    <Box
+                      display="flex"
+                      backgroundColor="rgba(245, 246, 248, 1)"
+                      borderRadius="3px"
+                      width="300px"
+                      marginRight="10px"
+                    >
+                      {/* rgba(245, 246, 248, 1) */}
+                      <InputBase
+                        sx={{ ml: 2, flex: 1 }}
+                        placeholder="Search for unread notification"
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                      <IconButton type="button" sx={{ p: 1 }}>
+                        <SearchIcon />
+                      </IconButton>
+                    </Box>
+                    <div onClick={handleOpen}>
+                      <MyButton text="New Notification" />
+                    </div>
+                  </div>
+                  <div className="col-12 mt-1">
+                    <p className="list-group">All Unread Notifications List</p>
+                    <Box sx={{ height: 400, width: "100%" }}>
+                      <DataGrid
+                        rows={filteredRowsUnread}
                         columns={columns}
                         initialState={{
                           pagination: {
@@ -843,40 +1251,72 @@ function Notifications() {
         <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
           <div className="w-100 d-flex border-bottom mt-1 mt-md-2 my-border">
             <div className="col-2 col-md-1">
-            <Tooltip title="close">
-  <CgCloseR
-    style={{
-      color: "grey",
-      fontSize: "32px",
-      cursor: "pointer",
-    }}
-    onClick={() => setOpenModelView(false)}
-  />
-</Tooltip>
-            
+              <Tooltip title="close">
+                <CgCloseR
+                  style={{
+                    color: "grey",
+                    fontSize: "32px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setOpenModelView(false)}
+                />
+              </Tooltip>
             </div>
             <div className="col-10 col-md-11">
               <div className="d-flex justify-content-between">
-              <h5>{singleAdminNotification.type}</h5>
-              <p>{singleAdminNotification.createdAt}</p>
+                <h5>{singleAdminNotification.type}</h5>
+                <p>{singleAdminNotification.createdAt}</p>
               </div>
-              <p>
-                {singleAdminNotification.notification}
-              </p>
+              <p>{singleAdminNotification.notification}</p>
             </div>
           </div>
           <div className="float-end mt-2">
             <Tooltip title="delete">
-            <IoTrashBin style={{
-            color:"red",
-            fontSize:isSmallScreen ? "32px":"25px",
-             cursor:"pointer"
-          }} onClick={handleNoticationDeletion}/>
+              <IoTrashBin
+                style={{
+                  color: "red",
+                  fontSize: isSmallScreen ? "32px" : "25px",
+                  cursor: "pointer",
+                }}
+                onClick={handleNoticationDeletion}
+              />
             </Tooltip>
-          
           </div>
         </Box>
       </Modal>
+      <Modal
+  open={openModelSent}
+  onClose={handleCloseSent}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+  <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
+    <div className="w-100 d-flex border-bottom mt-1 mt-md-2 my-border">
+      <div className="col-2 col-md-1">
+        <Tooltip title="close">
+          <div>
+            <CgCloseR
+              style={{
+                color: "grey",
+                fontSize: "32px",
+                cursor: "pointer",
+              }}
+              onClick={() => setOpenModelSent(false)}
+            />
+          </div>
+        </Tooltip>
+      </div>
+      <div className="col-10 col-md-11">
+        <div className="d-flex justify-content-between">
+          <h5>{sentAdminNotification?.type}</h5>
+          <p>{sentAdminNotification?.createdAt}</p>
+        </div>
+        <p>{sentAdminNotification?.notification}</p>
+      </div>
+    </div>
+  </Box>
+</Modal>
+
     </div>
   );
 }

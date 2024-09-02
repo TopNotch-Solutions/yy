@@ -173,15 +173,15 @@ function Profile() {
       dispatch(updateProfileImage({ profileImage: data.profileImage }));
       setSelectedFile(null);
       setNewProfilePic("");
-      // if(!data.isAuthenticated){
-      //   dispatch(toggleSidebarfalse());
-      // dispatch(
-      //   login({
-      //     user: {},
-      //   })
-      // );
-      // navigate("/");
-      // }
+      if(!currentUser.token){
+        dispatch(toggleSidebarfalse());
+      dispatch(
+        login({
+          user: {},
+        })
+      );
+      navigate("/");
+      }
     } catch (error) {
       setIsSubmitting(false);
       Swal.fire({
@@ -191,6 +191,15 @@ function Profile() {
         showConfirmButton: false,
         timer: 3000,
       });
+      if(!currentUser.token){
+        dispatch(toggleSidebarfalse());
+      dispatch(
+        login({
+          user: {},
+        })
+      );
+      navigate("/");
+      }
     }
   };
 
@@ -211,7 +220,7 @@ function Profile() {
       try {
         setIsSubmitting(true);
         const response = await fetch(
-          `http://localhost:4000/auth/admin/change-password/${currentUser.id}`,
+          `http://localhost:4000/auth/admin/change-password`,
           {
             method: "PUT",
             headers: {
@@ -255,15 +264,15 @@ function Profile() {
             showConfirmButton: false,
             timer: 3000,
           });
-          // if(!data.isAuthenticated){
-          //   dispatch(toggleSidebarfalse());
-          // dispatch(
-          //   login({
-          //     user: {},
-          //   })
-          // );
-          // navigate("/");
-          // }
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       } catch (error) {
         setIsSubmitting(false);
@@ -274,6 +283,15 @@ function Profile() {
           showConfirmButton: false,
           timer: 3000,
         });
+        if(!currentUser.token){
+          dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+        }
       }
     }
   };
@@ -353,15 +371,15 @@ function Profile() {
               showConfirmButton: false,
               timer: 3000,
             });
-            // if(!data.isAuthenticated){
-            //   dispatch(toggleSidebarfalse());
-            // dispatch(
-            //   login({
-            //     user: {},
-            //   })
-            // );
-            // navigate("/");
-            // }
+            if(!currentUser.token){
+              dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+            }
           }
         } catch (error) {
           setIsSubmitting(false);
@@ -372,6 +390,15 @@ function Profile() {
             showConfirmButton: false,
             timer: 3000,
           });
+          if(!currentUser.token){
+            dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+          }
         }
       }
     }
