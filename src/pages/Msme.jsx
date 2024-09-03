@@ -1495,12 +1495,12 @@ function Msme() {
   console.log(allMSMEList);
   const rowsAll = allMSMEList.map((msme) => ({
     id: msme.id,
-    registrationName: msme.businessRegistrationName,
+    registrationName: msme.registrationName,
     email: msme.contactInfo?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
-    annualTurnover: msme.annualTurnover,
+    annualTurnover: msme.annualTurnOver,
     foundersName: msme.founderInfo?.founderName,
     status: msme.status,
     isBlocked: msme.isBlocked
