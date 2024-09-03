@@ -1513,36 +1513,36 @@ function Msme() {
   const rowsPending = pendingMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo?.email,
+    email: msme.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
     annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo?.founderName,
+    foundersName: msme.foundersName,
     status: msme.status,
     isBlocked: msme.isBlocked
   }));
   const rowsRejected = rejectedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo?.email,
+    email: msme.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
     annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo?.founderName,
+    foundersName: msme.foundersName,
     status: msme.status,
     isBlocked: msme.isBlocked
   }));
   const rowsApproved = approvedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo?.email,
+    email: msme.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
     annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo?.founderName,
+    foundersName: msme.foundersName,
     status: msme.status,
     isBlocked: msme.isBlocked
   }));
