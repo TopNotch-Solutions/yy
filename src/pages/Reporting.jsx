@@ -54,7 +54,7 @@ function Reporting() {
       }));
 
         if (response.ok) {
-          console.log("Login successful", data);
+          console.log("Login successful approved", data);
           setAllMSMEList(data.data);
         } else {
           if(!currentUser.token){
@@ -383,7 +383,7 @@ function Reporting() {
 
 const rowsAll = allMSMEList.map((msme) => ({
   id: msme.id,
-  registrationName: msme.businessRegistrationName,
+  registrationName: msme.registrationName,
   registrationNumber: msme.registrationNumber,
   displayName: msme.displayName,
   typeOfBusiness: msme.typeOfBusiness,
@@ -477,7 +477,7 @@ const rowsAll = allMSMEList.map((msme) => ({
   ];
   const rowsAllPending = allMSMEPendingList.map((msme) => ({
     id: msme.id,
-    registrationName: msme.businessRegistrationName,
+    registrationName: msme.registrationName,
     registrationNumber: msme.registrationNumber,
     displayName: msme.displayName,
     typeOfBusiness: msme.typeOfBusiness,
@@ -570,7 +570,7 @@ const rowsAll = allMSMEList.map((msme) => ({
   ];
   const rowsRejected = allMSMERejectedList.map((msme) => ({
     id: msme.id,
-    registrationName: msme.businessRegistrationName,
+    registrationName: msme.registrationName,
     registrationNumber: msme.registrationNumber,
     displayName: msme.displayName,
     typeOfBusiness: msme.typeOfBusiness,
@@ -708,7 +708,7 @@ const rowsAll = allMSMEList.map((msme) => ({
   ];
   const rowsAllBlocked = allMSMEBlockedList.map((msme) => ({
     id: msme.id,
-    registrationName: msme.businessRegistrationName,
+    registrationName: msme.registrationName,
     registrationNumber: msme.registrationNumber,
     displayName: msme.displayName,
     typeOfBusiness: msme.typeOfBusiness,
