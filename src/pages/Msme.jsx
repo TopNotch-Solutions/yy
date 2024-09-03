@@ -1517,31 +1517,31 @@ function Msme() {
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
-    annualTurnover: msme.annualTurnover,
+    annualTurnover: msme.annualTurnOver,
     foundersName: msme.foundersName,
     status: msme.status,
     isBlocked: msme.isBlocked
   }));
   const rowsRejected = rejectedMSMEList.map((msme) => ({
     id: msme.id,
-    registrationName: msme. registrationName,
+    registrationName: msme.registrationName,
     email: msme.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
-    annualTurnover: msme.annualTurnover,
+    annualTurnover: msme.annualTurnOver,
     foundersName: msme.foundersName,
     status: msme.status,
     isBlocked: msme.isBlocked
   }));
   const rowsApproved = approvedMSMEList.map((msme) => ({
     id: msme.id,
-    registrationName: msme. registrationName,
+    registrationName: msme.registrationName,
     email: msme.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
-    annualTurnover: msme.annualTurnover,
+    annualTurnover: msme.annualTurnOver,
     foundersName: msme.foundersName,
     status: msme.status,
     isBlocked: msme.isBlocked
