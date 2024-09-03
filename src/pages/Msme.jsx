@@ -1512,7 +1512,7 @@ function Msme() {
   );
   const rowsPending = pendingMSMEList.map((msme) => ({
     id: msme.id,
-    registrationName: msme.businessRegistrationName,
+    registrationName: msme.registrationName,
     email: msme.email,
     region: msme.region,
     town: msme.town,
@@ -1524,7 +1524,7 @@ function Msme() {
   }));
   const rowsRejected = rejectedMSMEList.map((msme) => ({
     id: msme.id,
-    registrationName: msme.businessRegistrationName,
+    registrationName: msme. registrationName,
     email: msme.email,
     region: msme.region,
     town: msme.town,
@@ -1536,7 +1536,7 @@ function Msme() {
   }));
   const rowsApproved = approvedMSMEList.map((msme) => ({
     id: msme.id,
-    registrationName: msme.businessRegistrationName,
+    registrationName: msme. registrationName,
     email: msme.email,
     region: msme.region,
     town: msme.town,
