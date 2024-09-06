@@ -30,10 +30,7 @@ import { useSelector } from 'react-redux';
 
 const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
   const dispatch = useDispatch();
-  const activeSidebarTab = useSelector((state) => {
-    console.log('State:', state);
-    return state.tabs.activeTab;
-  });
+  const activeSidebarTab = useSelector((state) => state.tabs.activeTab);
   console.log("Weertyuio",activeSidebarTab)
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);

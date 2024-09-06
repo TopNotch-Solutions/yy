@@ -26,7 +26,7 @@ const Topbar = ({ OpenSidebar }) => {
   const [allNotificationsCount,setAllNotificationsCount] = useState(0);
   let firstLetter = CapitalizeFirstLetter(currentUser?.firstName);
   let secondLetter = CapitalizeFirstLetter(currentUser?.lastName);
-
+  console.log("current user topbar: ",currentUser)
   useEffect(() => {
     const fetchAllAdminNotificationsCount = async () => {
       try {
