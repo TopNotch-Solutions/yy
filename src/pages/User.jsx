@@ -413,7 +413,6 @@ function User() {
             "Content-Type": "application/json",
             Authorization: `${tokenHeader}`,
           },
-          credentials: "include",
           body: JSON.stringify({
             email
           })
@@ -1439,7 +1438,7 @@ function User() {
                         setDepartmentDetails(e.target.value)
                       }}
                     >
-                      <option value="" disabled selected>
+                      <option value="" disabled>
                         Select department
                       </option>
                       {companyDepartmentsOptions.map((option) => (
@@ -1469,7 +1468,7 @@ function User() {
                         setRoleDetails(e.target.value)
                       }}
                     >
-                      <option value="" disabled selected>
+                      <option value="" disabled>
                         Select role
                       </option>
                       {roleOptions.map((option) => (

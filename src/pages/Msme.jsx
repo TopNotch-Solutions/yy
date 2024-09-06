@@ -71,6 +71,12 @@ function Msme() {
   const inputRef1 = useRef();
   const inputRef2 = useRef();
   const inputRef3 = useRef();
+  
+  const inputRefBusinessLogo = useRef();
+  const inputRef1Details = useRef();
+  const inputRef2Details = useRef();
+  const inputRef3Details = useRef();
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -279,6 +285,14 @@ function Msme() {
   const [fridayDetailsError, setFridayDetailsError] = useState("");
   const [saturdayDetailsError, setSaturdayDetailsError] = useState("");
   const [sundayDetailsError, setSundayDetailsError] = useState("");
+  const [businessLogoDetails, setBusinessLogoDetails] = useState("");
+  const [businessLogoDetailsError,setBusinessLogoDetailsError] = useState("");
+  const [image1Details, setImage1Details] = useState("");
+  const [image1DetailsError, setImage1DetailsError] = useState("");
+  const [image2Details, setImage2Details] = useState("");
+  const [image2DetailsError, setImage2DetailsError] = useState("");
+  const [image3Details, setImage3Details] = useState("");
+  const [image3DetailsError, setImage3DetailsError] = useState("");
 
   const tokenHeader = currentUser.token;
 
@@ -289,11 +303,54 @@ function Msme() {
   const handleOpenView = () => setOpenModelView(true);
   const handleCloseView = () => {
     setUpdatingDetails([]);
+    setBusinessAddressDetails();
+        setBusinessRegistrationNameDetails("");
+        setBusinessDisplayNameDetails("");
+        setDescriptionDetails("");
+        setTypeOfBusinessDetails("");
+        setRegionDetails("");
+        setTownDetails("");
+        setPrimaryIndustryDetails("");
+        setSecondaryIndustryDetails("");
+        setYearOfEstablishmentDetails("");
+        setAnnualTurnoverDetails("");
+        setFoundersNameDetails("");
+        setFoundersGenderDetails("");
+        setFoundersAgeDetails("");
+        setBusinessAddressDetails("");
+        setPhoneNumberDetails("");
+        setWhatsAppNumberDetails("");
+        setBusinessEmailDetails("");
+        setWebsiteLinkDetails("");
+        setFacebookLinkDetails("");
+        setTwitterLinkDetails("");
+        setInstagramLinkDetails("");
+        setLinkedInLinkDetails("");
+        setMondayDetails("");
+        setTuesdayDetails("");
+        setWednesdayDetails("");
+        setThursdayDetails("");
+        setFridayDetails("");
+        setSaturdayDetails("");
+        setSundayDetails("");
+        setBusinessLogoDetails("");
+        setImage1Details("");
+        setImage2Details("");
+        setImage3Details("");
     setOpenModelView(false);
   };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  function convertTo12HourFormat(time) {
+    let [hours, minutes] = time.split(":");
+    hours = parseInt(hours, 10);
+
+    const period = hours >= 12 ? "PM" : "AM";
+
+    return `${hours}:${minutes} ${period}`;
+}
+  console.log(convertTo12HourFormat("12:30"))
   useEffect(() => {
     const fetchTotalCount = async () => {
       try {
@@ -310,34 +367,36 @@ function Msme() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setTotalRegistration(data.count);
         } else {
-          if(!currentUser.token){
+          if (currentUser.token ==="") {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (currentUser.token ==="") {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -361,34 +420,36 @@ function Msme() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setPendingRegistration(data.count);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -412,34 +473,36 @@ function Msme() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setRejectedRegistration(data.count);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -463,34 +526,36 @@ function Msme() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setIApprovedRegistration(data.count);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -508,38 +573,39 @@ function Msme() {
             Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        }
-      );
+        });
 
-      const data = await response.json();
-      const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setAllMSMEList(data.data);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -562,34 +628,36 @@ function Msme() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setPendingMSMEList(data.data);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -613,34 +681,36 @@ function Msme() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setRejectedMSMEList(data.data);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -664,34 +734,36 @@ function Msme() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setApprovedMSMEList(data.data);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -709,38 +781,39 @@ function Msme() {
             Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        }
-      );
+        });
 
-      const data = await response.json();
-      const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setRegionList(data.data);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -758,38 +831,39 @@ function Msme() {
             Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        }
-      );
+        });
 
-      const data = await response.json();
-      const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setTownList(data.data);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -812,34 +886,36 @@ function Msme() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setPrimaryIndustryList(data.data);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -862,34 +938,36 @@ function Msme() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setSecondaryList(data.data);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -912,34 +990,36 @@ function Msme() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        const newTokenHeader = response.headers.get("Authorization");
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
 
         if (response.ok) {
           console.log("Login successful", data);
           setAllUserList(data.data);
         } else {
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
           dispatch(
             login({
               user: {},
             })
           );
           navigate("/");
-          }
-        }
-      } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
         }
       }
     };
@@ -1111,7 +1191,7 @@ function Msme() {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(e);
   };
-
+  
   const handleStep1 = () => {
     if (typeOfBusiness === "" || typeOfBusiness === "") {
       fields1.push({
@@ -1189,16 +1269,43 @@ function Msme() {
     }
   };
   const handleStep5 = async () => {
-    if (validateFields5()) {
+    if (validateFields4()) {
+      // Prepare the time strings for each day
+      const updatedTimes = {
+        monday: `${convertTo12HourFormat(mondayFrom)} - ${convertTo12HourFormat(mondayTo)}`,
+        tuesday: `${convertTo12HourFormat(tuesdayFrom)} - ${convertTo12HourFormat(tuesdayTo)}`,
+        wednesday: `${convertTo12HourFormat(wednesdayFrom)} - ${convertTo12HourFormat(wednesdayTo)}`,
+        thursday: `${convertTo12HourFormat(thursdayFrom)} - ${convertTo12HourFormat(thursdayTo)}`,
+        friday: `${convertTo12HourFormat(fridayFrom)} - ${convertTo12HourFormat(fridayTo)}`,
+        saturday: `${convertTo12HourFormat(saturdayFrom)} - ${convertTo12HourFormat(saturdayTo)}`,
+        sunday: `${convertTo12HourFormat(sundayFrom)} - ${convertTo12HourFormat(sundayTo)}`
+      };
+  
+      // Update all days' state in one go to ensure they are captured immediately
+      setMonday(updatedTimes.monday);
+      setTuesday(updatedTimes.tuesday);
+      setWednesday(updatedTimes.wednesday);
+      setThursday(updatedTimes.thursday);
+      setFriday(updatedTimes.friday);
+      setSaturday(updatedTimes.saturday);
+      setSunday(updatedTimes.sunday);
+  
+      // Now log the updated times object directly
+      console.log(
+        updatedTimes.monday,
+        updatedTimes.tuesday,
+        updatedTimes.wednesday,
+        updatedTimes.thursday,
+        updatedTimes.friday,
+        updatedTimes.saturday,
+        updatedTimes.sunday
+      );
+  
       try {
         setIsSubmitting(true);
         const formData = new FormData();
         formData.append("businessRegistrationName", businessRegistrationName);
-        console.log(businessRegistrationName);
-        formData.append(
-          "businessRegistrationNumber",
-          businessRegistrationNumber
-        );
+        formData.append("businessRegistrationNumber", businessRegistrationNumber);
         formData.append("businessDisplayName", businessDisplayName);
         formData.append("typeOfBusiness", typeOfBusiness);
         formData.append("description", description);
@@ -1221,13 +1328,13 @@ function Msme() {
         formData.append("facebook", facebookLink);
         formData.append("instagram", instagramLink);
         formData.append("linkedln", linkedInLink);
-        formData.append("monday", mondayTo);
-        formData.append("tuesday", tuesdayTo);
-        formData.append("wednesday", wednesdayTo);
-        formData.append("thursday", thursdayTo);
-        formData.append("friday", fridayTo);
-        formData.append("saturday", saturdayTo);
-        formData.append("sunday", sundayTo);
+        formData.append("monday", updatedTimes.monday);
+        formData.append("tuesday", updatedTimes.tuesday);
+        formData.append("wednesday", updatedTimes.wednesday);
+        formData.append("thursday", updatedTimes.thursday);
+        formData.append("friday", updatedTimes.friday);
+        formData.append("saturday", updatedTimes.saturday);
+        formData.append("sunday", updatedTimes.sunday);
         formData.append("numberOfEmployees", numberOfEmployees);
         if (fileBusinessLogo) {
           formData.append("businessLogo", fileBusinessLogo);
@@ -1241,18 +1348,16 @@ function Msme() {
         if (fileImage3) {
           formData.append("image3", fileImage3);
         }
-
-        const response = await fetch(
-          "http://localhost:4000/msme/admin/create",
-          {
-            method: "POST",
-            credentials: "include",
-            body: formData,
-          }
-        );
-
+        console.log("This is my formdata", formData);
+  
+        const response = await fetch("http://localhost:4000/msme/admin/create", {
+          method: "POST",
+          credentials: "include",
+          body: formData,
+        });
+  
         const data = await response.json();
-
+  
         if (response.ok) {
           setOpenModel(false);
           setIsSubmitting(false);
@@ -1266,7 +1371,6 @@ function Msme() {
         } else {
           setIsSubmitting(false);
           setOpenModel(false);
-          //await new Promise((resolve) => setTimeout(resolve, 3000));
           await Swal.fire({
             position: "center",
             icon: "error",
@@ -1274,16 +1378,10 @@ function Msme() {
             showConfirmButton: false,
             timer: 3000,
           });
-          //setOpenModel(true);
-          console.error("Submission failed:", data);
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+            dispatch(login({ user: {} }));
+            navigate("/");
           }
         }
       } catch (error) {
@@ -1296,20 +1394,16 @@ function Msme() {
           showConfirmButton: false,
           timer: 3000,
         });
-        //setOpenModel(true);
-        if(!currentUser.token){
+        if (!currentUser.token) {
           dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+          dispatch(login({ user: {} }));
+          navigate("/");
         }
         console.error("An error occurred:", error);
       }
     }
   };
+  
   const handleStep1Review = () => {
     setStepperCounter(1);
   };
@@ -1338,10 +1432,12 @@ function Msme() {
       );
 
       const data = await response.json();
-      const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
+      const newTokenHeader = response.headers.get("Authorization");
+      dispatch(
+        updateToken({
+          token: newTokenHeader,
+        })
+      );
       console.log("Login successful", data.data);
       if (response.ok) {
         console.log("Login successful", data.data);
@@ -1359,25 +1455,29 @@ function Msme() {
         setSecondaryIndustryDetails(data.data.secondaryIndustry);
         setYearOfEstablishmentDetails(data.data.yearOfEstablishment);
         setAnnualTurnoverDetails(data.data.annualTurnover);
-        setFoundersNameDetails(data.data.founderInfo.founderName);
-        setFoundersGenderDetails(data.data.founderInfo.founderGender);
-        setFoundersAgeDetails(data.data.founderInfo.founderAge);
-        setBusinessAddressDetails(data.data.contactInfo.businessAddress);
-        setPhoneNumberDetails(data.data.contactInfo.phoneNumber);
-        setWhatsAppNumberDetails(data.data.contactInfo.whatsAppNumber);
-        setBusinessEmailDetails(data.data.contactInfo.businessEmail);
-        setWebsiteLinkDetails(data.data.contactInfo.website);
-        setFacebookLinkDetails(data.data.contactInfo.facebook);
-        setTwitterLinkDetails(data.data.contactInfo.twitter);
-        setInstagramLinkDetails(data.data.contactInfo.instagram);
-        setLinkedInLinkDetails(data.data.contactInfo.linkedln);
-        setMondayDetails(data.data.businessHours.monday);
-        setTuesdayDetails(data.data.businessHours.tuesday);
-        setWednesdayDetails(data.data.businessHours.wednesday);
-        setThursdayDetails(data.data.businessHours.thursday);
-        setFridayDetails(data.data.businessHours.friday);
-        setSaturdayDetails(data.data.businessHours.saturday);
-        setSundayDetails(data.data.businessHours.sunday);
+        setFoundersNameDetails(data.data.founderInfo?.founderName);
+        setFoundersGenderDetails(data.data.founderInfo?.founderGender);
+        setFoundersAgeDetails(data.data.founderInfo?.founderAge);
+        setBusinessAddressDetails(data.data.contactInfo?.businessAddress);
+        setPhoneNumberDetails(data.data.contactInfo?.phoneNumber);
+        setWhatsAppNumberDetails(data.data.contactInfo?.whatsAppNumber);
+        setBusinessEmailDetails(data.data.contactInfo?.email);
+        setWebsiteLinkDetails(data.data.contactInfo?.website);
+        setFacebookLinkDetails(data.data.contactInfo?.facebook);
+        setTwitterLinkDetails(data.data.contactInfo?.twitter);
+        setInstagramLinkDetails(data.data.contactInfo?.instagram);
+        setLinkedInLinkDetails(data.data.contactInfo?.linkedln);
+        setMondayDetails(data.data.businessHours?.monday);
+        setTuesdayDetails(data.data.businessHours?.tuesday);
+        setWednesdayDetails(data.data.businessHours?.wednesday);
+        setThursdayDetails(data.data.businessHours?.thursday);
+        setFridayDetails(data.data.businessHours?.friday);
+        setSaturdayDetails(data.data.businessHours?.saturday);
+        setSundayDetails(data.data.businessHours?.sunday);
+        setBusinessLogoDetails(data.data.additionalInfo?.businessLogo);
+        setImage1Details(data.data.additionalInfo?.image1);
+        setImage2Details(data.data.additionalInfo?.image2);
+        setImage3Details(data.data.additionalInfo?.image3);
 
         setOpenModelView(true);
       } else {
@@ -1389,14 +1489,14 @@ function Msme() {
           showConfirmButton: false,
           timer: 4000,
         });
-        if(!currentUser.token){
+        if (!currentUser.token) {
           dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
         }
       }
     } catch (error) {
@@ -1409,14 +1509,14 @@ function Msme() {
         showConfirmButton: false,
         timer: 3000,
       });
-      if(!currentUser.token){
+      if (!currentUser.token) {
         dispatch(toggleSidebarfalse());
-      dispatch(
-        login({
-          user: {},
-        })
-      );
-      navigate("/");
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
       }
     }
   };
@@ -1492,18 +1592,17 @@ function Msme() {
       ),
     },
   ];
-  console.log(allMSMEList);
   const rowsAll = allMSMEList.map((msme) => ({
     id: msme.id,
-    registrationName: msme.registrationName,
+    registrationName: msme.businessRegistrationName,
     email: msme.contactInfo?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
-    annualTurnover: msme.annualTurnOver,
+    annualTurnover: msme.annualTurnover,
     foundersName: msme.founderInfo?.founderName,
     status: msme.status,
-    isBlocked: msme.isBlocked
+    isBlocked: msme.isBlocked,
   }));
   const filteredRows = rowsAll.filter((row) =>
     Object.values(row).some((value) =>
@@ -1520,8 +1619,13 @@ function Msme() {
     annualTurnover: msme.annualTurnOver,
     foundersName: msme.foundersName,
     status: msme.status,
-    isBlocked: msme.isBlocked
+    isBlocked: msme.isBlocked,
   }));
+  const filteredRowsPending = rowsPending.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
   const rowsRejected = rejectedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.registrationName,
@@ -1532,8 +1636,13 @@ function Msme() {
     annualTurnover: msme.annualTurnOver,
     foundersName: msme.foundersName,
     status: msme.status,
-    isBlocked: msme.isBlocked
+    isBlocked: msme.isBlocked,
   }));
+  const filteredRowsRejected = rowsRejected.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
   const rowsApproved = approvedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.registrationName,
@@ -1544,8 +1653,13 @@ function Msme() {
     annualTurnover: msme.annualTurnOver,
     foundersName: msme.foundersName,
     status: msme.status,
-    isBlocked: msme.isBlocked
+    isBlocked: msme.isBlocked,
   }));
+  const filteredRowsApproved = rowsApproved.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
 
   const typeOfBusinessOptions = [
     {
@@ -1592,14 +1706,24 @@ function Msme() {
       value: "100+ employees",
     },
   ];
+  const annualTurnoverOptions = [
+    {
+      value: "N$ 0 to N$ 300,000",
+    },
+    {
+      value: "N$ 300,001 to N$ 3,000,000",
+    },
+    {
+      value: "N$ 3,000,001 to N$ 10,000,000",
+    },
+  ];
   const regionOptions = regionList.map((option) => ({
     label: option.regionName,
     value: option.id,
   }));
-  console.log(region);
-  console.log(townList);
   const filteredTownOptions = townList.map((option) => ({
     value: option.townName,
+    label: option.id,
   }));
   const primatyIndustryOptions = primaryIndustryList.map((option) => ({
     value: option.industryName,
@@ -1612,21 +1736,201 @@ function Msme() {
     value: option.id,
   }));
 
-  const approve = () => {
+  const approve = async() => {
     setOpenModelView(false);
-    try {
-      setOpenModelView(false);
-      Swal.fire({
-        title: "Are you sure?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Approve it!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
+    if (
+      updatingDetails.businessRegistrationName === businessRegistrationNameDetails &&
+      updatingDetails.businessDisplayName === businessDisplayNameDetails &&
+      updatingDetails.description === descriptionDetails &&
+      updatingDetails.typeOfBusiness === typeOfBusinessDetails &&
+      updatingDetails.region === regionDetails &&
+      updatingDetails.town === townDetails &&
+      updatingDetails.primaryIndustry === primaryIndustryDetails &&
+      updatingDetails.secondaryIndustry === secondaryIndustryDetails &&
+      updatingDetails.yearOfEstablishment === yearOfEstablishmentDetails &&
+      updatingDetails.annualTurnover === annualTurnoverDetails &&
+      updatingDetails.founderInfo?.founderName === foundersNameDetails &&
+      updatingDetails.founderInfo?.founderGender === foundersGenderDetails &&
+      updatingDetails.founderInfo?.founderAge === foundersAgeDetails &&
+      updatingDetails.contactInfo?.businessAddress === businessAddressDetails &&
+      updatingDetails.contactInfo?.phoneNumber === phoneNumberDetails &&
+      updatingDetails.contactInfo?.whatsAppNumber === whatsAppNumberDetails &&
+      updatingDetails.contactInfo?.email === businessEmailDetails &&
+      updatingDetails.contactInfo?.website === websiteLinkDetails &&
+      updatingDetails.contactInfo?.facebook === facebookLinkDetails &&
+      updatingDetails.contactInfo?.twitter === twitterLinkDetails &&
+      updatingDetails.contactInfo?.instagram === instagramLinkDetails &&
+      updatingDetails.contactInfo?.linkedln === linkedInLinkDetails &&
+      updatingDetails.businessHours?.monday === mondayDetails &&
+      updatingDetails.businessHours?.tuesday === tuesdayDetails &&
+      updatingDetails.businessHours?.wednesday === wednesdayDetails &&
+      updatingDetails.businessHours?.thursday === thursdayDetails &&
+      updatingDetails.businessHours?.friday === fridayDetails &&
+      updatingDetails.businessHours?.saturday === saturdayDetails &&
+      updatingDetails.businessHours?.sunday === sundayDetails &&
+      updatingDetails.additionalInfo?.businessLogo === businessLogoDetails &&
+      updatingDetails.additionalInfo?.image1 === image1Details &&
+      updatingDetails.additionalInfo?.image2 === image2Details &&
+      updatingDetails.additionalInfo?.image3 === image3Details
+    ) {
+      try {
+        setOpenModelView(false);
+        Swal.fire({
+          title: "Are you sure?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, Approve it!",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              setIsSubmitting(true);
+  
+              const response = await fetch(
+                `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `${tokenHeader}`,
+                  },
+                  credentials: "include",
+                  body: JSON.stringify({
+                    status: "Approved",
+                  }),
+                }
+              );
+  
+              const data = await response.json();
+              const newTokenHeader = response.headers.get("Authorization");
+              dispatch(
+                updateToken({
+                  token: newTokenHeader,
+                })
+              );
+              console.log(data);
+  
+              if (response.ok) {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "MSME Successfully Approved",
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+                setStepperCounter(0);
+                setUpdatingDetails([]);
+              } else {
+                await Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: `${data.message}`,
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+                if (!currentUser.token) {
+                  dispatch(toggleSidebarfalse());
+                  dispatch(
+                    login({
+                      user: {},
+                    })
+                  );
+                  navigate("/");
+                }
+              }
+            } catch (error) {
+              console.error("Network Error:", error);
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Check your internet connection and try again!",
+                showConfirmButton: false,
+                timer: 3000,
+              });
+              if (!currentUser.token) {
+                dispatch(toggleSidebarfalse());
+                dispatch(
+                  login({
+                    user: {},
+                  })
+                );
+                navigate("/");
+              }
+            } finally {
+              setIsSubmitting(false);
+            }
+          } else {
+            setOpenModelView(true);
+          }
+        });
+      } catch (error) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: `Check your internet connection and try again: ${error}`,
+          showConfirmButton: false,
+          timer: 4000,
+        });
+      }
+    }else{
+      try {
+        setIsSubmitting(true);
+        const formData = new FormData();
+        formData.append("businessRegistrationName", businessRegistrationNameDetails);
+        formData.append("businessRegistrationNumber", businessRegistrationNumberDetails);
+        formData.append("businessDisplayName", businessDisplayNameDetails);
+        formData.append("typeOfBusiness", typeOfBusinessDetails);
+        formData.append("description", descriptionDetails);
+        formData.append("region", regionDetails);
+        formData.append("town", townDetails);
+        formData.append("yearOfEstablishment", yearOfEstablishmentDetails);
+        formData.append("primaryIndustry", primaryIndustryDetails);
+        formData.append("secondaryIndustry", secondaryIndustryDetails);
+        formData.append("annualTurnover", annualTurnoverDetails);
+        formData.append("founderName", foundersNameDetails);
+        formData.append("founderAge", foundersAgeDetails);
+        formData.append("founderGender", foundersGenderDetails);
+        formData.append("businessAddress", businessAddressDetails);
+        formData.append("phoneNumber", phoneNumberDetails);
+        formData.append("whatsAppNumber", whatsAppNumberDetails);
+        formData.append("email", businessEmailDetails);
+        formData.append("website", websiteLinkDetails);
+        formData.append("twitter", twitterLinkDetails);
+        formData.append("facebook", facebookLinkDetails);
+        formData.append("instagram", instagramLinkDetails);
+        formData.append("linkedln", linkedInLinkDetails);
+        formData.append("monday", mondayDetails);
+        formData.append("tuesday", tuesdayDetails);
+        formData.append("wednesday", wednesdayDetails);
+        formData.append("thursday", thursdayDetails);
+        formData.append("friday", fridayDetails);
+        formData.append("saturday", saturdayDetails);
+        formData.append("sunday", sundayDetails);
+        if (fileBusinessLogo) {
+          formData.append("businessLogo", fileBusinessLogo);
+        }
+        if (fileImage1) {
+          formData.append("image1", fileImage1);
+        }
+        if (fileImage2) {
+          formData.append("image2", fileImage2);
+        }
+        if (fileImage3) {
+          formData.append("image3", fileImage3);
+        }
+  
+        const response = await fetch(`http://localhost:4000/msme/admin/update/${updatingDetails.id}`, {
+          method: "PUT",
+          credentials: "include",
+          body: formData,
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
           try {
-            setIsSubmitting(true);
+            setIsSubmitting(true)
 
             const response = await fetch(
               `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
@@ -1644,10 +1948,12 @@ function Msme() {
             );
 
             const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+            const newTokenHeader = response.headers.get("Authorization");
+            dispatch(
+              updateToken({
+                token: newTokenHeader,
+              })
+            );
             console.log(data);
 
             if (response.ok) {
@@ -1668,14 +1974,14 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if(!currentUser.token){
+              if (!currentUser.token) {
                 dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
+                dispatch(
+                  login({
+                    user: {},
+                  })
+                );
+                navigate("/");
               }
             }
           } catch (error) {
@@ -1687,31 +1993,53 @@ function Msme() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if(!currentUser.token){
+            if (!currentUser.token) {
               dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
             }
           } finally {
             setIsSubmitting(false);
           }
         } else {
-          setOpenModelView(true);
+          setIsSubmitting(false);
+          setOpenModel(false);
+          await Swal.fire({
+            position: "center",
+            icon: "error",
+            title: `Internal server error: ${data.message}`,
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          if (!currentUser.token) {
+            dispatch(toggleSidebarfalse());
+            dispatch(login({ user: {} }));
+            navigate("/");
+          }
         }
-      });
-    } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: `Check your internet connection and try again: ${error}`,
-        showConfirmButton: false,
-        timer: 4000,
-      });
+      } catch (error) {
+        setIsSubmitting(false);
+        setOpenModel(false);
+        Swal.fire({
+          position: "center",
+          icon: "question",
+          title: `Check your internet connection and try again: ${error}`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        if (!currentUser.token) {
+          dispatch(toggleSidebarfalse());
+          dispatch(login({ user: {} }));
+          navigate("/");
+        }
+        console.error("An error occurred:", error);
+      }
     }
+   
   };
   const reject = () => {
     setOpenModelView(false);
@@ -1744,10 +2072,12 @@ function Msme() {
             );
 
             const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+            const newTokenHeader = response.headers.get("Authorization");
+            dispatch(
+              updateToken({
+                token: newTokenHeader,
+              })
+            );
             console.log(data);
 
             if (response.ok) {
@@ -1768,14 +2098,14 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if(!currentUser.token){
+              if (!currentUser.token) {
                 dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
+                dispatch(
+                  login({
+                    user: {},
+                  })
+                );
+                navigate("/");
               }
             }
           } catch (error) {
@@ -1787,14 +2117,14 @@ function Msme() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if(!currentUser.token){
+            if (!currentUser.token) {
               dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
             }
           } finally {
             setIsSubmitting(false);
@@ -1844,10 +2174,12 @@ function Msme() {
             );
 
             const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+            const newTokenHeader = response.headers.get("Authorization");
+            dispatch(
+              updateToken({
+                token: newTokenHeader,
+              })
+            );
             console.log(data);
 
             if (response.ok) {
@@ -1868,14 +2200,14 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if(!currentUser.token){
+              if (!currentUser.token) {
                 dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
+                dispatch(
+                  login({
+                    user: {},
+                  })
+                );
+                navigate("/");
               }
             }
           } catch (error) {
@@ -1887,14 +2219,14 @@ function Msme() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if(!currentUser.token){
+            if (!currentUser.token) {
               dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
             }
           } finally {
             setIsSubmitting(false);
@@ -1944,10 +2276,12 @@ function Msme() {
             );
 
             const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+            const newTokenHeader = response.headers.get("Authorization");
+            dispatch(
+              updateToken({
+                token: newTokenHeader,
+              })
+            );
             console.log(data);
 
             if (response.ok) {
@@ -1969,14 +2303,14 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if(!currentUser.token){
+              if (!currentUser.token) {
                 dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
+                dispatch(
+                  login({
+                    user: {},
+                  })
+                );
+                navigate("/");
               }
             }
           } catch (error) {
@@ -1988,14 +2322,14 @@ function Msme() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if(!currentUser.token){
+            if (!currentUser.token) {
               dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
             }
           } finally {
             setIsSubmitting(false);
@@ -2041,6 +2375,35 @@ function Msme() {
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileBusinessLogo(selectedFile);
       setBusinessLogo(objectUrl);
+    }
+  };
+  const handleFileChangeBusinessLogoDetails = (e) => {
+    const selectedFile = e.target.files[0];
+    setBusinessLogoDetailsError("");
+
+    if (selectedFile) {
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+      const validMimeTypes = ["image/jpeg", "image/png"];
+
+      if (!allowedExtensions.exec(selectedFile.name)) {
+        setBusinessLogoDetailsError(
+          "Please upload a valid image file with .jpg, .jpeg, or .png extension."
+        );
+        setBusinessLogoDetails(null);
+        return;
+      }
+
+      if (!validMimeTypes.includes(selectedFile.type)) {
+        setBusinessLogoDetailsError(
+          "Invalid image type. Please upload a .jpg or .png image."
+        );
+        setBusinessLogoDetails(null);
+        return;
+      }
+
+      const objectUrl = URL.createObjectURL(selectedFile);
+      setFileBusinessLogo(selectedFile);
+      setBusinessLogoDetails(objectUrl);
     }
   };
   const handleFileChangeImage1 = (e) => {
@@ -2130,6 +2493,93 @@ function Msme() {
       setImage3(objectUrl);
     }
   };
+  const handleFileChangeImage1Details = (e) => {
+    const selectedFile = e.target.files[0];
+    setImage1DetailsError("");
+
+    if (selectedFile) {
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+      const validMimeTypes = ["image/jpeg", "image/png"];
+
+      if (!allowedExtensions.exec(selectedFile.name)) {
+        setImage1DetailsError(
+          "Please upload a valid image file with .jpg, .jpeg, or .png extension."
+        );
+        setImage1Details(null);
+        return;
+      }
+
+      if (!validMimeTypes.includes(selectedFile.type)) {
+        setImage1DetailsError(
+          "Invalid image type. Please upload a .jpg or .png image."
+        );
+        setImage1Details(null);
+        return;
+      }
+
+      const objectUrl = URL.createObjectURL(selectedFile);
+      setFileImage1(selectedFile);
+      setImage1Details(objectUrl);
+    }
+  };
+  const handleFileChangeImage2Details = (e) => {
+    const selectedFile = e.target.files[0];
+    setImage2DetailsError("");
+
+    if (selectedFile) {
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+      const validMimeTypes = ["image/jpeg", "image/png"];
+
+      if (!allowedExtensions.exec(selectedFile.name)) {
+        setImage2DetailsError(
+          "Please upload a valid image file with .jpg, .jpeg, or .png extension."
+        );
+        setImage2Details(null);
+        return;
+      }
+
+      if (!validMimeTypes.includes(selectedFile.type)) {
+        setImage2DetailsError(
+          "Invalid image type. Please upload a .jpg or .png image."
+        );
+        setImage2Details(null);
+        return;
+      }
+
+      const objectUrl = URL.createObjectURL(selectedFile);
+      setFileImage2(selectedFile);
+      setImage2Details(objectUrl);
+    }
+  };
+  const handleFileChangeImage3Details = (e) => {
+    const selectedFile = e.target.files[0];
+    setImage3DetailsError("");
+
+    if (selectedFile) {
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+      const validMimeTypes = ["image/jpeg", "image/png"];
+
+      if (!allowedExtensions.exec(selectedFile.name)) {
+        setImage3DetailsError(
+          "Please upload a valid image file with .jpg, .jpeg, or .png extension."
+        );
+        setImage3Details(null);
+        return;
+      }
+
+      if (!validMimeTypes.includes(selectedFile.type)) {
+        setImage3DetailsError(
+          "Invalid image type. Please upload a .jpg or .png image."
+        );
+        setImage3Details(null);
+        return;
+      }
+
+      const objectUrl = URL.createObjectURL(selectedFile);
+      setFileImage3(selectedFile);
+      setImage3Details(objectUrl);
+    }
+  };
   const clearFileInput = () => {
     if (businessLogo) {
       URL.revokeObjectURL(businessLogo);
@@ -2157,6 +2607,34 @@ function Msme() {
     }
     inputRef3.current.value = "";
     setImage3(null);
+  };
+  const clearFileInputBusinessLogoDetails = () => {
+    if (businessLogoDetails) {
+      URL.revokeObjectURL(businessLogoDetails);
+    }
+    inputRefBusinessLogo.current.value = "";
+    setBusinessLogoDetails(null);
+  };
+  const clearFileInputImage1Details = () => {
+    if (image1Details) {
+      URL.revokeObjectURL(image1Details);
+    }
+    inputRef1Details.current.value = "";
+    setImage1Details(null);
+  };
+  const clearFileInputImage2Details = () => {
+    if (image2Details) {
+      URL.revokeObjectURL(image2Details);
+    }
+    inputRef2Details.current.value = "";
+    setImage2Details(null);
+  };
+  const clearFileInputImage3Details = () => {
+    if (image3Details) {
+      URL.revokeObjectURL(image3Details);
+    }
+    inputRef3Details.current.value = "";
+    setImage3Details(null);
   };
 
   return (
@@ -2385,17 +2863,7 @@ function Msme() {
                           <DataGrid
                             rows={filteredRows}
                             columns={columns}
-                            sx={{
-                              "& .status-pending": {
-                                color: "yellow",
-                              },
-                              "& .status-rejected": {
-                                color: "red",
-                              },
-                              "& .status-approved": {
-                                color: "green",
-                              },
-                            }}
+                            
                             initialState={{
                               pagination: {
                                 paginationModel: {
@@ -2425,7 +2893,7 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for pending MSME"
-                            //onChange={handleSearchChange}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
@@ -2439,7 +2907,7 @@ function Msme() {
                         <p className="list-group">Pending MSME List</p>
                         <Box sx={{ height: 400, width: "100%" }}>
                           <DataGrid
-                            rows={rowsPending}
+                            rows={filteredRowsPending}
                             columns={columns}
                             initialState={{
                               pagination: {
@@ -2470,7 +2938,7 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for a rejected MSME"
-                            //onChange={handleSearchChange}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
@@ -2484,7 +2952,7 @@ function Msme() {
                         <p className="list-group">Rejected MSME List</p>
                         <Box sx={{ height: 400, width: "100%" }}>
                           <DataGrid
-                            rows={rowsRejected}
+                            rows={filteredRowsRejected}
                             columns={columns}
                             initialState={{
                               pagination: {
@@ -2515,7 +2983,7 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for a incomplete"
-                            //onChange={handleSearchChange}
+                            //onChange={(e) => setSearchQuery(e.target.value)}
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
@@ -2560,7 +3028,7 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for approved msme"
-                            //onChange={handleSearchChange}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
@@ -2574,7 +3042,7 @@ function Msme() {
                         <p className="list-group">Approved MSME List</p>
                         <Box sx={{ height: 400, width: "100%" }}>
                           <DataGrid
-                            rows={rowsApproved}
+                            rows={filteredRowsApproved}
                             columns={columns}
                             initialState={{
                               pagination: {
@@ -2617,7 +3085,7 @@ function Msme() {
               </Box>
               <Grid
                 container
-                spacing={{ xs: 2, md: 2 }}
+                spacing={{ xs: 1 }}
                 columns={{ xs: 12, sm: 12, md: 12 }}
                 style={{ marginTop: "10px" }}
               >
@@ -2661,10 +3129,10 @@ function Msme() {
                               htmlFor="businessRegistrationNumber"
                               className="pb-2"
                             >
-                              Registration Number:<span>*</span>
+                              Registration Number: <span>*</span>
                             </label>
                             <input
-                              type="text"
+                              type="number"
                               className="form-control place-holder"
                               placeholder="Business registration number"
                               autoComplete="off"
@@ -2738,16 +3206,53 @@ function Msme() {
                           </>
                         )}
                       </div>
+                      {
+  (typeOfBusiness !== "Proprietary Limited Company (PTY)" &&
+    typeOfBusiness !== "Close Corporation (CC)") && (
+      <>
+        <div className="form-group pb-3">
+          <label htmlFor="email" className="pb-2">
+            User Name: <span>*</span>
+          </label>
+          <select
+            className="form-select"
+            value={userId}
+            onChange={(e) => {
+              setUserIdError("");
+              setUserId(e.target.value);
+            }}
+          >
+            <option value="" disabled selected>
+              Select user
+            </option>
+            {userOptions.map((option) => (
+              <option value={option.value} key={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+          {userIdError && (
+            <>
+              <p className="error mt-1">{userIdError}</p>
+            </>
+          )}
+        </div>
+      </>
+    )
+}
+
+                      
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
                         <label htmlFor="description" className="pb-2">
-                          Business Description:<span>*</span>
+                          Business Description: <span>*</span>
                         </label>
-                        <input
+                        <textarea
                           type="text"
+                          rows={5}
                           className="form-control place-holder"
-                          placeholder="Display name"
+                          placeholder="Start typing....."
                           value={description}
                           autoComplete="off"
                           name="description"
@@ -2764,6 +3269,40 @@ function Msme() {
                       </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
+                    {
+                        (typeOfBusiness === "Proprietary Limited Company (PTY)" ||
+                          typeOfBusiness === "Close Corporation (CC)") && (
+                            <>
+                            <div className="form-group pb-3">
+                        <label htmlFor="email" className="pb-2">
+                          User Name: <span>*</span>
+                        </label>
+                        <select
+                          class="form-select"
+                          value={userId}
+                          onChange={(e) => {
+                            setUserIdError("");
+                            setUserId(e.target.value);
+                          }}
+                        >
+                          <option value="" disabled selected>
+                            Select user
+                          </option>
+                          {userOptions.map((option) => (
+                            <option value={option.value} key={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
+                        {userIdError && (
+                          <>
+                            <p className="error mt-1">{userIdError}</p>
+                          </>
+                        )}
+                      </div>
+                            </>
+                          )
+                      }
                       <div className="form-group pb-3">
                         <label htmlFor="email" className="pb-2">
                           Region: <span>*</span>
@@ -2774,13 +3313,14 @@ function Msme() {
                           onChange={(e) => {
                             setRegionError("");
                             setRegion(e.target.value);
+                            console.log(region);
                           }}
                         >
                           <option value="" disabled selected>
                             Select region
                           </option>
                           {regionOptions.map((option) => (
-                            <option value={option.value} key={option.value}>
+                            <option value={option.label} key={option.value}>
                               {option.label}
                             </option>
                           ))}
@@ -2795,7 +3335,7 @@ function Msme() {
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
                         <label htmlFor="email" className="pb-2">
-                          Town:<span>*</span>
+                          Town: <span>*</span>
                         </label>
                         <select
                           class="form-select"
@@ -2809,14 +3349,14 @@ function Msme() {
                             Select town
                           </option>
                           {filteredTownOptions.map((option) => (
-                            <option value={option.value} key={option.value}>
+                            <option value={option.value} key={option.label}>
                               {option.value}
                             </option>
                           ))}
                         </select>
-                        {regionError && (
+                        {townError && (
                           <>
-                            <p className="error mt-1">{regionError}</p>
+                            <p className="error mt-1">{townError}</p>
                           </>
                         )}
                       </div>
@@ -2914,50 +3454,26 @@ function Msme() {
                         <label htmlFor="turnover" className="pb-2">
                           Annual Turnover: <span>*</span>
                         </label>
-                        <input
-                          type="text"
-                          className="form-control place-holder"
+                        <select
+                          class="form-select"
                           value={annualTurnover}
-                          placeholder="30 000"
-                          autoComplete="off"
-                          name="turnover"
                           onChange={(e) => {
                             setAnnualTurnoverError("");
                             setAnnualTurnover(e.target.value);
                           }}
-                        />
-                        {annualTurnoverError && (
-                          <>
-                            <p className="error mt-1">{annualTurnoverError}</p>
-                          </>
-                        )}
-                      </div>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={6}>
-                      <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
-                          User Name: <span>*</span>
-                        </label>
-                        <select
-                          class="form-select"
-                          value={userId}
-                          onChange={(e) => {
-                            setUserIdError("");
-                            setUserId(e.target.value);
-                          }}
                         >
                           <option value="" disabled selected>
-                            Select user
+                            Select annual turnover
                           </option>
-                          {userOptions.map((option) => (
+                          {annualTurnoverOptions.map((option) => (
                             <option value={option.value} key={option.value}>
-                              {option.label}
+                              {option.value}
                             </option>
                           ))}
                         </select>
-                        {userIdError && (
+                        {annualTurnoverError && (
                           <>
-                            <p className="error mt-1">{userIdError}</p>
+                            <p className="error mt-1">{annualTurnoverError}</p>
                           </>
                         )}
                       </div>
@@ -3076,7 +3592,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="address"
+                          placeholder="Location"
                           value={businessAddress}
                           autoComplete="off"
                           name="businessAddress"
@@ -3101,7 +3617,7 @@ function Msme() {
                           type="text"
                           value={phoneNumber}
                           className="form-control place-holder"
-                          placeholder="+264 81 000000/ 0810000000"
+                          placeholder="Enter number e.g. +26481*******"
                           autoComplete="off"
                           name="phoneNumber"
                           onChange={(e) => {
@@ -3125,7 +3641,7 @@ function Msme() {
                           type="text"
                           value={whatsAppNumber}
                           className="form-control place-holder"
-                          placeholder="+264 81 000000/ 0810000000"
+                          placeholder="Enter number e.g. +26481*******"
                           autoComplete="off"
                           name="whatsAppNumber"
                           onChange={(e) => {
@@ -3305,9 +3821,7 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">
-                          Monday:<span>*</span>
-                        </label>
+                        <label htmlFor="email">Monday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -3362,9 +3876,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">
-                          Tuesday: <span>*</span>
-                        </label>
+                        <label htmlFor="email">Tuesday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -3419,9 +3931,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">
-                          Wednesday:<span>*</span>
-                        </label>
+                        <label htmlFor="email">Wednesday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -3476,9 +3986,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">
-                          Thursday: <span>*</span>
-                        </label>
+                        <label htmlFor="email">Thursday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -3533,9 +4041,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">
-                          Friday:<span>*</span>
-                        </label>
+                        <label htmlFor="email">Friday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -3590,9 +4096,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">
-                          Saturday: <span>*</span>
-                        </label>
+                        <label htmlFor="email">Saturday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -3725,7 +4229,10 @@ function Msme() {
                         </label>
                         <select
                           class="form-select"
-                          onChange={(e) => setNumberOfEmployees(e.target.value)}
+                          onChange={(e) => {
+                            setNumberOfEmployeesError("");
+                            setNumberOfEmployees(e.target.value);
+                          }}
                         >
                           <option value="" disabled selected>
                             Select number of employed
@@ -4110,21 +4617,23 @@ function Msme() {
                         <label htmlFor="email" className="pb-2">
                           Type of Business:
                         </label>
-                        <input
-                          type="text"
-                          className="form-control place-holder"
-                          placeholder="founder's name"
-                          disabled={
-                            currentUser.role === "Super admin" ? false : true
-                          }
+                        <select
+                          class="form-select"
                           value={typeOfBusinessDetails}
                           onChange={(e) => {
                             setTypeOfBusinessDetailsError("");
                             setTypeOfBusinessDetails(e.target.value);
                           }}
-                          autoComplete="off"
-                          name="email"
-                        />
+                        >
+                          <option value="" disabled selected>
+                            Select business type
+                          </option>
+                          {typeOfBusinessOptions.map((option) => (
+                            <option value={option.value} key={option.value}>
+                              {option.value}
+                            </option>
+                          ))}
+                        </select>
                         {typeOfBusinessError && (
                           <>
                             <p className="error mt-1">{typeOfBusinessError}</p>
@@ -4132,9 +4641,9 @@ function Msme() {
                         )}
                       </div>
                     </Grid>
-                    {(updatingDetails?.typeOfBusiness ===
+                    {(typeOfBusinessDetails ===
                       "Proprietary Limited Company (PTY)" ||
-                      updatingDetails?.typeOfBusiness ===
+                      typeOfBusinessDetails ===
                         "Close Corporation (CC)") && (
                       <>
                         <Grid item xs={12} sm={6} md={6}>
@@ -4148,7 +4657,7 @@ function Msme() {
                             <input
                               type="text"
                               className="form-control place-holder"
-                              placeholder="founder's name"
+                              placeholder="Registration number"
                               disabled={
                                 currentUser.role === "Super admin"
                                   ? false
@@ -4393,9 +4902,11 @@ function Msme() {
                           Year of Establishment:
                         </label>
                         <input
-                          type="number"
+                          type="text"
+                          min="1900"
+                          max="21000"
                           className="form-control place-holder"
-                          placeholder="Display name"
+                          placeholder="Created date"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -4481,21 +4992,23 @@ function Msme() {
                         <label htmlFor="email" className="pb-2">
                           Founder's Gender:
                         </label>
-                        <input
-                          type="text"
-                          className="form-control place-holder"
-                          placeholder="founder's gender"
-                          disabled={
-                            currentUser.role === "Super admin" ? false : true
-                          }
+                        <select
+                          class="form-select"
                           value={foundersGenderDetails}
                           onChange={(e) => {
                             setFoundersGenderDetailsError("");
                             setFoundersGenderDetails(e.target.value);
                           }}
-                          autoComplete="off"
-                          name="email"
-                        />
+                        >
+                          <option value="" disabled selected>
+                            Select gender
+                          </option>
+                          {foundersGenderOptions.map((option) => (
+                            <option value={option.value} key={option.value}>
+                              {option.value}
+                            </option>
+                          ))}
+                        </select>
                         {typeOfBusinessError && (
                           <>
                             <p className="error mt-1">{typeOfBusinessError}</p>
@@ -4509,16 +5022,16 @@ function Msme() {
                           Founder Age:
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="founder's age"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
                           value={foundersAgeDetails}
                           onChange={(e) => {
-                            setFoundersNameDetailsError("");
-                            setFoundersNameDetails(e.target.value);
+                            setFoundersAgeDetailsError("");
+                            setFoundersAgeDetails(e.target.value);
                           }}
                           autoComplete="off"
                           name="email"
@@ -4558,7 +5071,7 @@ function Msme() {
                           type="text"
                           rows={2}
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="Location"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -4585,7 +5098,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="+264 81 *** ****"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -4613,7 +5126,7 @@ function Msme() {
                           <input
                             type="text"
                             className="form-control place-holder"
-                            placeholder="founder's name"
+                            placeholder="+264 81 *** ****"
                             disabled={
                               currentUser.role === "Super admin" ? false : true
                             }
@@ -4644,7 +5157,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="example@nipdb.com"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -5034,102 +5547,333 @@ function Msme() {
                 )}
                 {stepperCounter === 4 && (
                   <>
-                    {updatingDetails?.additionalInfo?.businessLogo && (
+                    
                       <Grid item xs={12} sm={6} md={6}>
-                        <div className="form-group pb-md-2">
-                          <label htmlFor="logo" className="pb-2">
-                            Business Logo:
-                          </label>
+                      
+                         {businessLogoDetails ? (
+                        <>
                           <div>
+                            <div className="form-group pb-md-2">
+                              <label htmlFor="email" className="pb-2">
+                                Business image 3: <span>*</span>
+                              </label>
+                            </div>
                             <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
                               <div className="position-relative">
+                                <div
+                                  className="bg-white rounded-circle position-absolute camera-topp d-flex align-items-center justify-content-center "
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={clearFileInputBusinessLogoDetails}
+                                >
+                                  {businessLogoDetails ? (
+                                    <CloseIcon
+                                      style={{
+                                        width: isSmallScreen ? "18px" : "24px",
+                                        height: isSmallScreen ? "18px" : "24px",
+                                        color: "#1674BB",
+                                      }}
+                                    />
+                                  ) : (
+                                    <CameraAltIcon
+                                      style={{
+                                        width: isSmallScreen ? "18px" : "24px",
+                                        height: isSmallScreen ? "18px" : "24px",
+                                        color: "#1674BB",
+                                      }}
+                                    />
+                                  )}
+                                </div>
                                 <img
-                                  src={
-                                    updatingDetails?.additionalInfo
-                                      ?.businessLogo &&
-                                    `http://localhost:4000/msmes/${updatingDetails?.additionalInfo?.businessLogo}`
-                                  }
+                                  src={updatingDetails?.additionalInfo?.businessLogo === businessLogoDetails ? `http://localhost:4000/msmes/${businessLogoDetails}` : businessLogoDetails }
                                   className=" img-responsive img-thumbnail"
                                   alt=""
                                 />
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  style={{ display: "none" }}
+                                  ref={inputRefBusinessLogo}
+                                  onChange={handleFileChangeBusinessLogoDetails}
+                                />
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="form-group pb-md-2">
+                            <label htmlFor="email" className="pb-2">
+                              Business logo: <span>*</span>
+                            </label>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="form-control place-holder"
+                              placeholder="example@nipdb.com.na"
+                              autoComplete="off"
+                              name="email"
+                              onChange={handleFileChangeBusinessLogoDetails}
+                            />
+                            {businessLogoDetailsError && (
+                              <>
+                                <p className="error mt-1">{businessLogoDetailsError}</p>
+                              </>
+                            )}
+                          </div>
+                        </>
+                      )}
                       </Grid>
-                    )}
+                   
 
-                    {updatingDetails?.additionalInfo?.image1 && (
+                    
                       <Grid item xs={12} sm={6} md={6}>
-                        <div className="form-group pb-md-2">
-                          <label htmlFor="image1" className="pb-2">
-                            Business image 1:
-                          </label>
+                        
+                         {image1Details ? (
+                        <>
                           <div>
+                            <div className="form-group pb-md-2">
+                              <label htmlFor="email" className="pb-2">
+                                Business image 1:
+                              </label>
+                            </div>
                             <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
                               <div className="position-relative">
+                                <div
+                                  className="bg-white rounded-circle position-absolute camera-topp d-flex align-items-center justify-content-center "
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={clearFileInputImage1Details}
+                                >
+                                  {image1Details ? (
+                                    <CloseIcon
+                                      style={{
+                                        width: isSmallScreen ? "18px" : "24px",
+                                        height: isSmallScreen ? "18px" : "24px",
+                                        color: "#1674BB",
+                                      }}
+                                    />
+                                  ) : (
+                                    <CameraAltIcon
+                                      style={{
+                                        width: isSmallScreen ? "18px" : "24px",
+                                        height: isSmallScreen ? "18px" : "24px",
+                                        color: "#1674BB",
+                                      }}
+                                    />
+                                  )}
+                                </div>
                                 <img
-                                  src={
-                                    updatingDetails?.additionalInfo?.image1 &&
-                                    `http://localhost:4000/msmes/${updatingDetails?.additionalInfo?.image1}`
-                                  }
+                                  src={updatingDetails?.additionalInfo?.image1 === image1Details ? `http://localhost:4000/msmes/${image1Details}` : image1Details }
                                   className=" img-responsive img-thumbnail"
                                   alt=""
                                 />
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  style={{ display: "none" }}
+                                  ref={inputRef1Details}
+                                  onChange={handleFileChangeImage1Details}
+                                />
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="form-group pb-md-2">
+                            <label htmlFor="email" className="pb-2">
+                              Business image 1:
+                            </label>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="form-control place-holder"
+                              placeholder="example@nipdb.com.na"
+                              autoComplete="off"
+                              name="email"
+                              onChange={handleFileChangeImage1Details}
+                            />
+                            {image1DetailsError && (
+                              <>
+                                <p className="error mt-1">{image1DetailsError}</p>
+                              </>
+                            )}
+                          </div>
+                        </>
+                      )}
                       </Grid>
-                    )}
+                   
 
-                    {updatingDetails?.additionalInfo?.image2 && (
+                    
                       <Grid item xs={12} sm={6} md={6}>
-                        <div className="form-group pb-md-2">
-                          <label htmlFor="image2" className="pb-2">
-                            Business image 2:
-                          </label>
+                        
+                         {image2Details ? (
+                        <>
                           <div>
+                            <div className="form-group pb-md-2">
+                              <label htmlFor="email" className="pb-2">
+                                Business image 2:
+                              </label>
+                            </div>
                             <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
                               <div className="position-relative">
+                                <div
+                                  className="bg-white rounded-circle position-absolute camera-topp d-flex align-items-center justify-content-center "
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={clearFileInputImage2Details}
+                                >
+                                  {image2Details ? (
+                                    <CloseIcon
+                                      style={{
+                                        width: isSmallScreen ? "18px" : "24px",
+                                        height: isSmallScreen ? "18px" : "24px",
+                                        color: "#1674BB",
+                                      }}
+                                    />
+                                  ) : (
+                                    <CameraAltIcon
+                                      style={{
+                                        width: isSmallScreen ? "18px" : "24px",
+                                        height: isSmallScreen ? "18px" : "24px",
+                                        color: "#1674BB",
+                                      }}
+                                    />
+                                  )}
+                                </div>
                                 <img
-                                  src={
-                                    updatingDetails?.additionalInfo?.image2 &&
-                                    `http://localhost:4000/msmes/${updatingDetails?.additionalInfo?.image2}`
-                                  }
+                                  src={updatingDetails?.additionalInfo?.image2 === image2Details ? `http://localhost:4000/msmes/${image2Details}` : image2Details }
                                   className=" img-responsive img-thumbnail"
                                   alt=""
                                 />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </Grid>
-                    )}
-
-                    {updatingDetails?.additionalInfo?.image3 && (
-                      <Grid item xs={12} sm={6} md={6}>
-                        <div className="form-group pb-md-2">
-                          <label htmlFor="image3" className="pb-2">
-                            Business image 3:
-                          </label>
-                          <div>
-                            <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3">
-                              <div className="position-relative">
-                                <img
-                                  src={
-                                    updatingDetails?.additionalInfo?.image3 &&
-                                    `http://localhost:4000/msmes/${updatingDetails?.additionalInfo?.image3}`
-                                  }
-                                  className="img-responsive img-thumbnail"
-                                  alt="Business Image 3"
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  style={{ display: "none" }}
+                                  ref={inputRef2Details}
+                                  onChange={handleFileChangeImage2Details}
                                 />
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="form-group pb-md-2">
+                            <label htmlFor="email" className="pb-2">
+                              Business image 2:
+                            </label>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="form-control place-holder"
+                              placeholder="example@nipdb.com.na"
+                              autoComplete="off"
+                              name="email"
+                              onChange={handleFileChangeImage2Details}
+                            />
+                            {image2DetailsError && (
+                              <>
+                                <p className="error mt-1">{image2DetailsError}</p>
+                              </>
+                            )}
+                          </div>
+                        </>
+                      )}
                       </Grid>
-                    )}
+                    
+
+                    
+                      <Grid item xs={12} sm={6} md={6}>
+                        
+                        {image3Details ? (
+                        <>
+                          <div>
+                            <div className="form-group pb-md-2">
+                              <label htmlFor="email" className="pb-2">
+                                Business image 3:
+                              </label>
+                            </div>
+                            <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
+                              <div className="position-relative">
+                                <div
+                                  className="bg-white rounded-circle position-absolute camera-topp d-flex align-items-center justify-content-center "
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={clearFileInputImage3Details}
+                                >
+                                  {image3Details ? (
+                                    <CloseIcon
+                                      style={{
+                                        width: isSmallScreen ? "18px" : "24px",
+                                        height: isSmallScreen ? "18px" : "24px",
+                                        color: "#1674BB",
+                                      }}
+                                    />
+                                  ) : (
+                                    <CameraAltIcon
+                                      style={{
+                                        width: isSmallScreen ? "18px" : "24px",
+                                        height: isSmallScreen ? "18px" : "24px",
+                                        color: "#1674BB",
+                                      }}
+                                    />
+                                  )}
+                                </div>
+                                <img
+                                  src={updatingDetails?.additionalInfo?.image3 === image3Details ? `http://localhost:4000/msmes/${image3Details}` : image3Details }
+                                  className=" img-responsive img-thumbnail"
+                                  alt=""
+                                />
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  style={{ display: "none" }}
+                                  ref={inputRef3Details}
+                                  onChange={handleFileChangeImage3Details}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="form-group pb-md-2">
+                            <label htmlFor="email" className="pb-2">
+                              Business image 3:
+                            </label>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="form-control place-holder"
+                              placeholder="example@nipdb.com.na"
+                              autoComplete="off"
+                              name="email"
+                              onChange={handleFileChangeImage3Details}
+                            />
+                            {image3DetailsError && (
+                              <>
+                                <p className="error mt-1">{image3DetailsError}</p>
+                              </>
+                            )}
+                          </div>
+                        </>
+                      )}
+                      </Grid>
+                  
                     <Grid item xs={12}>
                       <div className="d-flex justify-content-between w-100">
                         <button

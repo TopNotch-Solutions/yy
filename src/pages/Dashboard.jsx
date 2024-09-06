@@ -541,12 +541,12 @@ function Dashboard() {
   const rows = allMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo.email,
+    email: msme.contactInfo?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
     annualTurnover: msme.annualTurnover,
-    foundersName: msme.founderInfo.founderName,
+    foundersName: msme.founderInfo?.founderName,
     status: msme.status,
     isBlocked: msme.isBlocked
   }));

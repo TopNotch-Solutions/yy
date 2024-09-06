@@ -921,17 +921,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                   <DataGrid
                     rows={rowsAll}
                     columns={columns1}
-                    sx={{
-                      '& .status-pending': {
-                        color: 'yellow',
-                      },
-                      '& .status-rejected': {
-                        color: 'red',
-                      },
-                      '& .status-approved': {
-                        color: 'green',
-                      },
-                    }}
+                    
                     initialState={{
                       pagination: {
                         paginationModel: {
