@@ -373,7 +373,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setTotalRegistration(data.count);
@@ -426,7 +434,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setPendingRegistration(data.count);
@@ -479,7 +495,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setRejectedRegistration(data.count);
@@ -532,7 +556,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setIApprovedRegistration(data.count);
@@ -582,7 +614,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setAllMSMEList(data.data);
@@ -634,7 +674,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setPendingMSMEList(data.data);
@@ -687,7 +735,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setRejectedMSMEList(data.data);
@@ -740,7 +796,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setApprovedMSMEList(data.data);
@@ -790,7 +854,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setRegionList(data.data);
@@ -832,7 +904,15 @@ function Msme() {
           },
           credentials: "include",
         });
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
         dispatch(
@@ -892,7 +972,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setPrimaryIndustryList(data.data);
@@ -944,7 +1032,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setSecondaryList(data.data);
@@ -996,7 +1092,15 @@ function Msme() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setAllUserList(data.data);
@@ -1466,7 +1570,7 @@ function Msme() {
         setFacebookLinkDetails(data.data.contactInfo?.facebook);
         setTwitterLinkDetails(data.data.contactInfo?.twitter);
         setInstagramLinkDetails(data.data.contactInfo?.instagram);
-        setLinkedInLinkDetails(data.data.contactInfo?.linkedln);
+        setLinkedInLinkDetails(data.data.contactInfo?.linkedIn);
         setMondayDetails(data.data.businessHours?.monday);
         setTuesdayDetails(data.data.businessHours?.tuesday);
         setWednesdayDetails(data.data.businessHours?.wednesday);
@@ -1919,7 +2023,7 @@ function Msme() {
         if (fileImage3) {
           formData.append("image3", fileImage3);
         }
-  
+        console.log("Here is image 1: ",fileImage1)
         const response = await fetch(`http://localhost:4000/msme/admin/update/${updatingDetails.id}`, {
           method: "PUT",
           credentials: "include",
@@ -2432,6 +2536,7 @@ function Msme() {
 
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileImage1(selectedFile);
+      console.log("Here is went the file is changed",fileImage1)
       setImage1(objectUrl);
     }
   };
@@ -2518,7 +2623,11 @@ function Msme() {
       }
 
       const objectUrl = URL.createObjectURL(selectedFile);
+      console.log("here is the image 1 details: ",fileImage1);
       setFileImage1(selectedFile);
+      
+    //setFileImage1(null);
+    console.log("here is the image 1 details: ",fileImage1);
       setImage1Details(objectUrl);
     }
   };
@@ -2592,6 +2701,7 @@ function Msme() {
       URL.revokeObjectURL(image1);
     }
     inputRef1.current.value = "";
+    console.log("Here is file when clearing",fileImage1)
     setImage1(null);
   };
   const clearFileInputImage2 = () => {
@@ -2620,6 +2730,9 @@ function Msme() {
       URL.revokeObjectURL(image1Details);
     }
     inputRef1Details.current.value = "";
+    console.log("here is the image 1 details: ",fileImage1);
+    setFileImage1(null);
+    console.log("here is the image 1 details: ",fileImage1);
     setImage1Details(null);
   };
   const clearFileInputImage2Details = () => {
@@ -2627,6 +2740,7 @@ function Msme() {
       URL.revokeObjectURL(image2Details);
     }
     inputRef2Details.current.value = "";
+    setFileImage2(null);
     setImage2Details(null);
   };
   const clearFileInputImage3Details = () => {
@@ -2634,6 +2748,7 @@ function Msme() {
       URL.revokeObjectURL(image3Details);
     }
     inputRef3Details.current.value = "";
+    setFileImage3(null);
     setImage3Details(null);
   };
 
@@ -2859,7 +2974,7 @@ function Msme() {
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">All MSME List</p>
-                        <Box sx={{ height: 400, width: "100%" }}>
+                        <Box sx={{ height: 500, width: "100%" }}>
                           <DataGrid
                             rows={filteredRows}
                             columns={columns}
@@ -2867,11 +2982,11 @@ function Msme() {
                             initialState={{
                               pagination: {
                                 paginationModel: {
-                                  pageSize: 5,
+                                  pageSize: 15,
                                 },
                               },
                             }}
-                            pageSizeOptions={[5]}
+                            pageSizeOptions={[15]}
                             checkboxSelection
                             disableRowSelectionOnClick
                           />
@@ -2905,18 +3020,18 @@ function Msme() {
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Pending MSME List</p>
-                        <Box sx={{ height: 400, width: "100%" }}>
+                        <Box sx={{ height: 500, width: "100%" }}>
                           <DataGrid
                             rows={filteredRowsPending}
                             columns={columns}
                             initialState={{
                               pagination: {
                                 paginationModel: {
-                                  pageSize: 5,
+                                  pageSize: 15,
                                 },
                               },
                             }}
-                            pageSizeOptions={[5]}
+                            pageSizeOptions={[15]}
                             checkboxSelection
                             disableRowSelectionOnClick
                           />
@@ -2950,18 +3065,18 @@ function Msme() {
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Rejected MSME List</p>
-                        <Box sx={{ height: 400, width: "100%" }}>
+                        <Box sx={{ height: 500, width: "100%" }}>
                           <DataGrid
                             rows={filteredRowsRejected}
                             columns={columns}
                             initialState={{
                               pagination: {
                                 paginationModel: {
-                                  pageSize: 5,
+                                  pageSize: 15,
                                 },
                               },
                             }}
-                            pageSizeOptions={[5]}
+                            pageSizeOptions={[15]}
                             checkboxSelection
                             disableRowSelectionOnClick
                           />
@@ -2995,18 +3110,18 @@ function Msme() {
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Incomplete MSME List</p>
-                        <Box sx={{ height: 400, width: "100%" }}>
+                        <Box sx={{ height: 500, width: "100%" }}>
                           <DataGrid
                             rows={rowsIncomplete}
                             columns={columns}
                             initialState={{
                               pagination: {
                                 paginationModel: {
-                                  pageSize: 5,
+                                  pageSize: 15,
                                 },
                               },
                             }}
-                            pageSizeOptions={[5]}
+                            pageSizeOptions={[15]}
                             checkboxSelection
                             disableRowSelectionOnClick
                           />
@@ -3040,18 +3155,18 @@ function Msme() {
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Approved MSME List</p>
-                        <Box sx={{ height: 400, width: "100%" }}>
+                        <Box sx={{ height: 500, width: "100%" }}>
                           <DataGrid
                             rows={filteredRowsApproved}
                             columns={columns}
                             initialState={{
                               pagination: {
                                 paginationModel: {
-                                  pageSize: 5,
+                                  pageSize: 15,
                                 },
                               },
                             }}
-                            pageSizeOptions={[5]}
+                            pageSizeOptions={[15]}
                             checkboxSelection
                             disableRowSelectionOnClick
                           />
@@ -5176,7 +5291,7 @@ function Msme() {
                         )}
                       </div>
                     </Grid>
-                    {updatingDetails?.contactInfo?.websiteLink && (
+                    
                       <Grid item xs={12} sm={6} md={6}>
                         <div className="form-group pb-md-2">
                           <label htmlFor="website" className="pb-2">
@@ -5185,7 +5300,7 @@ function Msme() {
                           <input
                             type="text"
                             className="form-control place-holder"
-                            placeholder="founder's name"
+                            placeholder="Enter link here"
                             disabled={
                               currentUser.role === "Super admin" ? false : true
                             }
@@ -5206,9 +5321,9 @@ function Msme() {
                           )}
                         </div>
                       </Grid>
-                    )}
+                    
 
-                    {updatingDetails?.contactInfo?.twitterLink && (
+                    
                       <Grid item xs={12} sm={6} md={6}>
                         <div className="form-group pb-md-2">
                           <label htmlFor="twitter" className="pb-2">
@@ -5217,7 +5332,7 @@ function Msme() {
                           <input
                             type="text"
                             className="form-control place-holder"
-                            placeholder="founder's name"
+                            placeholder="Enter link here"
                             disabled={
                               currentUser.role === "Super admin" ? false : true
                             }
@@ -5238,9 +5353,9 @@ function Msme() {
                           )}
                         </div>
                       </Grid>
-                    )}
+                  
 
-                    {updatingDetails?.contactInfo?.facebookLink && (
+                    
                       <Grid item xs={12} sm={6} md={6}>
                         <div className="form-group pb-md-2">
                           <label htmlFor="facebook" className="pb-2">
@@ -5249,7 +5364,7 @@ function Msme() {
                           <input
                             type="text"
                             className="form-control place-holder"
-                            placeholder="founder's name"
+                            placeholder="Enter link here"
                             disabled={
                               currentUser.role === "Super admin" ? false : true
                             }
@@ -5270,9 +5385,9 @@ function Msme() {
                           )}
                         </div>
                       </Grid>
-                    )}
+              
 
-                    {updatingDetails?.contactInfo?.instagramLink && (
+                    
                       <Grid item xs={12} sm={6} md={6}>
                         <div className="form-group pb-md-2">
                           <label htmlFor="instagram" className="pb-2">
@@ -5281,7 +5396,7 @@ function Msme() {
                           <input
                             type="text"
                             className="form-control place-holder"
-                            placeholder="founder's name"
+                            placeholder="Enter link here"
                             disabled={
                               currentUser.role === "Super admin" ? false : true
                             }
@@ -5302,9 +5417,9 @@ function Msme() {
                           )}
                         </div>
                       </Grid>
-                    )}
+                   
 
-                    {updatingDetails?.contactInfo?.linkedInLink && (
+                    
                       <Grid item xs={12} sm={6} md={6}>
                         <div className="form-group pb-md-2">
                           <label htmlFor="linkedIn" className="pb-2">
@@ -5313,7 +5428,7 @@ function Msme() {
                           <input
                             type="text"
                             className="form-control place-holder"
-                            placeholder="founder's name"
+                            placeholder="Enter link here"
                             disabled={
                               currentUser.role === "Super admin" ? false : true
                             }
@@ -5334,7 +5449,7 @@ function Msme() {
                           )}
                         </div>
                       </Grid>
-                    )}
+                  
 
                     <div className="d-flex justify-content-between w-100">
                       <button

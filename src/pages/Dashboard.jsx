@@ -139,6 +139,15 @@ function Dashboard() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         console.log("Header header",newTokenHeader,tokenHeader,currentUser);
         if (response.ok) {
           console.log("Login successful", data);
@@ -190,6 +199,15 @@ function Dashboard() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setTotalRegistration(data.count);
@@ -240,7 +258,15 @@ function Dashboard() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setPendingRegistration(data.count);
@@ -291,7 +317,15 @@ function Dashboard() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setRejectedRegistration(data.count);
@@ -342,6 +376,15 @@ function Dashboard() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setIApprovedRegistration(data.count);
@@ -389,6 +432,15 @@ function Dashboard() {
       dispatch(updateToken({
         token: newTokenHeader
       }));
+      if(!newTokenHeader){
+        dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+      }
         if (response.ok) {
           console.log("Login successful", data);
           setAllMSMEList(data.data);
@@ -438,7 +490,15 @@ function Dashboard() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           setTopCategory(data.data);
 
@@ -861,7 +921,7 @@ function Dashboard() {
             <div className="col-12 listing-msme p-4 shadow rounded-3 mb-4">
               <div className="col-12 mt-1">
                 <p className="list-group">All MSME List</p>
-                <Box sx={{ height: 400, width: "100%" }}>
+                <Box sx={{ height: 500, width: "100%" }}>
                   <DataGrid
                     rows={rows}
                     columns={columns}
@@ -879,11 +939,11 @@ function Dashboard() {
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 5,
+                          pageSize: 15,
                         },
                       },
                     }}
-                    pageSizeOptions={[5]}
+                    pageSizeOptions={[15]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />

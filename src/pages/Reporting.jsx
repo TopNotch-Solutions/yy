@@ -52,7 +52,15 @@ function Reporting() {
       dispatch(updateToken({
         token: newTokenHeader
       }));
-
+      if(!newTokenHeader){
+        dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+      }
         if (response.ok) {
           console.log("Login successful approved", data);
           setAllMSMEList(data.data);
@@ -100,7 +108,15 @@ function Reporting() {
       dispatch(updateToken({
         token: newTokenHeader
       }));
-
+      if(!newTokenHeader){
+        dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+      }
         if (response.ok) {
           console.log("Login successful", data);
           setAllMSMEPendingList(data.data);
@@ -148,7 +164,15 @@ function Reporting() {
       dispatch(updateToken({
         token: newTokenHeader
       }));
-
+      if(!newTokenHeader){
+        dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+      }
         if (response.ok) {
           console.log("Login successful", data);
           setAllMSMERejectedList(data.data);
@@ -196,7 +220,15 @@ function Reporting() {
       dispatch(updateToken({
         token: newTokenHeader
       }));
-
+      if(!newTokenHeader){
+        dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+      }
         if (response.ok) {
           console.log("Login successful", data);
           setAllMSMEBlockedList(data.data);
@@ -244,7 +276,15 @@ function Reporting() {
       dispatch(updateToken({
         token: newTokenHeader
       }));
-
+      if(!newTokenHeader){
+        dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+      }
         if (response.ok) {
           console.log("Login successful", data);
           setAllBSOList(data.data);
@@ -292,7 +332,15 @@ function Reporting() {
       dispatch(updateToken({
         token: newTokenHeader
       }));
-
+      if(!newTokenHeader){
+        dispatch(toggleSidebarfalse());
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
+      }
         if (response.ok) {
           console.log("Login successful", data);
           setAllUserList(data.data);
@@ -917,7 +965,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                   <BackButton onClick={() =>setActiveTab(0)}/>
                     {allMSMEList ? <><DownloadButton onClick={handleDownloadAllMSME}/></> :<></>}
                 </div>
-                <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
+                <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
                     rows={rowsAll}
                     columns={columns1}
@@ -925,11 +973,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 5,
+                          pageSize: 15,
                         },
                       },
                     }}
-                    pageSizeOptions={[5]}
+                    pageSizeOptions={[15]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
@@ -945,7 +993,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                   <BackButton onClick={() =>setActiveTab(0)}/>
                     {allMSMEPendingList ? <><DownloadButton onClick={handleDownloadAllMSMEPending}/></> :<></>}
                 </div>
-                <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
+                <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
                     rows={rowsAllPending}
                     columns={columns2}
@@ -963,11 +1011,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 5,
+                          pageSize: 15,
                         },
                       },
                     }}
-                    pageSizeOptions={[5]}
+                    pageSizeOptions={[15]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
@@ -983,7 +1031,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                   <BackButton onClick={() =>setActiveTab(0)}/>
                   {allMSMERejectedList ? <><DownloadButton onClick={handleDownloadAllMSMERejected}/></> : <></>}
                 </div>
-                <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
+                <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
                     rows={rowsRejected}
                     columns={columns3}
@@ -1001,11 +1049,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 5,
+                          pageSize: 15,
                         },
                       },
                     }}
-                    pageSizeOptions={[5]}
+                    pageSizeOptions={[15]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
@@ -1024,7 +1072,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                     }
                   
                 </div>
-                <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
+                <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
                     rows={rowsBSO}
                     columns={column4}
@@ -1032,11 +1080,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 5,
+                          pageSize: 15,
                         },
                       },
                     }}
-                    pageSizeOptions={[5]}
+                    pageSizeOptions={[15]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
@@ -1054,7 +1102,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                       allUserList ? <><DownloadButton onClick={handleDownloadAllUsers}/></> : <></>
                     }
                 </div>
-                <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
+                <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
                     rows={rowsUsers}
                     columns={columns5}
@@ -1062,11 +1110,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 5,
+                          pageSize: 15,
                         },
                       },
                     }}
-                    pageSizeOptions={[5]}
+                    pageSizeOptions={[15]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
@@ -1084,7 +1132,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                       allMSMEBlockedList ? <><DownloadButton onClick={handleDownloadAllBlocked}/></>:<></>
                     }
                 </div>
-                <Box sx={{ height: 400, width: "100%" , marginTop: "10px"}}>
+                <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
                     rows={rowsAllBlocked}
                     columns={columns6}
@@ -1092,11 +1140,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 5,
+                          pageSize: 15,
                         },
                       },
                     }}
-                    pageSizeOptions={[5]}
+                    pageSizeOptions={[15]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />

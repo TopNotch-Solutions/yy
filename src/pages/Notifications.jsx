@@ -136,7 +136,15 @@ function Notifications() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setAllAdminNotifications(data.data);
@@ -191,7 +199,15 @@ function Notifications() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setAllUnread(data.data);
@@ -246,7 +262,15 @@ function Notifications() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setAllSent(data.data);
@@ -301,7 +325,15 @@ function Notifications() {
             token: newTokenHeader,
           })
         );
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setAllRead(data.data);
@@ -988,18 +1020,18 @@ function Notifications() {
                   </div>
                   <div className="col-12 mt-1">
                     <p className="list-group">All Read Notification List</p>
-                    <Box sx={{ height: 400, width: "100%" }}>
+                    <Box sx={{ height: 500, width: "100%" }}>
                       <DataGrid
                         rows={filteredRowsRead}
                         columns={columns}
                         initialState={{
                           pagination: {
                             paginationModel: {
-                              pageSize: 5,
+                              pageSize: 15,
                             },
                           },
                         }}
-                        pageSizeOptions={[5]}
+                        pageSizeOptions={[15]}
                         checkboxSelection
                         disableRowSelectionOnClick
                       />
@@ -1033,18 +1065,18 @@ function Notifications() {
                   </div>
                   <div className="col-12 mt-1">
                     <p className="list-group">Sent Notification List</p>
-                    <Box sx={{ height: 400, width: "100%" }}>
+                    <Box sx={{ height: 500, width: "100%" }}>
                       <DataGrid
                         rows={filteredRowsSent}
                         columns={columnSent}
                         initialState={{
                           pagination: {
                             paginationModel: {
-                              pageSize: 5,
+                              pageSize: 15,
                             },
                           },
                         }}
-                        pageSizeOptions={[5]}
+                        pageSizeOptions={[15]}
                         checkboxSelection
                         disableRowSelectionOnClick
                       />
@@ -1078,18 +1110,18 @@ function Notifications() {
                   </div>
                   <div className="col-12 mt-1">
                     <p className="list-group">All Unread Notifications List</p>
-                    <Box sx={{ height: 400, width: "100%" }}>
+                    <Box sx={{ height: 500, width: "100%" }}>
                       <DataGrid
                         rows={filteredRowsUnread}
                         columns={columns}
                         initialState={{
                           pagination: {
                             paginationModel: {
-                              pageSize: 5,
+                              pageSize: 15,
                             },
                           },
                         }}
-                        pageSizeOptions={[5]}
+                        pageSizeOptions={[15]}
                         checkboxSelection
                         disableRowSelectionOnClick
                       />

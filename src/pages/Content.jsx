@@ -178,7 +178,15 @@ function Content() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setOpportunitiesList(data.data);
@@ -228,7 +236,15 @@ function Content() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setMobileImagesList(data.data);
@@ -1357,18 +1373,18 @@ function Content() {
                     </div>
                     <div className="col-12 mt-1">
                       <p className="list-group">Opportunity List</p>
-                      <Box sx={{ height: 400, width: "100%" }}>
+                      <Box sx={{ height: 500, width: "100%" }}>
                         <DataGrid
                           rows={filteredRows}
                           columns={columns}
                           initialState={{
                             pagination: {
                               paginationModel: {
-                                pageSize: 5,
+                                pageSize: 15,
                               },
                             },
                           }}
-                          pageSizeOptions={[5]}
+                          pageSizeOptions={[15]}
                           checkboxSelection
                           disableRowSelectionOnClick
                         />
@@ -1402,18 +1418,18 @@ function Content() {
                     </div>
                     <div className="col-12 mt-1">
                       <p className="list-group">Image List</p>
-                      <Box sx={{ height: 400, width: "100%" }}>
+                      <Box sx={{ height: 500, width: "100%" }}>
                         <DataGrid
                           rows={filteredRows1}
                           columns={columns1}
                           initialState={{
                             pagination: {
                               paginationModel: {
-                                pageSize: 5,
+                                pageSize: 15,
                               },
                             },
                           }}
-                          pageSizeOptions={[5]}
+                          pageSizeOptions={[15]}
                           checkboxSelection
                           disableRowSelectionOnClick
                         />

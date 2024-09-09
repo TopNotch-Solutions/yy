@@ -169,7 +169,15 @@ function User() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setTotalSystemUsers(data.count);
@@ -220,7 +228,15 @@ function User() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setTotalSuperUser(data.count);
@@ -271,7 +287,15 @@ function User() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setTotalAdmins(data.count);
@@ -322,7 +346,15 @@ function User() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setTotalAppUsers(data.count);
@@ -372,7 +404,15 @@ function User() {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        if(!newTokenHeader){
+          dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
         if (response.ok) {
           console.log("Login successful", data);
           setAdminList(data.data);
