@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { IconButton, useTheme, useMediaQuery } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
+import {useTheme, useMediaQuery } from "@mui/material";
 import "../assets/css/Reporting.css";
 import * as XLSX from 'xlsx';  
-import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import BackButton from "../components/commons/BackButton";
@@ -14,8 +11,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateToken } from "../redux/reducers/authReducer";
-import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
-import { login } from "../redux/reducers/authReducer";
+import handleAuthFailure from "../utils/handleAuthFailure";
 
 function Reporting() {
   const theme = useTheme();
@@ -49,42 +45,21 @@ function Reporting() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
-      if(!newTokenHeader){
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+      
+      if(newTokenHeader){
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
       }
+      
         if (response.ok) {
           console.log("Login successful approved", data);
           setAllMSMEList(data.data);
-        } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+        }else {
+          handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
 
@@ -105,42 +80,21 @@ function Reporting() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
-      if(!newTokenHeader){
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+      
+      if(newTokenHeader){
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
       }
+      
         if (response.ok) {
-          console.log("Login successful", data);
+         
           setAllMSMEPendingList(data.data);
-        } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+        }else {
+          handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
 
@@ -161,42 +115,21 @@ function Reporting() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
-      if(!newTokenHeader){
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+      
+      if(newTokenHeader){
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
       }
+      
         if (response.ok) {
-          console.log("Login successful", data);
+
           setAllMSMERejectedList(data.data);
         } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
 
@@ -217,42 +150,21 @@ function Reporting() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
-      if(!newTokenHeader){
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+      
+      if(newTokenHeader){
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
       }
+      
         if (response.ok) {
-          console.log("Login successful", data);
+
           setAllMSMEBlockedList(data.data);
-        } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+        }else {
+          handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
 
@@ -273,42 +185,21 @@ function Reporting() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
-      if(!newTokenHeader){
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+     
+      if(newTokenHeader){
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
       }
+      
         if (response.ok) {
-          console.log("Login successful", data);
+
           setAllBSOList(data.data);
         } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
 
@@ -329,42 +220,21 @@ function Reporting() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
-      if(!newTokenHeader){
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+      
+      if(newTokenHeader){
+        dispatch(updateToken({
+          token: newTokenHeader
+        }));
       }
+      
         if (response.ok) {
-          console.log("Login successful", data);
+
           setAllUserList(data.data);
-        } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+        }else {
+          handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
 
@@ -942,6 +812,23 @@ const rowsAll = allMSMEList.map((msme) => ({
                   <DataGrid
                     rows={rows}
                     columns={columns}
+                    sx={{
+                      "& .status-pending": {
+                        color: "yellow",
+                      },
+                      "& .status-rejected": {
+                        color: "red",
+                      },
+                      "& .status-approved": {
+                        color: "green",
+                      },
+                      "& .MuiDataGrid-columnHeaders": {
+      fontWeight: 'bold', 
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      fontWeight: 'bold', 
+    }
+                    }}
                     initialState={{
                       pagination: {
                         paginationModel: {
@@ -969,7 +856,23 @@ const rowsAll = allMSMEList.map((msme) => ({
                   <DataGrid
                     rows={rowsAll}
                     columns={columns1}
-                    
+                    sx={{
+                      "& .status-pending": {
+                        color: "yellow",
+                      },
+                      "& .status-rejected": {
+                        color: "red",
+                      },
+                      "& .status-approved": {
+                        color: "green",
+                      },
+                      "& .MuiDataGrid-columnHeaders": {
+      fontWeight: 'bold', 
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      fontWeight: 'bold', 
+    }
+                    }}
                     initialState={{
                       pagination: {
                         paginationModel: {
@@ -998,15 +901,21 @@ const rowsAll = allMSMEList.map((msme) => ({
                     rows={rowsAllPending}
                     columns={columns2}
                     sx={{
-                      '& .status-pending': {
-                        color: 'yellow',
+                      "& .status-pending": {
+                        color: "yellow",
                       },
-                      '& .status-rejected': {
-                        color: 'red',
+                      "& .status-rejected": {
+                        color: "red",
                       },
-                      '& .status-approved': {
-                        color: 'green',
+                      "& .status-approved": {
+                        color: "green",
                       },
+                      "& .MuiDataGrid-columnHeaders": {
+      fontWeight: 'bold', 
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      fontWeight: 'bold', 
+    }
                     }}
                     initialState={{
                       pagination: {
@@ -1036,15 +945,21 @@ const rowsAll = allMSMEList.map((msme) => ({
                     rows={rowsRejected}
                     columns={columns3}
                     sx={{
-                      '& .status-pending': {
-                        color: 'yellow',
+                      "& .status-pending": {
+                        color: "yellow",
                       },
-                      '& .status-rejected': {
-                        color: 'red',
+                      "& .status-rejected": {
+                        color: "red",
                       },
-                      '& .status-approved': {
-                        color: 'green',
+                      "& .status-approved": {
+                        color: "green",
                       },
+                      "& .MuiDataGrid-columnHeaders": {
+      fontWeight: 'bold', 
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      fontWeight: 'bold', 
+    }
                     }}
                     initialState={{
                       pagination: {
@@ -1076,7 +991,23 @@ const rowsAll = allMSMEList.map((msme) => ({
                   <DataGrid
                     rows={rowsBSO}
                     columns={column4}
-        
+                    sx={{
+                      "& .status-pending": {
+                        color: "yellow",
+                      },
+                      "& .status-rejected": {
+                        color: "red",
+                      },
+                      "& .status-approved": {
+                        color: "green",
+                      },
+                      "& .MuiDataGrid-columnHeaders": {
+      fontWeight: 'bold', 
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      fontWeight: 'bold', 
+    }
+                    }}
                     initialState={{
                       pagination: {
                         paginationModel: {
@@ -1106,7 +1037,23 @@ const rowsAll = allMSMEList.map((msme) => ({
                   <DataGrid
                     rows={rowsUsers}
                     columns={columns5}
-        
+                    sx={{
+                      "& .status-pending": {
+                        color: "yellow",
+                      },
+                      "& .status-rejected": {
+                        color: "red",
+                      },
+                      "& .status-approved": {
+                        color: "green",
+                      },
+                      "& .MuiDataGrid-columnHeaders": {
+      fontWeight: 'bold', 
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      fontWeight: 'bold', 
+    }
+                    }}
                     initialState={{
                       pagination: {
                         paginationModel: {
@@ -1136,7 +1083,23 @@ const rowsAll = allMSMEList.map((msme) => ({
                   <DataGrid
                     rows={rowsAllBlocked}
                     columns={columns6}
-        
+                    sx={{
+                      "& .status-pending": {
+                        color: "yellow",
+                      },
+                      "& .status-rejected": {
+                        color: "red",
+                      },
+                      "& .status-approved": {
+                        color: "green",
+                      },
+                      "& .MuiDataGrid-columnHeaders": {
+      fontWeight: 'bold', 
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      fontWeight: 'bold', 
+    }
+                    }}
                     initialState={{
                       pagination: {
                         paginationModel: {

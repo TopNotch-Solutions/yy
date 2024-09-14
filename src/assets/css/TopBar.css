@@ -11,6 +11,9 @@
     margin-left: auto 10px auto 10px;
     
 }
+.text-bold{
+    font-weight: bold;
+  }
 .username-text{
     font-weight: bold;
     font-size: 17px;

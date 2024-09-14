@@ -10,7 +10,9 @@
   .status-rejected {
     color: rgba(221, 44, 33, 1);
   }
-  
+  .text-bold{
+    font-weight: bold;
+  }
   .status-approved {
     color: rgba(0, 149, 71, 1);
   }

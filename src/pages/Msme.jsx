@@ -2,15 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { IconButton, useTheme, useMediaQuery } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import EastIcon from '@mui/icons-material/East';
 import "../assets/css/msme.css";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Box from "@mui/material/Box";
+import { CgCloseR } from "react-icons/cg";
 import { DataGrid } from "@mui/x-data-grid";
 import { SlOptionsVertical } from "react-icons/sl";
 import Swal from "sweetalert2";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -27,6 +29,7 @@ import { updateToken } from "../redux/reducers/authReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { login } from "../redux/reducers/authReducer";
+import handleAuthFailure from "../utils/handleAuthFailure";
 
 const mobileStyle = {
   position: "absolute",
@@ -48,7 +51,7 @@ const largeStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "50%",
-  height: "70%",
+  height: "80%",
   overflowY: "auto",
   bgcolor: "background.paper",
   border: "2px solid #fff",
@@ -71,12 +74,12 @@ function Msme() {
   const inputRef1 = useRef();
   const inputRef2 = useRef();
   const inputRef3 = useRef();
-  
+
   const inputRefBusinessLogo = useRef();
   const inputRef1Details = useRef();
   const inputRef2Details = useRef();
   const inputRef3Details = useRef();
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -85,10 +88,6 @@ function Msme() {
   const [fileImage1, setFileImage1] = useState(null);
   const [fileImage2, setFileImage2] = useState(null);
   const [fileImage3, setFileImage3] = useState(null);
-  const [fileBuinessLogoDetails, setFileBuinessLogoDetails] = useState(null);
-  const [fileImage1Details, setFileImage1Details] = useState(null);
-  const [fileImage2Details, setFileImage2Details] = useState(null);
-  const [fileImage3Details, setFileImage3Details] = useState(null);
 
   const [totalRegisteration, setTotalRegistration] = useState("");
   const [pendingRegisteration, setPendingRegistration] = useState("");
@@ -195,7 +194,6 @@ function Msme() {
   const [sundayFrom, setSundayFrom] = useState("");
   const [sundayTo, setSundayTo] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorFromAPI, setErrorFromAPI] = useState("'");
 
   const [searchQuery, setSearchQuery] = useState("");
   const [updatingDetails, setUpdatingDetails] = useState([]);
@@ -238,6 +236,10 @@ function Msme() {
   const [yearOfEstablishmentDetails, setYearOfEstablishmentDetails] =
     useState("");
   const [yearOfEstablishmentDetailsError, setYearOfEstablishmentDetailsError] =
+    useState("");
+  const [numberOfEmployeesDetails, setNumberOfEmployeesDeDetails] =
+    useState("");
+  const [numberOfEmployeesDetailsError, setNumberOfEmployeesDetailsError] =
     useState("");
   const [annualTurnoverDetails, setAnnualTurnoverDetails] = useState("");
   const [annualTurnoverDetailsError, setAnnualTurnoverDetailsError] =
@@ -286,7 +288,7 @@ function Msme() {
   const [saturdayDetailsError, setSaturdayDetailsError] = useState("");
   const [sundayDetailsError, setSundayDetailsError] = useState("");
   const [businessLogoDetails, setBusinessLogoDetails] = useState("");
-  const [businessLogoDetailsError,setBusinessLogoDetailsError] = useState("");
+  const [businessLogoDetailsError, setBusinessLogoDetailsError] = useState("");
   const [image1Details, setImage1Details] = useState("");
   const [image1DetailsError, setImage1DetailsError] = useState("");
   const [image2Details, setImage2Details] = useState("");
@@ -298,45 +300,84 @@ function Msme() {
 
   const handleOpen = () => setOpenModel(true);
   const handleClose = () => {
+    setBusinessAddressError("");
+    setBusinessRegistrationNameError("");
+    setBusinessRegistrationNumberError("");
+    setBusinessDisplayNameError("");
+    setDescriptionError("");
+    setTypeOfBusinessError("");
+    setRegionError("");
+    setTownError("");
+    setPrimaryIndustryError("");
+    setSecondaryIndustryError("");
+    setYearOfEstablishmentError("");
+    setNumberOfEmployeesError("");
+    setAnnualTurnoverError("");
+    setFoundersNameError("");
+    setFoundersGenderError("");
+    setFoundersAgeError("");
+    setBusinessAddressError("");
+    setPhoneNumberError("");
+    setWhatsAppNumberError("");
+    setBusinessEmailError("");
+    setWebsiteLinkError("");
+    setFacebookLinkError("");
+    setTwitterLinkError("");
+    setInstagramLinkError("");
+    setLinkedInLinkError("");
+    setMondayError("");
+    setTuesdayDetails("");
+    setWednesdayError("");
+    setThursdayError("");
+    setFridayError("");
+    setSaturdayError("");
+    setSundayError("");
+    setBusinessLogoError("");
+    setImage1Error("");
+    setImage2Error("");
+    setImage3Error("");
+    setUserIdError("");
     setOpenModel(false);
   };
   const handleOpenView = () => setOpenModelView(true);
   const handleCloseView = () => {
     setUpdatingDetails([]);
     setBusinessAddressDetails();
-        setBusinessRegistrationNameDetails("");
-        setBusinessDisplayNameDetails("");
-        setDescriptionDetails("");
-        setTypeOfBusinessDetails("");
-        setRegionDetails("");
-        setTownDetails("");
-        setPrimaryIndustryDetails("");
-        setSecondaryIndustryDetails("");
-        setYearOfEstablishmentDetails("");
-        setAnnualTurnoverDetails("");
-        setFoundersNameDetails("");
-        setFoundersGenderDetails("");
-        setFoundersAgeDetails("");
-        setBusinessAddressDetails("");
-        setPhoneNumberDetails("");
-        setWhatsAppNumberDetails("");
-        setBusinessEmailDetails("");
-        setWebsiteLinkDetails("");
-        setFacebookLinkDetails("");
-        setTwitterLinkDetails("");
-        setInstagramLinkDetails("");
-        setLinkedInLinkDetails("");
-        setMondayDetails("");
-        setTuesdayDetails("");
-        setWednesdayDetails("");
-        setThursdayDetails("");
-        setFridayDetails("");
-        setSaturdayDetails("");
-        setSundayDetails("");
-        setBusinessLogoDetails("");
-        setImage1Details("");
-        setImage2Details("");
-        setImage3Details("");
+    setBusinessRegistrationNameDetails("");
+    setBusinessDisplayNameDetails("");
+    setDescriptionDetails("");
+    setTypeOfBusinessDetails("");
+    setRegionDetails("");
+    setTownDetails("");
+    setPrimaryIndustryDetails("");
+    setSecondaryIndustryDetails("");
+    setYearOfEstablishmentDetails("");
+    setNumberOfEmployeesDeDetails("");
+    setAnnualTurnoverDetails("");
+    setFoundersNameDetails("");
+    setFoundersGenderDetails("");
+    setFoundersAgeDetails("");
+    setBusinessAddressDetails("");
+    setPhoneNumberDetails("");
+    setWhatsAppNumberDetails("");
+    setBusinessEmailDetails("");
+    setWebsiteLinkDetails("");
+    setFacebookLinkDetails("");
+    setTwitterLinkDetails("");
+    setInstagramLinkDetails("");
+    setLinkedInLinkDetails("");
+    setMondayDetails("");
+    setTuesdayDetails("");
+    setWednesdayDetails("");
+    setThursdayDetails("");
+    setFridayDetails("");
+    setSaturdayDetails("");
+    setSundayDetails("");
+    setBusinessLogoDetails("");
+    setImage1Details("");
+    setImage2Details("");
+    setImage3Details("");
+    setStepperCounter(0);
     setOpenModelView(false);
   };
   useEffect(() => {
@@ -349,8 +390,7 @@ function Msme() {
     const period = hours >= 12 ? "PM" : "AM";
 
     return `${hours}:${minutes} ${period}`;
-}
-  console.log(convertTo12HourFormat("12:30"))
+  }
   useEffect(() => {
     const fetchTotalCount = async () => {
       try {
@@ -368,44 +408,23 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
           console.log("Login successful", data);
           setTotalRegistration(data.count);
         } else {
-          if (currentUser.token ==="") {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (currentUser.token ==="") {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -429,44 +448,23 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
           console.log("Login successful", data);
           setPendingRegistration(data.count);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -490,44 +488,22 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setRejectedRegistration(data.count);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -551,44 +527,22 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setIApprovedRegistration(data.count);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -609,44 +563,22 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setAllMSMEList(data.data);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -669,44 +601,22 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+        console.log(data.message)
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setPendingMSMEList(data.data);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -730,44 +640,22 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setRejectedMSMEList(data.data);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -791,44 +679,22 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setApprovedMSMEList(data.data);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -849,44 +715,22 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setRegionList(data.data);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -904,47 +748,24 @@ function Msme() {
           },
           credentials: "include",
         });
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
 
-        if (response.ok) {
-          console.log("Login successful", data);
-          setTownList(data.data);
-        } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
-        }
-      } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+        if (response.ok) {
+          setTownList(data.data);
+        } else {
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
+        }
+      } catch (error) {
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -967,44 +788,22 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setPrimaryIndustryList(data.data);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -1027,44 +826,22 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setSecondaryList(data.data);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -1087,44 +864,22 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setAllUserList(data.data);
         } else {
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -1194,24 +949,48 @@ function Msme() {
     { value: businessEmail, setError: setBusinessEmailError, name: "Email" },
   ];
   const fields4 = [
-    { value: mondayFrom, setError: setMondayError, name: "Monday From" },
-    { value: mondayTo, setError: setMondayError, name: "Monday To" },
-    { value: tuesdayFrom, setError: setTuesdayError, name: "Tuesday From" },
-    { value: tuesdayTo, setError: setTuesdayError, name: "Tuesday To" },
+    { value: mondayFrom, setError: setMondayError, name: "Monday From & To" },
+    { value: mondayTo, setError: setMondayError, name: "Monday From & To" },
+    {
+      value: tuesdayFrom,
+      setError: setTuesdayError,
+      name: "Tuesday From & To",
+    },
+    { value: tuesdayTo, setError: setTuesdayError, name: "Tuesday From & To" },
     {
       value: wednesdayFrom,
       setError: setWednesdayError,
-      name: "Wednesday From",
+      name: "Wednesday From & To",
     },
-    { value: wednesdayTo, setError: setWednesdayError, name: "Wednesday To" },
-    { value: thursdayFrom, setError: setThursdayError, name: "Thursday From" },
-    { value: thursdayTo, setError: setThursdayError, name: "Thursday To" },
-    { value: fridayFrom, setError: setFridayError, name: "Friday From" },
-    { value: fridayTo, setError: setFridayError, name: "Friday To" },
-    { value: saturdayFrom, setError: setSaturdayError, name: "Saturday From" },
-    { value: saturdayTo, setError: setSaturdayError, name: "Saturday To" },
-    { value: sundayFrom, setError: setSundayError, name: "Sunday From" },
-    { value: sundayTo, setError: setSundayError, name: "Sunday To" },
+    {
+      value: wednesdayTo,
+      setError: setWednesdayError,
+      name: "Wednesday From & To",
+    },
+    {
+      value: thursdayFrom,
+      setError: setThursdayError,
+      name: "Thursday From & To",
+    },
+    {
+      value: thursdayTo,
+      setError: setThursdayError,
+      name: "Thursday From & To",
+    },
+    { value: fridayFrom, setError: setFridayError, name: "Friday From & To" },
+    { value: fridayTo, setError: setFridayError, name: "Friday From & To" },
+    {
+      value: saturdayFrom,
+      setError: setSaturdayError,
+      name: "Saturday From & To",
+    },
+    {
+      value: saturdayTo,
+      setError: setSaturdayError,
+      name: "Saturday From & To",
+    },
+    { value: sundayFrom, setError: setSundayError, name: "Sunday From & To" },
+    { value: sundayTo, setError: setSundayError, name: "Sunday From & To" },
   ];
   const fields5 = [
     {
@@ -1295,7 +1074,7 @@ function Msme() {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(e);
   };
-  
+
   const handleStep1 = () => {
     if (typeOfBusiness === "" || typeOfBusiness === "") {
       fields1.push({
@@ -1376,15 +1155,29 @@ function Msme() {
     if (validateFields4()) {
       // Prepare the time strings for each day
       const updatedTimes = {
-        monday: `${convertTo12HourFormat(mondayFrom)} - ${convertTo12HourFormat(mondayTo)}`,
-        tuesday: `${convertTo12HourFormat(tuesdayFrom)} - ${convertTo12HourFormat(tuesdayTo)}`,
-        wednesday: `${convertTo12HourFormat(wednesdayFrom)} - ${convertTo12HourFormat(wednesdayTo)}`,
-        thursday: `${convertTo12HourFormat(thursdayFrom)} - ${convertTo12HourFormat(thursdayTo)}`,
-        friday: `${convertTo12HourFormat(fridayFrom)} - ${convertTo12HourFormat(fridayTo)}`,
-        saturday: `${convertTo12HourFormat(saturdayFrom)} - ${convertTo12HourFormat(saturdayTo)}`,
-        sunday: `${convertTo12HourFormat(sundayFrom)} - ${convertTo12HourFormat(sundayTo)}`
+        monday: `${convertTo12HourFormat(mondayFrom)} - ${convertTo12HourFormat(
+          mondayTo
+        )}`,
+        tuesday: `${convertTo12HourFormat(
+          tuesdayFrom
+        )} - ${convertTo12HourFormat(tuesdayTo)}`,
+        wednesday: `${convertTo12HourFormat(
+          wednesdayFrom
+        )} - ${convertTo12HourFormat(wednesdayTo)}`,
+        thursday: `${convertTo12HourFormat(
+          thursdayFrom
+        )} - ${convertTo12HourFormat(thursdayTo)}`,
+        friday: `${convertTo12HourFormat(fridayFrom)} - ${convertTo12HourFormat(
+          fridayTo
+        )}`,
+        saturday: `${convertTo12HourFormat(
+          saturdayFrom
+        )} - ${convertTo12HourFormat(saturdayTo)}`,
+        sunday: `${convertTo12HourFormat(sundayFrom)} - ${convertTo12HourFormat(
+          sundayTo
+        )}`,
       };
-  
+
       // Update all days' state in one go to ensure they are captured immediately
       setMonday(updatedTimes.monday);
       setTuesday(updatedTimes.tuesday);
@@ -1393,7 +1186,7 @@ function Msme() {
       setFriday(updatedTimes.friday);
       setSaturday(updatedTimes.saturday);
       setSunday(updatedTimes.sunday);
-  
+
       // Now log the updated times object directly
       console.log(
         updatedTimes.monday,
@@ -1404,12 +1197,15 @@ function Msme() {
         updatedTimes.saturday,
         updatedTimes.sunday
       );
-  
+
       try {
         setIsSubmitting(true);
         const formData = new FormData();
         formData.append("businessRegistrationName", businessRegistrationName);
-        formData.append("businessRegistrationNumber", businessRegistrationNumber);
+        formData.append(
+          "businessRegistrationNumber",
+          businessRegistrationNumber
+        );
         formData.append("businessDisplayName", businessDisplayName);
         formData.append("typeOfBusiness", typeOfBusiness);
         formData.append("description", description);
@@ -1453,15 +1249,18 @@ function Msme() {
           formData.append("image3", fileImage3);
         }
         console.log("This is my formdata", formData);
-  
-        const response = await fetch("http://localhost:4000/msme/admin/create", {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        });
-  
+
+        const response = await fetch(
+          "http://localhost:4000/msme/admin/create",
+          {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+          }
+        );
+
         const data = await response.json();
-  
+
         if (response.ok) {
           setOpenModel(false);
           setIsSubmitting(false);
@@ -1507,7 +1306,7 @@ function Msme() {
       }
     }
   };
-  
+
   const handleStep1Review = () => {
     setStepperCounter(1);
   };
@@ -1578,6 +1377,9 @@ function Msme() {
         setFridayDetails(data.data.businessHours?.friday);
         setSaturdayDetails(data.data.businessHours?.saturday);
         setSundayDetails(data.data.businessHours?.sunday);
+        setNumberOfEmployeesDeDetails(
+          data.data.additionalInfo?.numberOfEmployees
+        );
         setBusinessLogoDetails(data.data.additionalInfo?.businessLogo);
         setImage1Details(data.data.additionalInfo?.image1);
         setImage2Details(data.data.additionalInfo?.image2);
@@ -1683,6 +1485,11 @@ function Msme() {
       },
     },
     {
+      field: "createdAt",
+      headerName: "Created At",
+      width: isSmallScreen ? 100 : 140,
+    },
+    {
       field: "action",
       headerName: "",
       width: 50,
@@ -1707,6 +1514,7 @@ function Msme() {
     foundersName: msme.founderInfo?.founderName,
     status: msme.status,
     isBlocked: msme.isBlocked,
+    createdAt: msme.createdAt,
   }));
   const filteredRows = rowsAll.filter((row) =>
     Object.values(row).some((value) =>
@@ -1716,7 +1524,7 @@ function Msme() {
   const rowsPending = pendingMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.registrationName,
-    email: msme.email,
+    email: msme?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
@@ -1724,6 +1532,7 @@ function Msme() {
     foundersName: msme.foundersName,
     status: msme.status,
     isBlocked: msme.isBlocked,
+    createdAt: msme.createdAt,
   }));
   const filteredRowsPending = rowsPending.filter((row) =>
     Object.values(row).some((value) =>
@@ -1741,6 +1550,7 @@ function Msme() {
     foundersName: msme.foundersName,
     status: msme.status,
     isBlocked: msme.isBlocked,
+    createdAt: msme.createdAt,
   }));
   const filteredRowsRejected = rowsRejected.filter((row) =>
     Object.values(row).some((value) =>
@@ -1758,6 +1568,7 @@ function Msme() {
     foundersName: msme.foundersName,
     status: msme.status,
     isBlocked: msme.isBlocked,
+    createdAt: msme.createdAt,
   }));
   const filteredRowsApproved = rowsApproved.filter((row) =>
     Object.values(row).some((value) =>
@@ -1840,10 +1651,11 @@ function Msme() {
     value: option.id,
   }));
 
-  const approve = async() => {
+  const approve = async () => {
     setOpenModelView(false);
     if (
-      updatingDetails.businessRegistrationName === businessRegistrationNameDetails &&
+      updatingDetails.businessRegistrationName ===
+        businessRegistrationNameDetails &&
       updatingDetails.businessDisplayName === businessDisplayNameDetails &&
       updatingDetails.description === descriptionDetails &&
       updatingDetails.typeOfBusiness === typeOfBusinessDetails &&
@@ -1875,7 +1687,9 @@ function Msme() {
       updatingDetails.additionalInfo?.businessLogo === businessLogoDetails &&
       updatingDetails.additionalInfo?.image1 === image1Details &&
       updatingDetails.additionalInfo?.image2 === image2Details &&
-      updatingDetails.additionalInfo?.image3 === image3Details
+      updatingDetails.additionalInfo?.image3 === image3Details &&
+      updatingDetails.additionalInfo?.numberOfEmployees ===
+        numberOfEmployeesDetails
     ) {
       try {
         setOpenModelView(false);
@@ -1890,7 +1704,7 @@ function Msme() {
           if (result.isConfirmed) {
             try {
               setIsSubmitting(true);
-  
+
               const response = await fetch(
                 `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
                 {
@@ -1905,7 +1719,7 @@ function Msme() {
                   }),
                 }
               );
-  
+
               const data = await response.json();
               const newTokenHeader = response.headers.get("Authorization");
               dispatch(
@@ -1914,7 +1728,7 @@ function Msme() {
                 })
               );
               console.log(data);
-  
+
               if (response.ok) {
                 Swal.fire({
                   position: "center",
@@ -1977,18 +1791,25 @@ function Msme() {
           timer: 4000,
         });
       }
-    }else{
+    } else {
       try {
         setIsSubmitting(true);
         const formData = new FormData();
-        formData.append("businessRegistrationName", businessRegistrationNameDetails);
-        formData.append("businessRegistrationNumber", businessRegistrationNumberDetails);
+        formData.append(
+          "businessRegistrationName",
+          businessRegistrationNameDetails
+        );
+        formData.append(
+          "businessRegistrationNumber",
+          businessRegistrationNumberDetails
+        );
         formData.append("businessDisplayName", businessDisplayNameDetails);
         formData.append("typeOfBusiness", typeOfBusinessDetails);
         formData.append("description", descriptionDetails);
         formData.append("region", regionDetails);
         formData.append("town", townDetails);
         formData.append("yearOfEstablishment", yearOfEstablishmentDetails);
+        formData.append("numberOfEmployees", numberOfEmployeesDetails);
         formData.append("primaryIndustry", primaryIndustryDetails);
         formData.append("secondaryIndustry", secondaryIndustryDetails);
         formData.append("annualTurnover", annualTurnoverDetails);
@@ -2023,18 +1844,21 @@ function Msme() {
         if (fileImage3) {
           formData.append("image3", fileImage3);
         }
-        console.log("Here is image 1: ",fileImage1)
-        const response = await fetch(`http://localhost:4000/msme/admin/update/${updatingDetails.id}`, {
-          method: "PUT",
-          credentials: "include",
-          body: formData,
-        });
-  
+        console.log("Here is image 1: ", fileImage1);
+        const response = await fetch(
+          `http://localhost:4000/msme/admin/update/${updatingDetails.id}`,
+          {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+          }
+        );
+
         const data = await response.json();
-  
+
         if (response.ok) {
           try {
-            setIsSubmitting(true)
+            setIsSubmitting(true);
 
             const response = await fetch(
               `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
@@ -2143,7 +1967,6 @@ function Msme() {
         console.error("An error occurred:", error);
       }
     }
-   
   };
   const reject = () => {
     setOpenModelView(false);
@@ -2536,7 +2359,7 @@ function Msme() {
 
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileImage1(selectedFile);
-      console.log("Here is went the file is changed",fileImage1)
+      console.log("Here is went the file is changed", fileImage1);
       setImage1(objectUrl);
     }
   };
@@ -2623,11 +2446,11 @@ function Msme() {
       }
 
       const objectUrl = URL.createObjectURL(selectedFile);
-      console.log("here is the image 1 details: ",fileImage1);
+      console.log("here is the image 1 details: ", fileImage1);
       setFileImage1(selectedFile);
-      
-    //setFileImage1(null);
-    console.log("here is the image 1 details: ",fileImage1);
+
+      //setFileImage1(null);
+      console.log("here is the image 1 details: ", fileImage1);
       setImage1Details(objectUrl);
     }
   };
@@ -2701,7 +2524,7 @@ function Msme() {
       URL.revokeObjectURL(image1);
     }
     inputRef1.current.value = "";
-    console.log("Here is file when clearing",fileImage1)
+    console.log("Here is file when clearing", fileImage1);
     setImage1(null);
   };
   const clearFileInputImage2 = () => {
@@ -2730,9 +2553,9 @@ function Msme() {
       URL.revokeObjectURL(image1Details);
     }
     inputRef1Details.current.value = "";
-    console.log("here is the image 1 details: ",fileImage1);
+    console.log("here is the image 1 details: ", fileImage1);
     setFileImage1(null);
-    console.log("here is the image 1 details: ",fileImage1);
+    console.log("here is the image 1 details: ", fileImage1);
     setImage1Details(null);
   };
   const clearFileInputImage2Details = () => {
@@ -2900,7 +2723,11 @@ function Msme() {
                               ? "btn btn-success m-1 p-2 p-xl-3 flex-grow-1"
                               : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                           }
-                          onClick={() => setButonActive(1)}
+                          onClick={() => {
+                            setButonActive(1);
+                            setSearchQuery("");
+                          }}
+                          style={{ border: "none" }}
                         >
                           Registered Msme
                         </button>
@@ -2910,7 +2737,11 @@ function Msme() {
                               ? "btn btn-success m-1 p-2 p-xl-3 flex-grow-1"
                               : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                           }
-                          onClick={() => setButonActive(2)}
+                          onClick={() => {
+                            setButonActive(2);
+                            setSearchQuery("");
+                          }}
+                          style={{ border: "none" }}
                         >
                           Pending Approval
                         </button>
@@ -2920,7 +2751,11 @@ function Msme() {
                               ? "btn btn-success m-1 p-2 p-xl-3 flex-grow-1"
                               : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                           }
-                          onClick={() => setButonActive(5)}
+                          onClick={() => {
+                            setButonActive(5);
+                            setSearchQuery("");
+                          }}
+                          style={{ border: "none" }}
                         >
                           Approved Msme
                         </button>
@@ -2930,7 +2765,11 @@ function Msme() {
                               ? "btn btn-success m-1 p-2 p-xl-3 flex-grow-1"
                               : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                           }
-                          onClick={() => setButonActive(3)}
+                          onClick={() => {
+                             setButonActive(3);
+                             setSearchQuery("");
+                          }}
+                          style={{ border: "none" }}
                         >
                           Rejected Msme
                         </button>
@@ -2940,7 +2779,11 @@ function Msme() {
                               ? "btn btn-success m-1 p-2 p-xl-3 flex-grow-1"
                               : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                           }
-                          onClick={() => setButonActive(4)}
+                          onClick={() => {
+                            setButonActive(4)
+                            setSearchQuery("")
+                          }}
+                          style={{ border: "none" }}
                         >
                           Incomplete Registration
                         </button>
@@ -2974,23 +2817,57 @@ function Msme() {
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">All MSME List</p>
-                        <Box sx={{ height: 500, width: "100%" }}>
-                          <DataGrid
-                            rows={filteredRows}
-                            columns={columns}
-                            
-                            initialState={{
-                              pagination: {
-                                paginationModel: {
-                                  pageSize: 15,
-                                },
-                              },
-                            }}
-                            pageSizeOptions={[15]}
-                            checkboxSelection
-                            disableRowSelectionOnClick
-                          />
-                        </Box>
+                        {allMSMEList ? (
+                          <>
+                            <Box sx={{ height: 500, width: "100%" }}>
+                              <DataGrid
+                                rows={filteredRows}
+                                sx={{
+                                  "& .status-pending": {
+                                    color: "yellow",
+                                  },
+                                  "& .status-rejected": {
+                                    color: "red",
+                                  },
+                                  "& .status-approved": {
+                                    color: "green",
+                                  },
+                                  "& .MuiDataGrid-columnHeaders": {
+                                    fontWeight: "bold",
+                                  },
+                                  "& .MuiDataGrid-columnHeaderTitle": {
+                                    fontWeight: "bold",
+                                  },
+                                }}
+                                columns={columns}
+                                initialState={{
+                                  pagination: {
+                                    paginationModel: {
+                                      pageSize: 15,
+                                    },
+                                  },
+                                }}
+                                pageSizeOptions={[15]}
+                                checkboxSelection
+                                disableRowSelectionOnClick
+                              />
+                            </Box>
+                          </>
+                        ) : (
+                          <>
+                            <div
+                              className="d-flex justify-content-center align-items-center"
+                              style={{ height: 500, width: "100%" }}
+                            >
+                              <div style={{ textAlign: "center" }}>
+                                <CircularProgress color="inherit" />
+                                <p className="p-4 text-secondary">
+                                  Just a moment, we’re getting things ready...
+                                </p>
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </>
                   )}
@@ -3020,22 +2897,57 @@ function Msme() {
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Pending MSME List</p>
-                        <Box sx={{ height: 500, width: "100%" }}>
-                          <DataGrid
-                            rows={filteredRowsPending}
-                            columns={columns}
-                            initialState={{
-                              pagination: {
-                                paginationModel: {
-                                  pageSize: 15,
-                                },
-                              },
-                            }}
-                            pageSizeOptions={[15]}
-                            checkboxSelection
-                            disableRowSelectionOnClick
-                          />
-                        </Box>
+                        {pendingMSMEList ? (
+                          <>
+                            <Box sx={{ height: 500, width: "100%" }}>
+                              <DataGrid
+                                rows={filteredRowsPending}
+                                columns={columns}
+                                sx={{
+                                  "& .status-pending": {
+                                    color: "yellow",
+                                  },
+                                  "& .status-rejected": {
+                                    color: "red",
+                                  },
+                                  "& .status-approved": {
+                                    color: "green",
+                                  },
+                                  "& .MuiDataGrid-columnHeaders": {
+                                    fontWeight: "bold",
+                                  },
+                                  "& .MuiDataGrid-columnHeaderTitle": {
+                                    fontWeight: "bold",
+                                  },
+                                }}
+                                initialState={{
+                                  pagination: {
+                                    paginationModel: {
+                                      pageSize: 15,
+                                    },
+                                  },
+                                }}
+                                pageSizeOptions={[15]}
+                                checkboxSelection
+                                disableRowSelectionOnClick
+                              />
+                            </Box>
+                          </>
+                        ) : (
+                          <>
+                            <div
+                              className="d-flex justify-content-center align-items-center"
+                              style={{ height: 500, width: "100%" }}
+                            >
+                              <div style={{ textAlign: "center" }}>
+                                <CircularProgress color="inherit" />
+                                <p className="p-4 text-secondary">
+                                  Just a moment, we’re getting things ready...
+                                </p>
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </>
                   )}
@@ -3065,22 +2977,57 @@ function Msme() {
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Rejected MSME List</p>
-                        <Box sx={{ height: 500, width: "100%" }}>
-                          <DataGrid
-                            rows={filteredRowsRejected}
-                            columns={columns}
-                            initialState={{
-                              pagination: {
-                                paginationModel: {
-                                  pageSize: 15,
-                                },
-                              },
-                            }}
-                            pageSizeOptions={[15]}
-                            checkboxSelection
-                            disableRowSelectionOnClick
-                          />
-                        </Box>
+                        {rejectedMSMEList ? (
+                          <>
+                            <Box sx={{ height: 500, width: "100%" }}>
+                              <DataGrid
+                                rows={filteredRowsRejected}
+                                columns={columns}
+                                sx={{
+                                  "& .status-pending": {
+                                    color: "yellow",
+                                  },
+                                  "& .status-rejected": {
+                                    color: "red",
+                                  },
+                                  "& .status-approved": {
+                                    color: "green",
+                                  },
+                                  "& .MuiDataGrid-columnHeaders": {
+                                    fontWeight: "bold",
+                                  },
+                                  "& .MuiDataGrid-columnHeaderTitle": {
+                                    fontWeight: "bold",
+                                  },
+                                }}
+                                initialState={{
+                                  pagination: {
+                                    paginationModel: {
+                                      pageSize: 15,
+                                    },
+                                  },
+                                }}
+                                pageSizeOptions={[15]}
+                                checkboxSelection
+                                disableRowSelectionOnClick
+                              />
+                            </Box>
+                          </>
+                        ) : (
+                          <>
+                            <div
+                              className="d-flex justify-content-center align-items-center"
+                              style={{ height: 500, width: "100%" }}
+                            >
+                              <div style={{ textAlign: "center" }}>
+                                <CircularProgress color="inherit" />
+                                <p className="p-4 text-secondary">
+                                  Just a moment, we’re getting things ready...
+                                </p>
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </>
                   )}
@@ -3114,6 +3061,23 @@ function Msme() {
                           <DataGrid
                             rows={rowsIncomplete}
                             columns={columns}
+                            sx={{
+                              "& .status-pending": {
+                                color: "yellow",
+                              },
+                              "& .status-rejected": {
+                                color: "red",
+                              },
+                              "& .status-approved": {
+                                color: "green",
+                              },
+                              "& .MuiDataGrid-columnHeaders": {
+                                fontWeight: "bold",
+                              },
+                              "& .MuiDataGrid-columnHeaderTitle": {
+                                fontWeight: "bold",
+                              },
+                            }}
                             initialState={{
                               pagination: {
                                 paginationModel: {
@@ -3155,22 +3119,57 @@ function Msme() {
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Approved MSME List</p>
-                        <Box sx={{ height: 500, width: "100%" }}>
-                          <DataGrid
-                            rows={filteredRowsApproved}
-                            columns={columns}
-                            initialState={{
-                              pagination: {
-                                paginationModel: {
-                                  pageSize: 15,
-                                },
-                              },
-                            }}
-                            pageSizeOptions={[15]}
-                            checkboxSelection
-                            disableRowSelectionOnClick
-                          />
-                        </Box>
+                        {approvedMSMEList ? (
+                          <>
+                            <Box sx={{ height: 500, width: "100%" }}>
+                              <DataGrid
+                                rows={filteredRowsApproved}
+                                columns={columns}
+                                sx={{
+                                  "& .status-pending": {
+                                    color: "yellow",
+                                  },
+                                  "& .status-rejected": {
+                                    color: "red",
+                                  },
+                                  "& .status-approved": {
+                                    color: "green",
+                                  },
+                                  "& .MuiDataGrid-columnHeaders": {
+                                    fontWeight: "bold",
+                                  },
+                                  "& .MuiDataGrid-columnHeaderTitle": {
+                                    fontWeight: "bold",
+                                  },
+                                }}
+                                initialState={{
+                                  pagination: {
+                                    paginationModel: {
+                                      pageSize: 15,
+                                    },
+                                  },
+                                }}
+                                pageSizeOptions={[15]}
+                                checkboxSelection
+                                disableRowSelectionOnClick
+                              />
+                            </Box>
+                          </>
+                        ) : (
+                          <>
+                            <div
+                              className="d-flex justify-content-center align-items-center"
+                              style={{ height: 500, width: "100%" }}
+                            >
+                              <div style={{ textAlign: "center" }}>
+                                <CircularProgress color="inherit" />
+                                <p className="p-4 text-secondary">
+                                  Just a moment, we’re getting things ready...
+                                </p>
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </>
                   )}
@@ -3185,7 +3184,104 @@ function Msme() {
             aria-describedby="modal-modal-description"
           >
             <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
-              <h1 className="text-center">Add New MSME</h1>
+              <div className="d-flex justify-content-between align-items-center">
+                <div></div>
+                <h1 className="text-center">Add New MSME</h1>
+                <CgCloseR
+                  style={{
+                    color: "red",
+                    fontSize: "32px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setBusinessAddressError("");
+                    setBusinessRegistrationNameError("");
+                    setBusinessRegistrationNumberError("");
+                    setBusinessDisplayNameError("");
+                    setDescriptionError("");
+                    setTypeOfBusinessError("");
+                    setRegionError("");
+                    setTownError("");
+                    setPrimaryIndustryError("");
+                    setSecondaryIndustryError("");
+                    setYearOfEstablishmentError("");
+                    setNumberOfEmployeesError("");
+                    setAnnualTurnoverError("");
+                    setFoundersNameError("");
+                    setFoundersGenderError("");
+                    setFoundersAgeError("");
+                    setBusinessAddressError("");
+                    setPhoneNumberError("");
+                    setWhatsAppNumberError("");
+                    setBusinessEmailError("");
+                    setWebsiteLinkError("");
+                    setFacebookLinkError("");
+                    setTwitterLinkError("");
+                    setInstagramLinkError("");
+                    setLinkedInLinkError("");
+                    setMondayError("");
+                    setTuesdayDetails("");
+                    setWednesdayError("");
+                    setThursdayError("");
+                    setFridayError("");
+                    setSaturdayError("");
+                    setSundayError("");
+                    setBusinessLogoError("");
+                    setImage1Error("");
+                    setImage2Error("");
+                    setImage3Error("");
+                    setUserIdError("");
+
+                    setBusinessAddress("");
+                    setBusinessRegistrationName("");
+                    setBusinessRegistrationNumber("");
+                    setBusinessDisplayName("");
+                    setDescription("");
+                    setTypeOfBusiness("");
+                    setRegion("");
+                    setTown("");
+                    setPrimaryIndustry("");
+                    setSecondaryIndustry("");
+                    setYearOfEstablishment("");
+                    setNumberOfEmployees("");
+                    setAnnualTurnover("");
+                    setFoundersName("");
+                    setFoundersGender("");
+                    setFoundersAge("");
+                    setBusinessAddress("");
+                    setPhoneNumber("");
+                    setWhatsAppNumber("");
+                    setBusinessEmail("");
+                    setWebsiteLink("");
+                    setFacebookLink("");
+                    setTwitterLink("");
+                    setInstagramLink("");
+                    setLinkedInLink("");
+                    setMondayTo("");
+                    setMondayFrom("");
+                    setTuesdayTo("");
+                    setTuesdayFrom("");
+                    setWednesdayTo("");
+                    setWednesdayFrom("");
+                    setThursdayTo("");
+                    setThursdayFrom("");
+                    setFridayTo("");
+                    setFridayFrom("");
+                    setSaturdayTo("");
+                    setSaturdayFrom("");
+                    setSundayTo("");
+                    setSundayFrom("");
+                    setBusinessLogo("");
+                    setImage1("");
+                    setImage2("");
+                    setImage3("");
+                    setUserId("");
+                    setStepperCounter(0);
+                    setOpenModel(false);
+                  }}
+                />
+              </div>
+
               <Box
                 sx={{ width: "100%" }}
                 style={{ marginTop: "10px", marginBottom: "20px" }}
@@ -3208,7 +3304,7 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Type of Business: <span>*</span>
                         </label>
                         <select
@@ -3242,7 +3338,7 @@ function Msme() {
                           <div className="form-group pb-3">
                             <label
                               htmlFor="businessRegistrationNumber"
-                              className="pb-2"
+                              className="pb-2 text-bold"
                             >
                               Registration Number: <span>*</span>
                             </label>
@@ -3272,7 +3368,7 @@ function Msme() {
 
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="registrationName" className="pb-2">
+                        <label htmlFor="registrationName" className="pb-2 text-bold">
                           Registration Name:<span>*</span>
                         </label>
                         <input
@@ -3298,7 +3394,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="displayNumber" className="pb-2">
+                        <label htmlFor="displayNumber" className="pb-2 text-bold">
                           Display Name:<span>*</span>
                         </label>
                         <input
@@ -3321,46 +3417,45 @@ function Msme() {
                           </>
                         )}
                       </div>
-                      {
-  (typeOfBusiness !== "Proprietary Limited Company (PTY)" &&
-    typeOfBusiness !== "Close Corporation (CC)") && (
-      <>
-        <div className="form-group pb-3">
-          <label htmlFor="email" className="pb-2">
-            User Name: <span>*</span>
-          </label>
-          <select
-            className="form-select"
-            value={userId}
-            onChange={(e) => {
-              setUserIdError("");
-              setUserId(e.target.value);
-            }}
-          >
-            <option value="" disabled selected>
-              Select user
-            </option>
-            {userOptions.map((option) => (
-              <option value={option.value} key={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          {userIdError && (
-            <>
-              <p className="error mt-1">{userIdError}</p>
-            </>
-          )}
-        </div>
-      </>
-    )
-}
-
-                      
+                      {typeOfBusiness !== "Proprietary Limited Company (PTY)" &&
+                        typeOfBusiness !== "Close Corporation (CC)" && (
+                          <>
+                            <div className="form-group pb-3">
+                              <label htmlFor="email" className="pb-2 text-bold">
+                                User Name: <span>*</span>
+                              </label>
+                              <select
+                                className="form-select"
+                                value={userId}
+                                onChange={(e) => {
+                                  setUserIdError("");
+                                  setUserId(e.target.value);
+                                }}
+                              >
+                                <option value="" disabled selected>
+                                  Select user
+                                </option>
+                                {userOptions.map((option) => (
+                                  <option
+                                    value={option.value}
+                                    key={option.value}
+                                  >
+                                    {option.label}
+                                  </option>
+                                ))}
+                              </select>
+                              {userIdError && (
+                                <>
+                                  <p className="error mt-1">{userIdError}</p>
+                                </>
+                              )}
+                            </div>
+                          </>
+                        )}
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="description" className="pb-2">
+                        <label htmlFor="description" className="pb-2 text-bold">
                           Business Description: <span>*</span>
                         </label>
                         <textarea
@@ -3384,42 +3479,41 @@ function Msme() {
                       </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                    {
-                        (typeOfBusiness === "Proprietary Limited Company (PTY)" ||
-                          typeOfBusiness === "Close Corporation (CC)") && (
-                            <>
-                            <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
-                          User Name: <span>*</span>
-                        </label>
-                        <select
-                          class="form-select"
-                          value={userId}
-                          onChange={(e) => {
-                            setUserIdError("");
-                            setUserId(e.target.value);
-                          }}
-                        >
-                          <option value="" disabled selected>
-                            Select user
-                          </option>
-                          {userOptions.map((option) => (
-                            <option value={option.value} key={option.value}>
-                              {option.label}
-                            </option>
-                          ))}
-                        </select>
-                        {userIdError && (
-                          <>
-                            <p className="error mt-1">{userIdError}</p>
-                          </>
-                        )}
-                      </div>
-                            </>
-                          )
-                      }
+                      {(typeOfBusiness ===
+                        "Proprietary Limited Company (PTY)" ||
+                        typeOfBusiness === "Close Corporation (CC)") && (
+                        <>
+                          <div className="form-group pb-3">
+                            <label htmlFor="email" className="pb-2 text-bold">
+                              User Name: <span>*</span>
+                            </label>
+                            <select
+                              class="form-select"
+                              value={userId}
+                              onChange={(e) => {
+                                setUserIdError("");
+                                setUserId(e.target.value);
+                              }}
+                            >
+                              <option value="" disabled selected>
+                                Select user
+                              </option>
+                              {userOptions.map((option) => (
+                                <option value={option.value} key={option.value}>
+                                  {option.label}
+                                </option>
+                              ))}
+                            </select>
+                            {userIdError && (
+                              <>
+                                <p className="error mt-1">{userIdError}</p>
+                              </>
+                            )}
+                          </div>
+                        </>
+                      )}
                       <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Region: <span>*</span>
                         </label>
                         <select
@@ -3449,7 +3543,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Town: <span>*</span>
                         </label>
                         <select
@@ -3478,7 +3572,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Primary Industry:<span>*</span>
                         </label>
                         <select
@@ -3507,7 +3601,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Secondary Industry:<span>*</span>
                         </label>
                         <select
@@ -3538,7 +3632,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Year of Establishment: <span>*</span>
                         </label>
                         <input
@@ -3566,7 +3660,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="turnover" className="pb-2">
+                        <label htmlFor="turnover" className="pb-2 text-bold">
                           Annual Turnover: <span>*</span>
                         </label>
                         <select
@@ -3594,7 +3688,13 @@ function Msme() {
                       </div>
                     </Grid>
                     <div className="d-flex justify-content-end w-100">
-                      <ModelButton text="Step 2" onClick={handleStep1} />
+                    <button
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
+                        onClick={handleStep1}
+                      >
+                        Step 2
+                        <EastIcon style={{marginLeft: "10px"}}/>
+                      </button>
                     </div>
                   </>
                 )}
@@ -3603,7 +3703,7 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Founder's Name:<span>*</span>
                         </label>
                         <input
@@ -3627,7 +3727,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Founder's Gender:<span>*</span>
                         </label>
                         <select
@@ -3656,7 +3756,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Founder Age: <span>*</span>
                         </label>
                         <input
@@ -3683,16 +3783,18 @@ function Msme() {
 
                     <div className="d-flex justify-content-between w-100">
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(0)}
                       >
-                        Previous
+                        <KeyboardBackspaceIcon style={{marginRight: "10px"}}/>
+                        Step 1
                       </button>
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={handleStep2}
                       >
                         Step 3
+                        <EastIcon style={{marginLeft: "10px"}}/>
                       </button>
                     </div>
                   </>
@@ -3701,8 +3803,8 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="businessAddress" className="pb-2">
-                          Business Address:<span>*</span>
+                        <label htmlFor="businessAddress" className="pb-2 text-bold">
+                          Business Address: <span>*</span>
                         </label>
                         <input
                           type="text"
@@ -3725,8 +3827,8 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="phoneNumber" className="pb-2">
-                          Phone Number:<span>*</span>
+                        <label htmlFor="phoneNumber" className="pb-2 text-bold">
+                          Phone Number: <span>*</span>
                         </label>
                         <input
                           type="text"
@@ -3749,8 +3851,8 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="whatsAppNumber" className="pb-2">
-                          What's App Number: <span>*</span>
+                        <label htmlFor="whatsAppNumber" className="pb-2 text-bold">
+                          What's App Number:
                         </label>
                         <input
                           type="text"
@@ -3773,8 +3875,8 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="businessEmail" className="pb-2">
-                          Business email:<span>*</span>
+                        <label htmlFor="businessEmail" className="pb-2 text-bold">
+                          Business email: <span>*</span>
                         </label>
                         <input
                           type="email"
@@ -3797,8 +3899,8 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="website" className="pb-2">
-                          Website Link: <span>*</span>
+                        <label htmlFor="website" className="pb-2 text-bold">
+                          Website Link:
                         </label>
                         <input
                           type="text"
@@ -3821,8 +3923,8 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="twitter" className="pb-2">
-                          Twitter Link:<span>*</span>
+                        <label htmlFor="twitter" className="pb-2 text-bold">
+                          Twitter Link:
                         </label>
                         <input
                           type="text"
@@ -3845,8 +3947,8 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="facebook" className="pb-2">
-                          Facebook Link: <span>*</span>
+                        <label htmlFor="facebook" className="pb-2 text-bold">
+                          Facebook Link:
                         </label>
                         <input
                           type="text"
@@ -3869,7 +3971,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="instagram" className="pb-2">
+                        <label htmlFor="instagram" className="pb-2 text-bold">
                           Instagram Link:
                         </label>
                         <input
@@ -3893,8 +3995,8 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="linkedIn" className="pb-2">
-                          Linkedln Link: <span>*</span>
+                        <label htmlFor="linkedIn" className="pb-2 text-bold">
+                          Linkedln Link:
                         </label>
                         <input
                           type="text"
@@ -3918,16 +4020,18 @@ function Msme() {
 
                     <div className="d-flex justify-content-between w-100">
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(1)}
                       >
-                        Previous
+                        <KeyboardBackspaceIcon style={{marginRight: "10px"}}/>
+                        Step 2
                       </button>
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={handleStep3}
                       >
                         Step 4
+                        <EastIcon style={{marginLeft: "10px"}}/>
                       </button>
                     </div>
                   </>
@@ -3936,7 +4040,7 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">Monday:</label>
+                        <label htmlFor="email" className="text-bold">Monday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -3945,7 +4049,7 @@ function Msme() {
                         >
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="mondayFrom" className="pb-2">
+                              <label htmlFor="mondayFrom" className="pb-2 text-bold">
                                 From: <span>*</span>
                               </label>
                               <input
@@ -3964,7 +4068,7 @@ function Msme() {
                           </Grid>
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="mondayTo" className="pb-2">
+                              <label htmlFor="mondayTo" className="pb-2 text-bold">
                                 To: <span>*</span>
                               </label>
                               <input
@@ -3991,7 +4095,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">Tuesday:</label>
+                        <label htmlFor="email" className="text-bold">Tuesday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -4000,7 +4104,7 @@ function Msme() {
                         >
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="tusdayFrom" className="pb-2">
+                              <label htmlFor="tusdayFrom" className="pb-2 text-bold">
                                 From: <span>*</span>
                               </label>
                               <input
@@ -4019,7 +4123,7 @@ function Msme() {
                           </Grid>
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="tusdayTo" className="pb-2">
+                              <label htmlFor="tusdayTo" className="pb-2 text-bold">
                                 To: <span>*</span>
                               </label>
                               <input
@@ -4046,7 +4150,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">Wednesday:</label>
+                        <label htmlFor="email" className="text-bold">Wednesday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -4055,7 +4159,7 @@ function Msme() {
                         >
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="wednesdayFrom" className="pb-2">
+                              <label htmlFor="wednesdayFrom" className="pb-2 text-bold">
                                 From: <span>*</span>
                               </label>
                               <input
@@ -4074,7 +4178,7 @@ function Msme() {
                           </Grid>
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="wednesdayTo" className="pb-2">
+                              <label htmlFor="wednesdayTo" className="pb-2 text-bold">
                                 To: <span>*</span>
                               </label>
                               <input
@@ -4101,7 +4205,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">Thursday:</label>
+                        <label htmlFor="email" className="text-bold">Thursday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -4110,7 +4214,7 @@ function Msme() {
                         >
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="thursdayFrom" className="pb-2">
+                              <label htmlFor="thursdayFrom" className="pb-2 text-bold">
                                 From: <span>*</span>
                               </label>
                               <input
@@ -4129,7 +4233,7 @@ function Msme() {
                           </Grid>
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="thursdayTo" className="pb-2">
+                              <label htmlFor="thursdayTo" className="pb-2 text-bold">
                                 To: <span>*</span>
                               </label>
                               <input
@@ -4156,7 +4260,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">Friday:</label>
+                        <label htmlFor="email" className="text-bold">Friday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -4165,7 +4269,7 @@ function Msme() {
                         >
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="fridayFrom" className="pb-2">
+                              <label htmlFor="fridayFrom" className="pb-2 text-bold">
                                 From: <span>*</span>
                               </label>
                               <input
@@ -4184,7 +4288,7 @@ function Msme() {
                           </Grid>
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="fridayTo" className="pb-2">
+                              <label htmlFor="fridayTo" className="pb-2 text-bold">
                                 To: <span>*</span>
                               </label>
                               <input
@@ -4211,7 +4315,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">Saturday:</label>
+                        <label htmlFor="email" className="text-bold">Saturday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -4220,7 +4324,7 @@ function Msme() {
                         >
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="saturdayFrom" className="pb-2">
+                              <label htmlFor="saturdayFrom" className="pb-2 text-bold">
                                 From: <span>*</span>
                               </label>
                               <input
@@ -4239,7 +4343,7 @@ function Msme() {
                           </Grid>
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="fridayTo" className="pb-2">
+                              <label htmlFor="fridayTo" className="pb-2 text-bold">
                                 To: <span>*</span>
                               </label>
                               <input
@@ -4266,7 +4370,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email">Sunday:</label>
+                        <label htmlFor="email" className="text-bold">Sunday:</label>
                         <Grid
                           container
                           spacing={{ xs: 2, md: 2 }}
@@ -4275,7 +4379,7 @@ function Msme() {
                         >
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="sundayFrom" className="pb-2">
+                              <label htmlFor="sundayFrom" className="pb-2 text-bold">
                                 From: <span>*</span>
                               </label>
                               <input
@@ -4294,7 +4398,7 @@ function Msme() {
                           </Grid>
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-3">
-                              <label htmlFor="sundayTo" className="pb-2">
+                              <label htmlFor="sundayTo" className="pb-2 text-bold">
                                 To: <span>*</span>
                               </label>
                               <input
@@ -4321,16 +4425,18 @@ function Msme() {
                     </Grid>
                     <div className="d-flex justify-content-between w-100">
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(2)}
                       >
-                        Previous
+                        <KeyboardBackspaceIcon style={{marginRight: "10px"}}/>
+                        Step 3
                       </button>
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={handleStep4}
                       >
-                        Step 4
+                        Step 5
+                        <EastIcon style={{marginLeft: "10px"}}/>
                       </button>
                     </div>
                   </>
@@ -4339,8 +4445,8 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="numberOfEmployee" className="pb-2">
-                          Number of Employees:<span>*</span>
+                        <label htmlFor="numberOfEmployee" className="pb-2 text-bold">
+                          Number of Employees: <span>*</span>
                         </label>
                         <select
                           class="form-select"
@@ -4370,8 +4476,8 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2">
-                                Business image 1: <span>*</span>
+                              <label htmlFor="email" className="pb-2 text-bold">
+                                Business image 1:
                               </label>
                             </div>
                             <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
@@ -4422,8 +4528,8 @@ function Msme() {
                       ) : (
                         <>
                           <div className="form-group pb-md-2">
-                            <label htmlFor="email" className="pb-2">
-                              Business image 1: <span>*</span>
+                            <label htmlFor="email" className="pb-2 text-bold">
+                              Business image 1:
                             </label>
                             <input
                               type="file"
@@ -4448,8 +4554,8 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2">
-                                Business Logo: <span>*</span>
+                              <label htmlFor="email" className="pb-2 text-bold">
+                                Business Logo:
                               </label>
                             </div>
                             <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
@@ -4500,8 +4606,8 @@ function Msme() {
                       ) : (
                         <>
                           <div className="form-group pb-md-2">
-                            <label htmlFor="email" className="pb-2">
-                              Business Logo: <span>*</span>
+                            <label htmlFor="email" className="pb-2 text-bold">
+                              Business Logo:
                             </label>
                             <input
                               type="file"
@@ -4528,8 +4634,8 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2">
-                                Business image 2: <span>*</span>
+                              <label htmlFor="email" className="pb-2 text-bold">
+                                Business image 2:
                               </label>
                             </div>
                             <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
@@ -4580,8 +4686,8 @@ function Msme() {
                       ) : (
                         <>
                           <div className="form-group pb-md-2">
-                            <label htmlFor="email" className="pb-2">
-                              Business image 2: <span>*</span>
+                            <label htmlFor="email" className="pb-2 text-bold">
+                              Business image 2:
                             </label>
                             <input
                               type="file"
@@ -4606,8 +4712,8 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2">
-                                Business image 3: <span>*</span>
+                              <label htmlFor="email" className="pb-2 text-bold">
+                                Business image 3:
                               </label>
                             </div>
                             <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
@@ -4658,8 +4764,8 @@ function Msme() {
                       ) : (
                         <>
                           <div className="form-group pb-md-2">
-                            <label htmlFor="email" className="pb-2">
-                              Business image 3: <span>*</span>
+                            <label htmlFor="email" className="pb-2 text-bold">
+                              Business image 3:
                             </label>
                             <input
                               type="file"
@@ -4682,13 +4788,14 @@ function Msme() {
 
                     <div className="d-flex justify-content-between w-100">
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(3)}
                       >
-                        Previous
+                        <KeyboardBackspaceIcon style={{marginRight: "10px"}}/>
+                        Step 4
                       </button>
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={handleStep5}
                       >
                         Submit
@@ -4706,7 +4813,57 @@ function Msme() {
             aria-describedby="modal-modal-description"
           >
             <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
-              <h1 className="text-center">MSME Review</h1>
+              <div className="d-flex justify-content-between align-items-center">
+                <div></div>
+                <h1 className="text-center">MSME Review</h1>
+                <CgCloseR
+                  style={{
+                    color: "red",
+                    fontSize: "32px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setBusinessAddressDetails();
+                    setBusinessRegistrationNameDetails("");
+                    setBusinessDisplayNameDetails("");
+                    setDescriptionDetails("");
+                    setTypeOfBusinessDetails("");
+                    setRegionDetails("");
+                    setTownDetails("");
+                    setPrimaryIndustryDetails("");
+                    setSecondaryIndustryDetails("");
+                    setYearOfEstablishmentDetails("");
+                    setNumberOfEmployeesDeDetails("");
+                    setAnnualTurnoverDetails("");
+                    setFoundersNameDetails("");
+                    setFoundersGenderDetails("");
+                    setFoundersAgeDetails("");
+                    setBusinessAddressDetails("");
+                    setPhoneNumberDetails("");
+                    setWhatsAppNumberDetails("");
+                    setBusinessEmailDetails("");
+                    setWebsiteLinkDetails("");
+                    setFacebookLinkDetails("");
+                    setTwitterLinkDetails("");
+                    setInstagramLinkDetails("");
+                    setLinkedInLinkDetails("");
+                    setMondayDetails("");
+                    setTuesdayDetails("");
+                    setWednesdayDetails("");
+                    setThursdayDetails("");
+                    setFridayDetails("");
+                    setSaturdayDetails("");
+                    setSundayDetails("");
+                    setBusinessLogoDetails("");
+                    setImage1Details("");
+                    setImage2Details("");
+                    setImage3Details("");
+                    setStepperCounter(0);
+                    setOpenModelView(false);
+                  }}
+                />
+              </div>
+
               <Box
                 sx={{ width: "100%" }}
                 style={{ marginTop: "10px", marginBottom: "20px" }}
@@ -4729,7 +4886,7 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Type of Business:
                         </label>
                         <select
@@ -4758,14 +4915,13 @@ function Msme() {
                     </Grid>
                     {(typeOfBusinessDetails ===
                       "Proprietary Limited Company (PTY)" ||
-                      typeOfBusinessDetails ===
-                        "Close Corporation (CC)") && (
+                      typeOfBusinessDetails === "Close Corporation (CC)") && (
                       <>
                         <Grid item xs={12} sm={6} md={6}>
                           <div className="form-group pb-md-2">
                             <label
                               htmlFor="businessRegistrationNumber"
-                              className="pb-2"
+                              className="pb-2 text-bold"
                             >
                               Registration Number:
                             </label>
@@ -4802,7 +4958,7 @@ function Msme() {
 
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="registrationName" className="pb-2">
+                        <label htmlFor="registrationName" className="pb-2 text-bold">
                           Registration Name:
                         </label>
                         <input
@@ -4829,7 +4985,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="displayNumber" className="pb-2">
+                        <label htmlFor="displayNumber" className="pb-2 text-bold">
                           Display Name:
                         </label>
                         <input
@@ -4856,7 +5012,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="description" className="pb-2">
+                        <label htmlFor="description" className="pb-2 text-bold">
                           Business Description:
                         </label>
                         <textarea
@@ -4885,7 +5041,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Region:
                         </label>
                         <select
@@ -4917,7 +5073,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Town:
                         </label>
                         <select
@@ -4949,7 +5105,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Primary Industry:
                         </label>
                         <select
@@ -4981,7 +5137,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Secondary Industry:
                         </label>
                         <select
@@ -5013,7 +5169,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Year of Establishment:
                         </label>
                         <input
@@ -5042,24 +5198,55 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="turnover" className="pb-2">
+                        <label htmlFor="turnover" className="pb-2 text-bold">
                           Annual Turnover:
                         </label>
-                        <input
-                          type="text"
-                          className="form-control place-holder"
-                          placeholder="Display name"
-                          disabled={
-                            currentUser.role === "Super admin" ? false : true
-                          }
+                        <select
+                          class="form-select"
                           value={annualTurnoverDetails}
                           onChange={(e) => {
                             setAnnualTurnoverDetailsError("");
                             setAnnualTurnoverDetails(e.target.value);
                           }}
-                          autoComplete="off"
-                          name="displayNumber"
-                        />
+                        >
+                          <option value="" disabled>
+                            Select annual turnover
+                          </option>
+                          {annualTurnoverOptions.map((option) => (
+                            <option value={option.value} key={option.value}>
+                              {option.value}
+                            </option>
+                          ))}
+                        </select>
+                        {typeOfBusinessError && (
+                          <>
+                            <p className="error mt-1">{typeOfBusinessError}</p>
+                          </>
+                        )}
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6}>
+                      <div className="form-group pb-md-2">
+                        <label htmlFor="turnover" className="pb-2 text-bold">
+                          Number of Employees:
+                        </label>
+                        <select
+                          class="form-select"
+                          value={numberOfEmployeesDetails}
+                          onChange={(e) => {
+                            setNumberOfEmployeesDetailsError("");
+                            setNumberOfEmployeesDeDetails(e.target.value);
+                          }}
+                        >
+                          <option value="" disabled>
+                            Select number of employees
+                          </option>
+                          {numberOfEmployeeOptions.map((option) => (
+                            <option value={option.value} key={option.value}>
+                              {option.value}
+                            </option>
+                          ))}
+                        </select>
                         {typeOfBusinessError && (
                           <>
                             <p className="error mt-1">{typeOfBusinessError}</p>
@@ -5077,7 +5264,7 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Founder's Name:
                         </label>
                         <input
@@ -5104,7 +5291,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Founder's Gender:
                         </label>
                         <select
@@ -5133,7 +5320,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="pb-2">
+                        <label htmlFor="email" className="pb-2 text-bold">
                           Founder Age:
                         </label>
                         <input
@@ -5179,7 +5366,7 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="businessAddress" className="pb-2">
+                        <label htmlFor="businessAddress" className="pb-2 text-bold">
                           Business Address:
                         </label>
                         <textarea
@@ -5207,7 +5394,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="phoneNumber" className="pb-2">
+                        <label htmlFor="phoneNumber" className="pb-2 text-bold">
                           Phone Number:
                         </label>
                         <input
@@ -5235,7 +5422,7 @@ function Msme() {
                     {updatingDetails?.contactInfo?.whatsAppNumber && (
                       <Grid item xs={12} sm={6} md={6}>
                         <div className="form-group pb-md-2">
-                          <label htmlFor="whatsAppNumber" className="pb-2">
+                          <label htmlFor="whatsAppNumber" className="pb-2 text-bold">
                             What's App Number:
                           </label>
                           <input
@@ -5266,7 +5453,7 @@ function Msme() {
 
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="businessEmail" className="pb-2">
+                        <label htmlFor="businessEmail" className="pb-2 text-bold">
                           Business email:
                         </label>
                         <input
@@ -5291,165 +5478,146 @@ function Msme() {
                         )}
                       </div>
                     </Grid>
-                    
-                      <Grid item xs={12} sm={6} md={6}>
-                        <div className="form-group pb-md-2">
-                          <label htmlFor="website" className="pb-2">
-                            Website Link:
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control place-holder"
-                            placeholder="Enter link here"
-                            disabled={
-                              currentUser.role === "Super admin" ? false : true
-                            }
-                            value={websiteLinkDetails}
-                            onChange={(e) => {
-                              setWebsiteLinkDetailsError("");
-                              setWebsiteLinkDetails(e.target.value);
-                            }}
-                            autoComplete="off"
-                            name="email"
-                          />
-                          {typeOfBusinessError && (
-                            <>
-                              <p className="error mt-1">
-                                {typeOfBusinessError}
-                              </p>
-                            </>
-                          )}
-                        </div>
-                      </Grid>
-                    
 
-                    
-                      <Grid item xs={12} sm={6} md={6}>
-                        <div className="form-group pb-md-2">
-                          <label htmlFor="twitter" className="pb-2">
-                            Twitter Link:
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control place-holder"
-                            placeholder="Enter link here"
-                            disabled={
-                              currentUser.role === "Super admin" ? false : true
-                            }
-                            value={twitterLinkDetails}
-                            onChange={(e) => {
-                              setTwitterLinkDetailsError("");
-                              setTwitterLinkDetails(e.target.value);
-                            }}
-                            autoComplete="off"
-                            name="email"
-                          />
-                          {typeOfBusinessError && (
-                            <>
-                              <p className="error mt-1">
-                                {typeOfBusinessError}
-                              </p>
-                            </>
-                          )}
-                        </div>
-                      </Grid>
-                  
+                    <Grid item xs={12} sm={6} md={6}>
+                      <div className="form-group pb-md-2">
+                        <label htmlFor="website" className="pb-2 text-bold">
+                          Website Link:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control place-holder"
+                          placeholder="Enter link here"
+                          disabled={
+                            currentUser.role === "Super admin" ? false : true
+                          }
+                          value={websiteLinkDetails}
+                          onChange={(e) => {
+                            setWebsiteLinkDetailsError("");
+                            setWebsiteLinkDetails(e.target.value);
+                          }}
+                          autoComplete="off"
+                          name="email"
+                        />
+                        {typeOfBusinessError && (
+                          <>
+                            <p className="error mt-1">{typeOfBusinessError}</p>
+                          </>
+                        )}
+                      </div>
+                    </Grid>
 
-                    
-                      <Grid item xs={12} sm={6} md={6}>
-                        <div className="form-group pb-md-2">
-                          <label htmlFor="facebook" className="pb-2">
-                            Facebook Link:
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control place-holder"
-                            placeholder="Enter link here"
-                            disabled={
-                              currentUser.role === "Super admin" ? false : true
-                            }
-                            value={facebookLinkDetails}
-                            onChange={(e) => {
-                              setFacebookLinkDetailsError("");
-                              setFacebookLinkDetails(e.target.value);
-                            }}
-                            autoComplete="off"
-                            name="email"
-                          />
-                          {typeOfBusinessError && (
-                            <>
-                              <p className="error mt-1">
-                                {typeOfBusinessError}
-                              </p>
-                            </>
-                          )}
-                        </div>
-                      </Grid>
-              
+                    <Grid item xs={12} sm={6} md={6}>
+                      <div className="form-group pb-md-2">
+                        <label htmlFor="twitter" className="pb-2 text-bold">
+                          Twitter Link:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control place-holder"
+                          placeholder="Enter link here"
+                          disabled={
+                            currentUser.role === "Super admin" ? false : true
+                          }
+                          value={twitterLinkDetails}
+                          onChange={(e) => {
+                            setTwitterLinkDetailsError("");
+                            setTwitterLinkDetails(e.target.value);
+                          }}
+                          autoComplete="off"
+                          name="email"
+                        />
+                        {typeOfBusinessError && (
+                          <>
+                            <p className="error mt-1">{typeOfBusinessError}</p>
+                          </>
+                        )}
+                      </div>
+                    </Grid>
 
-                    
-                      <Grid item xs={12} sm={6} md={6}>
-                        <div className="form-group pb-md-2">
-                          <label htmlFor="instagram" className="pb-2">
-                            Instagram Link:
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control place-holder"
-                            placeholder="Enter link here"
-                            disabled={
-                              currentUser.role === "Super admin" ? false : true
-                            }
-                            value={instagramLinkDetails}
-                            onChange={(e) => {
-                              setInstagramLinkDetailsError("");
-                              setInstagramLinkDetails(e.target.value);
-                            }}
-                            autoComplete="off"
-                            name="email"
-                          />
-                          {typeOfBusinessError && (
-                            <>
-                              <p className="error mt-1">
-                                {typeOfBusinessError}
-                              </p>
-                            </>
-                          )}
-                        </div>
-                      </Grid>
-                   
+                    <Grid item xs={12} sm={6} md={6}>
+                      <div className="form-group pb-md-2">
+                        <label htmlFor="facebook" className="pb-2 text-bold">
+                          Facebook Link:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control place-holder"
+                          placeholder="Enter link here"
+                          disabled={
+                            currentUser.role === "Super admin" ? false : true
+                          }
+                          value={facebookLinkDetails}
+                          onChange={(e) => {
+                            setFacebookLinkDetailsError("");
+                            setFacebookLinkDetails(e.target.value);
+                          }}
+                          autoComplete="off"
+                          name="email"
+                        />
+                        {typeOfBusinessError && (
+                          <>
+                            <p className="error mt-1">{typeOfBusinessError}</p>
+                          </>
+                        )}
+                      </div>
+                    </Grid>
 
-                    
-                      <Grid item xs={12} sm={6} md={6}>
-                        <div className="form-group pb-md-2">
-                          <label htmlFor="linkedIn" className="pb-2">
-                            Linkedln Link:
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control place-holder"
-                            placeholder="Enter link here"
-                            disabled={
-                              currentUser.role === "Super admin" ? false : true
-                            }
-                            value={linkedInLinkDetails}
-                            onChange={(e) => {
-                              setLinkedInLinkDetailsError("");
-                              setLinkedInLinkDetails(e.target.value);
-                            }}
-                            autoComplete="off"
-                            name="email"
-                          />
-                          {typeOfBusinessError && (
-                            <>
-                              <p className="error mt-1">
-                                {typeOfBusinessError}
-                              </p>
-                            </>
-                          )}
-                        </div>
-                      </Grid>
-                  
+                    <Grid item xs={12} sm={6} md={6}>
+                      <div className="form-group pb-md-2">
+                        <label htmlFor="instagram" className="pb-2 text-bold">
+                          Instagram Link:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control place-holder"
+                          placeholder="Enter link here"
+                          disabled={
+                            currentUser.role === "Super admin" ? false : true
+                          }
+                          value={instagramLinkDetails}
+                          onChange={(e) => {
+                            setInstagramLinkDetailsError("");
+                            setInstagramLinkDetails(e.target.value);
+                          }}
+                          autoComplete="off"
+                          name="email"
+                        />
+                        {typeOfBusinessError && (
+                          <>
+                            <p className="error mt-1">{typeOfBusinessError}</p>
+                          </>
+                        )}
+                      </div>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={6}>
+                      <div className="form-group pb-md-2">
+                        <label htmlFor="linkedIn" className="pb-2 text-bold">
+                          Linkedln Link:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control place-holder"
+                          placeholder="Enter link here"
+                          disabled={
+                            currentUser.role === "Super admin" ? false : true
+                          }
+                          value={linkedInLinkDetails}
+                          onChange={(e) => {
+                            setLinkedInLinkDetailsError("");
+                            setLinkedInLinkDetails(e.target.value);
+                          }}
+                          autoComplete="off"
+                          name="email"
+                        />
+                        {typeOfBusinessError && (
+                          <>
+                            <p className="error mt-1">{typeOfBusinessError}</p>
+                          </>
+                        )}
+                      </div>
+                    </Grid>
 
                     <div className="d-flex justify-content-between w-100">
                       <button
@@ -5471,7 +5639,7 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email">Monday:</label>
+                        <label htmlFor="email" className="text-bold">Monday:</label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5496,7 +5664,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email">Tuesday:</label>
+                        <label htmlFor="email" className="text-bold">Tuesday:</label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5521,7 +5689,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email">Wednesday:</label>
+                        <label htmlFor="email" className="text-bold">Wednesday:</label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5546,7 +5714,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email">Thursday:</label>
+                        <label htmlFor="email" className="text-bold">Thursday:</label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5571,7 +5739,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email">Friday:</label>
+                        <label htmlFor="email" className="text-bold">Friday:</label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5596,7 +5764,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email">Saturday:</label>
+                        <label htmlFor="email" className="text-bold">Saturday:</label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5621,7 +5789,7 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email">Sunday:</label>
+                        <label htmlFor="email" className="text-bold">Sunday:</label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5662,15 +5830,13 @@ function Msme() {
                 )}
                 {stepperCounter === 4 && (
                   <>
-                    
-                      <Grid item xs={12} sm={6} md={6}>
-                      
-                         {businessLogoDetails ? (
+                    <Grid item xs={12} sm={6} md={6}>
+                      {businessLogoDetails ? (
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2">
-                                Business image 3: <span>*</span>
+                              <label htmlFor="email" className="pb-2 text-bold">
+                                Business logo:
                               </label>
                             </div>
                             <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
@@ -5703,7 +5869,12 @@ function Msme() {
                                   )}
                                 </div>
                                 <img
-                                  src={updatingDetails?.additionalInfo?.businessLogo === businessLogoDetails ? `http://localhost:4000/msmes/${businessLogoDetails}` : businessLogoDetails }
+                                  src={
+                                    updatingDetails?.additionalInfo
+                                      ?.businessLogo === businessLogoDetails
+                                      ? `http://localhost:4000/msmes/${businessLogoDetails}`
+                                      : businessLogoDetails
+                                  }
                                   className=" img-responsive img-thumbnail"
                                   alt=""
                                 />
@@ -5721,8 +5892,8 @@ function Msme() {
                       ) : (
                         <>
                           <div className="form-group pb-md-2">
-                            <label htmlFor="email" className="pb-2">
-                              Business logo: <span>*</span>
+                            <label htmlFor="email" className="pb-2 text-bold">
+                              Business logo:
                             </label>
                             <input
                               type="file"
@@ -5735,23 +5906,22 @@ function Msme() {
                             />
                             {businessLogoDetailsError && (
                               <>
-                                <p className="error mt-1">{businessLogoDetailsError}</p>
+                                <p className="error mt-1">
+                                  {businessLogoDetailsError}
+                                </p>
                               </>
                             )}
                           </div>
                         </>
                       )}
-                      </Grid>
-                   
+                    </Grid>
 
-                    
-                      <Grid item xs={12} sm={6} md={6}>
-                        
-                         {image1Details ? (
+                    <Grid item xs={12} sm={6} md={6}>
+                      {image1Details ? (
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2">
+                              <label htmlFor="email" className="pb-2 text-bold">
                                 Business image 1:
                               </label>
                             </div>
@@ -5785,7 +5955,12 @@ function Msme() {
                                   )}
                                 </div>
                                 <img
-                                  src={updatingDetails?.additionalInfo?.image1 === image1Details ? `http://localhost:4000/msmes/${image1Details}` : image1Details }
+                                  src={
+                                    updatingDetails?.additionalInfo?.image1 ===
+                                    image1Details
+                                      ? `http://localhost:4000/msmes/${image1Details}`
+                                      : image1Details
+                                  }
                                   className=" img-responsive img-thumbnail"
                                   alt=""
                                 />
@@ -5803,7 +5978,7 @@ function Msme() {
                       ) : (
                         <>
                           <div className="form-group pb-md-2">
-                            <label htmlFor="email" className="pb-2">
+                            <label htmlFor="email" className="pb-2 text-bold">
                               Business image 1:
                             </label>
                             <input
@@ -5817,23 +5992,22 @@ function Msme() {
                             />
                             {image1DetailsError && (
                               <>
-                                <p className="error mt-1">{image1DetailsError}</p>
+                                <p className="error mt-1">
+                                  {image1DetailsError}
+                                </p>
                               </>
                             )}
                           </div>
                         </>
                       )}
-                      </Grid>
-                   
+                    </Grid>
 
-                    
-                      <Grid item xs={12} sm={6} md={6}>
-                        
-                         {image2Details ? (
+                    <Grid item xs={12} sm={6} md={6}>
+                      {image2Details ? (
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2">
+                              <label htmlFor="email" className="pb-2 text-bold">
                                 Business image 2:
                               </label>
                             </div>
@@ -5867,7 +6041,12 @@ function Msme() {
                                   )}
                                 </div>
                                 <img
-                                  src={updatingDetails?.additionalInfo?.image2 === image2Details ? `http://localhost:4000/msmes/${image2Details}` : image2Details }
+                                  src={
+                                    updatingDetails?.additionalInfo?.image2 ===
+                                    image2Details
+                                      ? `http://localhost:4000/msmes/${image2Details}`
+                                      : image2Details
+                                  }
                                   className=" img-responsive img-thumbnail"
                                   alt=""
                                 />
@@ -5885,7 +6064,7 @@ function Msme() {
                       ) : (
                         <>
                           <div className="form-group pb-md-2">
-                            <label htmlFor="email" className="pb-2">
+                            <label htmlFor="email" className="pb-2 text-bold">
                               Business image 2:
                             </label>
                             <input
@@ -5899,23 +6078,22 @@ function Msme() {
                             />
                             {image2DetailsError && (
                               <>
-                                <p className="error mt-1">{image2DetailsError}</p>
+                                <p className="error mt-1">
+                                  {image2DetailsError}
+                                </p>
                               </>
                             )}
                           </div>
                         </>
                       )}
-                      </Grid>
-                    
+                    </Grid>
 
-                    
-                      <Grid item xs={12} sm={6} md={6}>
-                        
-                        {image3Details ? (
+                    <Grid item xs={12} sm={6} md={6}>
+                      {image3Details ? (
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2">
+                              <label htmlFor="email" className="pb-2 text-bold">
                                 Business image 3:
                               </label>
                             </div>
@@ -5949,7 +6127,12 @@ function Msme() {
                                   )}
                                 </div>
                                 <img
-                                  src={updatingDetails?.additionalInfo?.image3 === image3Details ? `http://localhost:4000/msmes/${image3Details}` : image3Details }
+                                  src={
+                                    updatingDetails?.additionalInfo?.image3 ===
+                                    image3Details
+                                      ? `http://localhost:4000/msmes/${image3Details}`
+                                      : image3Details
+                                  }
                                   className=" img-responsive img-thumbnail"
                                   alt=""
                                 />
@@ -5967,7 +6150,7 @@ function Msme() {
                       ) : (
                         <>
                           <div className="form-group pb-md-2">
-                            <label htmlFor="email" className="pb-2">
+                            <label htmlFor="email" className="pb-2 text-bold">
                               Business image 3:
                             </label>
                             <input
@@ -5981,18 +6164,20 @@ function Msme() {
                             />
                             {image3DetailsError && (
                               <>
-                                <p className="error mt-1">{image3DetailsError}</p>
+                                <p className="error mt-1">
+                                  {image3DetailsError}
+                                </p>
                               </>
                             )}
                           </div>
                         </>
                       )}
-                      </Grid>
-                  
+                    </Grid>
+
                     <Grid item xs={12}>
                       <div className="d-flex justify-content-between w-100">
                         <button
-                          className="btn btn-warning m-1 p-2 modelButton"
+                          className="btn btn-warning m-1 p-2 modelButton text-bold"
                           onClick={() => setStepperCounter(3)}
                         >
                           Previous
@@ -6000,13 +6185,13 @@ function Msme() {
                         {currentUser?.role === "Super admin" && (
                           <div className="">
                             <button
-                              className="btn btn-danger m-1 p-2 modelButton"
+                              className="btn btn-danger m-1 p-2 modelButton text-bold"
                               onClick={reject}
                             >
                               Reject
                             </button>
                             <button
-                              className="btn btn-success m-1 p-2 modelButton"
+                              className="btn btn-success m-1 p-2 modelButton text-bold"
                               onClick={approve}
                             >
                               Approve
@@ -6017,7 +6202,7 @@ function Msme() {
                           updatingDetails?.isBlocked === false &&
                           currentUser?.role === "Super admin" && (
                             <button
-                              className="btn btn-danger m-1 p-2 modelButton"
+                              className="btn btn-danger m-1 p-2 modelButton text-bold"
                               onClick={block}
                             >
                               Block
@@ -6027,7 +6212,7 @@ function Msme() {
                           updatingDetails?.isBlocked === true &&
                           currentUser?.role === "Super admin" && (
                             <button
-                              className="btn btn-danger m-1 p-2 modelButton"
+                              className="btn btn-danger m-1 p-2 modelButton text-bold"
                               onClick={unBlock}
                             >
                               Unblock

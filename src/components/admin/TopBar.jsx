@@ -172,21 +172,23 @@ const Topbar = ({ OpenSidebar }) => {
           >{`${firstLetter}${secondLetter}`}</Avatar>
         )}
 
-        <Dropdown className="dropdown" autoClose="outside">
-          <Dropdown.Toggle variant="" id="dropdown-basic"></Dropdown.Toggle>
-          <Dropdown.Menu className="dropdown-menu">
-            <Dropdown.Item  href="/profile" onClick={() =>{
-               dispatch(toggleActiveTab({ activeTab: 8 }));
-            }}>
-              <BsPersonGear style={{ marginRight: "10px" }} />
-              Profile
-            </Dropdown.Item>
-            <Dropdown.Item onClick={handleLogout}>
-              <BsBoxArrowRight style={{ marginRight: "10px" }} />
-              Logout
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+<Dropdown className="dropdown" autoClose="outside">
+  <Dropdown.Toggle variant="" id="dropdown-basic" style={{ border: "none" }}>
+  </Dropdown.Toggle>
+  <Dropdown.Menu className="dropdown-menu">
+    <Dropdown.Item href="/profile" onClick={() => {
+        dispatch(toggleActiveTab({ activeTab: 8 }));
+    }}>
+      <BsPersonGear style={{ marginRight: "10px" }} />
+      Profile
+    </Dropdown.Item>
+    <Dropdown.Item onClick={handleLogout}>
+      <BsBoxArrowRight style={{ marginRight: "10px" }} />
+      Logout
+    </Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+
       </Box>
     </Box>
   );

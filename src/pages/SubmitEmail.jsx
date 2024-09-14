@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import "../assets/css/AdminLogin.css";
-import logo from "../assets/images/in4logo.png";
-import mtclogo from "../assets/images/banner.png";
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { toast } from "react-toastify";
-import { toggleSidebarTrue } from "../redux/reducers/sidebarReducer";
-import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import {login} from "../redux/reducers/authReducer";
 
 function SubmitEmail() {
-    const [passwordShown, setPasswordShown] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
   const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +36,7 @@ function SubmitEmail() {
             setIsSubmitting(false);
             setEmail("");
             toast.success(data.message);
+            navigate("/");
         } else {
           setIsSubmitting(false);
           toast.error(data.message);
@@ -59,9 +49,6 @@ function SubmitEmail() {
         );
       }
     }
-  };
-  const togglePassword = () => {
-    setPasswordShown(!passwordShown);
   };
 
   const validateForm = () => {
@@ -78,22 +65,9 @@ function SubmitEmail() {
   return (
     <div className="">
       <div className="d-flex vh-100 w-100 ">
-        {/* <div className="d-none d-lg-block d-lg-flex col-lg-6 col-xl-7 justify-content-center align-items-center left-box">
-          <img
-            src={logo}
-            alt="Illustration"
-            className="img-fluid mtc-logo-login"
-          />
-        </div> */}
         <div className="m-auto col-11 col-md-10 col-lg-6 col-xl-5 d-flex flex-column justify-content-center align-items-center">
           <div className="d-flex align-items-center">
             <h3 className="portal-text">IN4MSME Portal</h3>
-            {/* <img
-              src={mtclogo}
-              alt="Illustration"
-              className="img-fluid"
-              style={{ width: 100, height: 100 }}
-            /> */}
           </div>
           <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
           <form onSubmit={handleSubmit}>
@@ -124,9 +98,15 @@ function SubmitEmail() {
                 <button type="submit" className="submission" disabled={isSubmitting}>
                 {isSubmitting ? <div className="loader"></div> : "Submit"}
                 </button>
-                <div className="mt-4 d-flex justify-content-center">
-                <ArrowBackIosNewIcon fontSize="small" style={{marginTop:"3px", fontSize:"18px", marginRight:"10px"}}/>
-                <p className="back-to-login" onClick={() =>navigate('/')}>back to login</p>
+                <div className="mt-2 d-flex justify-content-center">
+                <button
+                    onClick={() =>navigate('/')}
+                    className="back"
+                
+                  >
+                    Back
+                  </button>
+                {/* <p className="back-to-login" onClick={() =>navigate('/')}>back to login</p> */}
                 </div>
               </form>
           </div>

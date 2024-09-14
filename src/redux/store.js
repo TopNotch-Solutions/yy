@@ -5,6 +5,7 @@ import sidebarReducer from './reducers/sidebarReducer';
 import authReducer from "./reducers/authReducer";
 import storage from 'redux-persist/lib/storage';
 import tabsReducer from './reducers/tabsReducer';
+import authenticationReducer  from './reducers/twoFactorReducer';
 
 const persistConfig = {
   key: 'root',
@@ -14,7 +15,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   sidebar: sidebarReducer,
-  tabs: tabsReducer
+  tabs: tabsReducer,
+  authentication:authenticationReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

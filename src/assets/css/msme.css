@@ -13,6 +13,9 @@
     width: fit-content;
     font-weight: 700;
 }
+.text-bold{
+  font-weight: bold;
+}
 .msme-table{
     overflow-x: auto;
 }

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../assets/css/AdminLogin.css";
 import logo from "../assets/images/in4logo.png";
-import mtclogo from "../assets/images/banner.png";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import in4msme_Logo_Blk from "../assets/images/in4msme_Logo_Blk.png";
 import { toast } from "react-toastify";
 import { toggleSidebarTrue } from "../redux/reducers/sidebarReducer";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
+import {toggleAuthenticationTrue, toggleAuthenticationfalse} from "../redux/reducers/twoFactorReducer";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateToken } from "../redux/reducers/authReducer";
@@ -22,12 +21,12 @@ const AdminLogin = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [twoFactorDigits, setTwoFactorDigits] = useState("");
   const [twoFactorDigitsError, setTwoFactorDigitsError] = useState("");
   const [userId, setUserId] = useState(null);
+  const [rememberPassword, setRememberPassword] = useState(false);
   const currentUser = useSelector((state) => state.auth.user);
-  const tokenHeader = currentUser.token;
+  const isUserAuthenticated = useSelector((state) => state.authentication.isAuthenticated)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -36,53 +35,17 @@ const AdminLogin = () => {
     dispatch(toggleSidebarfalse());
     dispatch(toggleActiveTab({ activeTab: 1 }));
   }, []);
-  // useEffect(() => {
-  //   const fetchCurrentUser = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         "http://localhost:4000/auth/admin/currentUser",
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           credentials: "include",
-  //         }
-  //       );
 
-  //       const data = await response.json();
-
-  //       if (response.ok) {
-  //         console.log("Login successful", data);
-  //         dispatch(toggleActiveTab({ activeTab: 1 }));
-  //         dispatch(toggleSidebarTrue());
-  //         dispatch(
-  //           login({
-  //             user: data.currentUser,
-  //           })
-  //         );
-  //         navigate("/Dashboard");
-  //       } else {
-  //         // dispatch(toggleActiveTab({ activeTab: 1 }));
-  //         // dispatch(
-  //         //   login({
-  //         //     user: {},
-  //         //   })
-  //         // );
-  //       }
-  //     } catch (error) {
-  //       // dispatch(toggleActiveTab({ activeTab: 1 }));
-  //       // dispatch(
-  //       //   login({
-  //       //     user: {},
-  //       //   })
-  //       // );
-  //     }
-  //   };
-
-  //   fetchCurrentUser();
-  // }, []);
-
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("rememberedEmail");
+    const savedPassword = localStorage.getItem("rememberedPassword");
+  
+    if (savedEmail && savedPassword) {
+      setEmail(savedEmail);
+      setPassword(savedPassword);
+      setRememberPassword(true);
+    }
+  }, []);
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
@@ -110,6 +73,14 @@ const AdminLogin = () => {
     setEmailError("");
     setPasswordError("");
 
+    if (rememberPassword) {
+      localStorage.setItem("rememberedEmail", email);
+      localStorage.setItem("rememberedPassword", password);
+    } else {
+      localStorage.removeItem("rememberedEmail");
+      localStorage.removeItem("rememberedPassword");
+    }
+
     if (validateForm()) {
       try {
         setIsSubmitting(true);
@@ -129,14 +100,13 @@ const AdminLogin = () => {
 
         if (response.ok) {
           console.log("Login successful", data);
-          //console.log(data.currentUser.role);
 
           setIsSubmitting(false);
           setUserId(data.userId);
           console.log(data);
           console.log(data.userId);
           setTwoFactorDigits("");
-          setIsAuthenticated(true);
+          dispatch(toggleAuthenticationTrue());
         } else {
           setIsSubmitting(false);
           toast.error(`Wrong username or password:`);
@@ -163,7 +133,7 @@ const AdminLogin = () => {
       toast.error(
         `Something went wrong during the authentication process. Try again`
       );
-      setIsAuthenticated(false);
+      dispatch(toggleAuthenticationfalse())
       valid = false;
     }
     return valid;
@@ -192,19 +162,16 @@ const AdminLogin = () => {
         );
 
         const data = await response.json();
-        //const newTokenHeader = response.headers.get('Authorization');
-       
 
         if (response.ok) {
-          console.log("Login successful", data);
-          //console.log(data.currentUser.role);
-          
+
           dispatch(toggleSidebarTrue());
           dispatch(
             login({
               user: data.currentUser,
             })
           );
+          dispatch(toggleAuthenticationfalse());
           dispatch(updateToken({
             token: `Bearer ${data.currentUser.token}`
           }));
@@ -225,7 +192,7 @@ const AdminLogin = () => {
   };
   return (
     <div className="">
-      <div className="d-flex vh-100 w-100 ">
+      <div className="d-flex vh-100 w-100">
         <div className="d-none d-lg-block d-lg-flex col-lg-6 col-xl-7 justify-content-center align-items-center left-box">
           <img
             src={logo}
@@ -233,17 +200,11 @@ const AdminLogin = () => {
             className="img-fluid mtc-logo-login"
           />
         </div>
-        {isAuthenticated ? (
+        {isUserAuthenticated ? (
           <>
             <div className="m-auto col-11 col-md-10 col-lg-6 col-xl-5 d-flex flex-column justify-content-center align-items-center">
               <div className="d-flex align-items-center">
                 <h3 className="portal-text">IN4MSME Portal</h3>
-                {/* <img
-                  src={in4msme_Logo_Blk}
-                  alt="Illustration"
-                  className="img-fluid"
-                  style={{ width: 50, height: 50 }}
-                /> */}
               </div>
               <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
                 <form>
@@ -258,7 +219,7 @@ const AdminLogin = () => {
                     </label>
                     <input
                       type="text"
-                      value={twoFactorDigits}
+                      value={twoFactorDigits || ""}
                       className="form-control place-holder"
                       placeholder="****"
                       autoComplete="off"
@@ -282,25 +243,20 @@ const AdminLogin = () => {
                   >
                     {isSubmitting ? <div className="loader"></div> : "Submit"}
                   </button>
-                  <div className="mt-3 d-flex justify-content-center">
-                    <ArrowBackIosNewIcon
-                      fontSize="small"
-                      style={{
-                        marginTop: "3px",
-                        fontSize: "18px",
-                        marginRight: "10px",
-                      }}
-                    />
-                    <p
-                      className="back-to-login"
-                      onClick={() => {
-                        setPassword("");
-                        setEmail("");
-                        setIsAuthenticated(false);
-                      }}
-                    >
-                      back to login
-                    </p>
+                  <div className="mt-2 d-flex justify-content-center">
+                    
+                    <button
+                    onClick={() => {
+                      setPassword("");
+                      setEmail("");
+                      dispatch(toggleAuthenticationfalse());
+                      window.location.reload();
+                    }}
+                    className="back"
+                
+                  >
+                    Back
+                  </button>
                   </div>
                 </form>
               </div>
@@ -311,12 +267,6 @@ const AdminLogin = () => {
             <div className="m-auto col-11 col-md-10 col-lg-6 col-xl-5 d-flex flex-column justify-content-center align-items-center">
               <div className="d-flex align-items-center"> 
                 <h3 className="portal-text">IN4MSME Portal</h3>
-                {/* <img
-                  src={in4msme_Logo_Blk}
-                  alt="Illustration"
-                  className="img-fluid"
-                  style={{ width: 50, height: 50 }}
-                /> */}
               </div>
               <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
                 <form>
@@ -330,7 +280,7 @@ const AdminLogin = () => {
                     </label>
                     <input
                       type="text"
-                      value={email}
+                      value={email || ""}
                       className="form-control place-holder"
                       placeholder="example@nipdb.com.na"
                       autoComplete="off"
@@ -359,6 +309,7 @@ const AdminLogin = () => {
                       className="form-control place-holder"
                       id="password"
                       placeholder="***************"
+                      value={password || ""}
                       autoComplete="off"
                       name="password"
                       onChange={(e) => {
@@ -405,13 +356,10 @@ const AdminLogin = () => {
                       type="checkbox"
                       className="form-check-input"
                       id="rememberPassword"
+                      checked={rememberPassword}
+                  onChange={() => setRememberPassword(!rememberPassword)}
                     />
-                    <label
-                      className="form-check-label"
-                      htmlFor="rememberPassword"
-                    >
-                      Remember password
-                    </label>
+                    <label className="form-check-label" htmlFor="rememberPassword">Remember password</label>
                   </div>
                   <button
                     onClick={handleSubmit}

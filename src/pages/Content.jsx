@@ -1,29 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  IconButton,
-  useTheme,
-  useMediaQuery,
-  Backdrop,
-  CircularProgress,
-} from "@mui/material";
+import { IconButton, useTheme, useMediaQuery, Backdrop } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
+import { CgCloseR } from "react-icons/cg";
 import "../assets/css/msme.css";
-import StickyNote2Icon from "@mui/icons-material/StickyNote2";
+import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { SlOptionsVertical } from "react-icons/sl";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import CloseIcon from "@mui/icons-material/Close";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
-import Tooltip from "@mui/material/Tooltip";
 import MyButton from "../components/commons/MyButton";
 import Modal from "@mui/material/Modal";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
 import ModelButton from "../components/commons/ModelButton";
 import Swal from "sweetalert2";
 import UpdateButton from "../components/commons/UpdateButton";
@@ -33,6 +21,7 @@ import { updateToken } from "../redux/reducers/authReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { login } from "../redux/reducers/authReducer";
+import handleAuthFailure from "../utils/handleAuthFailure";
 
 const mobileStyle = {
   position: "absolute",
@@ -54,21 +43,13 @@ const largeStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "50%",
-  height: "70%",
+  height: "80%",
   overflowY: "auto",
   bgcolor: "background.paper",
   border: "2px solid #fff",
   boxShadow: 24,
   p: 4,
 };
-
-const steps = [
-  "General business information",
-  "Founder's information",
-  "Contact information",
-  "Business hours",
-  "Additional information",
-];
 
 function Content() {
   const theme = useTheme();
@@ -81,7 +62,6 @@ function Content() {
 
   const [file, setFile] = useState(null);
   const [fileMobileImage, setFileMobileImage] = useState(null);
-  const [fileDetails, setFileDetails] = useState(null);
   const [fileMobileImageDetails, setFileMobileImageDetails] = useState(null);
 
   const [buttonActive, setButonActive] = useState(1);
@@ -91,8 +71,6 @@ function Content() {
   const [descriptionError, setDescriptionError] = useState("");
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState("");
-  const [user, setUser] = useState("");
-  const [userError, setUserError] = useState("");
 
   const [descriptionImage, setDescriptionImage] = useState("");
   const [descriptionImageError, setDescriptionImageError] = useState("");
@@ -106,7 +84,6 @@ function Content() {
   const [imageDetails, setImageDetails] = useState("");
   const [imageDetailsError, setImageDetailsError] = useState("");
   const [userDetails, setUserDetails] = useState("");
-  const [userDetailsError, setUserDetailsError] = useState("");
 
   const [descriptionImageDetails, setDescriptionImageDetails] = useState("");
   const [descriptionImageDetailsError, setDescriptionImageDetailsError] =
@@ -139,9 +116,9 @@ function Content() {
     setOpenModel(false);
   };
   const handleClose1 = () => {
-    setDescriptionImage("");
-    setImageImage("");
     setOpenModel1(false);
+    setDescriptionImageError("");
+    setImageImageError("");
   };
   const handleOpenEdit = () => setOpenModelEdit(true);
   const handleOpenEdit1 = () => setOpenModelEdit1(true);
@@ -149,12 +126,13 @@ function Content() {
     setDescriptionDetails("");
     setImageDetails("");
     setUserDetails("");
+    setUpdatingFail("");
     setOpenModelEdit(false);
   };
   const handleCloseEdit1 = () => {
     setDescriptionImageDetails("");
     setImageImageDetails("");
-
+    setUpdatingFail("");
     setOpenModelEdit1(false);
   };
 
@@ -174,43 +152,23 @@ function Content() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setOpportunitiesList(data.data);
         } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -232,43 +190,23 @@ function Content() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setMobileImagesList(data.data);
         } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -297,7 +235,7 @@ function Content() {
         );
 
         const data = await response.json();
-       
+
         if (response.ok) {
           Swal.fire({
             position: "center",
@@ -317,14 +255,14 @@ function Content() {
             timer: 3000,
           });
 
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
           }
         }
       } catch (error) {
@@ -335,14 +273,14 @@ function Content() {
           showConfirmButton: false,
           timer: 3000,
         });
-        if(!currentUser.token){
+        if (!currentUser.token) {
           dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
         }
       } finally {
         setIsSubmitting(false);
@@ -392,14 +330,14 @@ function Content() {
           });
           setDescriptionImage("");
           setImageImage("");
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
           }
         }
       } catch (error) {
@@ -412,14 +350,14 @@ function Content() {
           showConfirmButton: false,
           timer: 3000,
         });
-        if(!currentUser.token){
+        if (!currentUser.token) {
           dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
         }
       }
     }
@@ -440,10 +378,12 @@ function Content() {
       );
 
       const data = await response.json();
-      const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
+      const newTokenHeader = response.headers.get("Authorization");
+      dispatch(
+        updateToken({
+          token: newTokenHeader,
+        })
+      );
 
       if (response.ok) {
         console.log("Login successful", data);
@@ -463,14 +403,14 @@ function Content() {
           showConfirmButton: false,
           timer: 4000,
         });
-        if(!currentUser.token){
+        if (!currentUser.token) {
           dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
         }
       }
     } catch (error) {
@@ -481,14 +421,14 @@ function Content() {
         showConfirmButton: false,
         timer: 4000,
       });
-      if(!currentUser.token){
+      if (!currentUser.token) {
         dispatch(toggleSidebarfalse());
-      dispatch(
-        login({
-          user: {},
-        })
-      );
-      navigate("/");
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
       }
     }
   };
@@ -507,10 +447,12 @@ function Content() {
       );
 
       const data = await response.json();
-      const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
+      const newTokenHeader = response.headers.get("Authorization");
+      dispatch(
+        updateToken({
+          token: newTokenHeader,
+        })
+      );
 
       if (response.ok) {
         console.log("Login successful", data);
@@ -529,14 +471,14 @@ function Content() {
           showConfirmButton: false,
           timer: 4000,
         });
-        if(!currentUser.token){
+        if (!currentUser.token) {
           dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
         }
       }
     } catch (error) {
@@ -547,14 +489,14 @@ function Content() {
         showConfirmButton: false,
         timer: 4000,
       });
-      if(!currentUser.token){
+      if (!currentUser.token) {
         dispatch(toggleSidebarfalse());
-      dispatch(
-        login({
-          user: {},
-        })
-      );
-      navigate("/");
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
       }
     }
   };
@@ -583,12 +525,14 @@ function Content() {
               credentials: "include",
             }
           );
-  
+
           const data = await response.json();
-          const newTokenHeader = response.headers.get('Authorization');
-          dispatch(updateToken({
-            token: newTokenHeader
-          }));
+          const newTokenHeader = response.headers.get("Authorization");
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
           console.log(data);
 
           if (response.ok) {
@@ -607,14 +551,14 @@ function Content() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if(!currentUser.token){
+            if (!currentUser.token) {
               dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
             }
           }
         } catch (error) {
@@ -626,14 +570,14 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
           }
         } finally {
           setIsSubmitting(false);
@@ -666,12 +610,14 @@ function Content() {
               credentials: "include",
             }
           );
-  
+
           const data = await response.json();
-          const newTokenHeader = response.headers.get('Authorization');
-          dispatch(updateToken({
-            token: newTokenHeader
-          }));
+          const newTokenHeader = response.headers.get("Authorization");
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
           console.log(data);
 
           if (response.ok) {
@@ -690,14 +636,14 @@ function Content() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if(!currentUser.token){
+            if (!currentUser.token) {
               dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
             }
           }
         } catch (error) {
@@ -709,14 +655,14 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
           }
         } finally {
           setIsSubmitting(false);
@@ -1061,8 +1007,8 @@ function Content() {
               body: formData,
             }
           );
-          
-        const data = await response.json();
+
+          const data = await response.json();
           if (response.ok) {
             setOpenModelEdit(false);
             setIsSubmitting(false);
@@ -1089,14 +1035,14 @@ function Content() {
             setDescriptionDetails("");
             setUserDetails("");
             setImageDetails("");
-            if(!currentUser.token){
+            if (!currentUser.token) {
               dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
             }
           }
         } catch (error) {
@@ -1109,14 +1055,14 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
           }
         }
       }
@@ -1170,14 +1116,14 @@ function Content() {
             });
             setDescriptionImageDetails("");
             setImageImageDetails("");
-            if(!currentUser.token){
+            if (!currentUser.token) {
               dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
             }
           }
         } catch (error) {
@@ -1190,14 +1136,14 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
           }
         }
       }
@@ -1258,14 +1204,14 @@ function Content() {
             setDescriptionDetails("");
             setUserDetails("");
             setImageDetails("");
-            if(!currentUser.token){
+            if (!currentUser.token) {
               dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
             }
           }
         } catch (error) {
@@ -1278,14 +1224,14 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
           }
         }
       }
@@ -1330,6 +1276,7 @@ function Content() {
                             : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                         }
                         onClick={() => setButonActive(1)}
+                        style={{ border: "none" }}
                       >
                         Opportunity
                       </button>
@@ -1340,6 +1287,7 @@ function Content() {
                             : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                         }
                         onClick={() => setButonActive(2)}
+                        style={{ border: "none" }}
                       >
                         Mobile Images
                       </button>
@@ -1373,22 +1321,57 @@ function Content() {
                     </div>
                     <div className="col-12 mt-1">
                       <p className="list-group">Opportunity List</p>
-                      <Box sx={{ height: 500, width: "100%" }}>
-                        <DataGrid
-                          rows={filteredRows}
-                          columns={columns}
-                          initialState={{
-                            pagination: {
-                              paginationModel: {
-                                pageSize: 15,
-                              },
-                            },
-                          }}
-                          pageSizeOptions={[15]}
-                          checkboxSelection
-                          disableRowSelectionOnClick
-                        />
-                      </Box>
+                      {opportunitiesList ? (
+                        <>
+                          <Box sx={{ height: 500, width: "100%" }}>
+                            <DataGrid
+                              rows={filteredRows}
+                              columns={columns}
+                              sx={{
+                                "& .status-pending": {
+                                  color: "yellow",
+                                },
+                                "& .status-rejected": {
+                                  color: "red",
+                                },
+                                "& .status-approved": {
+                                  color: "green",
+                                },
+                                "& .MuiDataGrid-columnHeaders": {
+                                  fontWeight: "bold",
+                                },
+                                "& .MuiDataGrid-columnHeaderTitle": {
+                                  fontWeight: "bold",
+                                },
+                              }}
+                              initialState={{
+                                pagination: {
+                                  paginationModel: {
+                                    pageSize: 15,
+                                  },
+                                },
+                              }}
+                              pageSizeOptions={[15]}
+                              checkboxSelection
+                              disableRowSelectionOnClick
+                            />
+                          </Box>
+                        </>
+                      ) : (
+                        <>
+                          <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: 500, width: "100%" }}
+                          >
+                            <div style={{ textAlign: "center" }}>
+                              <CircularProgress color="inherit" />
+                              <p className="p-4 text-secondary">
+                                Just a moment, we’re getting things ready...
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </>
                 )}
@@ -1418,22 +1401,57 @@ function Content() {
                     </div>
                     <div className="col-12 mt-1">
                       <p className="list-group">Image List</p>
-                      <Box sx={{ height: 500, width: "100%" }}>
-                        <DataGrid
-                          rows={filteredRows1}
-                          columns={columns1}
-                          initialState={{
-                            pagination: {
-                              paginationModel: {
-                                pageSize: 15,
-                              },
-                            },
-                          }}
-                          pageSizeOptions={[15]}
-                          checkboxSelection
-                          disableRowSelectionOnClick
-                        />
-                      </Box>
+                      {mobileImagesList ? (
+                        <>
+                          <Box sx={{ height: 500, width: "100%" }}>
+                            <DataGrid
+                              rows={filteredRows1}
+                              sx={{
+                                "& .status-pending": {
+                                  color: "yellow",
+                                },
+                                "& .status-rejected": {
+                                  color: "red",
+                                },
+                                "& .status-approved": {
+                                  color: "green",
+                                },
+                                "& .MuiDataGrid-columnHeaders": {
+                                  fontWeight: "bold",
+                                },
+                                "& .MuiDataGrid-columnHeaderTitle": {
+                                  fontWeight: "bold",
+                                },
+                              }}
+                              columns={columns1}
+                              initialState={{
+                                pagination: {
+                                  paginationModel: {
+                                    pageSize: 15,
+                                  },
+                                },
+                              }}
+                              pageSizeOptions={[15]}
+                              checkboxSelection
+                              disableRowSelectionOnClick
+                            />
+                          </Box>
+                        </>
+                      ) : (
+                        <>
+                          <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: 500, width: "100%" }}
+                          >
+                            <div style={{ textAlign: "center" }}>
+                              <CircularProgress color="inherit" />
+                              <p className="p-4 text-secondary">
+                                Just a moment, we’re getting things ready...
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </>
                 )}
@@ -1448,7 +1466,25 @@ function Content() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
-            <h1 className="text-center">Add New Opportunity</h1>
+            <div className="d-flex justify-content-between align-items-center">
+              <div></div>
+              <h1 className="text-center">Add New Opportunity</h1>
+              <CgCloseR
+                style={{
+                  color: "red",
+                  fontSize: "32px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setDescription("");
+                  setImage("");
+                  setUserDetails("");
+                  setDescriptionError("");
+                  setImageError("");
+                  setOpenModel(false);
+                }}
+              />
+            </div>
             <div className="container-fluid mt-md-4">
               <div className="row justify-content-center">
                 <div className="col-12 col-lg-12 col-xxl-9 mx-auto border d-flex flex-wrap justify-content-between p-1">
@@ -1505,8 +1541,8 @@ function Content() {
                 <>
                   <Grid item xs={12} sm={6} md={6}>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2">
-                        Description:<span>*</span>
+                      <label htmlFor="email" className="pb-2 text-bold">
+                        Description: <span>*</span>
                       </label>
                       <textarea
                         type="text"
@@ -1527,7 +1563,7 @@ function Content() {
                       )}
                     </div>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2">
+                      <label htmlFor="email" className="pb-2 text-bold">
                         Link:
                       </label>
                       <input
@@ -1601,7 +1637,7 @@ function Content() {
                     ) : (
                       <>
                         <div className="form-group pb-md-2">
-                          <label htmlFor="email" className="pb-2">
+                          <label htmlFor="email" className="pb-2 text-bold">
                             Image: <span>*</span>
                           </label>
                           <input
@@ -1633,7 +1669,7 @@ function Content() {
                 <>
                   <Grid item xs={12} sm={6} md={6}>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2">
+                      <label htmlFor="email" className="pb-2 text-bold">
                         Description:<span>*</span>
                       </label>
                       <textarea
@@ -1655,7 +1691,7 @@ function Content() {
                       )}
                     </div>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2">
+                      <label htmlFor="email" className="pb-2 text-bold">
                         Link:
                       </label>
                       <input
@@ -1729,7 +1765,7 @@ function Content() {
                     ) : (
                       <>
                         <div className="form-group pb-md-2">
-                          <label htmlFor="email" className="pb-2">
+                          <label htmlFor="email" className="pb-2 text-bold">
                             Image: <span>*</span>
                           </label>
                           <input
@@ -1767,7 +1803,25 @@ function Content() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
-            <h1 className="text-center">Add New Mobile Image</h1>
+            <div className="d-flex justify-content-between align-items-center">
+              <div></div>
+              <h1 className="text-center">Add New Mobile Image</h1>
+              <CgCloseR
+                style={{
+                  color: "red",
+                  fontSize: "32px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setDescriptionImage("");
+                  setImageImage("");
+                  setOpenModel1(false);
+                  setDescriptionImageError("");
+                  setImageImageError("");
+                }}
+              />
+            </div>
+
             <Grid
               container
               spacing={{ xs: 1, md: 1 }}
@@ -1776,8 +1830,8 @@ function Content() {
             >
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2">
-                    Description:<span>*</span>
+                  <label htmlFor="email" className="pb-2 text-bold">
+                    Description: <span>*</span>
                   </label>
                   <input
                     type="text"
@@ -1850,7 +1904,7 @@ function Content() {
                 ) : (
                   <>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2">
+                      <label htmlFor="email" className="pb-2 text-bold">
                         Image: <span>*</span>
                       </label>
                       <input
@@ -1886,7 +1940,27 @@ function Content() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
-            <h1 className="text-center">Update Opportunity</h1>
+            <div className="d-flex justify-content-between align-items-center">
+              <div></div>
+              <h1 className="text-center">Update Opportunity</h1>
+              <CgCloseR
+                style={{
+                  color: "red",
+                  fontSize: "32px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setDescriptionDetails("");
+                  setImageDetails("");
+                  setUserDetails("");
+                  setOpenModelEdit(false);
+                  setDescriptionImageDetails("");
+                  setImageImageDetailsError("");
+                  setUpdatingFail("");
+                }}
+              />
+            </div>
+
             {updatingFail && (
               <>
                 <div className="col-md-6 p-1 p-md-3 error-div d-flex justify-content-center align-items-center m-auto">
@@ -1948,8 +2022,8 @@ function Content() {
                 <>
                   <Grid item xs={12} sm={6} md={6}>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2">
-                        Description:<span>*</span>
+                      <label htmlFor="email" className="pb-2 text-bold">
+                        Description: <span>*</span>
                       </label>
                       <textarea
                         type="text"
@@ -1974,7 +2048,7 @@ function Content() {
                       )}
                     </div>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2">
+                      <label htmlFor="email" className="pb-2 text-bold">
                         Link:
                       </label>
                       <input
@@ -2054,7 +2128,7 @@ function Content() {
                     ) : (
                       <>
                         <div className="form-group pb-md-2">
-                          <label htmlFor="email" className="pb-2">
+                          <label htmlFor="email" className="pb-2 text-bold">
                             Image: <span>*</span>
                           </label>
                           <input
@@ -2089,8 +2163,8 @@ function Content() {
                 <>
                   <Grid item xs={12} sm={6} md={6}>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2">
-                        Description:<span>*</span>
+                      <label htmlFor="email" className="pb-2 text-bold">
+                        Description: <span>*</span>
                       </label>
                       <textarea
                         type="text"
@@ -2115,7 +2189,7 @@ function Content() {
                       )}
                     </div>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2">
+                      <label htmlFor="email" className="pb-2 text-bold">
                         Link:
                       </label>
                       <input
@@ -2196,7 +2270,7 @@ function Content() {
                     ) : (
                       <>
                         <div className="form-group pb-md-2">
-                          <label htmlFor="email" className="pb-2">
+                          <label htmlFor="email" className="pb-2 text-bold">
                             Image: <span>*</span>
                           </label>
                           <input
@@ -2237,7 +2311,26 @@ function Content() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
-            <h1 className="text-center">Update Mobile Image</h1>
+            <div className="d-flex justify-content-between align-items-center">
+              <div></div>
+              <h1 className="text-center">Update Mobile Image</h1>
+              <CgCloseR
+                style={{
+                  color: "red",
+                  fontSize: "32px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setDescriptionImageDetails("");
+                  setImageImageDetails("");
+                  setDescriptionImageDetailsError("");
+                  setImageImageDetailsError("");
+                  setOpenModelEdit1(false);
+                  setUpdatingFail("");
+                }}
+              />
+            </div>
+
             {updatingFail && (
               <>
                 <div className="col-md-6 p-1 p-md-3 error-div d-flex justify-content-center align-items-center m-auto">
@@ -2253,8 +2346,8 @@ function Content() {
             >
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2">
-                    Description:<span>*</span>
+                  <label htmlFor="email" className="pb-2 text-bold">
+                    Description: <span>*</span>
                   </label>
                   <input
                     type="text"
@@ -2336,7 +2429,7 @@ function Content() {
                 ) : (
                   <>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2">
+                      <label htmlFor="email" className="pb-2 text-bold">
                         Image: <span>*</span>
                       </label>
                       <input

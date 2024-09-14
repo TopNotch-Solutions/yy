@@ -1,5 +1,5 @@
 .left-box {
-    background: white;
+    /* background: white; */
     color: white;
     padding: 30px;
     /* border-radius: 10px 10px 0 10px; */
@@ -13,6 +13,9 @@
   }
   .place-holder{
     color: rgb(84, 85, 88);
+  }
+  .text-bold{
+    font-weight: bold;
   }
 .forgot-div{
     margin-top: -12px;
@@ -119,6 +122,18 @@
       color: white;
       background: #009548;
   }
+  .back{
+    width:100%;
+    cursor: pointer;
+    padding: 12px 0;
+    outline: none;
+    font-family: "Outfit", sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background: #154e8a;
+}
   .show-password{
     top: 54%;
     right: 14px;

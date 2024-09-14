@@ -3,24 +3,16 @@ import { IconButton, useTheme, useMediaQuery } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import "../assets/css/notifications.css";
-import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import { DataGrid } from "@mui/x-data-grid";
-import { SlOptionsVertical } from "react-icons/sl";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import MyButton from "../components/commons/MyButton";
 import Modal from "@mui/material/Modal";
 import { IoTrashBin } from "react-icons/io5";
 import { CgCloseR } from "react-icons/cg";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import ModelButton from "../components/commons/ModelButton";
 import DeleteButton from "../components/commons/DeleteButton";
-import ViewButton from "../components/commons/ViewButton";
 import NViewButton from "../components/commons/NViewButton";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { updateToken } from "../redux/reducers/authReducer";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { login } from "../redux/reducers/authReducer";
+import handleAuthFailure from "../utils/handleAuthFailure";
 
 const mobileStyle = {
   position: "absolute",
@@ -56,14 +49,6 @@ const largeStyle = {
   boxShadow: 24,
   p: 4,
 };
-
-const steps = [
-  "General business information",
-  "Founder's information",
-  "Contact information",
-  "Business hours",
-  "Additional information",
-];
 
 function Notifications() {
   const theme = useTheme();
@@ -100,12 +85,11 @@ function Notifications() {
   const handleOpenSent = () => setOpenModelSent(true);
   const handleOpenView = () => setOpenModelView(true);
   const handleClose = () => {
-    setTitle("");
-    setPriority("");
-    setNotification("");
-    setTextCounter(0);
-    setNotificationActive("All");
     setOpenModel(false);
+
+    setTitleError("");
+    setPriorityError("");
+    setNotificationError("");
   };
   const handleCloseView = () => {
     setOpenModelView(false);
@@ -131,46 +115,22 @@ function Notifications() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setAllAdminNotifications(data.data);
         } else {
-          setIsSubmitting(false);
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        setIsSubmitting(false);
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -194,46 +154,23 @@ function Notifications() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
           console.log("Login successful", data);
           setAllUnread(data.data);
         } else {
-          setIsSubmitting(false);
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
-        setIsSubmitting(false);
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -257,46 +194,23 @@ function Notifications() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
           console.log("Login successful", data);
           setAllSent(data.data);
         } else {
-          setIsSubmitting(false);
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        setIsSubmitting(false);
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -320,46 +234,22 @@ function Notifications() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setAllRead(data.data);
         } else {
-          setIsSubmitting(false);
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        setIsSubmitting(false);
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -424,14 +314,14 @@ function Notifications() {
           setTitle("");
           setPriority("");
           setNotification("");
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
           }
         }
       } catch (error) {
@@ -444,14 +334,14 @@ function Notifications() {
           showConfirmButton: false,
           timer: 3000,
         });
-        if(!currentUser.token){
+        if (!currentUser.token) {
           dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
         }
       }
     }
@@ -492,14 +382,14 @@ function Notifications() {
           showConfirmButton: false,
           timer: 3000,
         });
-        if(!currentUser.token){
+        if (!currentUser.token) {
           dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
         }
       }
     } catch (error) {
@@ -512,14 +402,14 @@ function Notifications() {
         showConfirmButton: false,
         timer: 3000,
       });
-      if(!currentUser.token){
+      if (!currentUser.token) {
         dispatch(toggleSidebarfalse());
-      dispatch(
-        login({
-          user: {},
-        })
-      );
-      navigate("/");
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
       }
     }
   };
@@ -545,7 +435,7 @@ function Notifications() {
           token: newTokenHeader,
         })
       );
-      console.log("This is the data: ", data)
+      console.log("This is the data: ", data);
       if (response.ok) {
         setIsSubmitting(false);
         setSentAdminNotification(data.data);
@@ -559,14 +449,14 @@ function Notifications() {
           showConfirmButton: false,
           timer: 3000,
         });
-        if(!currentUser.token){
+        if (!currentUser.token) {
           dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
         }
       }
     } catch (error) {
@@ -579,14 +469,14 @@ function Notifications() {
         showConfirmButton: false,
         timer: 3000,
       });
-      if(!currentUser.token){
+      if (!currentUser.token) {
         dispatch(toggleSidebarfalse());
-      dispatch(
-        login({
-          user: {},
-        })
-      );
-      navigate("/");
+        dispatch(
+          login({
+            user: {},
+          })
+        );
+        navigate("/");
       }
     }
   };
@@ -641,14 +531,14 @@ function Notifications() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if(!currentUser.token){
+            if (!currentUser.token) {
               dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+              dispatch(
+                login({
+                  user: {},
+                })
+              );
+              navigate("/");
             }
           }
         } catch (error) {
@@ -660,14 +550,14 @@ function Notifications() {
             showConfirmButton: false,
             timer: 3000,
           });
-          if(!currentUser.token){
+          if (!currentUser.token) {
             dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+            dispatch(
+              login({
+                user: {},
+              })
+            );
+            navigate("/");
           }
         } finally {
           setIsSubmitting(false);
@@ -712,26 +602,26 @@ function Notifications() {
         });
       } else {
         setIsSubmitting(false);
-        if(!currentUser.token){
+        if (!currentUser.token) {
           dispatch(toggleSidebarfalse());
+          dispatch(
+            login({
+              user: {},
+            })
+          );
+          navigate("/");
+        }
+      }
+    } catch (error) {
+      setIsSubmitting(false);
+      if (!currentUser.token) {
+        dispatch(toggleSidebarfalse());
         dispatch(
           login({
             user: {},
           })
         );
         navigate("/");
-        }
-      }
-    } catch (error) {
-      setIsSubmitting(false);
-      if(!currentUser.token){
-        dispatch(toggleSidebarfalse());
-      dispatch(
-        login({
-          user: {},
-        })
-      );
-      navigate("/");
       }
     }
   };
@@ -921,6 +811,7 @@ function Notifications() {
                           : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                       }
                       onClick={() => setButonActive(4)}
+                      style={{ border: "none" }}
                     >
                       Unread
                     </button>
@@ -931,6 +822,7 @@ function Notifications() {
                           : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                       }
                       onClick={() => setButonActive(2)}
+                      style={{ border: "none" }}
                     >
                       Read
                     </button>
@@ -941,6 +833,7 @@ function Notifications() {
                           : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                       }
                       onClick={() => setButonActive(3)}
+                      style={{ border: "none" }}
                     >
                       Sent
                     </button>
@@ -1020,22 +913,57 @@ function Notifications() {
                   </div>
                   <div className="col-12 mt-1">
                     <p className="list-group">All Read Notification List</p>
-                    <Box sx={{ height: 500, width: "100%" }}>
-                      <DataGrid
-                        rows={filteredRowsRead}
-                        columns={columns}
-                        initialState={{
-                          pagination: {
-                            paginationModel: {
-                              pageSize: 15,
-                            },
-                          },
-                        }}
-                        pageSizeOptions={[15]}
-                        checkboxSelection
-                        disableRowSelectionOnClick
-                      />
-                    </Box>
+                    {allRead ? (
+                      <>
+                        <Box sx={{ height: 500, width: "100%" }}>
+                          <DataGrid
+                            rows={filteredRowsRead}
+                            columns={columns}
+                            sx={{
+                              "& .status-pending": {
+                                color: "yellow",
+                              },
+                              "& .status-rejected": {
+                                color: "red",
+                              },
+                              "& .status-approved": {
+                                color: "green",
+                              },
+                              "& .MuiDataGrid-columnHeaders": {
+                                fontWeight: "bold",
+                              },
+                              "& .MuiDataGrid-columnHeaderTitle": {
+                                fontWeight: "bold",
+                              },
+                            }}
+                            initialState={{
+                              pagination: {
+                                paginationModel: {
+                                  pageSize: 15,
+                                },
+                              },
+                            }}
+                            pageSizeOptions={[15]}
+                            checkboxSelection
+                            disableRowSelectionOnClick
+                          />
+                        </Box>
+                      </>
+                    ) : (
+                      <>
+                        <div
+                          className="d-flex justify-content-center align-items-center"
+                          style={{ height: 500, width: "100%" }}
+                        >
+                          <div style={{ textAlign: "center" }}>
+                            <CircularProgress color="inherit" />
+                            <p className="p-4 text-secondary">
+                              Just a moment, we’re getting things ready...
+                            </p>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </>
               )}
@@ -1065,22 +993,57 @@ function Notifications() {
                   </div>
                   <div className="col-12 mt-1">
                     <p className="list-group">Sent Notification List</p>
-                    <Box sx={{ height: 500, width: "100%" }}>
-                      <DataGrid
-                        rows={filteredRowsSent}
-                        columns={columnSent}
-                        initialState={{
-                          pagination: {
-                            paginationModel: {
-                              pageSize: 15,
-                            },
-                          },
-                        }}
-                        pageSizeOptions={[15]}
-                        checkboxSelection
-                        disableRowSelectionOnClick
-                      />
-                    </Box>
+                    {allSent ? (
+                      <>
+                        <Box sx={{ height: 500, width: "100%" }}>
+                          <DataGrid
+                            rows={filteredRowsSent}
+                            columns={columnSent}
+                            sx={{
+                              "& .status-pending": {
+                                color: "yellow",
+                              },
+                              "& .status-rejected": {
+                                color: "red",
+                              },
+                              "& .status-approved": {
+                                color: "green",
+                              },
+                              "& .MuiDataGrid-columnHeaders": {
+                                fontWeight: "bold",
+                              },
+                              "& .MuiDataGrid-columnHeaderTitle": {
+                                fontWeight: "bold",
+                              },
+                            }}
+                            initialState={{
+                              pagination: {
+                                paginationModel: {
+                                  pageSize: 15,
+                                },
+                              },
+                            }}
+                            pageSizeOptions={[15]}
+                            checkboxSelection
+                            disableRowSelectionOnClick
+                          />
+                        </Box>
+                      </>
+                    ) : (
+                      <>
+                        <div
+                          className="d-flex justify-content-center align-items-center"
+                          style={{ height: 500, width: "100%" }}
+                        >
+                          <div style={{ textAlign: "center" }}>
+                            <CircularProgress color="inherit" />
+                            <p className="p-4 text-secondary">
+                              Just a moment, we’re getting things ready...
+                            </p>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </>
               )}
@@ -1110,22 +1073,57 @@ function Notifications() {
                   </div>
                   <div className="col-12 mt-1">
                     <p className="list-group">All Unread Notifications List</p>
-                    <Box sx={{ height: 500, width: "100%" }}>
-                      <DataGrid
-                        rows={filteredRowsUnread}
-                        columns={columns}
-                        initialState={{
-                          pagination: {
-                            paginationModel: {
-                              pageSize: 15,
-                            },
-                          },
-                        }}
-                        pageSizeOptions={[15]}
-                        checkboxSelection
-                        disableRowSelectionOnClick
-                      />
-                    </Box>
+                    {allAdminNotifications ? (
+                      <>
+                        <Box sx={{ height: 500, width: "100%" }}>
+                          <DataGrid
+                            rows={filteredRowsUnread}
+                            columns={columns}
+                            sx={{
+                              "& .status-pending": {
+                                color: "yellow",
+                              },
+                              "& .status-rejected": {
+                                color: "red",
+                              },
+                              "& .status-approved": {
+                                color: "green",
+                              },
+                              "& .MuiDataGrid-columnHeaders": {
+                                fontWeight: "bold",
+                              },
+                              "& .MuiDataGrid-columnHeaderTitle": {
+                                fontWeight: "bold",
+                              },
+                            }}
+                            initialState={{
+                              pagination: {
+                                paginationModel: {
+                                  pageSize: 15,
+                                },
+                              },
+                            }}
+                            pageSizeOptions={[15]}
+                            checkboxSelection
+                            disableRowSelectionOnClick
+                          />
+                        </Box>
+                      </>
+                    ) : (
+                      <>
+                        <div
+                          className="d-flex justify-content-center align-items-center"
+                          style={{ height: 500, width: "100%" }}
+                        >
+                          <div style={{ textAlign: "center" }}>
+                            <CircularProgress color="inherit" />
+                            <p className="p-4 text-secondary">
+                              Just a moment, we’re getting things ready...
+                            </p>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </>
               )}
@@ -1140,7 +1138,30 @@ function Notifications() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
-          <h1 className="text-center">Add New Notification</h1>
+          <div className="d-flex justify-content-between align-items-center">
+            <div></div>
+            <h1 className="text-center">Add New Notification</h1>
+            <CgCloseR
+              style={{
+                color: "red",
+                fontSize: "32px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                setTitle("");
+                setPriority("");
+                setNotification("");
+                setTextCounter(0);
+                setNotificationActive("All");
+                setOpenModel(false);
+
+                setTitleError("");
+                setPriorityError("");
+                setNotificationError("");
+              }}
+            />
+          </div>
+
           <div className="container-fluid mt-md-4">
             <div className="row justify-content-center">
               <div className="col-12 col-lg-12 col-xxl-9 mx-auto border d-flex flex-wrap justify-content-between p-1">
@@ -1179,11 +1200,12 @@ function Notifications() {
           >
             <Grid item xs={12} sm={6} md={6}>
               <div className="form-group pb-3">
-                <label htmlFor="email" className="pb-2">
+                <label htmlFor="email" className="pb-2 text-bold">
                   Title: <span>*</span>
                 </label>
                 <input
                   type="text"
+                  value={title}
                   className="form-control place-holder"
                   placeholder="Enter title"
                   autoComplete="off"
@@ -1200,12 +1222,12 @@ function Notifications() {
                 )}
               </div>
               <div className="form-group pb-3">
-                <label htmlFor="email" className="pb-2">
+                <label htmlFor="email" className="pb-2 text-bold">
                   Prority: <span>*</span>
                 </label>
                 <select
                   class="form-select"
-                  //value={department}
+                  value={priority}
                   //disabled={!isEditing ? true : false}
                   onChange={(e) => {
                     setPriorityError("");
@@ -1230,20 +1252,20 @@ function Notifications() {
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <div className="form-group pb-3">
-                <label htmlFor="email" className="pb-2">
+                <label htmlFor="email" className="pb-2 text-bold">
                   Notification: <span>*</span>
                 </label>
                 <textarea
                   type="textArea"
                   rows="5"
                   cols="50"
+                  value={notification}
                   className="form-control place-holder"
                   maxlength="700"
                   placeholder="Type here.........."
                   autoComplete="off"
                   name="email"
                   onChange={(e) => {
-                    //setEmailError("");
                     setTextCounter(e.target.value.length);
                     setNotificationError("");
                     setNotification(e.target.value);
@@ -1264,7 +1286,7 @@ function Notifications() {
             <Grid item xs={12}>
               <div className="float-end">
                 <button
-                  className="btn btn-success m-1 p-2 modelButton"
+                  className="btn btn-success m-1 p-2 modelButton text-bold"
                   onClick={handleStep5}
                 >
                   Send
@@ -1286,7 +1308,7 @@ function Notifications() {
               <Tooltip title="close">
                 <CgCloseR
                   style={{
-                    color: "grey",
+                    color: "red",
                     fontSize: "32px",
                     cursor: "pointer",
                   }}
@@ -1317,38 +1339,37 @@ function Notifications() {
         </Box>
       </Modal>
       <Modal
-  open={openModelSent}
-  onClose={handleCloseSent}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-  <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
-    <div className="w-100 d-flex border-bottom mt-1 mt-md-2 my-border">
-      <div className="col-2 col-md-1">
-        <Tooltip title="close">
-          <div>
-            <CgCloseR
-              style={{
-                color: "grey",
-                fontSize: "32px",
-                cursor: "pointer",
-              }}
-              onClick={() => setOpenModelSent(false)}
-            />
+        open={openModelSent}
+        onClose={handleCloseSent}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
+          <div className="w-100 d-flex border-bottom mt-1 mt-md-2 my-border">
+            <div className="col-2 col-md-1">
+              <Tooltip title="close">
+                <div>
+                  <CgCloseR
+                    style={{
+                      color: "red",
+                      fontSize: "32px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setOpenModelSent(false)}
+                  />
+                </div>
+              </Tooltip>
+            </div>
+            <div className="col-10 col-md-11">
+              <div className="d-flex justify-content-between">
+                <h5>{sentAdminNotification?.type}</h5>
+                <p>{sentAdminNotification?.createdAt}</p>
+              </div>
+              <p>{sentAdminNotification?.notification}</p>
+            </div>
           </div>
-        </Tooltip>
-      </div>
-      <div className="col-10 col-md-11">
-        <div className="d-flex justify-content-between">
-          <h5>{sentAdminNotification?.type}</h5>
-          <p>{sentAdminNotification?.createdAt}</p>
-        </div>
-        <p>{sentAdminNotification?.notification}</p>
-      </div>
-    </div>
-  </Box>
-</Modal>
-
+        </Box>
+      </Modal>
     </div>
   );
 }

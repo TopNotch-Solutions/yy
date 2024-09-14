@@ -1,70 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { IconButton, useTheme, useMediaQuery } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
+import { useTheme, useMediaQuery } from "@mui/material";
 import "../assets/css/Dashboard.css";
+import CircularProgress from "@mui/material/CircularProgress";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { SlOptionsVertical } from "react-icons/sl";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
-import MyButton from "../components/commons/MyButton";
-import Modal from "@mui/material/Modal";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import ModelButton from "../components/commons/ModelButton";
-import TopCategories from "../components/admin/TopCategories";
 import { ResponsivePie } from "@nivo/pie";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
-import { Line as RCLine } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip as RCTooltip, Legend as RCLegend } from 'chart.js';
-import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip as RCTooltip,
+  Legend as RCLegend,
+} from "chart.js";
 import { updateToken } from "../redux/reducers/authReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../redux/reducers/authReducer";
 import { useNavigate } from "react-router-dom";
+import handleAuthFailure from "../utils/handleAuthFailure";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, RCTooltip, RCLegend);
-
-const mobileStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "90%",
-  height: "80%",
-  overflowY: "scroll",
-  bgcolor: "background.paper",
-  border: "2px solid #fff",
-  boxShadow: 24,
-  p: 4,
-};
-
-const largeStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "50%",
-  height: "70%",
-  overflowY: "auto",
-  bgcolor: "background.paper",
-  border: "2px solid #fff",
-  boxShadow: 24,
-  p: 4,
-};
-
-const steps = [
-  "General business information",
-  "Founder's information",
-  "Contact information",
-  "Business hours",
-  "Additional information",
-];
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  RCTooltip,
+  RCLegend
+);
 
 function Dashboard() {
   const theme = useTheme();
@@ -79,28 +55,6 @@ function Dashboard() {
 
   const [allMSMEList, setAllMSMEList] = useState([]);
 
-  const [stepperCounter, setStepperCounter] = useState(0);
-  const [buttonActive, setButonActive] = useState(1);
-  const [businessRegistrationName, setBusinessRegistrationName] = useState("");
-  const [businessRegistrationNameError, setBusinessRegistrationNameError] =
-    useState("");
-  const [businessDisplayName, setBusinessDisplayName] = useState("");
-  const [businessDisplayNameError, setBusinessDisplayNameError] = useState("");
-  const [typeOfBusiness, setTypeOfBusiness] = useState("");
-  const [typeOfBusinessError, setTypeOfBusinessError] = useState("");
-  const [region, setRegion] = useState("");
-  const [regionError, setRegionError] = useState("");
-  const [town, setTown] = useState("");
-  const [townError, setTownError] = useState("");
-  const [primaryIndustry, setPrimaryIndustry] = useState("");
-  const [primaryIndustryError, setPrimaryIndustryError] = useState("");
-  const [secondaryIndustry, setSecondaryIndustry] = useState("");
-  const [yearOfEstablishment, setYearOfEstablishment] = useState("");
-  const [yearOfEstablishmentError, setYearOfEstablishmentError] = useState("");
-  const [annualTurnover, setAnnualTurnover] = useState("");
-  const [annualTurnoverError, setAnnualTurnoverError] = useState("");
-  const [userId, setUserId] = useState("");
-  const [userIdError, setUserIdError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [topCategory, setTopCategory] = useState([]);
   const [firstElement, setFirstElement] = useState({});
@@ -114,11 +68,7 @@ function Dashboard() {
   const tokenHeader = currentUser.token;
 
   const datamy = lineData;
-  console.log(lineData)
 
-  const [openModel, setOpenModel] = useState(false);
-  const handleOpen = () => setOpenModel(true);
-  const handleClose = () => setOpenModel(false);
   useEffect(() => {
     const fetchTotalCount = async () => {
       try {
@@ -135,44 +85,19 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
+          dispatch(updateToken({ token: newTokenHeader }));
         }
-        console.log("Header header",newTokenHeader,tokenHeader,currentUser);
+
         if (response.ok) {
-          console.log("Login successful", data);
           setLineData(data.data);
         } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -195,43 +120,23 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setTotalRegistration(data.count);
         } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -254,43 +159,23 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
-          console.log("Login successful", data);
           setPendingRegistration(data.count);
         } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -313,43 +198,24 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
           console.log("Login successful", data);
           setRejectedRegistration(data.count);
         } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -372,43 +238,24 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
           console.log("Login successful", data);
           setIApprovedRegistration(data.count);
         } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -424,47 +271,26 @@ function Dashboard() {
             Authorization: `${tokenHeader}`,
           },
           credentials: "include",
-        }
-      );
+        });
 
-      const data = await response.json();
-      const newTokenHeader = response.headers.get('Authorization');
-      dispatch(updateToken({
-        token: newTokenHeader
-      }));
-      if(!newTokenHeader){
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-      }
-        if (response.ok) {
-          console.log("Login successful", data);
-          setAllMSMEList(data.data);
-        } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
-          }
+        }
+
+        if (response.ok) {
+          setAllMSMEList(data.data);
+        } else {
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -486,54 +312,28 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
-        if(!newTokenHeader){
-          dispatch(toggleSidebarfalse());
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
           dispatch(
-            login({
-              user: {},
+            updateToken({
+              token: newTokenHeader,
             })
           );
-          navigate("/");
         }
+
         if (response.ok) {
           setTopCategory(data.data);
-
           setFirstElement(data.data[0]);
           setSecondElement(data.data[1]);
           setThirdElement(data.data[2]);
           setFourthElement(data.data[3]);
           setFifthElement(data.data[4]);
-
-          console.log("First Element:", data.data[0]);
-          console.log("Second Element:", data.data[1]);
-          console.log("Third Element:", data.data[2]);
-          console.log("Fourth Element:", data.data[3]);
-          console.log("Fifth Element:", data.data[4]);
         } else {
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
@@ -547,8 +347,8 @@ function Dashboard() {
       width: isSmallScreen ? 130 : 160,
     },
     { field: "email", headerName: "Email", width: isSmallScreen ? 140 : 180 },
-    { field: "region", headerName: "Region", width: isSmallScreen ? 120 : 160 },
-    { field: "town", headerName: "Town", width: isSmallScreen ? 120 : 160 },
+    { field: "region", headerName: "Region", width: isSmallScreen ? 120 : 140 },
+    { field: "town", headerName: "Town", width: isSmallScreen ? 120 : 140 },
     {
       field: "primaryIndustry",
       headerName: "Primary Industry",
@@ -567,7 +367,7 @@ function Dashboard() {
     {
       field: "status",
       headerName: "Status",
-      width: isSmallScreen ? 120 : 140,
+      width: isSmallScreen ? 100 : 120,
       cellClassName: (params) => {
         switch (params.value) {
           case "Pending":
@@ -584,7 +384,7 @@ function Dashboard() {
     {
       field: "isBlocked",
       headerName: "Blocked",
-      width: isSmallScreen ? 120 : 140,
+      width: isSmallScreen ? 100 : 120,
       cellClassName: (params) => {
         switch (params.value) {
           case true:
@@ -595,6 +395,11 @@ function Dashboard() {
             return "";
         }
       },
+    },
+    {
+      field: "createdAt",
+      headerName: "Created At",
+      width: isSmallScreen ? 120 : 180,
     },
   ];
   console.log(allMSMEList);
@@ -608,7 +413,8 @@ function Dashboard() {
     annualTurnover: msme.annualTurnover,
     foundersName: msme.founderInfo?.founderName,
     status: msme.status,
-    isBlocked: msme.isBlocked
+    isBlocked: msme.isBlocked,
+    createdAt: msme.createdAt,
   }));
   const data = [
     {
@@ -642,7 +448,7 @@ function Dashboard() {
       color: "hsl(193, 70%, 50%)",
     },
   ];
-  console.log("data", data, fourthElement)
+  console.log("data", data, fourthElement);
   return (
     <div className="container-fluid mt-4">
       <p className="msme">Dashboard</p>
@@ -787,22 +593,44 @@ function Dashboard() {
                 </div>
               </div>
               <div className="row">
-                        <div className="col-12">
-                          <ResponsiveContainer width="100%" height={301}>
-                            <LineChart data={datamy}>
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="date" />
-                              <YAxis />
-                              <Tooltip />
-                              <Legend />
-                              <Line type="monotone" dataKey="currentMonth" stroke="rgba(21, 78, 138, 1)" activeDot={{ r: 8 }} />
-                              <Line type="monotone" dataKey="previousMonth" stroke="rgba(210, 31, 53, 1)" />
-                            </LineChart>
-                          </ResponsiveContainer>
-                        </div>
-                       
-                      </div>
-              
+                <div className="col-12">
+                  {
+                    lineData ? <>
+                     <ResponsiveContainer width="100%" height={301}>
+                    <LineChart data={datamy} width="100%">
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" />
+                      <YAxis interval={0} />
+                      <Tooltip />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="currentMonth"
+                        stroke="rgba(21, 78, 138, 1)"
+                        activeDot={{ r: 8 }}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="previousMonth"
+                        stroke="rgba(210, 31, 53, 1)"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                    </> : <>
+                     <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: 301, width: "100%" }}
+                          >
+                            <div style={{ textAlign: "center" }}>
+                              <CircularProgress color="inherit" />
+                              
+                            </div>
+                          </div>
+                    </>
+                  }
+                 
+                </div>
+              </div>
             </div>
           </Box>
           <Box
@@ -816,10 +644,12 @@ function Dashboard() {
               <div className="d-flex justify-content-between align-items-center border-bottom ">
                 <h6 className="header-padding">Top 5 performing categories</h6>
               </div>
-              <div style={{ height: 300 }}>
+              {
+                  topCategory ? <>
+                  <div style={{ height: 300 }}>
                 <ResponsivePie
                   data={data}
-                  margin={{ top: 10, right: 40, bottom: 10, left: 40 }}
+                  margin={{ top: 30, right: 10, bottom: 30, left: 40 }}
                   innerRadius={0.5}
                   padAngle={0.7}
                   cornerRadius={3}
@@ -829,7 +659,7 @@ function Dashboard() {
                     from: "color",
                     modifiers: [["darker", 0.2]],
                   }}
-                  arcLinkLabelsSkipAngle={360}
+                  arcLinkLabelsSkipAngle={10}
                   arcLinkLabelsTextColor="#333333"
                   arcLinkLabelsThickness={2}
                   arcLinkLabelsColor={{ from: "color" }}
@@ -908,9 +738,21 @@ function Dashboard() {
                       id: "lines",
                     },
                   ]}
-                  
                 />
               </div>
+                  </> : <>
+                  <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: 300, width: "100%" }}
+                          >
+                            <div style={{ textAlign: "center" }}>
+                              <CircularProgress color="inherit" />
+                              
+                            </div>
+                          </div>
+                  </>
+                }
+              
             </div>
           </Box>
 
@@ -921,33 +763,57 @@ function Dashboard() {
             <div className="col-12 listing-msme p-4 shadow rounded-3 mb-4">
               <div className="col-12 mt-1">
                 <p className="list-group">All MSME List</p>
-                <Box sx={{ height: 500, width: "100%" }}>
-                  <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    sx={{
-                      "& .status-pending": {
-                        color: "yellow",
-                      },
-                      "& .status-rejected": {
-                        color: "red",
-                      },
-                      "& .status-approved": {
-                        color: "green",
-                      },
-                    }}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 15,
-                        },
-                      },
-                    }}
-                    pageSizeOptions={[15]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                  />
-                </Box>
+                {allMSMEList ? (
+                  <>
+                    <Box sx={{ height: 500, width: "100%" }}>
+                      <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        sx={{
+                          "& .status-pending": {
+                            color: "yellow",
+                          },
+                          "& .status-rejected": {
+                            color: "red",
+                          },
+                          "& .status-approved": {
+                            color: "green",
+                          },
+                          "& .MuiDataGrid-columnHeaders": {
+                            fontWeight: "bold",
+                          },
+                          "& .MuiDataGrid-columnHeaderTitle": {
+                            fontWeight: "bold",
+                          },
+                        }}
+                        initialState={{
+                          pagination: {
+                            paginationModel: {
+                              pageSize: 15,
+                            },
+                          },
+                        }}
+                        pageSizeOptions={[15]}
+                        checkboxSelection
+                        disableRowSelectionOnClick
+                      />
+                    </Box>
+                  </>
+                ) : (
+                  <>
+                    <div
+                      className="d-flex justify-content-center align-items-center"
+                      style={{ height: 500, width: "100%" }}
+                    >
+                      <div style={{ textAlign: "center" }}>
+                        <CircularProgress color="inherit" />
+                        <p className="p-4 text-secondary">
+                          Just a moment, we’re getting things ready...
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </Box>

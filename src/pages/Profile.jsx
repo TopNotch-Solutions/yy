@@ -3,21 +3,17 @@ import "../assets/css/profile.css";
 import { useTheme, useMediaQuery } from "@mui/material";
 import profile from "../assets/images/blank-profile-picture-973460_960_720.webp";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import CloseIcon from "@mui/icons-material/Close";
-import Form from "react-bootstrap/Form";
 import Grid from "@mui/material/Grid";
-import InputGroup from "react-bootstrap/InputGroup";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SendIcon from "@mui/icons-material/Send";
 import EditIcon from "@mui/icons-material/Edit";
 import Stack from "@mui/material/Stack";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import axios from "axios";
-import { DataGrid } from "@mui/x-data-grid";
-import { Box, IconButton } from "@mui/material";
-//import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfileImage } from "../redux/reducers/authReducer";
 import { login } from "../redux/reducers/authReducer";
@@ -30,8 +26,10 @@ function Profile() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
+  const [currentPasswordShown, setCurrentPasswordShown] = useState(false);
+  const [newPasswordShown, setNewPasswordShown] = useState(false);
+  const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
 
-  const [userDetails, setUserDetails] = useState([]);
   const inputRef = useRef();
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("select");
@@ -50,11 +48,8 @@ function Profile() {
   const [department, setDepartment] = useState(currentUser.department);
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  let profileImage;
 
   const tokenHeader = currentUser.token;
-  const [data, setData] = useState([]);
-  const [employeeData, setEmployeeData] = useState([]);
   const buttonStyle = {
     color: "red",
     borderColor: "red",
@@ -679,12 +674,12 @@ function Profile() {
             style={{ marginTop: "10px" }}
           >
             <Grid item xs={12} sm={5} md={5}>
-              <div className="form-group pb-md-3">
+              <div className="form-group pb-md-3 position-relative">
                 <label htmlFor="email" className="pb-md-2">
                   Current Password:
                 </label>
                 <input
-                  type="password"
+                  type={currentPasswordShown ? "text" : "password"}
                   value={currentPassword}
                   className="form-control place-holder p-md-2"
                   placeholder="**********************"
@@ -694,16 +689,29 @@ function Profile() {
                     setCurrentPassword(e.target.value);
                   }}
                 />
+                <span
+                      className="show-password mt-1 position-absolute translate-middle-y pr-4"
+                      onClick={() =>setCurrentPasswordShown(!currentPasswordShown)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {currentPasswordShown ? (
+                        <VisibilityIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
+                      ) : (
+                        <VisibilityOffIcon
+                          sx={{ color: "rgba(0, 0, 0, 0.5)" }}
+                        />
+                      )}
+                    </span>
               </div>
             </Grid>
             <Grid item xs={12} sm={5} md={5}></Grid>
             <Grid item xs={12} sm={5} md={5}>
-              <div className="form-group pb-md-3">
+              <div className="form-group pb-md-3 position-relative">
                 <label htmlFor="email" className="pb-md-2">
                   New Password:
                 </label>
                 <input
-                  type="password"
+                  type={newPasswordShown ? "text" : "password"}
                   value={newPassword}
                   className="form-control place-holder p-md-2"
                   placeholder="**********************"
@@ -713,16 +721,29 @@ function Profile() {
                     setNewPassword(e.target.value);
                   }}
                 />
+                  <span
+                      className="show-password mt-1 position-absolute translate-middle-y pr-4"
+                      onClick={() =>setNewPasswordShown(!newPasswordShown)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {newPasswordShown ? (
+                        <VisibilityIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
+                      ) : (
+                        <VisibilityOffIcon
+                          sx={{ color: "rgba(0, 0, 0, 0.5)" }}
+                        />
+                      )}
+                    </span>
               </div>
             </Grid>
             <Grid item xs={12} sm={5} md={5}></Grid>
             <Grid item xs={12} sm={5} md={5}>
-              <div className="form-group pb-md-3">
+              <div className="form-group pb-md-3 position-relative">
                 <label htmlFor="email" className="pb-md-2">
                   Confirm Password:
                 </label>
                 <input
-                  type="password"
+                  type={confirmPasswordShown ? "text" : "password"}
                   value={confirmPassword}
                   className="form-control place-holder p-md-2"
                   placeholder="**********************"
@@ -732,6 +753,19 @@ function Profile() {
                     setConfirmPassword(e.target.value);
                   }}
                 />
+                <span
+                      className="show-password mt-1 position-absolute translate-middle-y pr-4"
+                      onClick={() =>setConfirmPasswordShown(!confirmPasswordShown)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {confirmPasswordShown ? (
+                        <VisibilityIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
+                      ) : (
+                        <VisibilityOffIcon
+                          sx={{ color: "rgba(0, 0, 0, 0.5)" }}
+                        />
+                      )}
+                    </span>
               </div>
             </Grid>
             <Grid item xs={12} sm={5} md={5}>

@@ -74,7 +74,7 @@ const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
         handleNavLinkClick()
         dispatch(toggleActiveTab({ activeTab: 1 }));
        // setNavList(activeSidebarTab);
-      }} style={{textDecoration: 'none'}}><h3 className="title text">In4msme portal</h3></NavLink>
+      }} style={{textDecoration: 'none'}}><h3 className="title text">In4msme Portal</h3></NavLink>
             </Tooltip>
             
           </div>
