@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IconButton, useTheme, useMediaQuery } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
 import InputBase from "@mui/material/InputBase";
 import "../assets/css/notifications.css";
 import Box from "@mui/material/Box";
@@ -100,6 +101,7 @@ function Notifications() {
   useEffect(() => {
     const fetchAllAdminNotifications = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
           `http://localhost:4000/notifications/admin/single/notifications`,
@@ -125,11 +127,14 @@ function Notifications() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setAllAdminNotifications(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -139,6 +144,7 @@ function Notifications() {
   useEffect(() => {
     const fetchAllUnread = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
           `http://localhost:4000/notifications/admin/all/unread-notification`,
@@ -164,12 +170,15 @@ function Notifications() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           console.log("Login successful", data);
           setAllUnread(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -179,6 +188,7 @@ function Notifications() {
   useEffect(() => {
     const fetchAllSent = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
           `http://localhost:4000/notifications/admin/all/sent-by-admin`,
@@ -204,12 +214,15 @@ function Notifications() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           console.log("Login successful", data);
           setAllSent(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -219,6 +232,7 @@ function Notifications() {
   useEffect(() => {
     const fetchAllRead = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
           `http://localhost:4000/notifications/admin/all/read-notification`,
@@ -244,11 +258,14 @@ function Notifications() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setAllRead(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -259,6 +276,7 @@ function Notifications() {
   const handleStep5 = async () => {
     if (validateFields()) {
       try {
+        dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const requestData = {
           title,
@@ -282,13 +300,19 @@ function Notifications() {
         );
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
+        
+        if (newTokenHeader) {
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
+        }else{
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
+        }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setOpenModel(false);
           setIsSubmitting(false);
           Swal.fire({
@@ -302,6 +326,7 @@ function Notifications() {
           setPriority("");
           setNotification("");
         } else {
+          dispatch(toggleIsSubmittingfalse());
           setIsSubmitting(false);
           setOpenModel(false);
           await Swal.fire({
@@ -314,40 +339,19 @@ function Notifications() {
           setTitle("");
           setPriority("");
           setNotification("");
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         setIsSubmitting(false);
         setOpenModel(false);
-        Swal.fire({
-          position: "center",
-          icon: "question",
-          title: "Check your internet connection and try again!",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     }
   };
   const handleView = async (id) => {
     try {
+      dispatch(toggleIsSubmittingTrue());
       setIsSubmitting(true);
       const response = await fetch(
         `http://localhost:4000/notifications/admin/single/${id}`,
@@ -363,12 +367,18 @@ function Notifications() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get("Authorization");
-      dispatch(
-        updateToken({
-          token: newTokenHeader,
-        })
-      );
+      
+      if (newTokenHeader) {
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+      }else{
+        handleAuthFailure({ dispatch, navigate, type: "auth" });
+      }
       if (response.ok) {
+        dispatch(toggleIsSubmittingfalse());
         setIsSubmitting(false);
         setUpdatedId(id);
         setSingleAdminNotification(data.data);
@@ -382,39 +392,18 @@ function Notifications() {
           showConfirmButton: false,
           timer: 3000,
         });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        
       }
     } catch (error) {
+      dispatch(toggleIsSubmittingfalse());
       setIsSubmitting(false);
       setOpenModel(false);
-      Swal.fire({
-        position: "center",
-        icon: "question",
-        title: "Check your internet connection and try again!",
-        showConfirmButton: false,
-        timer: 3000,
-      });
-      if (!currentUser.token) {
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-      }
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
   const handleViewSent = async (id) => {
     try {
+      dispatch(toggleIsSubmittingTrue());
       setIsSubmitting(true);
       const response = await fetch(
         `http://localhost:4000/notifications/admin/single/sent-by-admin/${id}`,
@@ -430,17 +419,24 @@ function Notifications() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get("Authorization");
-      dispatch(
-        updateToken({
-          token: newTokenHeader,
-        })
-      );
+      
+      if (newTokenHeader) {
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+      }else{
+        handleAuthFailure({ dispatch, navigate, type: "auth" });
+      }
       console.log("This is the data: ", data);
       if (response.ok) {
+        dispatch(toggleIsSubmittingfalse());
         setIsSubmitting(false);
         setSentAdminNotification(data.data);
         setOpenModelSent(true);
       } else {
+        dispatch(toggleIsSubmittingfalse());
         setIsSubmitting(false);
         await Swal.fire({
           position: "center",
@@ -449,35 +445,13 @@ function Notifications() {
           showConfirmButton: false,
           timer: 3000,
         });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        
       }
     } catch (error) {
+      dispatch(toggleIsSubmittingfalse());
       setIsSubmitting(false);
       setOpenModel(false);
-      Swal.fire({
-        position: "center",
-        icon: "question",
-        title: "Check your internet connection and try again!",
-        showConfirmButton: false,
-        timer: 3000,
-      });
-      if (!currentUser.token) {
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-      }
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
   const handleDeletion = (id) => {
@@ -493,7 +467,7 @@ function Notifications() {
       if (result.isConfirmed) {
         try {
           setIsSubmitting(true);
-
+          dispatch(toggleIsSubmittingTrue());
           const response = await fetch(
             `http://localhost:4000/notifications/admin/delete/${id}`,
             {
@@ -508,13 +482,19 @@ function Notifications() {
 
           const data = await response.json();
           const newTokenHeader = response.headers.get("Authorization");
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
+          
+          if (newTokenHeader) {
+            dispatch(
+              updateToken({
+                token: newTokenHeader,
+              })
+            );
+          }else{
+            handleAuthFailure({ dispatch, navigate, type: "auth" });
+          }
           console.log(data);
           if (response.ok) {
+            dispatch(toggleIsSubmittingfalse());
             Swal.fire({
               position: "center",
               icon: "success",
@@ -523,6 +503,7 @@ function Notifications() {
               timer: 3000,
             });
           } else {
+            dispatch(toggleIsSubmittingfalse());
             console.error("Server Error:", data.message);
             await Swal.fire({
               position: "center",
@@ -531,34 +512,11 @@ function Notifications() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            
           }
         } catch (error) {
-          console.error("Network Error:", error);
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Check your internet connection and try again!",
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          dispatch(toggleIsSubmittingfalse());
+          handleAuthFailure({ dispatch, navigate, type: "network" });
         } finally {
           setIsSubmitting(false);
         }
@@ -568,7 +526,7 @@ function Notifications() {
   const handleNoticationDeletion = async (id) => {
     try {
       setIsSubmitting(true);
-
+      dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
         `http://localhost:4000/notifications/admin/delete/${updatedId}`,
         {
@@ -583,15 +541,20 @@ function Notifications() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get("Authorization");
-      dispatch(
-        updateToken({
-          token: newTokenHeader,
-        })
-      );
+      
+      if (newTokenHeader) {
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+      }else{
+        handleAuthFailure({ dispatch, navigate, type: "auth" });
+      }
       console.log(data);
       if (response.ok) {
         setIsSubmitting(false);
-
+        dispatch(toggleIsSubmittingfalse());
         setOpenModelView(false);
         Swal.fire({
           position: "center",
@@ -601,28 +564,13 @@ function Notifications() {
           timer: 3000,
         });
       } else {
+        dispatch(toggleIsSubmittingfalse());
         setIsSubmitting(false);
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
-      }
+             }
     } catch (error) {
+      dispatch(toggleIsSubmittingfalse());
       setIsSubmitting(false);
-      if (!currentUser.token) {
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-      }
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
   const columns = [

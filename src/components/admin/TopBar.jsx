@@ -20,6 +20,7 @@ const Topbar = ({ OpenSidebar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.user);
+  const updatingState = useSelector((state) => state.submitting.isSubmitting);
   const [isSubmitting, setIsSubmitting] = useState(false);
   let fullName = currentUser?.firstName + currentUser?.lastName;
   const tokenHeader = currentUser.token;
@@ -57,7 +58,7 @@ const Topbar = ({ OpenSidebar }) => {
     };
 
     fetchAllAdminNotificationsCount();
-  }, [isSubmitting]);
+  }, [isSubmitting, updatingState]);
 
   const handleLogout = async () => {
     try {

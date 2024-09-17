@@ -5,6 +5,7 @@ import InputBase from "@mui/material/InputBase";
 import { CgCloseR } from "react-icons/cg";
 import "../assets/css/msme.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -105,6 +106,7 @@ function Content() {
   const [updatingImageDetails, setUpdatingImageDetails] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQuery1, setSearchQuery1] = useState("");
+  const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
 
   const handleOpen = () => setOpenModel(true);
   const handleOpen1 = () => setOpenModel1(true);
@@ -112,6 +114,7 @@ function Content() {
   const handleClose = () => {
     setDescription("");
     setImage("");
+    setLinkError("");
     setUserDetails("");
     setOpenModel(false);
   };
@@ -119,6 +122,7 @@ function Content() {
     setOpenModel1(false);
     setDescriptionImageError("");
     setImageImageError("");
+    setLinkError("");
   };
   const handleOpenEdit = () => setOpenModelEdit(true);
   const handleOpenEdit1 = () => setOpenModelEdit1(true);
@@ -127,11 +131,13 @@ function Content() {
     setImageDetails("");
     setUserDetails("");
     setUpdatingFail("");
+    setLinkDetailsError("");
     setOpenModelEdit(false);
   };
   const handleCloseEdit1 = () => {
     setDescriptionImageDetails("");
-    setImageImageDetails("");
+    setImageImageDetails("")
+    setLinkDetailsError("");
     setUpdatingFail("");
     setOpenModelEdit1(false);
   };
@@ -139,6 +145,7 @@ function Content() {
   useEffect(() => {
     const fetchOpportunities = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           `http://localhost:4000/opportunities/admin/all`,
           {
@@ -163,11 +170,14 @@ function Content() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setOpportunitiesList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -177,6 +187,7 @@ function Content() {
   useEffect(() => {
     const fetchMobileImages = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           `http://localhost:4000/admin/mobile-images/all`,
           {
@@ -201,11 +212,14 @@ function Content() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setMobileImagesList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -217,6 +231,7 @@ function Content() {
     if (validateFields1()) {
       try {
         setIsSubmitting(true);
+        dispatch(toggleIsSubmittingTrue());
         const formData = new FormData();
         formData.append("description", description);
         formData.append("opportunity-image", file);
@@ -237,6 +252,7 @@ function Content() {
         const data = await response.json();
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           Swal.fire({
             position: "center",
             icon: "success",
@@ -254,35 +270,12 @@ function Content() {
             showConfirmButton: false,
             timer: 3000,
           });
-
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
         }
       } catch (error) {
-        Swal.fire({
-          position: "center",
-          icon: "question",
-          title: `Check your internet connection and try again: ${error}`,
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        dispatch(toggleIsSubmittingfalse());
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       } finally {
+        dispatch(toggleIsSubmittingfalse());
         setIsSubmitting(false);
         setOpenModel(false);
       }
@@ -293,6 +286,7 @@ function Content() {
     if (validateFields3()) {
       try {
         setIsSubmitting(true);
+        dispatch(toggleIsSubmittingTrue());
         const formData = new FormData();
         formData.append("description", descriptionImage);
         formData.append("mobile-image", fileMobileImage);
@@ -309,6 +303,7 @@ function Content() {
         if (response.ok) {
           setOpenModel1(false);
           setIsSubmitting(false);
+          dispatch(toggleIsSubmittingfalse());
           Swal.fire({
             position: "center",
             icon: "success",
@@ -321,6 +316,7 @@ function Content() {
         } else {
           setIsSubmitting(false);
           setOpenModel1(false);
+          dispatch(toggleIsSubmittingfalse());
           await Swal.fire({
             position: "center",
             icon: "error",
@@ -330,41 +326,20 @@ function Content() {
           });
           setDescriptionImage("");
           setImageImage("");
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         setIsSubmitting(false);
         setOpenModel1(false);
-        Swal.fire({
-          position: "center",
-          icon: "question",
-          title: "Check your internet connection and try again!",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     }
   };
 
   const handleUpdate = async (id) => {
     try {
+      dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
         `http://localhost:4000/opportunities/admin/single/${id}`,
         {
@@ -379,14 +354,20 @@ function Content() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get("Authorization");
-      dispatch(
-        updateToken({
-          token: newTokenHeader,
-        })
-      );
+      
+      if (newTokenHeader) {
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+      }else{
+        handleAuthFailure({ dispatch, navigate, type: "auth" });
+      }
 
       if (response.ok) {
         console.log("Login successful", data);
+        dispatch(toggleIsSubmittingfalse());
         setUpdatingDetails(data.data);
         setDescriptionDetails(data.data.description);
         setImageDetails(data.data.image);
@@ -396,6 +377,7 @@ function Content() {
         setOpenModelEdit(true);
         //setAdminList(data.data);
       } else {
+        dispatch(toggleIsSubmittingfalse());
         await Swal.fire({
           position: "center",
           icon: "error",
@@ -403,37 +385,15 @@ function Content() {
           showConfirmButton: false,
           timer: 4000,
         });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
       }
     } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Check your internet connection and try again!",
-        showConfirmButton: false,
-        timer: 4000,
-      });
-      if (!currentUser.token) {
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-      }
+      dispatch(toggleIsSubmittingfalse());
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
   const handleUpdateImage = async (id) => {
     try {
+      dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
         `http://localhost:4000/admin/mobile-images/single/${id}`,
         {
@@ -448,14 +408,20 @@ function Content() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get("Authorization");
-      dispatch(
-        updateToken({
-          token: newTokenHeader,
-        })
-      );
+      
+      if (newTokenHeader) {
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+      }else{
+        handleAuthFailure({ dispatch, navigate, type: "auth" });
+      }
 
       if (response.ok) {
         console.log("Login successful", data);
+        dispatch(toggleIsSubmittingfalse());
         setUpdatingImageDetails(data.data);
         setDescriptionImageDetails(data.data.description);
         setImageImageDetails(data.data.mobileImage);
@@ -464,6 +430,7 @@ function Content() {
         setOpenModelEdit1(true);
         //setAdminList(data.data);
       } else {
+        dispatch(toggleIsSubmittingfalse());
         await Swal.fire({
           position: "center",
           icon: "error",
@@ -471,33 +438,11 @@ function Content() {
           showConfirmButton: false,
           timer: 4000,
         });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        
       }
     } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Check your internet connection and try again!",
-        showConfirmButton: false,
-        timer: 4000,
-      });
-      if (!currentUser.token) {
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-      }
+      dispatch(toggleIsSubmittingfalse());
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
   const handleDeletion = async (id) => {
@@ -513,7 +458,7 @@ function Content() {
       if (result.isConfirmed) {
         try {
           setIsSubmitting(true);
-
+          dispatch(toggleIsSubmittingTrue());
           const response = await fetch(
             `http://localhost:4000/opportunities/admin/delete/${id}`,
             {
@@ -528,14 +473,20 @@ function Content() {
 
           const data = await response.json();
           const newTokenHeader = response.headers.get("Authorization");
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
+         
+          if (newTokenHeader) {
+            dispatch(
+              updateToken({
+                token: newTokenHeader,
+              })
+            );
+          }else{
+            handleAuthFailure({ dispatch, navigate, type: "auth" });
+          }
           console.log(data);
 
           if (response.ok) {
+            dispatch(toggleIsSubmittingfalse());
             Swal.fire({
               position: "center",
               icon: "success",
@@ -544,6 +495,7 @@ function Content() {
               timer: 3000,
             });
           } else {
+            dispatch(toggleIsSubmittingfalse());
             await Swal.fire({
               position: "center",
               icon: "error",
@@ -551,35 +503,13 @@ function Content() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            
           }
         } catch (error) {
-          console.error("Network Error:", error);
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Check your internet connection and try again!",
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          dispatch(toggleIsSubmittingfalse());
+          handleAuthFailure({ dispatch, navigate, type: "network" });
         } finally {
+          dispatch(toggleIsSubmittingfalse());
           setIsSubmitting(false);
         }
       }
@@ -598,6 +528,7 @@ function Content() {
       if (result.isConfirmed) {
         try {
           setIsSubmitting(true);
+          dispatch(toggleIsSubmittingTrue());
 
           const response = await fetch(
             `http://localhost:4000/admin/mobile-images/delete/${id}`,
@@ -613,14 +544,20 @@ function Content() {
 
           const data = await response.json();
           const newTokenHeader = response.headers.get("Authorization");
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
+          
+          if (newTokenHeader) {
+            dispatch(
+              updateToken({
+                token: newTokenHeader,
+              })
+            );
+          }else{
+            handleAuthFailure({ dispatch, navigate, type: "auth" });
+          }
           console.log(data);
 
           if (response.ok) {
+            dispatch(toggleIsSubmittingfalse());
             Swal.fire({
               position: "center",
               icon: "success",
@@ -629,6 +566,7 @@ function Content() {
               timer: 3000,
             });
           } else {
+            dispatch(toggleIsSubmittingfalse());
             await Swal.fire({
               position: "center",
               icon: "error",
@@ -636,34 +574,10 @@ function Content() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
           }
         } catch (error) {
-          console.error("Network Error:", error);
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Check your internet connection and try again!",
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          dispatch(toggleIsSubmittingfalse());
+          handleAuthFailure({ dispatch, navigate, type: "network" });
         } finally {
           setIsSubmitting(false);
         }
@@ -751,18 +665,23 @@ function Content() {
   const fields1 = [
     { value: description, setError: setDescriptionError, name: "Description" },
     { value: image, setError: setImageError, name: "Image" },
-  ];
-  const validateFields1 = () => {
+    { value: link, setError: setLinkError, name: "Link", optional: true, isUrl: true }, // Link is optional
+];
+
+const validateFields1 = () => {
     let isValid = true;
     fields1.forEach((field) => {
-      field.setError("");
-      if (!field.value) {
-        field.setError(`${field.name} is required.`);
-        isValid = false;
-      }
+        field.setError(""); 
+        if (!field.optional && !field.value) {
+            field.setError(`${field.name} is required.`);
+            isValid = false;
+        } else if (field.isUrl && field.value && !urlRegex.test(field.value)) {
+            field.setError(`Invalid ${field.name}. Please provide a valid URL.`);
+            isValid = false;
+        }
     });
     return isValid;
-  };
+};
   const fields2 = [
     {
       value: descriptionDetails,
@@ -770,15 +689,19 @@ function Content() {
       name: "Description",
     },
     { value: imageDetails, setError: setImageDetailsError, name: "Image" },
+    { value: linkDetails, setError: setLinkDetailsError, name: "Link", optional: true, isUrl: true }, 
   ];
   const validateFields2 = () => {
     let isValid = true;
     fields2.forEach((field) => {
       field.setError("");
-      if (!field.value) {
+      if (!field.optional && !field.value) {
         field.setError(`${field.name} is required.`);
         isValid = false;
-      }
+    } else if (field.isUrl && field.value && !urlRegex.test(field.value)) {
+        field.setError(`Invalid ${field.name}. Please provide a valid URL.`);
+        isValid = false;
+    }
     });
     return isValid;
   };
@@ -1035,36 +958,12 @@ function Content() {
             setDescriptionDetails("");
             setUserDetails("");
             setImageDetails("");
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
           }
         } catch (error) {
           setIsSubmitting(false);
           setOpenModelEdit(false);
-          Swal.fire({
-            position: "center",
-            icon: "question",
-            title: `Check your internet connection and try again!: ${error}`,
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+          handleAuthFailure({ dispatch, navigate, type: "network" });
           }
-        }
       }
     }
   };
@@ -1116,36 +1015,13 @@ function Content() {
             });
             setDescriptionImageDetails("");
             setImageImageDetails("");
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            
           }
         } catch (error) {
           setIsSubmitting(false);
           setOpenModelEdit1(false);
-          Swal.fire({
-            position: "center",
-            icon: "question",
-            title: `Check your internet connection and try again!: ${error}`,
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
+          handleAuthFailure({ dispatch, navigate, type: "network" });
           }
-        }
       }
     }
   };
@@ -1204,35 +1080,12 @@ function Content() {
             setDescriptionDetails("");
             setUserDetails("");
             setImageDetails("");
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            
           }
         } catch (error) {
           setIsSubmitting(false);
           setOpenModelEdit(false);
-          Swal.fire({
-            position: "center",
-            icon: "question",
-            title: `Check your internet connection and try again!: ${error}`,
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "network" });
         }
       }
     }
@@ -1481,6 +1334,7 @@ function Content() {
                   setUserDetails("");
                   setDescriptionError("");
                   setImageError("");
+                  setLinkError("");
                   setOpenModel(false);
                 }}
               />
@@ -1497,9 +1351,8 @@ function Content() {
                     onClick={() => {
                       if (opportunityActive !== 1) {
                         setDescriptionError("");
-                        setDescription("");
-                        setImage("");
                         setImageError("");
+                        setLinkError("");
                         setopportunityActive(1);
                       } else {
                         setopportunityActive(1);
@@ -1517,9 +1370,8 @@ function Content() {
                     onClick={() => {
                       if (opportunityActive !== 2) {
                         setDescriptionError("");
-                        setDescription("");
-                        setImage("");
                         setImageError("");
+                        setLinkError("");
                         setopportunityActive(2);
                       } else {
                         setopportunityActive(2);
@@ -1547,6 +1399,7 @@ function Content() {
                       <textarea
                         type="text"
                         rows={4}
+                        value={description}
                         className="form-control place-holder"
                         placeholder="Opportunity description......"
                         autoComplete="off"
@@ -1568,6 +1421,7 @@ function Content() {
                       </label>
                       <input
                         type="url"
+                        value={link}
                         className="form-control place-holder"
                         placeholder="Enter URL link "
                         autoComplete="off"
@@ -1670,11 +1524,12 @@ function Content() {
                   <Grid item xs={12} sm={6} md={6}>
                     <div className="form-group pb-md-2">
                       <label htmlFor="email" className="pb-2 text-bold">
-                        Description:<span>*</span>
+                        Description: <span>*</span>
                       </label>
                       <textarea
                         type="text"
                         rows={4}
+                        value={description}
                         className="form-control place-holder"
                         placeholder="Opportunity description......"
                         autoComplete="off"
@@ -1696,6 +1551,7 @@ function Content() {
                       </label>
                       <input
                         type="url"
+                        value={link}
                         className="form-control place-holder"
                         placeholder="Enter URL link "
                         autoComplete="off"
@@ -1955,6 +1811,7 @@ function Content() {
                   setUserDetails("");
                   setOpenModelEdit(false);
                   setDescriptionImageDetails("");
+                  setLinkDetailsError("");
                   setImageImageDetailsError("");
                   setUpdatingFail("");
                 }}

@@ -7,6 +7,7 @@ import "../assets/css/bso.css";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
+import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Grid from "@mui/material/Grid";
 import Backdrop from "@mui/material/Backdrop";
@@ -103,6 +104,10 @@ function Bso() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openModel, setOpenModel] = useState(false);
   const [openModelEdit, setOpenModelEdit] = useState(false);
+  const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
+
 
   const currentUser = useSelector((state) => state.auth.user);
   const tokenHeader = currentUser.token;
@@ -131,6 +136,7 @@ function Bso() {
   useEffect(() => {
     const fetchTotalCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/bso/admin/count", {
           method: "GET",
           headers: {
@@ -152,11 +158,14 @@ function Bso() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setTotalBsos(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -167,6 +176,7 @@ function Bso() {
   useEffect(() => {
     const fetchApprovedCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/bso/admin/all", {
           method: "GET",
           headers: {
@@ -191,9 +201,11 @@ function Bso() {
           console.log("Login successful", data);
           setBsoList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -217,15 +229,42 @@ function Bso() {
   ];
   const validateFields1 = () => {
     let isValid = true;
+  
     fields1.forEach((field) => {
       field.setError("");
+  
       if (!field.value) {
         field.setError(`${field.name} is required.`);
         isValid = false;
+      } else {
+
+        if (field.name === "Email" && field.value) {
+          if (!emailRegex.test(field.value)) {
+            field.setError("Invalid email format.");
+            isValid = false;
+          }
+        }
+  
+        if (field.name === "Contact Number" && field.value) {
+          if (!namibiaPhoneRegex.test(field.value)) {
+            field.setError("Invalid phone number.");
+            isValid = false;
+          }
+        }
+  
+        if (field.name === "Website" && field.value) {
+          if (!urlRegex.test(field.value)) {
+            field.setError("Invalid website URL.");
+            isValid = false;
+          }
+        }
       }
     });
+  
     return isValid;
   };
+  
+  
   const fields2 = [
     { value: nameDetails, setError: setNameDetailsError, name: "Name" },
     { value: typeDetails, setError: setTypeDetailsError, name: "Type" },
@@ -250,21 +289,49 @@ function Bso() {
   ];
   const validateFields2 = () => {
     let isValid = true;
+  
     fields2.forEach((field) => {
       field.setError("");
+
       if (!field.value) {
         field.setError(`${field.name} is required.`);
         isValid = false;
+      } else {
+
+        if (field.name === "Email" && field.value) {
+          if (!emailRegex.test(field.value)) {
+            field.setError("Invalid email format.");
+            isValid = false;
+          }
+        }
+  
+        if (field.name === "Contact Number" && field.value) {
+          if (!namibiaPhoneRegex.test(field.value)) {
+            field.setError("Invalid phone number.");
+            isValid = false;
+          }
+        }
+  
+        if (field.name === "Website" && field.value) {
+          if (!urlRegex.test(field.value)) {
+            field.setError("Invalid website URL.");
+            isValid = false;
+          }
+        }
       }
     });
+  
     return isValid;
   };
+  
+  
 
   const handleStep5 = async () => {
     console.log(logo);
     if (validateFields1()) {
       try {
         setIsSubmitting(true);
+        dispatch(toggleIsSubmittingTrue());
         const formData = new FormData();
         formData.append("name", name);
         formData.append("type", type);
@@ -279,9 +346,11 @@ function Bso() {
           body: formData,
         });
         const data = await response.json();
+        
         if (response.ok) {
           setOpenModel(false);
           setIsSubmitting(false);
+          dispatch(toggleIsSubmittingfalse());
           Swal.fire({
             position: "center",
             icon: "success",
@@ -299,6 +368,7 @@ function Bso() {
         } else {
           setIsSubmitting(false);
           setOpenModel(false);
+          dispatch(toggleIsSubmittingfalse());
           await Swal.fire({
             position: "center",
             icon: "error",
@@ -313,35 +383,13 @@ function Bso() {
           setEmail("");
           setWebsite("");
           setLogo("");
-          if (!data.isAuthenticated) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          
         }
       } catch (error) {
         setIsSubmitting(false);
         setOpenModel(false);
-        Swal.fire({
-          position: "center",
-          icon: "question",
-          title: "Check your internet connection and try again!",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        dispatch(toggleIsSubmittingfalse());
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     }
   };
@@ -406,6 +454,7 @@ function Bso() {
 
   const handleUpdate = async (id) => {
     try {
+      dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
         `http://localhost:4000/bso/admin/single/${id}`,
         {
@@ -420,11 +469,16 @@ function Bso() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get("Authorization");
-      dispatch(
-        updateToken({
-          token: newTokenHeader,
-        })
-      );
+      
+      if (newTokenHeader) {
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+      }else{
+        handleAuthFailure({ dispatch, navigate, type: "auth" });
+      }
 
       if (response.ok) {
         console.log("Login successful", data);
@@ -437,7 +491,7 @@ function Bso() {
         setDesciptionDetails(data.data.description);
         setLogoDetails(data.data.logo);
         setOpenModelEdit(true);
-        //setAdminList(data.data);
+        dispatch(toggleIsSubmittingfalse());
       } else {
         await Swal.fire({
           position: "center",
@@ -446,33 +500,10 @@ function Bso() {
           showConfirmButton: false,
           timer: 4000,
         });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
       }
     } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: `Check your internet connection and try again: ${error}`,
-        showConfirmButton: false,
-        timer: 4000,
-      });
-      if (!currentUser.token) {
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-      }
+      dispatch(toggleIsSubmittingfalse());
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
   const handleDeletion = (id) => {
@@ -489,7 +520,7 @@ function Bso() {
         if (result.isConfirmed) {
           try {
             setIsSubmitting(true);
-
+            dispatch(toggleIsSubmittingTrue());
             const response = await fetch(
               `http://localhost:4000/bso/admin/delete/${id}`,
               {
@@ -504,14 +535,19 @@ function Bso() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            dispatch(
-              updateToken({
-                token: newTokenHeader,
-              })
-            );
+            if (newTokenHeader) {
+              dispatch(
+                updateToken({
+                  token: newTokenHeader,
+                })
+              );
+            }else{
+              handleAuthFailure({ dispatch, navigate, type: "auth" });
+            }
             console.log(data);
 
             if (response.ok) {
+              dispatch(toggleIsSubmittingfalse());
               Swal.fire({
                 position: "center",
                 icon: "success",
@@ -519,7 +555,9 @@ function Bso() {
                 showConfirmButton: false,
                 timer: 3000,
               });
+              
             } else {
+              dispatch(toggleIsSubmittingfalse());
               await Swal.fire({
                 position: "center",
                 icon: "error",
@@ -527,40 +565,19 @@ function Bso() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if (!currentUser.token) {
-                dispatch(toggleSidebarfalse());
-                dispatch(
-                  login({
-                    user: {},
-                  })
-                );
-                navigate("/");
-              }
+
             }
           } catch (error) {
-            console.error("Network Error:", error);
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Check your internet connection and try again!",
-              showConfirmButton: false,
-              timer: 3000,
-            });
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            dispatch(toggleIsSubmittingfalse());
+            handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
+            dispatch(toggleIsSubmittingfalse());
             setIsSubmitting(false);
           }
         }
       });
     } catch (error) {
+      dispatch(toggleIsSubmittingfalse());
       console.error("Unexpected Error:", error);
     }
   };
@@ -579,6 +596,7 @@ function Bso() {
     } else {
       if (validateFields2()) {
         try {
+          dispatch(toggleIsSubmittingTrue());
           setIsSubmitting(true);
           const formData = new FormData();
           formData.append("name", nameDetails);
@@ -601,6 +619,7 @@ function Bso() {
           if (response.ok) {
             setOpenModelEdit(false);
             setIsSubmitting(false);
+            dispatch(toggleIsSubmittingfalse());
             Swal.fire({
               position: "center",
               icon: "success",
@@ -618,6 +637,7 @@ function Bso() {
           } else {
             setIsSubmitting(false);
             setOpenModelEdit(false);
+            dispatch(toggleIsSubmittingfalse());
             await Swal.fire({
               position: "center",
               icon: "error",
@@ -632,35 +652,13 @@ function Bso() {
             setDesciptionDetails("");
             setWebsiteDetails("");
             setLogoDetails("");
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            
           }
         } catch (error) {
+          dispatch(toggleIsSubmittingfalse());
           setIsSubmitting(false);
           setOpenModelEdit(false);
-          Swal.fire({
-            position: "center",
-            icon: "question",
-            title: "Check your internet connection and try again!",
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "network" });
         }
       }
     }

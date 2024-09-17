@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import "../assets/css/msme.css";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
+import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
 import Box from "@mui/material/Box";
 import { CgCloseR } from "react-icons/cg";
 import { DataGrid } from "@mui/x-data-grid";
@@ -97,6 +98,8 @@ function User() {
 
   const [updatingFail, setUpdatingFail] = useState("");
   const tokenHeader = currentUser.token;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
 
   const [searchQuery, setSearchQuery] = useState("");
   const [openModel, setOpenModel] = useState(false);
@@ -131,6 +134,7 @@ function User() {
   useEffect(() => {
     const fetchTotalCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/system/all/system-users",
           {
@@ -155,11 +159,14 @@ function User() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setTotalSystemUsers(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -170,6 +177,7 @@ function User() {
   useEffect(() => {
     const fetchPendingCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/system/all/super-admin-count",
           {
@@ -194,11 +202,14 @@ function User() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setTotalSuperUser(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -209,6 +220,7 @@ function User() {
   useEffect(() => {
     const fetchRejectedCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/system/all/admin-count",
           {
@@ -233,11 +245,14 @@ function User() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setTotalAdmins(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -248,6 +263,7 @@ function User() {
   useEffect(() => {
     const fetchApprovedCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/system/all/app-user-count",
           {
@@ -272,11 +288,14 @@ function User() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setTotalAppUsers(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -286,6 +305,7 @@ function User() {
   useEffect(() => {
     const fetchApprovedCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/system/all/admin/list",
           {
@@ -310,11 +330,14 @@ function User() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setAdminList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -343,11 +366,16 @@ function User() {
 
       const newTokenHeader = response.headers.get("Authorization");
       console.log("My new token: ", newTokenHeader);
-      dispatch(
-        updateToken({
-          token: newTokenHeader,
-        })
-      );
+      
+      if (newTokenHeader) {
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+      }else{
+        handleAuthFailure({ dispatch, navigate, type: "auth" });
+      }
 
       if (response.ok) {
         console.log("Login successful", data);
@@ -368,33 +396,10 @@ function User() {
           showConfirmButton: false,
           timer: 4000,
         });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        
       }
     } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Check your internet connection and try again!",
-        showConfirmButton: false,
-        timer: 4000,
-      });
-      if (!currentUser.token) {
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-      }
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
     //setOpenModelEditing(true)
   };
@@ -429,11 +434,16 @@ function User() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            dispatch(
-              updateToken({
-                token: newTokenHeader,
-              })
-            );
+            
+            if (newTokenHeader) {
+              dispatch(
+                updateToken({
+                  token: newTokenHeader,
+                })
+              );
+            }else{
+              handleAuthFailure({ dispatch, navigate, type: "auth" });
+            }
             console.log(data);
             if (response.ok) {
               dispatch(toggleSidebarfalse());
@@ -452,34 +462,10 @@ function User() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if (!currentUser.token) {
-                dispatch(toggleSidebarfalse());
-                dispatch(
-                  login({
-                    user: {},
-                  })
-                );
-                navigate("/");
-              }
+              
             }
           } catch (error) {
-            console.error("Network Error:", error);
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Check your internet connection and try again!",
-              showConfirmButton: false,
-              timer: 3000,
-            });
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
             setIsSubmitting(false);
           }
@@ -514,11 +500,16 @@ function User() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            dispatch(
-              updateToken({
-                token: newTokenHeader,
-              })
-            );
+           
+            if (newTokenHeader) {
+              dispatch(
+                updateToken({
+                  token: newTokenHeader,
+                })
+              );
+            }else{
+              handleAuthFailure({ dispatch, navigate, type: "auth" });
+            }
             console.log(data);
             if (response.ok) {
               Swal.fire({
@@ -537,34 +528,10 @@ function User() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if (!currentUser.token) {
-                dispatch(toggleSidebarfalse());
-                dispatch(
-                  login({
-                    user: {},
-                  })
-                );
-                navigate("/");
-              }
+              
             }
           } catch (error) {
-            console.error("Network Error:", error);
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Check your internet connection and try again!",
-              showConfirmButton: false,
-              timer: 3000,
-            });
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
             setIsSubmitting(false);
           }
@@ -690,6 +657,19 @@ function User() {
       if (!field.value) {
         field.setError(`${field.name} is required.`);
         isValid = false;
+      }else{
+        if (field.name === "Email" && field.value) {
+          if (!emailRegex.test(field.value)) {
+            field.setError("Invalid email format.");
+            isValid = false;
+          }
+        }
+        if (field.name === "Contact Number" && field.value) {
+          if (!namibiaPhoneRegex.test(field.value)) {
+            field.setError("Invalid phone number.");
+            isValid = false;
+          }
+        }
       }
     });
     return isValid;
@@ -726,6 +706,20 @@ function User() {
       if (!field.value) {
         field.setError(`${field.name} is required.`);
         isValid = false;
+      }else{
+        if (field.name === "Email" && field.value) {
+          if (!emailRegex.test(field.value)) {
+            field.setError("Invalid email format.");
+            isValid = false;
+          }
+        }
+  
+        if (field.name === "Contact Number" && field.value) {
+          if (!namibiaPhoneRegex.test(field.value)) {
+            field.setError("Invalid phone number.");
+            isValid = false;
+          }
+        }
       }
     });
     return isValid;
@@ -770,11 +764,16 @@ function User() {
 
           const data = await response.json();
           const newTokenHeader = response.headers.get("Authorization");
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
+          
+          if (newTokenHeader) {
+            dispatch(
+              updateToken({
+                token: newTokenHeader,
+              })
+            );
+          }else{
+            handleAuthFailure({ dispatch, navigate, type: "auth" });
+          }
 
           if (response.ok) {
             setOpenModelEditing(false);
@@ -808,36 +807,11 @@ function User() {
             setContactNumberDetails("");
             setDepartmentDetails("");
             setRoleDetails("");
-
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
           }
         } catch (error) {
           setIsSubmitting(false);
           setOpenModelEditing(false);
-          Swal.fire({
-            position: "center",
-            icon: "question",
-            title: "Check your internet connection and try again!",
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
+          handleAuthFailure({ dispatch, navigate, type: "network" });
         }
       }
     }
@@ -871,11 +845,16 @@ function User() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        dispatch(
-          updateToken({
-            token: newTokenHeader,
-          })
-        );
+        
+        if (newTokenHeader) {
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
+        }else{
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
+        }
 
         if (response.ok) {
           setOpenModel(false);
@@ -909,35 +888,11 @@ function User() {
           setContactNumber("");
           setDepartment("");
           setRole("");
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-          }
         }
       } catch (error) {
         setIsSubmitting(false);
         setOpenModel(false);
-        Swal.fire({
-          position: "center",
-          icon: "question",
-          title: "Check your internet connection and try again!",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     }
   };

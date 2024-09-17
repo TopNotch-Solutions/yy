@@ -39,7 +39,7 @@ function SubmitEmail() {
             navigate("/");
         } else {
           setIsSubmitting(false);
-          toast.error(data.message);
+          toast.error("Username not found in our database. Verify username and try again!");
         }
       } catch (error) {
         setIsSubmitting(false);

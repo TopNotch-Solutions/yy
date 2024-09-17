@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IconButton, useTheme, useMediaQuery } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
+import Select from 'react-select';
 import InputBase from "@mui/material/InputBase";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import EastIcon from '@mui/icons-material/East';
@@ -295,6 +297,9 @@ function Msme() {
   const [image2DetailsError, setImage2DetailsError] = useState("");
   const [image3Details, setImage3Details] = useState("");
   const [image3DetailsError, setImage3DetailsError] = useState("");
+  const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
 
   const tokenHeader = currentUser.token;
 
@@ -394,6 +399,7 @@ function Msme() {
   useEffect(() => {
     const fetchTotalCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/totalCount",
           {
@@ -418,12 +424,15 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           console.log("Login successful", data);
           setTotalRegistration(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -434,6 +443,7 @@ function Msme() {
   useEffect(() => {
     const fetchPendingCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/pendingCount",
           {
@@ -458,12 +468,15 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           console.log("Login successful", data);
           setPendingRegistration(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -474,6 +487,7 @@ function Msme() {
   useEffect(() => {
     const fetchRejectedCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/rejectedCount",
           {
@@ -498,11 +512,14 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setRejectedRegistration(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -513,6 +530,7 @@ function Msme() {
   useEffect(() => {
     const fetchApprovedCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/approvedCount",
           {
@@ -537,11 +555,14 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setIApprovedRegistration(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -552,6 +573,7 @@ function Msme() {
   useEffect(() => {
     const fetchMsmeAllMSME = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/msme/admin/all", {
           method: "GET",
           headers: {
@@ -573,11 +595,14 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setAllMSMEList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -587,6 +612,7 @@ function Msme() {
   useEffect(() => {
     const fetchMsmePendingMSME = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/all/pending",
           {
@@ -611,11 +637,14 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setPendingMSMEList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -626,6 +655,7 @@ function Msme() {
   useEffect(() => {
     const fetchMsmeRejectedMSME = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/all/rejected",
           {
@@ -650,11 +680,14 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setRejectedMSMEList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -665,6 +698,7 @@ function Msme() {
   useEffect(() => {
     const fetchMsmeApprovedMSME = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/all/approved",
           {
@@ -688,12 +722,18 @@ function Msme() {
           );
         }
 
+        console.log(data.message)
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setApprovedMSMEList(data.data);
         } else {
+          console.log("else is getting executed")
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        console.log("catch is getting executed")
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -704,6 +744,7 @@ function Msme() {
   useEffect(() => {
     const fetchAllRegions = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/region/admin/all", {
           method: "GET",
           headers: {
@@ -725,11 +766,14 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setRegionList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -740,6 +784,7 @@ function Msme() {
   useEffect(() => {
     const fetchAllTowns = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/town/admin/all", {
           method: "GET",
           headers: {
@@ -760,11 +805,14 @@ function Msme() {
           );
         }
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setTownList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -774,6 +822,7 @@ function Msme() {
   useEffect(() => {
     const fetchAllPrimaryIndustryList = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/primaryIndustry/admin/all",
           {
@@ -798,11 +847,14 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setPrimaryIndustryList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -812,6 +864,7 @@ function Msme() {
   useEffect(() => {
     const fetchAllSeconaryList = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/secondaryIndustry/admin/all",
           {
@@ -836,11 +889,14 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setSecondaryList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -850,6 +906,7 @@ function Msme() {
   useEffect(() => {
     const fetchAllUser = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/all/user",
           {
@@ -874,17 +931,21 @@ function Msme() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setAllUserList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
 
     fetchAllUser();
   }, [isSubmitting]);
+  
 
   const fields1 = [
     {
@@ -945,9 +1006,53 @@ function Msme() {
       setError: setBusinessAddressError,
       name: "Business Address",
     },
-    { value: phoneNumber, setError: setPhoneNumberError, name: "Phone Number" },
-    { value: businessEmail, setError: setBusinessEmailError, name: "Email" },
+    {
+      value: phoneNumber,
+      setError: setPhoneNumberError,
+      name: "Phone Number",
+    },
+    {
+      value: businessEmail,
+      setError: setBusinessEmailError,
+      name: "Email",
+    },
+    {
+      value: websiteLink,
+      setError: setWebsiteLinkError, 
+      name: "Website Link",
+      optional: true,
+      isUrl: true,
+    },
+    {
+      value: twitterLink,
+      setError: setTwitterLinkError,
+      name: "Twitter Link",
+      optional: true,
+      isUrl: true,
+    },
+    {
+      value: facebookLink,
+      setError: setFacebookLinkError,
+      name: "Facebook Link",
+      optional: true,
+      isUrl: true,
+    },
+    {
+      value: instagramLink,
+      setError: setInstagramLinkError,
+      name: "Instagram Link",
+      optional: true,
+      isUrl: true,
+    },
+    {
+      value: linkedInLink,
+      setError: setLinkedInLinkError,
+      name: "LinkedIn Link",
+      optional: true,
+      isUrl: true,
+    },
   ];
+  
   const fields4 = [
     { value: mondayFrom, setError: setMondayError, name: "Monday From & To" },
     { value: mondayTo, setError: setMondayError, name: "Monday From & To" },
@@ -1024,15 +1129,35 @@ function Msme() {
   };
   const validateFields3 = () => {
     let isValid = true;
+  
     fields3.forEach((field) => {
       field.setError("");
-      if (!field.value) {
+  
+      if (!field.optional && !field.value) {
         field.setError(`${field.name} is required.`);
         isValid = false;
+      } else if (field.value) {
+
+        if (field.name === "Email" && !emailRegex.test(field.value)) {
+          field.setError("Invalid email format.");
+          isValid = false;
+        }
+
+        if (field.name === "Phone Number" && !namibiaPhoneRegex.test(field.value)) {
+          field.setError("Invalid phone number.");
+          isValid = false;
+        }
+  
+        if (field.isUrl && !urlRegex.test(field.value)) {
+          field.setError(`Invalid URL format.`);
+          isValid = false;
+        }
       }
     });
+  
     return isValid;
   };
+  
 
   const validateFields4 = () => {
     let isValid = true;
@@ -1074,7 +1199,7 @@ function Msme() {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(e);
   };
-
+  const DropdownIndicator = () => null;
   const handleStep1 = () => {
     if (typeOfBusiness === "" || typeOfBusiness === "") {
       fields1.push({
@@ -1093,48 +1218,6 @@ function Msme() {
     }
   };
   const handleStep3 = () => {
-    if (websiteLink && isValidURL(websiteLink)) {
-      fields3.push({
-        value: websiteLink,
-        setError: setWebsiteLinkError,
-        name: "Valid website link",
-      });
-    }
-    if (!isValidEmail(businessEmail)) {
-      fields3.push({
-        value: businessEmail,
-        setError: setBusinessEmailError,
-        name: "Valid email",
-      });
-    }
-    if (twitterLink && !isValidURL(twitterLink)) {
-      fields3.push({
-        value: twitterLink,
-        setError: setTwitterLinkError,
-        name: "Valid twitter link",
-      });
-    }
-    if (facebookLink && !isValidURL(facebookLink)) {
-      fields3.push({
-        value: facebookLink,
-        setError: setFacebookLinkError,
-        name: "Valid facebook link",
-      });
-    }
-    if (instagramLink && !isValidURL(instagramLink)) {
-      fields3.push({
-        value: instagramLink,
-        setError: setInstagramLinkError,
-        name: "Valid instagram link",
-      });
-    }
-    if (linkedInLink && !isValidURL(linkedInLink)) {
-      fields3.push({
-        value: linkedInLink,
-        setError: setLinkedInLinkError,
-        name: "Valid linkedIn link",
-      });
-    }
     if (validateFields3()) {
       setStepperCounter(3);
     }
@@ -1153,7 +1236,6 @@ function Msme() {
   };
   const handleStep5 = async () => {
     if (validateFields4()) {
-      // Prepare the time strings for each day
       const updatedTimes = {
         monday: `${convertTo12HourFormat(mondayFrom)} - ${convertTo12HourFormat(
           mondayTo
@@ -1281,28 +1363,12 @@ function Msme() {
             showConfirmButton: false,
             timer: 3000,
           });
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(login({ user: {} }));
-            navigate("/");
-          }
+          
         }
       } catch (error) {
         setIsSubmitting(false);
         setOpenModel(false);
-        Swal.fire({
-          position: "center",
-          icon: "question",
-          title: `Check your internet connection and try again: ${error}`,
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(login({ user: {} }));
-          navigate("/");
-        }
-        console.error("An error occurred:", error);
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     }
   };
@@ -1336,11 +1402,16 @@ function Msme() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get("Authorization");
-      dispatch(
-        updateToken({
-          token: newTokenHeader,
-        })
-      );
+      
+      if (newTokenHeader) {
+        dispatch(
+          updateToken({
+            token: newTokenHeader,
+          })
+        );
+      }else{
+        handleAuthFailure({ dispatch, navigate, type: "auth" });
+      }
       console.log("Login successful", data.data);
       if (response.ok) {
         console.log("Login successful", data.data);
@@ -1349,6 +1420,7 @@ function Msme() {
 
         setBusinessAddressDetails(data.data.businessRegistrationName);
         setBusinessRegistrationNameDetails(data.data.businessRegistrationName);
+        setBusinessRegistrationNumberDetails(data.data.businessRegistrationNumber)
         setBusinessDisplayNameDetails(data.data.businessDisplayName);
         setDescriptionDetails(data.data.description);
         setTypeOfBusinessDetails(data.data.typeOfBusiness);
@@ -1395,35 +1467,12 @@ function Msme() {
           showConfirmButton: false,
           timer: 4000,
         });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-        }
+        
       }
     } catch (error) {
       setIsSubmitting(false);
       console.error("Network Error:", error);
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Check your internet connection and try again!",
-        showConfirmButton: false,
-        timer: 3000,
-      });
-      if (!currentUser.token) {
-        dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-      }
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
   const rowsIncomplete = [];
@@ -1560,7 +1609,7 @@ function Msme() {
   const rowsApproved = approvedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.registrationName,
-    email: msme.email,
+    email: msme?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
@@ -1656,6 +1705,7 @@ function Msme() {
     if (
       updatingDetails.businessRegistrationName ===
         businessRegistrationNameDetails &&
+        updatingDetails.businessRegistrationNumber ===  businessRegistrationNumberDetails&&
       updatingDetails.businessDisplayName === businessDisplayNameDetails &&
       updatingDetails.description === descriptionDetails &&
       updatingDetails.typeOfBusiness === typeOfBusinessDetails &&
@@ -1722,12 +1772,17 @@ function Msme() {
 
               const data = await response.json();
               const newTokenHeader = response.headers.get("Authorization");
-              dispatch(
-                updateToken({
-                  token: newTokenHeader,
-                })
-              );
-              console.log(data);
+             
+              if (newTokenHeader) {
+                dispatch(
+                  updateToken({
+                    token: newTokenHeader,
+                  })
+                );
+              }else{
+                handleAuthFailure({ dispatch, navigate, type: "auth" });
+              }
+              console.log(data.message);
 
               if (response.ok) {
                 Swal.fire({
@@ -1747,34 +1802,10 @@ function Msme() {
                   showConfirmButton: false,
                   timer: 3000,
                 });
-                if (!currentUser.token) {
-                  dispatch(toggleSidebarfalse());
-                  dispatch(
-                    login({
-                      user: {},
-                    })
-                  );
-                  navigate("/");
-                }
+                
               }
             } catch (error) {
-              console.error("Network Error:", error);
-              Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "Check your internet connection and try again!",
-                showConfirmButton: false,
-                timer: 3000,
-              });
-              if (!currentUser.token) {
-                dispatch(toggleSidebarfalse());
-                dispatch(
-                  login({
-                    user: {},
-                  })
-                );
-                navigate("/");
-              }
+              handleAuthFailure({ dispatch, navigate, type: "network" });
             } finally {
               setIsSubmitting(false);
             }
@@ -1783,15 +1814,10 @@ function Msme() {
           }
         });
       } catch (error) {
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title: `Check your internet connection and try again: ${error}`,
-          showConfirmButton: false,
-          timer: 4000,
-        });
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     } else {
+      console.log("Updating the ")
       try {
         setIsSubmitting(true);
         const formData = new FormData();
@@ -1855,7 +1881,7 @@ function Msme() {
         );
 
         const data = await response.json();
-
+        console.log(data.message)
         if (response.ok) {
           try {
             setIsSubmitting(true);
@@ -1877,11 +1903,16 @@ function Msme() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            dispatch(
-              updateToken({
-                token: newTokenHeader,
-              })
-            );
+            
+            if (newTokenHeader) {
+              dispatch(
+                updateToken({
+                  token: newTokenHeader,
+                })
+              );
+            }else{
+              handleAuthFailure({ dispatch, navigate, type: "auth" });
+            }
             console.log(data);
 
             if (response.ok) {
@@ -1902,34 +1933,10 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if (!currentUser.token) {
-                dispatch(toggleSidebarfalse());
-                dispatch(
-                  login({
-                    user: {},
-                  })
-                );
-                navigate("/");
-              }
+              
             }
           } catch (error) {
-            console.error("Network Error:", error);
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Check your internet connection and try again!",
-              showConfirmButton: false,
-              timer: 3000,
-            });
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
             setIsSubmitting(false);
           }
@@ -1943,28 +1950,12 @@ function Msme() {
             showConfirmButton: false,
             timer: 3000,
           });
-          if (!currentUser.token) {
-            dispatch(toggleSidebarfalse());
-            dispatch(login({ user: {} }));
-            navigate("/");
-          }
+          
         }
       } catch (error) {
         setIsSubmitting(false);
         setOpenModel(false);
-        Swal.fire({
-          position: "center",
-          icon: "question",
-          title: `Check your internet connection and try again: ${error}`,
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        if (!currentUser.token) {
-          dispatch(toggleSidebarfalse());
-          dispatch(login({ user: {} }));
-          navigate("/");
-        }
-        console.error("An error occurred:", error);
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     }
   };
@@ -2000,11 +1991,16 @@ function Msme() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            dispatch(
-              updateToken({
-                token: newTokenHeader,
-              })
-            );
+            
+            if (newTokenHeader) {
+              dispatch(
+                updateToken({
+                  token: newTokenHeader,
+                })
+              );
+            }else{
+              handleAuthFailure({ dispatch, navigate, type: "auth" });
+            }
             console.log(data);
 
             if (response.ok) {
@@ -2018,6 +2014,7 @@ function Msme() {
               setStepperCounter(0);
               setUpdatingDetails([]);
             } else {
+              setIsSubmitting(false);
               await Swal.fire({
                 position: "center",
                 icon: "error",
@@ -2025,34 +2022,10 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if (!currentUser.token) {
-                dispatch(toggleSidebarfalse());
-                dispatch(
-                  login({
-                    user: {},
-                  })
-                );
-                navigate("/");
-              }
+              
             }
           } catch (error) {
-            console.error("Network Error:", error);
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Check your internet connection and try again!",
-              showConfirmButton: false,
-              timer: 3000,
-            });
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
             setIsSubmitting(false);
           }
@@ -2061,13 +2034,7 @@ function Msme() {
         }
       });
     } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: `Check your internet connection and try again: ${error}`,
-        showConfirmButton: false,
-        timer: 4000,
-      });
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
   const block = () => {
@@ -2102,11 +2069,16 @@ function Msme() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            dispatch(
-              updateToken({
-                token: newTokenHeader,
-              })
-            );
+            
+            if (newTokenHeader) {
+              dispatch(
+                updateToken({
+                  token: newTokenHeader,
+                })
+              );
+            }else{
+              handleAuthFailure({ dispatch, navigate, type: "auth" });
+            }
             console.log(data);
 
             if (response.ok) {
@@ -2127,34 +2099,9 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if (!currentUser.token) {
-                dispatch(toggleSidebarfalse());
-                dispatch(
-                  login({
-                    user: {},
-                  })
-                );
-                navigate("/");
-              }
             }
           } catch (error) {
-            console.error("Network Error:", error);
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Check your internet connection and try again!",
-              showConfirmButton: false,
-              timer: 3000,
-            });
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
             setIsSubmitting(false);
           }
@@ -2163,13 +2110,7 @@ function Msme() {
         }
       });
     } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: `Check your internet connection and try again: ${error}`,
-        showConfirmButton: false,
-        timer: 4000,
-      });
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
   const unBlock = () => {
@@ -2204,11 +2145,16 @@ function Msme() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            dispatch(
-              updateToken({
-                token: newTokenHeader,
-              })
-            );
+            
+            if (newTokenHeader) {
+              dispatch(
+                updateToken({
+                  token: newTokenHeader,
+                })
+              );
+            }else{
+              handleAuthFailure({ dispatch, navigate, type: "auth" });
+            }
             console.log(data);
 
             if (response.ok) {
@@ -2230,34 +2176,10 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              if (!currentUser.token) {
-                dispatch(toggleSidebarfalse());
-                dispatch(
-                  login({
-                    user: {},
-                  })
-                );
-                navigate("/");
-              }
+              
             }
           } catch (error) {
-            console.error("Network Error:", error);
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Check your internet connection and try again!",
-              showConfirmButton: false,
-              timer: 3000,
-            });
-            if (!currentUser.token) {
-              dispatch(toggleSidebarfalse());
-              dispatch(
-                login({
-                  user: {},
-                })
-              );
-              navigate("/");
-            }
+            handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
             setIsSubmitting(false);
           }
@@ -2266,13 +2188,7 @@ function Msme() {
         }
       });
     } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: `Check your internet connection and try again: ${error}`,
-        showConfirmButton: false,
-        timer: 4000,
-      });
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
   const handleFileChange = (e) => {
@@ -2824,7 +2740,7 @@ function Msme() {
                                 rows={filteredRows}
                                 sx={{
                                   "& .status-pending": {
-                                    color: "yellow",
+                                    color: "rgb(234, 156, 0)",
                                   },
                                   "& .status-rejected": {
                                     color: "red",
@@ -2905,7 +2821,7 @@ function Msme() {
                                 columns={columns}
                                 sx={{
                                   "& .status-pending": {
-                                    color: "yellow",
+                                    color: "rgb(234, 156, 0)",
                                   },
                                   "& .status-rejected": {
                                     color: "red",
@@ -2985,7 +2901,7 @@ function Msme() {
                                 columns={columns}
                                 sx={{
                                   "& .status-pending": {
-                                    color: "yellow",
+                                    color: "rgb(234, 156, 0)",
                                   },
                                   "& .status-rejected": {
                                     color: "red",
@@ -3063,7 +2979,7 @@ function Msme() {
                             columns={columns}
                             sx={{
                               "& .status-pending": {
-                                color: "yellow",
+                                color: "rgb(234, 156, 0)",
                               },
                               "& .status-rejected": {
                                 color: "red",
@@ -3127,7 +3043,7 @@ function Msme() {
                                 columns={columns}
                                 sx={{
                                   "& .status-pending": {
-                                    color: "yellow",
+                                    color: "rgb(234, 156, 0)",
                                   },
                                   "& .status-rejected": {
                                     color: "red",
@@ -3424,26 +3340,18 @@ function Msme() {
                               <label htmlFor="email" className="pb-2 text-bold">
                                 User Name: <span>*</span>
                               </label>
-                              <select
-                                className="form-select"
-                                value={userId}
-                                onChange={(e) => {
-                                  setUserIdError("");
-                                  setUserId(e.target.value);
-                                }}
-                              >
-                                <option value="" disabled selected>
-                                  Select user
-                                </option>
-                                {userOptions.map((option) => (
-                                  <option
-                                    value={option.value}
-                                    key={option.value}
-                                  >
-                                    {option.label}
-                                  </option>
-                                ))}
-                              </select>
+                              <Select
+              value={userOptions.find((option) => option.value === userId)}
+              onChange={(selectedOption) => {
+                setUserIdError("");
+                setUserId(selectedOption ? selectedOption.value : "");
+              }}
+              options={userOptions}
+              placeholder="Select user"
+              isSearchable
+              classNamePrefix="react-select"
+              components={{ DropdownIndicator }}
+            />
                               {userIdError && (
                                 <>
                                   <p className="error mt-1">{userIdError}</p>
@@ -3487,23 +3395,18 @@ function Msme() {
                             <label htmlFor="email" className="pb-2 text-bold">
                               User Name: <span>*</span>
                             </label>
-                            <select
-                              class="form-select"
-                              value={userId}
-                              onChange={(e) => {
-                                setUserIdError("");
-                                setUserId(e.target.value);
-                              }}
-                            >
-                              <option value="" disabled selected>
-                                Select user
-                              </option>
-                              {userOptions.map((option) => (
-                                <option value={option.value} key={option.value}>
-                                  {option.label}
-                                </option>
-                              ))}
-                            </select>
+                            <Select
+              value={userOptions.find((option) => option.value === userId)}
+              onChange={(selectedOption) => {
+                setUserIdError("");
+                setUserId(selectedOption ? selectedOption.value : "");
+              }}
+              options={userOptions}
+              placeholder="Select user"
+              isSearchable
+              classNamePrefix="react-select"
+              components={{ DropdownIndicator }}
+            />
                             {userIdError && (
                               <>
                                 <p className="error mt-1">{userIdError}</p>
@@ -4926,7 +4829,7 @@ function Msme() {
                               Registration Number:
                             </label>
                             <input
-                              type="text"
+                              type="number"
                               className="form-control place-holder"
                               placeholder="Registration number"
                               disabled={

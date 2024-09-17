@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTheme, useMediaQuery } from "@mui/material";
 import "../assets/css/Dashboard.css";
+import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
 import CircularProgress from "@mui/material/CircularProgress";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Box from "@mui/material/Box";
@@ -72,6 +73,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchTotalCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/monthly/registeration",
           {
@@ -92,11 +94,14 @@ function Dashboard() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setLineData(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -107,6 +112,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchLineGraph = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/totalCount",
           {
@@ -131,11 +137,14 @@ function Dashboard() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setTotalRegistration(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -146,6 +155,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchPendingCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/pendingCount",
           {
@@ -170,11 +180,14 @@ function Dashboard() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setPendingRegistration(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -185,6 +198,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchRejectedCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/rejectedCount",
           {
@@ -209,12 +223,15 @@ function Dashboard() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           console.log("Login successful", data);
           setRejectedRegistration(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -225,6 +242,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchApprovedCount = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/approvedCount",
           {
@@ -249,12 +267,15 @@ function Dashboard() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           console.log("Login successful", data);
           setIApprovedRegistration(data.count);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -264,6 +285,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchMsmeAllMSME = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/msme/admin/all", {
           method: "GET",
           headers: {
@@ -285,11 +307,14 @@ function Dashboard() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setAllMSMEList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -299,6 +324,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchTop5 = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
           "http://localhost:4000/msme/admin/top5/categories",
           {
@@ -323,6 +349,7 @@ function Dashboard() {
         }
 
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           setTopCategory(data.data);
           setFirstElement(data.data[0]);
           setSecondElement(data.data[1]);
@@ -330,9 +357,11 @@ function Dashboard() {
           setFourthElement(data.data[3]);
           setFifthElement(data.data[4]);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     };
@@ -771,7 +800,7 @@ function Dashboard() {
                         columns={columns}
                         sx={{
                           "& .status-pending": {
-                            color: "yellow",
+                            color: "rgb(234, 156, 0)",
                           },
                           "& .status-rejected": {
                             color: "red",

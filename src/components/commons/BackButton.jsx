@@ -20,9 +20,10 @@ const BackButton = ({ onClick }) => {
         width: isSmallScreen ? "30%" : "13%",
       }}
     >
+       <IoArrowBackSharp size={14} style={{ marginRight: "10px" }} />
+
       Back
-      <IoArrowBackSharp size={14} style={{ marginLeft: "10px" }} />
-    </Button>
+         </Button>
   );
 };
 

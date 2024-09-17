@@ -17,7 +17,7 @@
   }
   .close_icon{
     cursor: pointer;
-    margin-left: 7px;
+    margin-left: 1px;
     margin-top: 10px;
   }
   .header{
@@ -75,7 +75,11 @@
     list-style-type: none;
   }
   .sidebar-list-item{
-    padding: 18px 13px;
+    padding: 12px 13px 18px 13px;
+    font-size: 18px;
+  }
+  .first-link{
+    padding: 10px 13px 18px 13px;
     font-size: 18px;
   }
   .sidebar-list-item:hover,

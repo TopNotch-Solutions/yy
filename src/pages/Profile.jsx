@@ -5,6 +5,7 @@ import profile from "../assets/images/blank-profile-picture-973460_960_720.webp"
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import CloseIcon from "@mui/icons-material/Close";
 import Grid from "@mui/material/Grid";
@@ -21,6 +22,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { updateToken } from "../redux/reducers/authReducer";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
+import handleAuthFailure from "../utils/handleAuthFailure";
 
 function Profile() {
   const theme = useTheme();
@@ -56,10 +58,12 @@ function Profile() {
   };
 
   useEffect(() => {
+    dispatch(toggleIsSubmittingTrue());
     if (currentUser && currentUser.profileImage) {
       const parsedData = currentUser.profileImage;
       setProfilePic(parsedData);
     }
+    dispatch(toggleIsSubmittingfalse());
   }, [currentUser]);
 
   const convertToBase64 = (file) => {
@@ -141,9 +145,16 @@ function Profile() {
 
       const data = await response.json();
         const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        
+        if (newTokenHeader) {
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
+        }else{
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
+        }
         if (!response.ok) {
           setIsSubmitting(false);
           Swal.fire({
@@ -168,33 +179,9 @@ function Profile() {
       dispatch(updateProfileImage({ profileImage: data.profileImage }));
       setSelectedFile(null);
       setNewProfilePic("");
-      if(!currentUser.token){
-        dispatch(toggleSidebarfalse());
-      dispatch(
-        login({
-          user: {},
-        })
-      );
-      navigate("/");
-      }
     } catch (error) {
       setIsSubmitting(false);
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: `Upload failed`,
-        showConfirmButton: false,
-        timer: 3000,
-      });
-      if(!currentUser.token){
-        dispatch(toggleSidebarfalse());
-      dispatch(
-        login({
-          user: {},
-        })
-      );
-      navigate("/");
-      }
+      handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
 
@@ -233,9 +220,16 @@ function Profile() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+        
+        if (newTokenHeader) {
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
+        }else{
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
+        }
 
         if (response.ok) {
           setIsSubmitting(false);
@@ -259,34 +253,11 @@ function Profile() {
             showConfirmButton: false,
             timer: 3000,
           });
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
+          
         }
       } catch (error) {
         setIsSubmitting(false);
-        Swal.fire({
-          position: "center",
-          icon: "question",
-          title: "Check your internet connection and try again",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        if(!currentUser.token){
-          dispatch(toggleSidebarfalse());
-        dispatch(
-          login({
-            user: {},
-          })
-        );
-        navigate("/");
-        }
+        handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     }
   };
@@ -339,9 +310,16 @@ function Profile() {
 
           const data = await response.json();
         const newTokenHeader = response.headers.get('Authorization');
-        dispatch(updateToken({
-          token: newTokenHeader
-        }));
+       
+        if (newTokenHeader) {
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
+        }else{
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
+        }
 
           if (response.ok) {
             setIsSubmitting(false);
@@ -366,35 +344,12 @@ function Profile() {
               showConfirmButton: false,
               timer: 3000,
             });
-            if(!currentUser.token){
-              dispatch(toggleSidebarfalse());
-            dispatch(
-              login({
-                user: {},
-              })
-            );
-            navigate("/");
-            }
+            
           }
         } catch (error) {
           setIsSubmitting(false);
-          Swal.fire({
-            position: "center",
-            icon: "question",
-            title: "Check your internet connection and try again",
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          if(!currentUser.token){
-            dispatch(toggleSidebarfalse());
-          dispatch(
-            login({
-              user: {},
-            })
-          );
-          navigate("/");
-          }
-        }
+          handleAuthFailure({ dispatch, navigate, type: "network" });
+                  }
       }
     }
   };

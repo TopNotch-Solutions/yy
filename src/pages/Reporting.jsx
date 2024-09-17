@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import BackButton from "../components/commons/BackButton";
 import DownloadButton from "../components/commons/DownloadButton";
+import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
 import ViewButton from "../components/commons/ViewButton";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -33,6 +34,7 @@ function Reporting() {
   useEffect(() => {
     const fetchMsmeAllMSME = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/msme/admin/all/approved", {
           method: "GET",
           headers: {
@@ -53,12 +55,15 @@ function Reporting() {
       }
       
         if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
           console.log("Login successful approved", data);
           setAllMSMEList(data.data);
         }else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
@@ -68,6 +73,7 @@ function Reporting() {
   useEffect(() => {
     const fetchMsmeAllMSMEPending = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/msme/admin/all/pending", {
           method: "GET",
           headers: {
@@ -88,12 +94,14 @@ function Reporting() {
       }
       
         if (response.ok) {
-         
+          dispatch(toggleIsSubmittingfalse());
           setAllMSMEPendingList(data.data);
         }else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
@@ -103,6 +111,7 @@ function Reporting() {
   useEffect(() => {
     const fetchMsmeAllMSMERejected = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/msme/admin/all/rejected", {
           method: "GET",
           headers: {
@@ -123,12 +132,14 @@ function Reporting() {
       }
       
         if (response.ok) {
-
+          dispatch(toggleIsSubmittingfalse());
           setAllMSMERejectedList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
@@ -138,6 +149,7 @@ function Reporting() {
   useEffect(() => {
     const fetchMsmeAllMSMEBlocked = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/msme/admin/all/blocked", {
           method: "GET",
           headers: {
@@ -158,12 +170,14 @@ function Reporting() {
       }
       
         if (response.ok) {
-
+          dispatch(toggleIsSubmittingfalse());
           setAllMSMEBlockedList(data.data);
         }else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
@@ -173,6 +187,7 @@ function Reporting() {
   useEffect(() => {
     const fetchMsmeAllBSO = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/bso/admin/all/download", {
           method: "GET",
           headers: {
@@ -193,12 +208,14 @@ function Reporting() {
       }
       
         if (response.ok) {
-
+          dispatch(toggleIsSubmittingfalse());
           setAllBSOList(data.data);
         } else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
@@ -208,6 +225,7 @@ function Reporting() {
   useEffect(() => {
     const fetchMsmeAllUsers = async () => {
       try {
+        dispatch(toggleIsSubmittingTrue());
         const response = await fetch("http://localhost:4000/system/all/admin/list/download", {
           method: "GET",
           headers: {
@@ -228,12 +246,14 @@ function Reporting() {
       }
       
         if (response.ok) {
-
+          dispatch(toggleIsSubmittingfalse());
           setAllUserList(data.data);
         }else {
+          dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({dispatch, navigate, type:'auth'});
         }
       } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: 'network' });
       }
     };
@@ -814,7 +834,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                     columns={columns}
                     sx={{
                       "& .status-pending": {
-                        color: "yellow",
+                        color: "rgb(234, 156, 0)",
                       },
                       "& .status-rejected": {
                         color: "red",
@@ -847,10 +867,10 @@ const rowsAll = allMSMEList.map((msme) => ({
               {
                 activeTab === 1 &&<>
                 <div className="col-12 mt-1">
-                <p className="list-group text-center">All MSMEs Report</p>
+                <p className="list-group text-center">All Approved MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
-                    {allMSMEList ? <><DownloadButton onClick={handleDownloadAllMSME}/></> :<></>}
+                    {allMSMEList.length > 0 ? <><DownloadButton onClick={handleDownloadAllMSME}/></> :null}
                 </div>
                 <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
@@ -858,7 +878,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                     columns={columns1}
                     sx={{
                       "& .status-pending": {
-                        color: "yellow",
+                        color: "rgb(234, 156, 0)",
                       },
                       "& .status-rejected": {
                         color: "red",
@@ -894,7 +914,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <p className="list-group text-center">All Pending MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
-                    {allMSMEPendingList ? <><DownloadButton onClick={handleDownloadAllMSMEPending}/></> :<></>}
+                    {allMSMEPendingList.length > 0 ? <><DownloadButton onClick={handleDownloadAllMSMEPending}/></> : null}
                 </div>
                 <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
@@ -902,7 +922,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                     columns={columns2}
                     sx={{
                       "& .status-pending": {
-                        color: "yellow",
+                        color: "rgb(234, 156, 0)",
                       },
                       "& .status-rejected": {
                         color: "red",
@@ -937,16 +957,19 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <div className="col-12 mt-1">
                 <p className="list-group text-center">All Rejected MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
-                  <BackButton onClick={() =>setActiveTab(0)}/>
-                  {allMSMERejectedList ? <><DownloadButton onClick={handleDownloadAllMSMERejected}/></> : <></>}
-                </div>
+  <BackButton onClick={() => setActiveTab(0)} />
+  {allMSMERejectedList.length > 0 ? (
+    <DownloadButton onClick={handleDownloadAllMSMERejected} />
+  ) : null}
+</div>
+
                 <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
                   <DataGrid
                     rows={rowsRejected}
                     columns={columns3}
                     sx={{
                       "& .status-pending": {
-                        color: "yellow",
+                        color: "rgb(234, 156, 0)",
                       },
                       "& .status-rejected": {
                         color: "red",
@@ -983,7 +1006,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
                     {
-                      allBSOList ? <><DownloadButton onClick={handleDownloadAllBSO}/></> : <></>
+                      allBSOList.length > 0 ? <><DownloadButton onClick={handleDownloadAllBSO}/></> : null
                     }
                   
                 </div>
@@ -993,7 +1016,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                     columns={column4}
                     sx={{
                       "& .status-pending": {
-                        color: "yellow",
+                        color: "rgb(234, 156, 0)",
                       },
                       "& .status-rejected": {
                         color: "red",
@@ -1030,7 +1053,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
                     {
-                      allUserList ? <><DownloadButton onClick={handleDownloadAllUsers}/></> : <></>
+                      allUserList.length > 0 ? <><DownloadButton onClick={handleDownloadAllUsers}/></> : null
                     }
                 </div>
                 <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
@@ -1039,7 +1062,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                     columns={columns5}
                     sx={{
                       "& .status-pending": {
-                        color: "yellow",
+                        color: "rgb(234, 156, 0)",
                       },
                       "& .status-rejected": {
                         color: "red",
@@ -1076,7 +1099,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
                     {
-                      allMSMEBlockedList ? <><DownloadButton onClick={handleDownloadAllBlocked}/></>:<></>
+                      allMSMEBlockedList.length > 0 ? <><DownloadButton onClick={handleDownloadAllBlocked}/></>: null
                     }
                 </div>
                 <Box sx={{ height: 500, width: "100%" , marginTop: "10px"}}>
@@ -1085,7 +1108,7 @@ const rowsAll = allMSMEList.map((msme) => ({
                     columns={columns6}
                     sx={{
                       "& .status-pending": {
-                        color: "yellow",
+                        color: "rgb(234, 156, 0)",
                       },
                       "& .status-rejected": {
                         color: "red",
