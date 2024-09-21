@@ -422,10 +422,13 @@ function Bso() {
       headerName: "",
       width: isSmallScreen ? 230 : 350,
       renderCell: (params) => (
-        <>
+        currentUser.role === "Super admin" ? (
+          <>
           <UpdateButton onClick={() => handleUpdate(params.row.id)} />
           <DeleteButton onClick={() => handleDeletion(params.row.id)} />
         </>
+        ) : null
+        
       ),
     },
   ];
@@ -813,9 +816,14 @@ function Bso() {
                       <SearchIcon />
                     </IconButton>
                   </Box>
-                  <div onClick={handleOpen}>
+                  {currentUser.role === "Super admin" && (
+                      <>
+                       <div onClick={handleOpen}>
                     <MyButton text="Add BSO" />
                   </div>
+                      </>
+                    )}
+                  
                 </div>
                 <div className="col-12 mt-1">
                   <p className="list-group">BSO List</p>
@@ -845,11 +853,11 @@ function Bso() {
                           initialState={{
                             pagination: {
                               paginationModel: {
-                                pageSize: 15,
+                                pageSize: 25, 
                               },
                             },
                           }}
-                          pageSizeOptions={[15]}
+                          pageSizeOptions={[25, 50, 100]}
                           checkboxSelection
                           disableRowSelectionOnClick
                         />

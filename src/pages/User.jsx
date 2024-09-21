@@ -555,13 +555,13 @@ function User() {
     {
       field: "department",
       headerName: "Department",
-      width: isSmallScreen ? 150 : 190,
+      width: isSmallScreen ? 130 : 150,
     },
-    { field: "role", headerName: "Role", width: isSmallScreen ? 150 : 180 },
+    { field: "role", headerName: "Role", width: isSmallScreen ? 130 : 130 },
     {
       field: "createdAt",
       headerName: "Created Date",
-      width: isSmallScreen ? 180 : 250,
+      width: isSmallScreen ? 180 : 180,
     },
     {
       field: "action",
@@ -929,7 +929,7 @@ function User() {
               >
                 <div className="col-12 p-4 shadow rounded-2">
                   <div className="d-flex justify-content-between">
-                    <Tooltip title="Registered MSMEs" className="pointer">
+                    <Tooltip title="Total Users" className="pointer">
                       <p className="text">Total Users</p>
                     </Tooltip>
                     <ArrowForwardIosIcon />
@@ -954,7 +954,7 @@ function User() {
               >
                 <div className="col-12 p-4 shadow rounded-2">
                   <div className="d-flex justify-content-between">
-                    <Tooltip title="Pending Approvals" className="pointer">
+                    <Tooltip title="Super admins" className="pointer">
                       <p className="text">Super Admins</p>
                     </Tooltip>
 
@@ -980,7 +980,7 @@ function User() {
               >
                 <div className="col-12 p-4 shadow rounded-2">
                   <div className="d-flex justify-content-between">
-                    <Tooltip title="Rejected MSMEs" className="pointer">
+                    <Tooltip title="Admins" className="pointer">
                       <p className="text">Admins</p>
                     </Tooltip>
 
@@ -1006,7 +1006,7 @@ function User() {
               >
                 <div className="col-12 p-4 shadow rounded-2">
                   <div className="d-flex justify-content-between">
-                    <Tooltip title="Approved Registrations" className="pointer">
+                    <Tooltip title="Mobile App Users" className="pointer">
                       <p className="text">Mobile App Users</p>
                     </Tooltip>
 
@@ -1060,7 +1060,7 @@ function User() {
                     <p className="list-group">Admin List</p>
                     {adminList ? (
                       <>
-                        <Box sx={{ height: 400, width: "100%" }}>
+                        <Box sx={{ height: 500, width: "100%" }}>
                           <DataGrid
                             rows={filteredRows}
                             columns={columns}
@@ -1084,11 +1084,11 @@ function User() {
                             initialState={{
                               pagination: {
                                 paginationModel: {
-                                  pageSize: 5,
+                                  pageSize: 25, 
                                 },
                               },
                             }}
-                            pageSizeOptions={[5]}
+                            pageSizeOptions={[25, 50, 100]}
                             checkboxSelection
                             disableRowSelectionOnClick
                           />
@@ -1162,7 +1162,7 @@ function User() {
                     <input
                       type="text"
                       className="form-control place-holder"
-                      placeholder="admin's name"
+                      placeholder="Admin's name"
                       autoComplete="off"
                       value={firstName}
                       name="firstName"
@@ -1187,7 +1187,7 @@ function User() {
                       type="text"
                       value={lastName}
                       className="form-control place-holder"
-                      placeholder="admin's last name"
+                      placeholder="Admin's last name"
                       autoComplete="off"
                       name="lastName"
                       onChange={(e) => {
@@ -1293,7 +1293,7 @@ function User() {
                       type="text"
                       value={contactNumber}
                       className="form-control place-holder"
-                      placeholder="example@nipdb.com.na"
+                      placeholder="081*******"
                       autoComplete="off"
                       name="contactNumber"
                       onChange={(e) => {
@@ -1376,7 +1376,7 @@ function User() {
                       type="text"
                       value={firstNameDetails}
                       className="form-control place-holder"
-                      placeholder="admin's name"
+                      placeholder="Admin's name"
                       autoComplete="off"
                       name="firstName"
                       onChange={(e) => {
@@ -1401,7 +1401,7 @@ function User() {
                       type="text"
                       value={lastNameDetails}
                       className="form-control place-holder"
-                      placeholder="admin's last name"
+                      placeholder="Admin's last name"
                       autoComplete="off"
                       name="lastName"
                       onChange={(e) => {
@@ -1511,7 +1511,7 @@ function User() {
                       type="text"
                       value={contactNumberDetails}
                       className="form-control place-holder"
-                      placeholder="example@nipdb.com.na"
+                      placeholder="081*******"
                       autoComplete="off"
                       name="contactNumberDetails"
                       onChange={(e) => {

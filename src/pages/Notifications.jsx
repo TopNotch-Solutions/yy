@@ -742,16 +742,7 @@ function Notifications() {
               <div className="container-fluid">
                 <div className="row justify-content-center">
                   <div className="col-12 col-lg-12 col-xxl-9 mx-auto border d-flex flex-wrap justify-content-between p-1">
-                    {/* <button
-                      className={
-                        buttonActive === 1
-                          ? "btn btn-success m-1 p-2 p-xl-3 flex-grow-1"
-                          : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
-                      }
-                      onClick={() => setButonActive(1)}
-                    >
-                      All
-                    </button> */}
+                    
                     <button
                       className={
                         buttonActive === 4
@@ -791,49 +782,7 @@ function Notifications() {
 
               {buttonActive === 1 && (
                 <></>
-                // <>
-                //   <div className="col-12 col-lg-12 col-xxl-9 mx-auto mt-4 d-flex justify-content-end">
-                //     <Box
-                //       display="flex"
-                //       backgroundColor="rgba(245, 246, 248, 1)"
-                //       borderRadius="3px"
-                //       width="300px"
-                //       marginRight="10px"
-                //     >
-                //       {/* rgba(245, 246, 248, 1) */}
-                //       <InputBase
-                //         sx={{ ml: 2, flex: 1 }}
-                //         placeholder="Search for a notification"
-                //         onChange={(e) => setSearchQuery(e.target.value)}
-                //       />
-                //       <IconButton type="button" sx={{ p: 1 }}>
-                //         <SearchIcon />
-                //       </IconButton>
-                //     </Box>
-                //     <div onClick={handleOpen}>
-                //       <MyButton text="New Notification" />
-                //     </div>
-                //   </div>
-                //   <div className="col-12 mt-1">
-                //     <p className="list-group">All Notification List</p>
-                //     <Box sx={{ height: 400, width: "100%" }}>
-                //       <DataGrid
-                //         rows={filteredRows}
-                //         columns={columns}
-                //         initialState={{
-                //           pagination: {
-                //             paginationModel: {
-                //               pageSize: 5,
-                //             },
-                //           },
-                //         }}
-                //         pageSizeOptions={[5]}
-                //         checkboxSelection
-                //         disableRowSelectionOnClick
-                //       />
-                //     </Box>
-                //   </div>
-                // </>
+                
               )}
               {buttonActive === 2 && (
                 <>
@@ -855,9 +804,14 @@ function Notifications() {
                         <SearchIcon />
                       </IconButton>
                     </Box>
-                    <div onClick={handleOpen}>
+                    {currentUser.role === "Super admin" && (
+                      <>
+                        <div onClick={handleOpen}>
                       <MyButton text="New Notification" />
                     </div>
+                      </>
+                    )}
+                   
                   </div>
                   <div className="col-12 mt-1">
                     <p className="list-group">All Read Notification List</p>
@@ -887,11 +841,11 @@ function Notifications() {
                             initialState={{
                               pagination: {
                                 paginationModel: {
-                                  pageSize: 15,
+                                  pageSize: 25, 
                                 },
                               },
                             }}
-                            pageSizeOptions={[15]}
+                            pageSizeOptions={[25, 50, 100]}
                             checkboxSelection
                             disableRowSelectionOnClick
                           />
@@ -935,9 +889,14 @@ function Notifications() {
                         <SearchIcon />
                       </IconButton>
                     </Box>
-                    <div onClick={handleOpen}>
+                    {currentUser.role === "Super admin" && (
+                      <>
+                      <div onClick={handleOpen}>
                       <MyButton text="New Notification" />
                     </div>
+                      </>
+                    )}
+                    
                   </div>
                   <div className="col-12 mt-1">
                     <p className="list-group">Sent Notification List</p>
@@ -967,11 +926,11 @@ function Notifications() {
                             initialState={{
                               pagination: {
                                 paginationModel: {
-                                  pageSize: 15,
+                                  pageSize: 25, 
                                 },
                               },
                             }}
-                            pageSizeOptions={[15]}
+                            pageSizeOptions={[25, 50, 100]}
                             checkboxSelection
                             disableRowSelectionOnClick
                           />
@@ -1015,9 +974,13 @@ function Notifications() {
                         <SearchIcon />
                       </IconButton>
                     </Box>
-                    <div onClick={handleOpen}>
+                    {currentUser.role === "Super admin" && (
+                      <>
+                      <div onClick={handleOpen}>
                       <MyButton text="New Notification" />
                     </div>
+                      </>
+                    )}
                   </div>
                   <div className="col-12 mt-1">
                     <p className="list-group">All Unread Notifications List</p>
@@ -1047,11 +1010,11 @@ function Notifications() {
                             initialState={{
                               pagination: {
                                 paginationModel: {
-                                  pageSize: 15,
+                                  pageSize: 25, 
                                 },
                               },
                             }}
-                            pageSizeOptions={[15]}
+                            pageSizeOptions={[25, 50, 100]}
                             checkboxSelection
                             disableRowSelectionOnClick
                           />

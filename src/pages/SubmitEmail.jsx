@@ -36,7 +36,7 @@ function SubmitEmail() {
             setIsSubmitting(false);
             setEmail("");
             toast.success(data.message);
-            navigate("/");
+            
         } else {
           setIsSubmitting(false);
           toast.error("Username not found in our database. Verify username and try again!");

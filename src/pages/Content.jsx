@@ -588,12 +588,12 @@ function Content() {
     {
       field: "Description",
       headerName: "Description",
-      width: isSmallScreen ? 180 : 200,
+      width: isSmallScreen ? 180 : 300,
     },
     {
       field: "Link",
       headerName: "Link",
-      width: isSmallScreen ? 130 : 160,
+      width: isSmallScreen ? 130 : 250,
     },
     {
       field: "User",
@@ -611,10 +611,13 @@ function Content() {
       headerName: "",
       width: isSmallScreen ? 200 : 350,
       renderCell: (params) => (
-        <>
+        currentUser.role === "Super admin" ? (
+          <>
           <UpdateButton onClick={() => handleUpdate(params.row.id)} />
           <DeleteButton onClick={() => handleDeletion(params.row.id)} />
         </>
+        ) : null
+       
       ),
     },
   ];
@@ -644,10 +647,13 @@ function Content() {
       headerName: "",
       width: isSmallScreen ? 200 : 350,
       renderCell: (params) => (
-        <>
+        currentUser.role === "Super admin" ? (
+          <>
           <UpdateButton onClick={() => handleUpdateImage(params.row.id)} />
           <DeleteButton onClick={() => handleDeletionImage(params.row.id)} />
         </>
+        ) : null
+        
       ),
     },
   ];
@@ -1168,9 +1174,14 @@ const validateFields1 = () => {
                           <SearchIcon />
                         </IconButton>
                       </Box>
-                      <div onClick={handleOpen}>
+                      {currentUser.role === "Super admin" && (
+                      <>
+                       <div onClick={handleOpen}>
                         <MyButton text="Add Opportunity" />
                       </div>
+                      </>
+                    )}
+                      
                     </div>
                     <div className="col-12 mt-1">
                       <p className="list-group">Opportunity List</p>
@@ -1200,11 +1211,11 @@ const validateFields1 = () => {
                               initialState={{
                                 pagination: {
                                   paginationModel: {
-                                    pageSize: 15,
+                                    pageSize: 25, 
                                   },
                                 },
                               }}
-                              pageSizeOptions={[15]}
+                              pageSizeOptions={[25, 50, 100]}
                               checkboxSelection
                               disableRowSelectionOnClick
                             />
@@ -1248,9 +1259,14 @@ const validateFields1 = () => {
                           <SearchIcon />
                         </IconButton>
                       </Box>
-                      <div onClick={handleOpen1}>
+                      {currentUser.role === "Super admin" && (
+                      <>
+                       <div onClick={handleOpen1}>
                         <MyButton text="Add Image" />
                       </div>
+                      </>
+                    )}
+                      
                     </div>
                     <div className="col-12 mt-1">
                       <p className="list-group">Image List</p>
@@ -1280,11 +1296,11 @@ const validateFields1 = () => {
                               initialState={{
                                 pagination: {
                                   paginationModel: {
-                                    pageSize: 15,
+                                    pageSize: 25, 
                                   },
                                 },
                               }}
-                              pageSizeOptions={[15]}
+                              pageSizeOptions={[25, 50, 100]}
                               checkboxSelection
                               disableRowSelectionOnClick
                             />

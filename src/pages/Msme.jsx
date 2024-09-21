@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IconButton, useTheme, useMediaQuery } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
-import Select from 'react-select';
+import {
+  toggleIsSubmittingTrue,
+  toggleIsSubmittingfalse,
+} from "../redux/reducers/submittingReducer";
+import Select from "react-select";
+import { Switch } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import EastIcon from '@mui/icons-material/East';
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import EastIcon from "@mui/icons-material/East";
 import "../assets/css/msme.css";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Box from "@mui/material/Box";
@@ -198,7 +202,12 @@ function Msme() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchQueryPending, setSearchQueryPending] = useState("");
+  const [searchQueryApproved, setSearchQueryApproved] = useState("");
+  const [searchQueryRejected, setSearchQueryRejected] = useState("");
+  const [searchQueryIncomplete, setSearchQueryIncomplete] = useState("");
   const [updatingDetails, setUpdatingDetails] = useState([]);
+  const [numberOfDaysOpenError, setNumberOfDaysOpenError] = useState("");
   const [openModel, setOpenModel] = useState(false);
   const [openModelView, setOpenModelView] = useState(false);
 
@@ -297,6 +306,14 @@ function Msme() {
   const [image2DetailsError, setImage2DetailsError] = useState("");
   const [image3Details, setImage3Details] = useState("");
   const [image3DetailsError, setImage3DetailsError] = useState("");
+
+  const [isMondayClosed, setIsMondayClosed] = useState(false);
+  const [isTuesdayClosed, setIsTuesdayClosed] = useState(false);
+  const [isWednesdayClosed, setIsWednesdayClosed] = useState(false);
+  const [isThursdayClosed, setIsThursdayClosed] = useState(false);
+  const [isFridayClosed, setIsFridayClosed] = useState(false);
+  const [isSaturdayClosed, setIsSaturdayClosed] = useState(false);
+  const [isSundayClosed, setIsSundayClosed] = useState(false);
   const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
@@ -342,6 +359,14 @@ function Msme() {
     setImage2Error("");
     setImage3Error("");
     setUserIdError("");
+
+    setIsMondayClosed(false);
+    setIsTuesdayClosed(false);
+    setIsWednesdayClosed(false);
+    setIsThursdayClosed(false);
+    setIsFridayClosed(false);
+    setIsSaturdayClosed(false);
+    setIsSundayClosed(false);
     setOpenModel(false);
   };
   const handleOpenView = () => setOpenModelView(true);
@@ -627,7 +652,7 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        console.log(data.message)
+        console.log(data.message);
         if (newTokenHeader) {
           dispatch(
             updateToken({
@@ -722,17 +747,17 @@ function Msme() {
           );
         }
 
-        console.log(data.message)
+        console.log(data.message);
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
           setApprovedMSMEList(data.data);
         } else {
-          console.log("else is getting executed")
+          console.log("else is getting executed");
           dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        console.log("catch is getting executed")
+        console.log("catch is getting executed");
         dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
@@ -945,7 +970,6 @@ function Msme() {
 
     fetchAllUser();
   }, [isSubmitting]);
-  
 
   const fields1 = [
     {
@@ -1018,7 +1042,7 @@ function Msme() {
     },
     {
       value: websiteLink,
-      setError: setWebsiteLinkError, 
+      setError: setWebsiteLinkError,
       name: "Website Link",
       optional: true,
       isUrl: true,
@@ -1052,50 +1076,15 @@ function Msme() {
       isUrl: true,
     },
   ];
-  
+
   const fields4 = [
-    { value: mondayFrom, setError: setMondayError, name: "Monday From & To" },
-    { value: mondayTo, setError: setMondayError, name: "Monday From & To" },
-    {
-      value: tuesdayFrom,
-      setError: setTuesdayError,
-      name: "Tuesday From & To",
-    },
-    { value: tuesdayTo, setError: setTuesdayError, name: "Tuesday From & To" },
-    {
-      value: wednesdayFrom,
-      setError: setWednesdayError,
-      name: "Wednesday From & To",
-    },
-    {
-      value: wednesdayTo,
-      setError: setWednesdayError,
-      name: "Wednesday From & To",
-    },
-    {
-      value: thursdayFrom,
-      setError: setThursdayError,
-      name: "Thursday From & To",
-    },
-    {
-      value: thursdayTo,
-      setError: setThursdayError,
-      name: "Thursday From & To",
-    },
-    { value: fridayFrom, setError: setFridayError, name: "Friday From & To" },
-    { value: fridayTo, setError: setFridayError, name: "Friday From & To" },
-    {
-      value: saturdayFrom,
-      setError: setSaturdayError,
-      name: "Saturday From & To",
-    },
-    {
-      value: saturdayTo,
-      setError: setSaturdayError,
-      name: "Saturday From & To",
-    },
-    { value: sundayFrom, setError: setSundayError, name: "Sunday From & To" },
-    { value: sundayTo, setError: setSundayError, name: "Sunday From & To" },
+    { value: mondayFrom, to: mondayTo, isClosed: isMondayClosed, setError: setMondayError, name: "Monday" },
+    { value: tuesdayFrom, to: tuesdayTo, isClosed: isTuesdayClosed, setError: setTuesdayError, name: "Tuesday" },
+    { value: wednesdayFrom, to: wednesdayTo, isClosed: isWednesdayClosed, setError: setWednesdayError, name: "Wednesday" },
+    { value: thursdayFrom, to: thursdayTo, isClosed: isThursdayClosed, setError: setThursdayError, name: "Thursday" },
+    { value: fridayFrom, to: fridayTo, isClosed: isFridayClosed, setError: setFridayError, name: "Friday" },
+    { value: saturdayFrom, to: saturdayTo, isClosed: isSaturdayClosed, setError: setSaturdayError, name: "Saturday" },
+    { value: sundayFrom, to: sundayTo, isClosed: isSundayClosed, setError: setSundayError, name: "Sunday" },
   ];
   const fields5 = [
     {
@@ -1103,6 +1092,135 @@ function Msme() {
       setError: setNumberOfEmployeesError,
       name: "Number of Employees",
     },
+  ];
+
+  const fieldsDetails1 = [
+    {
+      value: businessRegistrationNameDetails,
+      setError: setBusinessRegistrationNameDetailsError,
+      name: "Business Registration Name",
+    },
+    {
+      value: businessRegistrationNumberDetails,
+        setError: setBusinessRegistrationNumberDetailsError,
+        name: "Business Registration Number",
+        optional: true,
+    },
+    {
+      value: businessDisplayNameDetails,
+      setError: setBusinessDisplayNameDetailsError,
+      name: "Business Display Name",
+    },
+    { value: descriptionDetails, setError: setDescriptionDetailsError, name: "Description" },
+    {
+      value: typeOfBusinessDetails,
+      setError: setTypeOfBusinessDetailsError,
+      name: "Type of Business",
+    },
+    { value: regionDetails, setError: setRegionDetailsError, name: "Region" },
+    { value: townDetails, setError: setTownDetailsError, name: "Town" },
+    {
+      value: primaryIndustryDetails,
+      setError: setPrimaryIndustryDetailsError,
+      name: "Primary Industry",
+    },
+    {
+      value: yearOfEstablishmentDetails,
+      setError: setYearOfEstablishmentDetailsError,
+      name: "Year of Establishment",
+    },
+    {
+      value: annualTurnoverDetails,
+      setError: setAnnualTurnoverDetailsError,
+      name: "Annual Turnover",
+    },
+    {
+      value: numberOfEmployeesDetails,
+      setError: setNumberOfEmployeesDetailsError,
+      name: "Number of Employees",
+    },
+  ];
+  const fieldsDetails2 = [
+    {
+      value: foundersNameDetails,
+      setError: setFoundersNameDetailsError,
+      name: "Founder's Name",
+    },
+    {
+      value: foundersGenderDetails,
+      setError: setFoundersGenderDetailsError,
+      name: "Founder's Gender",
+    },
+    {
+      value: foundersAgeDetails,
+      setError: setFoundersAgeDetailsError,
+      name: "Founder's Age",
+    },
+  ];
+  const fieldsDetails3 = [
+    {
+      value: businessAddressDetails,
+      setError: setBusinessAddressDetailsError,
+      name: "Business Address",
+    },
+    {
+      value: phoneNumberDetails,
+      setError: setPhoneNumberDetailsError,
+      name: "Phone Number",
+    },
+    {
+      value: businessEmailDetails,
+      setError: setBusinessEmailDetailsError,
+      name: "Email",
+    },
+    {
+      value: websiteLinkDetails,
+      setError: setWebsiteLinkDetailsError,
+      name: "Website Link",
+      optional: true,
+      isUrl: true,
+    },
+    {
+      value: twitterLinkDetails,
+      setError: setTwitterLinkDetailsError,
+      name: "Twitter Link",
+      optional: true,
+      isUrl: true,
+    },
+    {
+      value: facebookLinkDetails,
+      setError: setFacebookLinkDetailsError,
+      name: "Facebook Link",
+      optional: true,
+      isUrl: true,
+    },
+    {
+      value: instagramLinkDetails,
+      setError: setInstagramLinkDetailsError,
+      name: "Instagram Link",
+      optional: true,
+      isUrl: true,
+    },
+    {
+      value: linkedInLinkDetails,
+      setError: setLinkedInLinkDetailsError,
+      name: "LinkedIn Link",
+      optional: true,
+      isUrl: true,
+    },
+  ];
+
+  const fieldsDetails4 = [
+    { value: mondayDetails, setError: setMondayDetailsError, name: "Monday" },
+    { value: tuesdayDetails, setError: setTuesdayDetailsError, name: "Tuesday" },
+    { value: wednesdayDetails, setError: setWednesdayDetailsError, name: "Wednesday" },
+    { value: thursdayDetails, setError: setThursdayDetailsError, name: "Thursday" },
+    { value: fridayDetails, setError: setFridayDetailsError, name: "Friday" },
+    { value: saturdayDetails, setError: setSaturdayDetailsError, name: "Saturday" },
+    { value: sundayDetails, setError: setSundayDetailsError, name: "Sunday" },
+  ];
+  const fieldsDetails5 = [
+    
   ];
   const validateFields1 = () => {
     let isValid = true;
@@ -1129,39 +1247,67 @@ function Msme() {
   };
   const validateFields3 = () => {
     let isValid = true;
-  
+
     fields3.forEach((field) => {
       field.setError("");
-  
+
       if (!field.optional && !field.value) {
         field.setError(`${field.name} is required.`);
         isValid = false;
       } else if (field.value) {
-
         if (field.name === "Email" && !emailRegex.test(field.value)) {
           field.setError("Invalid email format.");
           isValid = false;
         }
 
-        if (field.name === "Phone Number" && !namibiaPhoneRegex.test(field.value)) {
+        if (
+          field.name === "Phone Number" &&
+          !namibiaPhoneRegex.test(field.value)
+        ) {
           field.setError("Invalid phone number.");
           isValid = false;
         }
-  
+
         if (field.isUrl && !urlRegex.test(field.value)) {
           field.setError(`Invalid URL format.`);
           isValid = false;
         }
       }
     });
+
+    return isValid;
+  };
+
+  const validateFields4 = () => {
+    let isValid = true;
+    let isBusinessOpenAtLeastOneDay = false;
+  
+    fields4.forEach((field) => {
+      field.setError("");
+  
+      if (field.isClosed) {
+        isBusinessOpenAtLeastOneDay = true;
+        if (!field.value || !field.to) {
+          field.setError(`${field.name} From & To is required.`);
+          isValid = false;
+        }
+      }
+    });
+  
+    if (!isBusinessOpenAtLeastOneDay) {
+      setNumberOfDaysOpenError("The business has to be open for at least one day.");
+      isValid = false;
+    } else {
+      setNumberOfDaysOpenError("");
+    }
   
     return isValid;
   };
   
 
-  const validateFields4 = () => {
+  const validateFields5 = () => {
     let isValid = true;
-    fields4.forEach((field) => {
+    fields5.forEach((field) => {
       field.setError("");
       if (!field.value) {
         field.setError(`${field.name} is required.`);
@@ -1171,9 +1317,91 @@ function Msme() {
     return isValid;
   };
 
-  const validateFields5 = () => {
+  const validateFieldsDetails1 = () => {
     let isValid = true;
-    fields5.forEach((field) => {
+  
+    fieldsDetails1.forEach((field) => {
+      field.setError("");
+  
+      if (
+        field.name === "Business Registration Number" &&
+        (typeOfBusinessDetails === "Close Corporation (CC)" || 
+         typeOfBusinessDetails === "Proprietary Limited Company (PTY)")
+      ) {
+        field.optional = false;
+      }
+      if (!field.value && !field.optional) {
+        field.setError(`${field.name} is required.`);
+        isValid = false;
+      }
+    });
+  
+    return isValid;
+  };
+
+  const validateFieldsDetails2 = () => {
+    let isValid = true;
+    fieldsDetails2.forEach((field) => {
+      field.setError("");
+      if (!field.value) {
+        field.setError(`${field.name} is required.`);
+        isValid = false;
+      }
+    });
+    return isValid;
+  };
+  const validateFieldsDetails3 = () => {
+    let isValid = true;
+
+    fieldsDetails3.forEach((field) => {
+      field.setError("");
+
+      if (!field.optional && !field.value) {
+        field.setError(`${field.name} is required.`);
+        isValid = false;
+      } else if (field.value) {
+        if (field.name === "Email" && !emailRegex.test(field.value)) {
+          field.setError("Invalid email format.");
+          isValid = false;
+        }
+
+        if (
+          field.name === "Phone Number" &&
+          !namibiaPhoneRegex.test(field.value)
+        ) {
+          field.setError("Invalid phone number.");
+          isValid = false;
+        }
+
+        if (field.isUrl && !urlRegex.test(field.value)) {
+          field.setError(`Invalid URL format.`);
+          isValid = false;
+        }
+      }
+    });
+
+    return isValid;
+  };
+
+  const validateFieldsDetails4 = () => {
+    let isValid = true;
+  
+    fieldsDetails4.forEach((field) => {
+      field.setError("");
+  
+      if (!field.value) {
+          field.setError(`${field.name} is required.`);
+          isValid = false;
+      }
+    });
+  
+    return isValid;
+  };
+  
+
+  const validateFieldsDetails5 = () => {
+    let isValid = true;
+    fieldsDetails5.forEach((field) => {
       field.setError("");
       if (!field.value) {
         field.setError(`${field.name} is required.`);
@@ -1201,7 +1429,7 @@ function Msme() {
   };
   const DropdownIndicator = () => null;
   const handleStep1 = () => {
-    if (typeOfBusiness === "" || typeOfBusiness === "") {
+    if (typeOfBusiness === "") {
       fields1.push({
         value: businessRegistrationNumber,
         setError: setBusinessRegistrationNumberError,
@@ -1237,30 +1465,15 @@ function Msme() {
   const handleStep5 = async () => {
     if (validateFields4()) {
       const updatedTimes = {
-        monday: `${convertTo12HourFormat(mondayFrom)} - ${convertTo12HourFormat(
-          mondayTo
-        )}`,
-        tuesday: `${convertTo12HourFormat(
-          tuesdayFrom
-        )} - ${convertTo12HourFormat(tuesdayTo)}`,
-        wednesday: `${convertTo12HourFormat(
-          wednesdayFrom
-        )} - ${convertTo12HourFormat(wednesdayTo)}`,
-        thursday: `${convertTo12HourFormat(
-          thursdayFrom
-        )} - ${convertTo12HourFormat(thursdayTo)}`,
-        friday: `${convertTo12HourFormat(fridayFrom)} - ${convertTo12HourFormat(
-          fridayTo
-        )}`,
-        saturday: `${convertTo12HourFormat(
-          saturdayFrom
-        )} - ${convertTo12HourFormat(saturdayTo)}`,
-        sunday: `${convertTo12HourFormat(sundayFrom)} - ${convertTo12HourFormat(
-          sundayTo
-        )}`,
+        monday: !isMondayClosed ? "Closed" : `${convertTo12HourFormat(mondayFrom)} - ${convertTo12HourFormat(mondayTo)}`,
+        tuesday: !isTuesdayClosed ? "Closed" : `${convertTo12HourFormat(tuesdayFrom)} - ${convertTo12HourFormat(tuesdayTo)}`,
+        wednesday: !isWednesdayClosed ? "Closed" : `${convertTo12HourFormat(wednesdayFrom)} - ${convertTo12HourFormat(wednesdayTo)}`,
+        thursday: !isThursdayClosed ? "Closed" : `${convertTo12HourFormat(thursdayFrom)} - ${convertTo12HourFormat(thursdayTo)}`,
+        friday: !isFridayClosed ? "Closed" : `${convertTo12HourFormat(fridayFrom)} - ${convertTo12HourFormat(fridayTo)}`,
+        saturday: !isSaturdayClosed ? "Closed" : `${convertTo12HourFormat(saturdayFrom)} - ${convertTo12HourFormat(saturdayTo)}`,
+        sunday: !isSundayClosed ? "Closed" : `${convertTo12HourFormat(sundayFrom)} - ${convertTo12HourFormat(sundayTo)}`,
       };
 
-      // Update all days' state in one go to ensure they are captured immediately
       setMonday(updatedTimes.monday);
       setTuesday(updatedTimes.tuesday);
       setWednesday(updatedTimes.wednesday);
@@ -1353,6 +1566,65 @@ function Msme() {
             showConfirmButton: false,
             timer: 3000,
           });
+          setBusinessAddress("");
+    setBusinessRegistrationName("");
+    setBusinessRegistrationNumber("");
+    setBusinessDisplayName("");
+    setDescription("");
+    setTypeOfBusiness("");
+    setRegion("");
+    setTown("");
+    setPrimaryIndustry("");
+    setSecondaryIndustry("");
+    setYearOfEstablishment("");
+    setNumberOfEmployees("");
+    setAnnualTurnover("");
+    setFoundersName("");
+    setFoundersGender("");
+    setFoundersAge("");
+    setBusinessAddress("");
+    setPhoneNumber("");
+    setWhatsAppNumber("");
+    setBusinessEmail("");
+    setWebsiteLink("");
+    setFacebookLink("");
+    setTwitterLink("");
+    setInstagramLink("");
+    setLinkedInLink("");
+    setMonday("");
+    setTuesday("");
+    setWednesday("");
+    setThursday("");
+    setFriday("");
+    setSaturday("");
+    setSunday("");
+    setBusinessLogo("");
+    setImage1("");
+    setImage2("");
+    setImage3("");
+    setUserId("");
+    setStepperCounter(0);
+    setMondayFrom("");
+    setMondayTo("");
+    setTuesdayFrom("");
+    setTuesdayTo("");
+    setWednesdayFrom("");
+    setWednesdayTo("");
+    setThursdayFrom("");
+    setThursdayTo("");
+    setFridayFrom("");
+    setFridayTo("");
+    setSaturdayFrom("");
+    setSaturdayTo("");
+    setSundayFrom("");
+    setSundayTo("");
+    setIsMondayClosed(false);
+    setIsTuesdayClosed(false);
+    setIsWednesdayClosed(false);
+    setIsThursdayClosed(false);
+    setIsFridayClosed(false);
+    setIsSaturdayClosed(false);
+    setIsSundayClosed(false);
         } else {
           setIsSubmitting(false);
           setOpenModel(false);
@@ -1363,7 +1635,6 @@ function Msme() {
             showConfirmButton: false,
             timer: 3000,
           });
-          
         }
       } catch (error) {
         setIsSubmitting(false);
@@ -1374,16 +1645,30 @@ function Msme() {
   };
 
   const handleStep1Review = () => {
-    setStepperCounter(1);
+
+    if(validateFieldsDetails1()){
+      if (typeOfBusinessDetails !== "Close Corporation (CC)" || typeOfBusinessDetails !== "Proprietary Limited Company (PTY)") {
+        setBusinessRegistrationNumberDetails("");
+        setBusinessRegistrationNumberError("");
+       }
+      setStepperCounter(1);
+    }
   };
   const handleStep2Review = () => {
-    setStepperCounter(2);
+    if(validateFieldsDetails2()){
+      setStepperCounter(2);
+    }
+    
   };
   const handleStep3Review = () => {
-    setStepperCounter(3);
+    if(validateFieldsDetails3()){
+      setStepperCounter(3);
+    }
   };
   const handleStep4Review = () => {
-    setStepperCounter(4);
+    if(validateFieldsDetails4()){
+      setStepperCounter(4);
+    }
   };
   const handleView = async (id) => {
     try {
@@ -1402,14 +1687,14 @@ function Msme() {
 
       const data = await response.json();
       const newTokenHeader = response.headers.get("Authorization");
-      
+
       if (newTokenHeader) {
         dispatch(
           updateToken({
             token: newTokenHeader,
           })
         );
-      }else{
+      } else {
         handleAuthFailure({ dispatch, navigate, type: "auth" });
       }
       console.log("Login successful", data.data);
@@ -1420,7 +1705,9 @@ function Msme() {
 
         setBusinessAddressDetails(data.data.businessRegistrationName);
         setBusinessRegistrationNameDetails(data.data.businessRegistrationName);
-        setBusinessRegistrationNumberDetails(data.data.businessRegistrationNumber)
+        setBusinessRegistrationNumberDetails(
+          data.data.businessRegistrationNumber
+        );
         setBusinessDisplayNameDetails(data.data.businessDisplayName);
         setDescriptionDetails(data.data.description);
         setTypeOfBusinessDetails(data.data.typeOfBusiness);
@@ -1467,7 +1754,6 @@ function Msme() {
           showConfirmButton: false,
           timer: 4000,
         });
-        
       }
     } catch (error) {
       setIsSubmitting(false);
@@ -1538,24 +1824,28 @@ function Msme() {
       headerName: "Created At",
       width: isSmallScreen ? 100 : 140,
     },
+    
     {
       field: "action",
       headerName: "",
       width: 50,
       renderCell: (params) => (
-        <SlOptionsVertical
-          style={{
-            cursor: "pointer",
-          }}
-          onClick={() => handleView(params.row.id)}
-        />
+        currentUser.role === "Super admin" ? (
+          <SlOptionsVertical
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => handleView(params.row.id)}
+          />
+        ) : null
       ),
-    },
+    }
+    
   ];
   const rowsAll = allMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
-    email: msme.contactInfo?.email,
+    email: msme?.contactInfo?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
@@ -1585,13 +1875,13 @@ function Msme() {
   }));
   const filteredRowsPending = rowsPending.filter((row) =>
     Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      value.toString().toLowerCase().includes(searchQueryPending.toLowerCase())
     )
   );
   const rowsRejected = rejectedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.registrationName,
-    email: msme.email,
+    email: msme?.email,
     region: msme.region,
     town: msme.town,
     primaryIndustry: msme.primaryIndustry,
@@ -1603,7 +1893,7 @@ function Msme() {
   }));
   const filteredRowsRejected = rowsRejected.filter((row) =>
     Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      value.toString().toLowerCase().includes(searchQueryRejected.toLowerCase())
     )
   );
   const rowsApproved = approvedMSMEList.map((msme) => ({
@@ -1621,7 +1911,7 @@ function Msme() {
   }));
   const filteredRowsApproved = rowsApproved.filter((row) =>
     Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      value.toString().toLowerCase().includes(searchQueryApproved.toLowerCase())
     )
   );
 
@@ -1705,7 +1995,8 @@ function Msme() {
     if (
       updatingDetails.businessRegistrationName ===
         businessRegistrationNameDetails &&
-        updatingDetails.businessRegistrationNumber ===  businessRegistrationNumberDetails&&
+      updatingDetails.businessRegistrationNumber ===
+        businessRegistrationNumberDetails &&
       updatingDetails.businessDisplayName === businessDisplayNameDetails &&
       updatingDetails.description === descriptionDetails &&
       updatingDetails.typeOfBusiness === typeOfBusinessDetails &&
@@ -1772,14 +2063,14 @@ function Msme() {
 
               const data = await response.json();
               const newTokenHeader = response.headers.get("Authorization");
-             
+
               if (newTokenHeader) {
                 dispatch(
                   updateToken({
                     token: newTokenHeader,
                   })
                 );
-              }else{
+              } else {
                 handleAuthFailure({ dispatch, navigate, type: "auth" });
               }
               console.log(data.message);
@@ -1802,7 +2093,6 @@ function Msme() {
                   showConfirmButton: false,
                   timer: 3000,
                 });
-                
               }
             } catch (error) {
               handleAuthFailure({ dispatch, navigate, type: "network" });
@@ -1817,7 +2107,7 @@ function Msme() {
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     } else {
-      console.log("Updating the ")
+      console.log("Updating the ");
       try {
         setIsSubmitting(true);
         const formData = new FormData();
@@ -1881,7 +2171,7 @@ function Msme() {
         );
 
         const data = await response.json();
-        console.log(data.message)
+        console.log(data.message);
         if (response.ok) {
           try {
             setIsSubmitting(true);
@@ -1903,14 +2193,14 @@ function Msme() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            
+
             if (newTokenHeader) {
               dispatch(
                 updateToken({
                   token: newTokenHeader,
                 })
               );
-            }else{
+            } else {
               handleAuthFailure({ dispatch, navigate, type: "auth" });
             }
             console.log(data);
@@ -1933,7 +2223,6 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              
             }
           } catch (error) {
             handleAuthFailure({ dispatch, navigate, type: "network" });
@@ -1950,7 +2239,6 @@ function Msme() {
             showConfirmButton: false,
             timer: 3000,
           });
-          
         }
       } catch (error) {
         setIsSubmitting(false);
@@ -1991,14 +2279,14 @@ function Msme() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            
+
             if (newTokenHeader) {
               dispatch(
                 updateToken({
                   token: newTokenHeader,
                 })
               );
-            }else{
+            } else {
               handleAuthFailure({ dispatch, navigate, type: "auth" });
             }
             console.log(data);
@@ -2022,7 +2310,6 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              
             }
           } catch (error) {
             handleAuthFailure({ dispatch, navigate, type: "network" });
@@ -2069,14 +2356,14 @@ function Msme() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            
+
             if (newTokenHeader) {
               dispatch(
                 updateToken({
                   token: newTokenHeader,
                 })
               );
-            }else{
+            } else {
               handleAuthFailure({ dispatch, navigate, type: "auth" });
             }
             console.log(data);
@@ -2145,14 +2432,14 @@ function Msme() {
 
             const data = await response.json();
             const newTokenHeader = response.headers.get("Authorization");
-            
+
             if (newTokenHeader) {
               dispatch(
                 updateToken({
                   token: newTokenHeader,
                 })
               );
-            }else{
+            } else {
               handleAuthFailure({ dispatch, navigate, type: "auth" });
             }
             console.log(data);
@@ -2176,7 +2463,6 @@ function Msme() {
                 showConfirmButton: false,
                 timer: 3000,
               });
-              
             }
           } catch (error) {
             handleAuthFailure({ dispatch, navigate, type: "network" });
@@ -2641,7 +2927,6 @@ function Msme() {
                           }
                           onClick={() => {
                             setButonActive(1);
-                            setSearchQuery("");
                           }}
                           style={{ border: "none" }}
                         >
@@ -2655,7 +2940,6 @@ function Msme() {
                           }
                           onClick={() => {
                             setButonActive(2);
-                            setSearchQuery("");
                           }}
                           style={{ border: "none" }}
                         >
@@ -2669,7 +2953,6 @@ function Msme() {
                           }
                           onClick={() => {
                             setButonActive(5);
-                            setSearchQuery("");
                           }}
                           style={{ border: "none" }}
                         >
@@ -2682,8 +2965,7 @@ function Msme() {
                               : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                           }
                           onClick={() => {
-                             setButonActive(3);
-                             setSearchQuery("");
+                            setButonActive(3);
                           }}
                           style={{ border: "none" }}
                         >
@@ -2696,8 +2978,7 @@ function Msme() {
                               : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
                           }
                           onClick={() => {
-                            setButonActive(4)
-                            setSearchQuery("")
+                            setButonActive(4);
                           }}
                           style={{ border: "none" }}
                         >
@@ -2727,9 +3008,14 @@ function Msme() {
                             <SearchIcon />
                           </IconButton>
                         </Box>
-                        <div onClick={handleOpen}>
+                        {currentUser.role === "Super admin" && (
+                      <>
+                           <div onClick={handleOpen}>
                           <MyButton text="Add MSME" />
                         </div>
+                      </>
+                    )}
+                       
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">All MSME List</p>
@@ -2759,11 +3045,11 @@ function Msme() {
                                 initialState={{
                                   pagination: {
                                     paginationModel: {
-                                      pageSize: 15,
+                                      pageSize: 25,
                                     },
                                   },
                                 }}
-                                pageSizeOptions={[15]}
+                                pageSizeOptions={[25, 50, 100]}
                                 checkboxSelection
                                 disableRowSelectionOnClick
                               />
@@ -2801,15 +3087,20 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for pending MSME"
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={(e) => setSearchQueryPending(e.target.value)}
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
                           </IconButton>
                         </Box>
+                        {currentUser.role === "Super admin" && (
+                      <>
                         <div onClick={handleOpen}>
                           <MyButton text="Add MSME" />
                         </div>
+                      </>
+                    )}
+                        
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Pending MSME List</p>
@@ -2839,11 +3130,11 @@ function Msme() {
                                 initialState={{
                                   pagination: {
                                     paginationModel: {
-                                      pageSize: 15,
+                                      pageSize: 25,
                                     },
                                   },
                                 }}
-                                pageSizeOptions={[15]}
+                                pageSizeOptions={[25, 50, 100]}
                                 checkboxSelection
                                 disableRowSelectionOnClick
                               />
@@ -2881,15 +3172,20 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for a rejected MSME"
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={(e) => setSearchQueryRejected(e.target.value)}
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
                           </IconButton>
                         </Box>
-                        <div onClick={handleOpen}>
+                        {currentUser.role === "Super admin" && (
+                      <>
+                         <div onClick={handleOpen}>
                           <MyButton text="Add MSME" />
                         </div>
+                      </>
+                    )}
+                       
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Rejected MSME List</p>
@@ -2919,11 +3215,11 @@ function Msme() {
                                 initialState={{
                                   pagination: {
                                     paginationModel: {
-                                      pageSize: 15,
+                                      pageSize: 25,
                                     },
                                   },
                                 }}
-                                pageSizeOptions={[15]}
+                                pageSizeOptions={[25, 50, 100]}
                                 checkboxSelection
                                 disableRowSelectionOnClick
                               />
@@ -2967,9 +3263,14 @@ function Msme() {
                             <SearchIcon />
                           </IconButton>
                         </Box>
+                        {currentUser.role === "Super admin" && (
+                      <>
                         <div onClick={handleOpen}>
                           <MyButton text="Add MSME" />
                         </div>
+                      </>
+                    )}
+                        
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Incomplete MSME List</p>
@@ -2997,11 +3298,11 @@ function Msme() {
                             initialState={{
                               pagination: {
                                 paginationModel: {
-                                  pageSize: 15,
+                                  pageSize: 25,
                                 },
                               },
                             }}
-                            pageSizeOptions={[15]}
+                            pageSizeOptions={[25, 50, 100]}
                             checkboxSelection
                             disableRowSelectionOnClick
                           />
@@ -3023,15 +3324,20 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for approved msme"
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={(e) => setSearchQueryApproved(e.target.value)}
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
                           </IconButton>
                         </Box>
+                        {currentUser.role === "Super admin" && (
+                      <>
                         <div onClick={handleOpen}>
                           <MyButton text="Add MSME" />
                         </div>
+                      </>
+                    )}
+                        
                       </div>
                       <div className="col-12 mt-1">
                         <p className="list-group">Approved MSME List</p>
@@ -3061,11 +3367,11 @@ function Msme() {
                                 initialState={{
                                   pagination: {
                                     paginationModel: {
-                                      pageSize: 15,
+                                      pageSize: 25,
                                     },
                                   },
                                 }}
-                                pageSizeOptions={[15]}
+                                pageSizeOptions={[25, 50, 100]}
                                 checkboxSelection
                                 disableRowSelectionOnClick
                               />
@@ -3193,11 +3499,34 @@ function Msme() {
                     setImage3("");
                     setUserId("");
                     setStepperCounter(0);
+
+                    setIsMondayClosed(false);
+    setIsTuesdayClosed(false);
+    setIsWednesdayClosed(false);
+    setIsThursdayClosed(false);
+    setIsFridayClosed(false);
+    setIsSaturdayClosed(false);
+    setIsSundayClosed(false);
+
+    setMondayFrom("");
+    setMondayTo("");
+    setTuesdayFrom("");
+    setTuesdayTo("");
+    setWednesdayFrom("");
+    setWednesdayTo("");
+    setThursdayFrom("");
+    setThursdayTo("");
+    setFridayFrom("");
+    setFridayTo("");
+    setSaturdayFrom("");
+    setSaturdayTo("");
+    setSundayFrom("");
+    setSundayTo("");
                     setOpenModel(false);
                   }}
                 />
               </div>
-
+                
               <Box
                 sx={{ width: "100%" }}
                 style={{ marginTop: "10px", marginBottom: "20px" }}
@@ -3210,6 +3539,13 @@ function Msme() {
                   ))}
                 </Stepper>
               </Box>
+              {numberOfDaysOpenError && (
+              <>
+                <div className="col-md-8 p-1 p-md-3 error-div d-flex justify-content-center align-items-center m-auto">
+                  <p>{numberOfDaysOpenError}</p>
+                </div>
+              </>
+            )}
               <Grid
                 container
                 spacing={{ xs: 1 }}
@@ -3284,7 +3620,10 @@ function Msme() {
 
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="registrationName" className="pb-2 text-bold">
+                        <label
+                          htmlFor="registrationName"
+                          className="pb-2 text-bold"
+                        >
                           Registration Name:<span>*</span>
                         </label>
                         <input
@@ -3310,7 +3649,10 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="displayNumber" className="pb-2 text-bold">
+                        <label
+                          htmlFor="displayNumber"
+                          className="pb-2 text-bold"
+                        >
                           Display Name:<span>*</span>
                         </label>
                         <input
@@ -3341,17 +3683,21 @@ function Msme() {
                                 User Name: <span>*</span>
                               </label>
                               <Select
-              value={userOptions.find((option) => option.value === userId)}
-              onChange={(selectedOption) => {
-                setUserIdError("");
-                setUserId(selectedOption ? selectedOption.value : "");
-              }}
-              options={userOptions}
-              placeholder="Select user"
-              isSearchable
-              classNamePrefix="react-select"
-              components={{ DropdownIndicator }}
-            />
+                                value={userOptions.find(
+                                  (option) => option.value === userId
+                                )}
+                                onChange={(selectedOption) => {
+                                  setUserIdError("");
+                                  setUserId(
+                                    selectedOption ? selectedOption.value : ""
+                                  );
+                                }}
+                                options={userOptions}
+                                placeholder="Select user"
+                                isSearchable
+                                classNamePrefix="react-select"
+                                components={{ DropdownIndicator }}
+                              />
                               {userIdError && (
                                 <>
                                   <p className="error mt-1">{userIdError}</p>
@@ -3396,17 +3742,21 @@ function Msme() {
                               User Name: <span>*</span>
                             </label>
                             <Select
-              value={userOptions.find((option) => option.value === userId)}
-              onChange={(selectedOption) => {
-                setUserIdError("");
-                setUserId(selectedOption ? selectedOption.value : "");
-              }}
-              options={userOptions}
-              placeholder="Select user"
-              isSearchable
-              classNamePrefix="react-select"
-              components={{ DropdownIndicator }}
-            />
+                              value={userOptions.find(
+                                (option) => option.value === userId
+                              )}
+                              onChange={(selectedOption) => {
+                                setUserIdError("");
+                                setUserId(
+                                  selectedOption ? selectedOption.value : ""
+                                );
+                              }}
+                              options={userOptions}
+                              placeholder="Select user"
+                              isSearchable
+                              classNamePrefix="react-select"
+                              components={{ DropdownIndicator }}
+                            />
                             {userIdError && (
                               <>
                                 <p className="error mt-1">{userIdError}</p>
@@ -3591,12 +3941,12 @@ function Msme() {
                       </div>
                     </Grid>
                     <div className="d-flex justify-content-end w-100">
-                    <button
+                      <button
                         className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={handleStep1}
                       >
                         Step 2
-                        <EastIcon style={{marginLeft: "10px"}}/>
+                        <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
                   </>
@@ -3689,7 +4039,9 @@ function Msme() {
                         className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(0)}
                       >
-                        <KeyboardBackspaceIcon style={{marginRight: "10px"}}/>
+                        <KeyboardBackspaceIcon
+                          style={{ marginRight: "10px" }}
+                        />
                         Step 1
                       </button>
                       <button
@@ -3697,7 +4049,7 @@ function Msme() {
                         onClick={handleStep2}
                       >
                         Step 3
-                        <EastIcon style={{marginLeft: "10px"}}/>
+                        <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
                   </>
@@ -3706,7 +4058,10 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="businessAddress" className="pb-2 text-bold">
+                        <label
+                          htmlFor="businessAddress"
+                          className="pb-2 text-bold"
+                        >
                           Business Address: <span>*</span>
                         </label>
                         <input
@@ -3754,7 +4109,10 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="whatsAppNumber" className="pb-2 text-bold">
+                        <label
+                          htmlFor="whatsAppNumber"
+                          className="pb-2 text-bold"
+                        >
                           What's App Number:
                         </label>
                         <input
@@ -3778,7 +4136,10 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="businessEmail" className="pb-2 text-bold">
+                        <label
+                          htmlFor="businessEmail"
+                          className="pb-2 text-bold"
+                        >
                           Business email: <span>*</span>
                         </label>
                         <input
@@ -3926,7 +4287,9 @@ function Msme() {
                         className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(1)}
                       >
-                        <KeyboardBackspaceIcon style={{marginRight: "10px"}}/>
+                        <KeyboardBackspaceIcon
+                          style={{ marginRight: "10px" }}
+                        />
                         Step 2
                       </button>
                       <button
@@ -3934,7 +4297,7 @@ function Msme() {
                         onClick={handleStep3}
                       >
                         Step 4
-                        <EastIcon style={{marginLeft: "10px"}}/>
+                        <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
                   </>
@@ -3942,396 +4305,496 @@ function Msme() {
                 {stepperCounter === 3 && (
                   <>
                     <Grid item xs={12} sm={6} md={6}>
-                      <div className="form-group pb-3">
-                        <label htmlFor="email" className="text-bold">Monday:</label>
-                        <Grid
-                          container
-                          spacing={{ xs: 2, md: 2 }}
-                          columns={{ xs: 12, sm: 12, md: 12 }}
-                          style={{ marginTop: "0px" }}
-                        >
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="mondayFrom" className="pb-2 text-bold">
-                                From: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="08:00"
-                                autoComplete="off"
-                                name="mondayFrom"
-                                value={mondayFrom}
-                                onChange={(e) => {
-                                  setMondayError("");
-                                  setMondayFrom(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="mondayTo" className="pb-2 text-bold">
-                                To: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="15:00"
-                                autoComplete="off"
-                                name="mondayTo"
-                                value={mondayTo}
-                                onChange={(e) => {
-                                  setMondayError("");
-                                  setMondayTo(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                        {mondayError && (
-                          <>
-                            <p className="error mt-1">{mondayError}</p>
-                          </>
-                        )}
-                      </div>
+      <div className="form-group pb-3">
+        <label htmlFor="email" className="text-bold">Monday:</label>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 2 }}
+          columns={{ xs: 12, sm: 12, md: 12 }}
+          style={{ marginTop: "0px" }}
+        >
+          <Grid item xs={12} sm={12} md={12}>
+            <div className="form-group d-flex justify-content-between align-items-center">
+              <label className="pb-2 text-bold text-secondary">Closed:</label>
+              <Switch
+                checked={!isMondayClosed}
+                onChange={() => setIsMondayClosed(!isMondayClosed)}
+                
+              />
+            </div>
+          </Grid>
+
+          {isMondayClosed && (
+            <>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group">
+                  <label htmlFor="mondayFrom" className="pb-2 text-bold">
+                    From: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="08:00"
+                    autoComplete="off"
+                    name="mondayFrom"
+                    value={mondayFrom}
+                    onChange={(e) => {
+                      setMondayError("");
+                      setMondayFrom(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group pb-3">
+                  <label htmlFor="mondayTo" className="pb-2 text-bold">
+                    To: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="15:00"
+                    autoComplete="off"
+                    name="mondayTo"
+                    value={mondayTo}
+                    onChange={(e) => {
+                      setMondayError("");
+                      setMondayTo(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+            </>
+          )}
+        </Grid>
+
+        {mondayError && (
+          <p className="error mt-1">{mondayError}</p>
+        )}
+      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                      <div className="form-group pb-3">
-                        <label htmlFor="email" className="text-bold">Tuesday:</label>
-                        <Grid
-                          container
-                          spacing={{ xs: 2, md: 2 }}
-                          columns={{ xs: 12, sm: 12, md: 12 }}
-                          style={{ marginTop: "0px" }}
-                        >
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="tusdayFrom" className="pb-2 text-bold">
-                                From: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="08:00"
-                                autoComplete="off"
-                                name="tusdayFrom"
-                                value={tuesdayFrom}
-                                onChange={(e) => {
-                                  setTuesdayError("");
-                                  setTuesdayFrom(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="tusdayTo" className="pb-2 text-bold">
-                                To: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="15:00"
-                                autoComplete="off"
-                                name="tusdayTo"
-                                value={tuesdayTo}
-                                onChange={(e) => {
-                                  setTuesdayError("");
-                                  setTuesdayTo(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                        {tuesdayError && (
-                          <>
-                            <p className="error mt-1">{tuesdayError}</p>
-                          </>
-                        )}
-                      </div>
+      <div className="form-group pb-3">
+        <label htmlFor="email" className="text-bold">Tuesday:</label>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 2 }}
+          columns={{ xs: 12, sm: 12, md: 12 }}
+          style={{ marginTop: "0px" }}
+        >
+          <Grid item xs={12} sm={12} md={12}>
+            <div className="form-group d-flex justify-content-between align-items-center">
+              <label className="pb-2 text-bold text-secondary">Closed:</label>
+              <Switch
+                checked={!isTuesdayClosed}
+                onChange={() => setIsTuesdayClosed(!isTuesdayClosed)}
+                
+              />
+            </div>
+          </Grid>
+
+          {isTuesdayClosed && (
+            <>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group">
+                  <label htmlFor="TuesdayFrom" className="pb-2 text-bold">
+                    From: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="08:00"
+                    autoComplete="off"
+                    name="mondayFrom"
+                    value={tuesdayFrom}
+                    onChange={(e) => {
+                      setTuesdayError("");
+                      setTuesdayFrom(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group pb-3">
+                  <label htmlFor="tuesdayTo" className="pb-2 text-bold">
+                    To: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="15:00"
+                    autoComplete="off"
+                    name="tuesdayTo"
+                    value={tuesdayTo}
+                    onChange={(e) => {
+                      setTuesdayError("");
+                      setTuesdayTo(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+            </>
+          )}
+        </Grid>
+
+        {tuesdayError && (
+          <p className="error mt-1">{tuesdayError}</p>
+        )}
+      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                      <div className="form-group pb-3">
-                        <label htmlFor="email" className="text-bold">Wednesday:</label>
-                        <Grid
-                          container
-                          spacing={{ xs: 2, md: 2 }}
-                          columns={{ xs: 12, sm: 12, md: 12 }}
-                          style={{ marginTop: "0px" }}
-                        >
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="wednesdayFrom" className="pb-2 text-bold">
-                                From: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="08:00"
-                                autoComplete="off"
-                                name="wednesdayFrom"
-                                value={wednesdayFrom}
-                                onChange={(e) => {
-                                  setWednesdayError("");
-                                  setWednesdayFrom(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="wednesdayTo" className="pb-2 text-bold">
-                                To: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="15:00"
-                                autoComplete="off"
-                                name="wednesdayTo"
-                                value={wednesdayTo}
-                                onChange={(e) => {
-                                  setWednesdayError("");
-                                  setWednesdayTo(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                        {wednesdayError && (
-                          <>
-                            <p className="error mt-1">{wednesdayError}</p>
-                          </>
-                        )}
-                      </div>
+      <div className="form-group pb-3">
+        <label htmlFor="email" className="text-bold">Wednesday:</label>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 2 }}
+          columns={{ xs: 12, sm: 12, md: 12 }}
+          style={{ marginTop: "0px" }}
+        >
+          <Grid item xs={12} sm={12} md={12}>
+            <div className="form-group d-flex justify-content-between align-items-center">
+              <label className="pb-2 text-bold text-secondary">Closed:</label>
+              <Switch
+                checked={!isWednesdayClosed}
+                onChange={() => setIsWednesdayClosed(!isWednesdayClosed)}
+                
+              />
+            </div>
+          </Grid>
+
+          {isWednesdayClosed && (
+            <>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group">
+                  <label htmlFor="mondayFrom" className="pb-2 text-bold">
+                    From: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="08:00"
+                    autoComplete="off"
+                    name="wednesdayFrom"
+                    value={wednesdayFrom}
+                    onChange={(e) => {
+                      setWednesdayError("");
+                      setWednesdayFrom(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group pb-3">
+                  <label htmlFor="wednesdayTo" className="pb-2 text-bold">
+                    To: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="15:00"
+                    autoComplete="off"
+                    name="wednesdayTo"
+                    value={wednesdayTo}
+                    onChange={(e) => {
+                      setWednesdayError("");
+                      setWednesdayTo(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+            </>
+          )}
+        </Grid>
+
+        {wednesdayError && (
+          <p className="error mt-1">{wednesdayError}</p>
+        )}
+      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                      <div className="form-group pb-3">
-                        <label htmlFor="email" className="text-bold">Thursday:</label>
-                        <Grid
-                          container
-                          spacing={{ xs: 2, md: 2 }}
-                          columns={{ xs: 12, sm: 12, md: 12 }}
-                          style={{ marginTop: "0px" }}
-                        >
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="thursdayFrom" className="pb-2 text-bold">
-                                From: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="08:00"
-                                autoComplete="off"
-                                name="thursdayFrom"
-                                value={thursdayFrom}
-                                onChange={(e) => {
-                                  setThursdayError("");
-                                  setThursdayFrom(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="thursdayTo" className="pb-2 text-bold">
-                                To: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="15:00"
-                                autoComplete="off"
-                                name="thursdayTo"
-                                value={thursdayTo}
-                                onChange={(e) => {
-                                  setThursdayError("");
-                                  setThursdayTo(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                        {thursdayError && (
-                          <>
-                            <p className="error mt-1">{thursdayError}</p>
-                          </>
-                        )}
-                      </div>
+      <div className="form-group pb-3">
+        <label htmlFor="email" className="text-bold">Thursday:</label>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 2 }}
+          columns={{ xs: 12, sm: 12, md: 12 }}
+          style={{ marginTop: "0px" }}
+        >
+          <Grid item xs={12} sm={12} md={12}>
+            <div className="form-group d-flex justify-content-between align-items-center">
+              <label className="pb-2 text-bold text-secondary">Closed:</label>
+              <Switch
+                checked={!isThursdayClosed}
+                onChange={() => setIsThursdayClosed(!isThursdayClosed)}
+                
+              />
+            </div>
+          </Grid>
+
+          {isThursdayClosed && (
+            <>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group">
+                  <label htmlFor="thursdayFrom" className="pb-2 text-bold">
+                    From: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="08:00"
+                    autoComplete="off"
+                    name="thursdayFrom"
+                    value={thursdayFrom}
+                    onChange={(e) => {
+                      setThursdayError("");
+                      setThursdayFrom(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group pb-3">
+                  <label htmlFor="thursdayTo" className="pb-2 text-bold">
+                    To: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="15:00"
+                    autoComplete="off"
+                    name="thursdayTo"
+                    value={thursdayTo}
+                    onChange={(e) => {
+                      setThursdayError("");
+                      setThursdayTo(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+            </>
+          )}
+        </Grid>
+
+        {thursdayError && (
+          <p className="error mt-1">{thursdayError}</p>
+        )}
+      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                      <div className="form-group pb-3">
-                        <label htmlFor="email" className="text-bold">Friday:</label>
-                        <Grid
-                          container
-                          spacing={{ xs: 2, md: 2 }}
-                          columns={{ xs: 12, sm: 12, md: 12 }}
-                          style={{ marginTop: "0px" }}
-                        >
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="fridayFrom" className="pb-2 text-bold">
-                                From: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="08:00"
-                                autoComplete="off"
-                                name="fridayFrom"
-                                value={fridayFrom}
-                                onChange={(e) => {
-                                  setFridayError("");
-                                  setFridayFrom(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="fridayTo" className="pb-2 text-bold">
-                                To: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="15:00"
-                                autoComplete="off"
-                                name="fridayTo"
-                                value={fridayTo}
-                                onChange={(e) => {
-                                  setFridayError("");
-                                  setFridayTo(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                        {fridayError && (
-                          <>
-                            <p className="error mt-1">{fridayError}</p>
-                          </>
-                        )}
-                      </div>
+      <div className="form-group pb-3">
+        <label htmlFor="email" className="text-bold">Friday:</label>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 2 }}
+          columns={{ xs: 12, sm: 12, md: 12 }}
+          style={{ marginTop: "0px" }}
+        >
+          <Grid item xs={12} sm={12} md={12}>
+            <div className="form-group d-flex justify-content-between align-items-center">
+              <label className="pb-2 text-bold text-secondary">Closed:</label>
+              <Switch
+                checked={!isFridayClosed}
+                onChange={() => setIsFridayClosed(!isFridayClosed)}
+                
+              />
+            </div>
+          </Grid>
+
+          {isFridayClosed && (
+            <>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group">
+                  <label htmlFor="fridayFrom" className="pb-2 text-bold">
+                    From: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="08:00"
+                    autoComplete="off"
+                    name="fridayFrom"
+                    value={fridayFrom}
+                    onChange={(e) => {
+                      setFridayError("");
+                      setFridayFrom(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group pb-3">
+                  <label htmlFor="fridayTo" className="pb-2 text-bold">
+                    To: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="15:00"
+                    autoComplete="off"
+                    name="fridayTo"
+                    value={fridayTo}
+                    onChange={(e) => {
+                      setFridayError("");
+                      setFridayTo(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+            </>
+          )}
+        </Grid>
+
+        {fridayError && (
+          <p className="error mt-1">{fridayError}</p>
+        )}
+      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                      <div className="form-group pb-3">
-                        <label htmlFor="email" className="text-bold">Saturday:</label>
-                        <Grid
-                          container
-                          spacing={{ xs: 2, md: 2 }}
-                          columns={{ xs: 12, sm: 12, md: 12 }}
-                          style={{ marginTop: "0px" }}
-                        >
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="saturdayFrom" className="pb-2 text-bold">
-                                From: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="08:00"
-                                autoComplete="off"
-                                name="saturdayFrom"
-                                value={saturdayFrom}
-                                onChange={(e) => {
-                                  setSaturdayError("");
-                                  setSaturdayFrom(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="fridayTo" className="pb-2 text-bold">
-                                To: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="15:00"
-                                autoComplete="off"
-                                name="fridayTo"
-                                value={saturdayTo}
-                                onChange={(e) => {
-                                  setSaturdayError("");
-                                  setSaturdayTo(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                        {saturdayError && (
-                          <>
-                            <p className="error mt-1">{saturdayError}</p>
-                          </>
-                        )}
-                      </div>
+      <div className="form-group pb-3">
+        <label htmlFor="email" className="text-bold">Saturday:</label>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 2 }}
+          columns={{ xs: 12, sm: 12, md: 12 }}
+          style={{ marginTop: "0px" }}
+        >
+          <Grid item xs={12} sm={12} md={12}>
+            <div className="form-group d-flex justify-content-between align-items-center">
+              <label className="pb-2 text-bold text-secondary">Closed:</label>
+              <Switch
+                checked={!isSaturdayClosed}
+                onChange={() => setIsSaturdayClosed(!isSaturdayClosed)}
+                
+              />
+            </div>
+          </Grid>
+
+          {isSaturdayClosed && (
+            <>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group">
+                  <label htmlFor="mondayFrom" className="pb-2 text-bold">
+                    From: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="08:00"
+                    autoComplete="off"
+                    name="saturdayFrom"
+                    value={saturdayFrom}
+                    onChange={(e) => {
+                      setSaturdayError("");
+                      setSaturdayFrom(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group pb-3">
+                  <label htmlFor="saturdayTo" className="pb-2 text-bold">
+                    To: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="15:00"
+                    autoComplete="off"
+                    name="saturdayTo"
+                    value={saturdayTo}
+                    onChange={(e) => {
+                      setSaturdayError("");
+                      setSaturdayTo(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+            </>
+          )}
+        </Grid>
+
+        {saturdayError && (
+          <p className="error mt-1">{saturdayError}</p>
+        )}
+      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                      <div className="form-group pb-3">
-                        <label htmlFor="email" className="text-bold">Sunday:</label>
-                        <Grid
-                          container
-                          spacing={{ xs: 2, md: 2 }}
-                          columns={{ xs: 12, sm: 12, md: 12 }}
-                          style={{ marginTop: "0px" }}
-                        >
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="sundayFrom" className="pb-2 text-bold">
-                                From: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="08:00"
-                                autoComplete="off"
-                                name="sundayFrom"
-                                value={sundayFrom}
-                                onChange={(e) => {
-                                  setSundayError("");
-                                  setSundayFrom(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item xs={12} sm={6} md={6}>
-                            <div className="form-group pb-3">
-                              <label htmlFor="sundayTo" className="pb-2 text-bold">
-                                To: <span>*</span>
-                              </label>
-                              <input
-                                type="time"
-                                className="form-control place-holder"
-                                placeholder="15:00"
-                                autoComplete="off"
-                                name="sundayTo"
-                                value={sundayTo}
-                                onChange={(e) => {
-                                  setSundayError("");
-                                  setSundayTo(e.target.value);
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                        {sundayError && (
-                          <>
-                            <p className="error mt-1">{sundayError}</p>
-                          </>
-                        )}
-                      </div>
+      <div className="form-group pb-3">
+        <label htmlFor="email" className="text-bold">Sunday:</label>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 2 }}
+          columns={{ xs: 12, sm: 12, md: 12 }}
+          style={{ marginTop: "0px" }}
+        >
+          <Grid item xs={12} sm={12} md={12}>
+            <div className="form-group d-flex justify-content-between align-items-center">
+              <label className="pb-2 text-bold text-secondary">Closed:</label>
+              <Switch
+                checked={!isSundayClosed}
+                onChange={() => setIsSundayClosed(!isSundayClosed)}
+                
+              />
+            </div>
+          </Grid>
+
+          {isSundayClosed && (
+            <>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group">
+                  <label htmlFor="mondayFrom" className="pb-2 text-bold">
+                    From: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="08:00"
+                    autoComplete="off"
+                    name="sundayFrom"
+                    value={sundayFrom}
+                    onChange={(e) => {
+                      setSundayError("");
+                      setSundayFrom(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group pb-3">
+                  <label htmlFor="thursdayTo" className="pb-2 text-bold">
+                    To: <span>*</span>
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control place-holder"
+                    placeholder="15:00"
+                    autoComplete="off"
+                    name="thursdayTo"
+                    value={sundayTo}
+                    onChange={(e) => {
+                      setSundayError("");
+                      setSundayTo(e.target.value);
+                    }}
+                  />
+                </div>
+              </Grid>
+            </>
+          )}
+        </Grid>
+
+        {sundayError && (
+          <p className="error mt-1">{sundayError}</p>
+        )}
+      </div>
                     </Grid>
                     <div className="d-flex justify-content-between w-100">
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(2)}
                       >
-                        <KeyboardBackspaceIcon style={{marginRight: "10px"}}/>
+                        <KeyboardBackspaceIcon
+                          style={{ marginRight: "10px" }}
+                        />
                         Step 3
                       </button>
                       <button
@@ -4339,7 +4802,7 @@ function Msme() {
                         onClick={handleStep4}
                       >
                         Step 5
-                        <EastIcon style={{marginLeft: "10px"}}/>
+                        <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
                   </>
@@ -4348,17 +4811,21 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="numberOfEmployee" className="pb-2 text-bold">
+                        <label
+                          htmlFor="numberOfEmployee"
+                          className="pb-2 text-bold"
+                        >
                           Number of Employees: <span>*</span>
                         </label>
                         <select
                           class="form-select"
+                          value={numberOfEmployees}
                           onChange={(e) => {
                             setNumberOfEmployeesError("");
                             setNumberOfEmployees(e.target.value);
                           }}
                         >
-                          <option value="" disabled selected>
+                          <option value="" disabled>
                             Select number of employed
                           </option>
                           {numberOfEmployeeOptions.map((option) => (
@@ -4694,7 +5161,9 @@ function Msme() {
                         className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(3)}
                       >
-                        <KeyboardBackspaceIcon style={{marginRight: "10px"}}/>
+                        <KeyboardBackspaceIcon
+                          style={{ marginRight: "10px" }}
+                        />
                         Step 4
                       </button>
                       <button
@@ -4809,9 +5278,9 @@ function Msme() {
                             </option>
                           ))}
                         </select>
-                        {typeOfBusinessError && (
+                        {typeOfBusinessDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{typeOfBusinessDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -4840,6 +5309,7 @@ function Msme() {
                               value={businessRegistrationNumberDetails}
                               autoComplete="off"
                               onChange={(e) => {
+                                console.log(e.target.value)
                                 setBusinessRegistrationNumberDetailsError("");
                                 setBusinessRegistrationNumberDetails(
                                   e.target.value
@@ -4847,10 +5317,10 @@ function Msme() {
                               }}
                               name="email"
                             />
-                            {typeOfBusinessError && (
+                            {businessRegistrationNumberDetailsError && (
                               <>
                                 <p className="error mt-1">
-                                  {typeOfBusinessError}
+                                  {businessRegistrationNumberDetailsError}
                                 </p>
                               </>
                             )}
@@ -4861,7 +5331,10 @@ function Msme() {
 
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="registrationName" className="pb-2 text-bold">
+                        <label
+                          htmlFor="registrationName"
+                          className="pb-2 text-bold"
+                        >
                           Registration Name:
                         </label>
                         <input
@@ -4879,16 +5352,19 @@ function Msme() {
                           }
                           name="registrationName"
                         />
-                        {typeOfBusinessError && (
+                        {businessRegistrationNameDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{businessRegistrationNameDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="displayNumber" className="pb-2 text-bold">
+                        <label
+                          htmlFor="displayNumber"
+                          className="pb-2 text-bold"
+                        >
                           Display Name:
                         </label>
                         <input
@@ -4906,9 +5382,9 @@ function Msme() {
                           autoComplete="off"
                           name="displayNumber"
                         />
-                        {typeOfBusinessError && (
+                        {businessDisplayNameDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{businessDisplayNameDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -4935,9 +5411,9 @@ function Msme() {
                           autoComplete="off"
                           name="description"
                         />
-                        {typeOfBusinessError && (
+                        {descriptionDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{descriptionDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -4967,9 +5443,9 @@ function Msme() {
                             </option>
                           ))}
                         </select>
-                        {typeOfBusinessError && (
+                        {regionDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{regionDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -4999,9 +5475,9 @@ function Msme() {
                             </option>
                           ))}
                         </select>
-                        {typeOfBusinessError && (
+                        {townDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{townDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5031,9 +5507,9 @@ function Msme() {
                             </option>
                           ))}
                         </select>
-                        {typeOfBusinessError && (
+                        {primaryIndustryDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{primaryIndustryDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5063,9 +5539,9 @@ function Msme() {
                             </option>
                           ))}
                         </select>
-                        {typeOfBusinessError && (
+                        {secondaryIndustryDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{secondaryIndustryDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5092,9 +5568,9 @@ function Msme() {
                           autoComplete="off"
                           name="displayNumber"
                         />
-                        {typeOfBusinessError && (
+                        {yearOfEstablishmentDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{yearOfEstablishmentDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5121,9 +5597,9 @@ function Msme() {
                             </option>
                           ))}
                         </select>
-                        {typeOfBusinessError && (
+                        {annualTurnoverDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{annualTurnoverDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5150,15 +5626,23 @@ function Msme() {
                             </option>
                           ))}
                         </select>
-                        {typeOfBusinessError && (
+                        {numberOfEmployeesDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{numberOfEmployeesDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
                     <div className="d-flex justify-content-end w-100">
-                      <ModelButton text="Step 2" onClick={handleStep1Review} />
+                  
+                      <button
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
+                        onClick={handleStep1Review}
+                      >
+                        Step 2
+                        <EastIcon style={{ marginLeft: "10px" }} />
+                      </button>
+                      
                     </div>
                   </>
                 )}
@@ -5185,9 +5669,9 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {foundersNameDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{foundersNameDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5214,9 +5698,9 @@ function Msme() {
                             </option>
                           ))}
                         </select>
-                        {typeOfBusinessError && (
+                        {foundersGenderDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{foundersGenderDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5241,9 +5725,9 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {foundersAgeDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{foundersAgeDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5251,16 +5735,20 @@ function Msme() {
 
                     <div className="d-flex justify-content-between w-100">
                       <button
-                        className="btn btn-warning m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(0)}
                       >
-                        Previous
+                        <KeyboardBackspaceIcon
+                          style={{ marginRight: "10px" }}
+                        />
+                        Step 1
                       </button>
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={handleStep2Review}
                       >
                         Step 3
+                        <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
                   </>
@@ -5269,7 +5757,10 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="businessAddress" className="pb-2 text-bold">
+                        <label
+                          htmlFor="businessAddress"
+                          className="pb-2 text-bold"
+                        >
                           Business Address:
                         </label>
                         <textarea
@@ -5288,9 +5779,9 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {businessAddressDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{businessAddressDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5315,17 +5806,20 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {phoneNumberDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{phoneNumberDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
-                    {updatingDetails?.contactInfo?.whatsAppNumber && (
+                    
                       <Grid item xs={12} sm={6} md={6}>
                         <div className="form-group pb-md-2">
-                          <label htmlFor="whatsAppNumber" className="pb-2 text-bold">
+                          <label
+                            htmlFor="whatsAppNumber"
+                            className="pb-2 text-bold"
+                          >
                             What's App Number:
                           </label>
                           <input
@@ -5343,20 +5837,22 @@ function Msme() {
                             autoComplete="off"
                             name="email"
                           />
-                          {typeOfBusinessError && (
+                          {whatsAppNumberDetailsError && (
                             <>
                               <p className="error mt-1">
-                                {typeOfBusinessError}
+                                {whatsAppNumberDetailsError}
                               </p>
                             </>
                           )}
                         </div>
                       </Grid>
-                    )}
 
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="businessEmail" className="pb-2 text-bold">
+                        <label
+                          htmlFor="businessEmail"
+                          className="pb-2 text-bold"
+                        >
                           Business email:
                         </label>
                         <input
@@ -5374,9 +5870,9 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {businessEmailDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{businessEmailDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5402,9 +5898,9 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {websiteLinkDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{websiteLinkDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5430,9 +5926,9 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {twitterLinkDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{twitterLinkDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5458,9 +5954,9 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {facebookLinkDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{facebookLinkDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5486,9 +5982,9 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {instagramLinkDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{instagramLinkDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -5514,26 +6010,32 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {linkedInLinkDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{linkedInLinkDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
 
                     <div className="d-flex justify-content-between w-100">
+                      
+
                       <button
-                        className="btn btn-warning m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(1)}
                       >
-                        Previous
+                        <KeyboardBackspaceIcon
+                          style={{ marginRight: "10px" }}
+                        />
+                        Step 2
                       </button>
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={handleStep3Review}
                       >
                         Step 4
+                        <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
                   </>
@@ -5542,7 +6044,9 @@ function Msme() {
                   <>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="text-bold">Monday:</label>
+                        <label htmlFor="email" className="text-bold">
+                          Monday:
+                        </label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5558,16 +6062,18 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {mondayDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{mondayDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="text-bold">Tuesday:</label>
+                        <label htmlFor="email" className="text-bold">
+                          Tuesday:
+                        </label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5583,16 +6089,18 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {tuesdayDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{tuesdayDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="text-bold">Wednesday:</label>
+                        <label htmlFor="email" className="text-bold">
+                          Wednesday:
+                        </label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5608,16 +6116,18 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {wednesdayDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{wednesdayDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="text-bold">Thursday:</label>
+                        <label htmlFor="email" className="text-bold">
+                          Thursday:
+                        </label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5633,16 +6143,18 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {thursdayDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{thursdayDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="text-bold">Friday:</label>
+                        <label htmlFor="email" className="text-bold">
+                          Friday:
+                        </label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5658,16 +6170,18 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {fridayDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{fridayDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="text-bold">Saturday:</label>
+                        <label htmlFor="email" className="text-bold">
+                          Saturday:
+                        </label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5683,16 +6197,18 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {saturdayDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{saturdayDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="email" className="text-bold">Sunday:</label>
+                        <label htmlFor="email" className="text-bold">
+                          Sunday:
+                        </label>
                         <input
                           type="text"
                           className="form-control place-holder"
@@ -5708,25 +6224,29 @@ function Msme() {
                           autoComplete="off"
                           name="email"
                         />
-                        {typeOfBusinessError && (
+                        {sundayDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error mt-1">{sundayDetailsError}</p>
                           </>
                         )}
                       </div>
                     </Grid>
                     <div className="d-flex justify-content-between w-100">
-                      <button
-                        className="btn btn-warning m-1 p-2 modelButton"
+                    <button
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(2)}
                       >
-                        Previous
+                        <KeyboardBackspaceIcon
+                          style={{ marginRight: "10px" }}
+                        />
+                        Step 3
                       </button>
                       <button
-                        className="btn btn-success m-1 p-2 modelButton"
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={handleStep4Review}
                       >
-                        Step 4
+                        Step 5
+                        <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
                   </>
@@ -6079,26 +6599,39 @@ function Msme() {
 
                     <Grid item xs={12}>
                       <div className="d-flex justify-content-between w-100">
-                        <button
-                          className="btn btn-warning m-1 p-2 modelButton text-bold"
-                          onClick={() => setStepperCounter(3)}
-                        >
-                          Previous
-                        </button>
+                      <button
+                        className="btn btn-success m-1 p-2 modelButton text-bold"
+                        onClick={() => setStepperCounter(3)}
+                      >
+                        <KeyboardBackspaceIcon
+                          style={{ marginRight: "10px" }}
+                        />
+                        Step 4
+                      </button>
                         {currentUser?.role === "Super admin" && (
                           <div className="">
-                            <button
-                              className="btn btn-danger m-1 p-2 modelButton text-bold"
-                              onClick={reject}
-                            >
-                              Reject
-                            </button>
-                            <button
+                            {
+                              updatingDetails?.status !== "Rejected" && (
+                                <button
+                                className="btn btn-danger m-1 p-2 modelButton text-bold"
+                                onClick={reject}
+                              >
+                                Reject
+                              </button>
+                              )
+                            }
+                           
+                           {
+                              updatingDetails?.status !== "Approved" && (
+                                <button
                               className="btn btn-success m-1 p-2 modelButton text-bold"
                               onClick={approve}
                             >
                               Approve
                             </button>
+                              )
+                           }
+
                           </div>
                         )}
                         {updatingDetails?.status === "Approved" &&

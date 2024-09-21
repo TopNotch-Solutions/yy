@@ -93,7 +93,6 @@ function ForgotPassword() {
         const data = await response.json();
 
         if (response.ok) {
-          console.log("Login successful", data);
           setIsSubmitting(false);
           setPassword("");
           setConfirmPassword("");
@@ -134,6 +133,7 @@ function ForgotPassword() {
                 </label>
                 <input
                   type={passwordShown ? "text" : "password"}
+                  value={password}
                   className="form-control place-holder"
                   id="password"
                   placeholder="***************"
@@ -175,6 +175,7 @@ function ForgotPassword() {
                 </label>
                 <input
                   type={passwordConfirmShown ? "text" : "password"}
+                  value={confirmPassword}
                   className="form-control place-holder"
                   id="password"
                   placeholder="***************"
@@ -214,14 +215,18 @@ function ForgotPassword() {
                 {isSubmitting ? (
                   <div className="loader"></div>
                 ) : (
-                  "Confirm password"
+                  "Submit"
                 )}
               </button>
               {success && (
-                <div className="mt-4 d-flex justify-content-center">
-                  <p className="back-to-login" onClick={() => navigate("/")}>
+                <div className="mt-2 d-flex justify-content-center">
+                  <button
+                    onClick={() =>navigate('/')}
+                    className="back"
+                
+                  >
                     Login
-                  </p>
+                  </button>
                 </div>
               )}
             </form>

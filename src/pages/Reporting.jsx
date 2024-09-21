@@ -896,11 +896,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 15,
+                          pageSize: 25, 
                         },
                       },
                     }}
-                    pageSizeOptions={[15]}
+                    pageSizeOptions={[25, 50, 100]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
@@ -940,11 +940,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 15,
+                          pageSize: 25, 
                         },
                       },
                     }}
-                    pageSizeOptions={[15]}
+                    pageSizeOptions={[25, 50, 100]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
@@ -987,11 +987,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 15,
+                          pageSize: 25, 
                         },
                       },
                     }}
-                    pageSizeOptions={[15]}
+                    pageSizeOptions={[25, 50, 100]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
@@ -1034,11 +1034,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 15,
+                          pageSize: 25, 
                         },
                       },
                     }}
-                    pageSizeOptions={[15]}
+                    pageSizeOptions={[25, 50, 100]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
@@ -1080,11 +1080,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 15,
+                          pageSize: 25, 
                         },
                       },
                     }}
-                    pageSizeOptions={[15]}
+                    pageSizeOptions={[25, 50, 100]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
@@ -1126,11 +1126,11 @@ const rowsAll = allMSMEList.map((msme) => ({
                     initialState={{
                       pagination: {
                         paginationModel: {
-                          pageSize: 15,
+                          pageSize: 25, 
                         },
                       },
                     }}
-                    pageSizeOptions={[15]}
+                    pageSizeOptions={[25, 50, 100]}
                     checkboxSelection
                     disableRowSelectionOnClick
                   />
