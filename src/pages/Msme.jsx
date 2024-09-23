@@ -314,6 +314,7 @@ function Msme() {
   const [isFridayClosed, setIsFridayClosed] = useState(false);
   const [isSaturdayClosed, setIsSaturdayClosed] = useState(false);
   const [isSundayClosed, setIsSundayClosed] = useState(false);
+  const [update, setUpdate] = useState(false);
   const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
@@ -2085,6 +2086,7 @@ function Msme() {
                 });
                 setStepperCounter(0);
                 setUpdatingDetails([]);
+                setUpdate(false);
               } else {
                 await Swal.fire({
                   position: "center",
@@ -2209,12 +2211,13 @@ function Msme() {
               Swal.fire({
                 position: "center",
                 icon: "success",
-                title: "MSME Successfully Approved",
+                title: update ? "MSME Successfully Approved & Updated" : "MSME Successfully Approved",
                 showConfirmButton: false,
                 timer: 3000,
               });
               setStepperCounter(0);
               setUpdatingDetails([]);
+              setUpdate(false);
             } else {
               await Swal.fire({
                 position: "center",
@@ -2228,6 +2231,7 @@ function Msme() {
             handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
             setIsSubmitting(false);
+            setUpdate(false);
           }
         } else {
           setIsSubmitting(false);
@@ -5195,6 +5199,7 @@ function Msme() {
                     cursor: "pointer",
                   }}
                   onClick={() => {
+                    setUpdate(false);
                     setBusinessAddressDetails();
                     setBusinessRegistrationNameDetails("");
                     setBusinessDisplayNameDetails("");
@@ -5265,6 +5270,7 @@ function Msme() {
                           class="form-select"
                           value={typeOfBusinessDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setTypeOfBusinessDetailsError("");
                             setTypeOfBusinessDetails(e.target.value);
                           }}
@@ -5309,7 +5315,8 @@ function Msme() {
                               value={businessRegistrationNumberDetails}
                               autoComplete="off"
                               onChange={(e) => {
-                                console.log(e.target.value)
+                                console.log(e.target.value);
+                                setUpdate(true);
                                 setBusinessRegistrationNumberDetailsError("");
                                 setBusinessRegistrationNumberDetails(
                                   e.target.value
@@ -5344,6 +5351,7 @@ function Msme() {
                           autoComplete="off"
                           value={businessRegistrationNameDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setBusinessRegistrationNameDetailsError("");
                             setBusinessRegistrationNameDetails(e.target.value);
                           }}
@@ -5375,6 +5383,7 @@ function Msme() {
                             currentUser.role === "Super admin" ? false : true
                           }
                           onChange={(e) => {
+                            setUpdate(true);
                             setBusinessDisplayNameDetailsError("");
                             setBusinessDisplayNameDetails(e.target.value);
                           }}
@@ -5405,6 +5414,7 @@ function Msme() {
                           placeholder="Display name"
                           value={descriptionDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setDescriptionDetailsError("");
                             setDescriptionDetails(e.target.value);
                           }}
@@ -5427,6 +5437,7 @@ function Msme() {
                           class="form-select"
                           value={regionDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setRegionDetailsError("");
                             setRegionDetails(e.target.value);
                           }}
@@ -5459,6 +5470,7 @@ function Msme() {
                           class="form-select"
                           value={townDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setTownDetailsError("");
                             setTownDetails(e.target.value);
                           }}
@@ -5491,6 +5503,7 @@ function Msme() {
                           class="form-select"
                           value={primaryIndustryDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setPrimaryIndustryDetailsError("");
                             setPrimaryIndustryDetails(e.target.value);
                           }}
@@ -5523,6 +5536,7 @@ function Msme() {
                           class="form-select"
                           value={secondaryIndustryDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setSecondaryIndustryDetailsError("");
                             setSecondaryIndustryDetails(e.target.value);
                           }}
@@ -5552,7 +5566,7 @@ function Msme() {
                           Year of Establishment:
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           min="1900"
                           max="21000"
                           className="form-control place-holder"
@@ -5562,6 +5576,7 @@ function Msme() {
                           }
                           value={yearOfEstablishmentDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setYearOfEstablishmentDetailsError("");
                             setYearOfEstablishmentDetails(e.target.value);
                           }}
@@ -5584,6 +5599,7 @@ function Msme() {
                           class="form-select"
                           value={annualTurnoverDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setAnnualTurnoverDetailsError("");
                             setAnnualTurnoverDetails(e.target.value);
                           }}
@@ -5613,6 +5629,7 @@ function Msme() {
                           class="form-select"
                           value={numberOfEmployeesDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setNumberOfEmployeesDetailsError("");
                             setNumberOfEmployeesDeDetails(e.target.value);
                           }}
@@ -5663,6 +5680,7 @@ function Msme() {
                           }
                           value={foundersNameDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setFoundersNameDetailsError("");
                             setFoundersNameDetails(e.target.value);
                           }}
@@ -5685,6 +5703,7 @@ function Msme() {
                           class="form-select"
                           value={foundersGenderDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setFoundersGenderDetailsError("");
                             setFoundersGenderDetails(e.target.value);
                           }}
@@ -5719,6 +5738,7 @@ function Msme() {
                           }
                           value={foundersAgeDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setFoundersAgeDetailsError("");
                             setFoundersAgeDetails(e.target.value);
                           }}
@@ -5773,6 +5793,7 @@ function Msme() {
                           }
                           value={businessAddressDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setBusinessAddressDetailsError("");
                             setBusinessAddressDetails(e.target.value);
                           }}
@@ -5800,6 +5821,7 @@ function Msme() {
                           }
                           value={phoneNumberDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setPhoneNumberDetailsError("");
                             setPhoneNumberDetails(e.target.value);
                           }}
@@ -5831,6 +5853,7 @@ function Msme() {
                             }
                             value={whatsAppNumberDetails}
                             onChange={(e) => {
+                              setUpdate(true);
                               setWhatsAppNumberDetailsError("");
                               setWhatsAppNumberDetails(e.target.value);
                             }}
@@ -5864,6 +5887,7 @@ function Msme() {
                           }
                           value={businessEmailDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setBusinessEmailDetailsError("");
                             setBusinessEmailDetails(e.target.value);
                           }}
@@ -5892,6 +5916,7 @@ function Msme() {
                           }
                           value={websiteLinkDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setWebsiteLinkDetailsError("");
                             setWebsiteLinkDetails(e.target.value);
                           }}
@@ -5920,6 +5945,7 @@ function Msme() {
                           }
                           value={twitterLinkDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setTwitterLinkDetailsError("");
                             setTwitterLinkDetails(e.target.value);
                           }}
@@ -5948,6 +5974,7 @@ function Msme() {
                           }
                           value={facebookLinkDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setFacebookLinkDetailsError("");
                             setFacebookLinkDetails(e.target.value);
                           }}
@@ -5976,6 +6003,7 @@ function Msme() {
                           }
                           value={instagramLinkDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setInstagramLinkDetailsError("");
                             setInstagramLinkDetails(e.target.value);
                           }}
@@ -6004,6 +6032,7 @@ function Msme() {
                           }
                           value={linkedInLinkDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setLinkedInLinkDetailsError("");
                             setLinkedInLinkDetails(e.target.value);
                           }}
@@ -6056,6 +6085,7 @@ function Msme() {
                           }
                           value={mondayDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setMondayDetailsError("");
                             setMondayDetails(e.target.value);
                           }}
@@ -6083,6 +6113,7 @@ function Msme() {
                           }
                           value={tuesdayDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setTuesdayDetailsError("");
                             setTuesdayDetails(e.target.value);
                           }}
@@ -6110,6 +6141,7 @@ function Msme() {
                           }
                           value={wednesdayDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setWednesdayDetailsError("");
                             setWednesdayDetails(e.target.value);
                           }}
@@ -6137,6 +6169,7 @@ function Msme() {
                           }
                           value={thursdayDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setThursdayDetailsError("");
                             setThursdayDetails(e.target.value);
                           }}
@@ -6164,6 +6197,7 @@ function Msme() {
                           }
                           value={fridayDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setFridayDetailsError("");
                             setFridayDetails(e.target.value);
                           }}
@@ -6191,6 +6225,7 @@ function Msme() {
                           }
                           value={saturdayDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setSaturdayDetailsError("");
                             setSaturdayDetails(e.target.value);
                           }}
@@ -6218,6 +6253,7 @@ function Msme() {
                           }
                           value={sundayDetails}
                           onChange={(e) => {
+                            setUpdate(true);
                             setSundayDetailsError("");
                             setSundayDetails(e.target.value);
                           }}
@@ -6628,6 +6664,16 @@ function Msme() {
                               onClick={approve}
                             >
                               Approve
+                            </button>
+                              )
+                           }
+                           {
+                              update && updatingDetails?.status !== "Pending" && updatingDetails?.status !== "Rejected"&& (
+                                <button
+                              className="btn btn-success m-1 p-2 modelButton text-bold"
+                              onClick={approve}
+                            >
+                              Update
                             </button>
                               )
                            }

@@ -1232,6 +1232,7 @@ function Notifications() {
                 <h5>{singleAdminNotification.type}</h5>
                 <p>{singleAdminNotification.createdAt}</p>
               </div>
+              <p>{sentAdminNotification?.title}</p>
               <p>{singleAdminNotification.notification}</p>
             </div>
           </div>
@@ -1276,6 +1277,7 @@ function Notifications() {
                 <h5>{sentAdminNotification?.type}</h5>
                 <p>{sentAdminNotification?.createdAt}</p>
               </div>
+              <p>{sentAdminNotification?.title}</p>
               <p>{sentAdminNotification?.notification}</p>
             </div>
           </div>
