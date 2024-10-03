@@ -72,7 +72,7 @@ function SubmitEmail() {
           <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
           <form onSubmit={handleSubmit}>
                 <h3>Email Submission</h3>
-                <p className="pb-md-3">To reset your password, submit your email address below. If we can find you in the database, an email will be sent to your email address, with instructions how to get access again.</p>
+                <p className="pb-md-3 text-secondary">To reset your password, submit your email address below. If we can find you in the database, an email will be sent to your email address, with instructions how to get access again.</p>
                 <div className="form-group pb-3">
                   <label htmlFor="email" className="pb-2">
                     Username

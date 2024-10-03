@@ -1079,13 +1079,55 @@ function Msme() {
   ];
 
   const fields4 = [
-    { value: mondayFrom, to: mondayTo, isClosed: isMondayClosed, setError: setMondayError, name: "Monday" },
-    { value: tuesdayFrom, to: tuesdayTo, isClosed: isTuesdayClosed, setError: setTuesdayError, name: "Tuesday" },
-    { value: wednesdayFrom, to: wednesdayTo, isClosed: isWednesdayClosed, setError: setWednesdayError, name: "Wednesday" },
-    { value: thursdayFrom, to: thursdayTo, isClosed: isThursdayClosed, setError: setThursdayError, name: "Thursday" },
-    { value: fridayFrom, to: fridayTo, isClosed: isFridayClosed, setError: setFridayError, name: "Friday" },
-    { value: saturdayFrom, to: saturdayTo, isClosed: isSaturdayClosed, setError: setSaturdayError, name: "Saturday" },
-    { value: sundayFrom, to: sundayTo, isClosed: isSundayClosed, setError: setSundayError, name: "Sunday" },
+    {
+      value: mondayFrom,
+      to: mondayTo,
+      isClosed: isMondayClosed,
+      setError: setMondayError,
+      name: "Monday",
+    },
+    {
+      value: tuesdayFrom,
+      to: tuesdayTo,
+      isClosed: isTuesdayClosed,
+      setError: setTuesdayError,
+      name: "Tuesday",
+    },
+    {
+      value: wednesdayFrom,
+      to: wednesdayTo,
+      isClosed: isWednesdayClosed,
+      setError: setWednesdayError,
+      name: "Wednesday",
+    },
+    {
+      value: thursdayFrom,
+      to: thursdayTo,
+      isClosed: isThursdayClosed,
+      setError: setThursdayError,
+      name: "Thursday",
+    },
+    {
+      value: fridayFrom,
+      to: fridayTo,
+      isClosed: isFridayClosed,
+      setError: setFridayError,
+      name: "Friday",
+    },
+    {
+      value: saturdayFrom,
+      to: saturdayTo,
+      isClosed: isSaturdayClosed,
+      setError: setSaturdayError,
+      name: "Saturday",
+    },
+    {
+      value: sundayFrom,
+      to: sundayTo,
+      isClosed: isSundayClosed,
+      setError: setSundayError,
+      name: "Sunday",
+    },
   ];
   const fields5 = [
     {
@@ -1103,16 +1145,20 @@ function Msme() {
     },
     {
       value: businessRegistrationNumberDetails,
-        setError: setBusinessRegistrationNumberDetailsError,
-        name: "Business Registration Number",
-        optional: true,
+      setError: setBusinessRegistrationNumberDetailsError,
+      name: "Business Registration Number",
+      optional: true,
     },
     {
       value: businessDisplayNameDetails,
       setError: setBusinessDisplayNameDetailsError,
       name: "Business Display Name",
     },
-    { value: descriptionDetails, setError: setDescriptionDetailsError, name: "Description" },
+    {
+      value: descriptionDetails,
+      setError: setDescriptionDetailsError,
+      name: "Description",
+    },
     {
       value: typeOfBusinessDetails,
       setError: setTypeOfBusinessDetailsError,
@@ -1213,16 +1259,30 @@ function Msme() {
 
   const fieldsDetails4 = [
     { value: mondayDetails, setError: setMondayDetailsError, name: "Monday" },
-    { value: tuesdayDetails, setError: setTuesdayDetailsError, name: "Tuesday" },
-    { value: wednesdayDetails, setError: setWednesdayDetailsError, name: "Wednesday" },
-    { value: thursdayDetails, setError: setThursdayDetailsError, name: "Thursday" },
+    {
+      value: tuesdayDetails,
+      setError: setTuesdayDetailsError,
+      name: "Tuesday",
+    },
+    {
+      value: wednesdayDetails,
+      setError: setWednesdayDetailsError,
+      name: "Wednesday",
+    },
+    {
+      value: thursdayDetails,
+      setError: setThursdayDetailsError,
+      name: "Thursday",
+    },
     { value: fridayDetails, setError: setFridayDetailsError, name: "Friday" },
-    { value: saturdayDetails, setError: setSaturdayDetailsError, name: "Saturday" },
+    {
+      value: saturdayDetails,
+      setError: setSaturdayDetailsError,
+      name: "Saturday",
+    },
     { value: sundayDetails, setError: setSundayDetailsError, name: "Sunday" },
   ];
-  const fieldsDetails5 = [
-    
-  ];
+  const fieldsDetails5 = [];
   const validateFields1 = () => {
     let isValid = true;
     fields1.forEach((field) => {
@@ -1282,10 +1342,10 @@ function Msme() {
   const validateFields4 = () => {
     let isValid = true;
     let isBusinessOpenAtLeastOneDay = false;
-  
+
     fields4.forEach((field) => {
       field.setError("");
-  
+
       if (field.isClosed) {
         isBusinessOpenAtLeastOneDay = true;
         if (!field.value || !field.to) {
@@ -1294,17 +1354,18 @@ function Msme() {
         }
       }
     });
-  
+
     if (!isBusinessOpenAtLeastOneDay) {
-      setNumberOfDaysOpenError("The business has to be open for at least one day.");
+      setNumberOfDaysOpenError(
+        "The business has to be open for at least one day."
+      );
       isValid = false;
     } else {
       setNumberOfDaysOpenError("");
     }
-  
+
     return isValid;
   };
-  
 
   const validateFields5 = () => {
     let isValid = true;
@@ -1320,14 +1381,14 @@ function Msme() {
 
   const validateFieldsDetails1 = () => {
     let isValid = true;
-  
+
     fieldsDetails1.forEach((field) => {
       field.setError("");
-  
+
       if (
         field.name === "Business Registration Number" &&
-        (typeOfBusinessDetails === "Close Corporation (CC)" || 
-         typeOfBusinessDetails === "Proprietary Limited Company (PTY)")
+        (typeOfBusinessDetails === "Close Corporation (CC)" ||
+          typeOfBusinessDetails === "Proprietary Limited Company (PTY)")
       ) {
         field.optional = false;
       }
@@ -1336,7 +1397,7 @@ function Msme() {
         isValid = false;
       }
     });
-  
+
     return isValid;
   };
 
@@ -1386,19 +1447,18 @@ function Msme() {
 
   const validateFieldsDetails4 = () => {
     let isValid = true;
-  
+
     fieldsDetails4.forEach((field) => {
       field.setError("");
-  
+
       if (!field.value) {
-          field.setError(`${field.name} is required.`);
-          isValid = false;
+        field.setError(`${field.name} is required.`);
+        isValid = false;
       }
     });
-  
+
     return isValid;
   };
-  
 
   const validateFieldsDetails5 = () => {
     let isValid = true;
@@ -1466,13 +1526,41 @@ function Msme() {
   const handleStep5 = async () => {
     if (validateFields4()) {
       const updatedTimes = {
-        monday: !isMondayClosed ? "Closed" : `${convertTo12HourFormat(mondayFrom)} - ${convertTo12HourFormat(mondayTo)}`,
-        tuesday: !isTuesdayClosed ? "Closed" : `${convertTo12HourFormat(tuesdayFrom)} - ${convertTo12HourFormat(tuesdayTo)}`,
-        wednesday: !isWednesdayClosed ? "Closed" : `${convertTo12HourFormat(wednesdayFrom)} - ${convertTo12HourFormat(wednesdayTo)}`,
-        thursday: !isThursdayClosed ? "Closed" : `${convertTo12HourFormat(thursdayFrom)} - ${convertTo12HourFormat(thursdayTo)}`,
-        friday: !isFridayClosed ? "Closed" : `${convertTo12HourFormat(fridayFrom)} - ${convertTo12HourFormat(fridayTo)}`,
-        saturday: !isSaturdayClosed ? "Closed" : `${convertTo12HourFormat(saturdayFrom)} - ${convertTo12HourFormat(saturdayTo)}`,
-        sunday: !isSundayClosed ? "Closed" : `${convertTo12HourFormat(sundayFrom)} - ${convertTo12HourFormat(sundayTo)}`,
+        monday: !isMondayClosed
+          ? "closed"
+          : `${convertTo12HourFormat(mondayFrom)} - ${convertTo12HourFormat(
+              mondayTo
+            )}`,
+        tuesday: !isTuesdayClosed
+          ? "closed"
+          : `${convertTo12HourFormat(tuesdayFrom)} - ${convertTo12HourFormat(
+              tuesdayTo
+            )}`,
+        wednesday: !isWednesdayClosed
+          ? "closed"
+          : `${convertTo12HourFormat(wednesdayFrom)} - ${convertTo12HourFormat(
+              wednesdayTo
+            )}`,
+        thursday: !isThursdayClosed
+          ? "closed"
+          : `${convertTo12HourFormat(thursdayFrom)} - ${convertTo12HourFormat(
+              thursdayTo
+            )}`,
+        friday: !isFridayClosed
+          ? "closed"
+          : `${convertTo12HourFormat(fridayFrom)} - ${convertTo12HourFormat(
+              fridayTo
+            )}`,
+        saturday: !isSaturdayClosed
+          ? "closed"
+          : `${convertTo12HourFormat(saturdayFrom)} - ${convertTo12HourFormat(
+              saturdayTo
+            )}`,
+        sunday: !isSundayClosed
+          ? "closed"
+          : `${convertTo12HourFormat(sundayFrom)} - ${convertTo12HourFormat(
+              sundayTo
+            )}`,
       };
 
       setMonday(updatedTimes.monday);
@@ -1568,64 +1656,64 @@ function Msme() {
             timer: 3000,
           });
           setBusinessAddress("");
-    setBusinessRegistrationName("");
-    setBusinessRegistrationNumber("");
-    setBusinessDisplayName("");
-    setDescription("");
-    setTypeOfBusiness("");
-    setRegion("");
-    setTown("");
-    setPrimaryIndustry("");
-    setSecondaryIndustry("");
-    setYearOfEstablishment("");
-    setNumberOfEmployees("");
-    setAnnualTurnover("");
-    setFoundersName("");
-    setFoundersGender("");
-    setFoundersAge("");
-    setBusinessAddress("");
-    setPhoneNumber("");
-    setWhatsAppNumber("");
-    setBusinessEmail("");
-    setWebsiteLink("");
-    setFacebookLink("");
-    setTwitterLink("");
-    setInstagramLink("");
-    setLinkedInLink("");
-    setMonday("");
-    setTuesday("");
-    setWednesday("");
-    setThursday("");
-    setFriday("");
-    setSaturday("");
-    setSunday("");
-    setBusinessLogo("");
-    setImage1("");
-    setImage2("");
-    setImage3("");
-    setUserId("");
-    setStepperCounter(0);
-    setMondayFrom("");
-    setMondayTo("");
-    setTuesdayFrom("");
-    setTuesdayTo("");
-    setWednesdayFrom("");
-    setWednesdayTo("");
-    setThursdayFrom("");
-    setThursdayTo("");
-    setFridayFrom("");
-    setFridayTo("");
-    setSaturdayFrom("");
-    setSaturdayTo("");
-    setSundayFrom("");
-    setSundayTo("");
-    setIsMondayClosed(false);
-    setIsTuesdayClosed(false);
-    setIsWednesdayClosed(false);
-    setIsThursdayClosed(false);
-    setIsFridayClosed(false);
-    setIsSaturdayClosed(false);
-    setIsSundayClosed(false);
+          setBusinessRegistrationName("");
+          setBusinessRegistrationNumber("");
+          setBusinessDisplayName("");
+          setDescription("");
+          setTypeOfBusiness("");
+          setRegion("");
+          setTown("");
+          setPrimaryIndustry("");
+          setSecondaryIndustry("");
+          setYearOfEstablishment("");
+          setNumberOfEmployees("");
+          setAnnualTurnover("");
+          setFoundersName("");
+          setFoundersGender("");
+          setFoundersAge("");
+          setBusinessAddress("");
+          setPhoneNumber("");
+          setWhatsAppNumber("");
+          setBusinessEmail("");
+          setWebsiteLink("");
+          setFacebookLink("");
+          setTwitterLink("");
+          setInstagramLink("");
+          setLinkedInLink("");
+          setMonday("");
+          setTuesday("");
+          setWednesday("");
+          setThursday("");
+          setFriday("");
+          setSaturday("");
+          setSunday("");
+          setBusinessLogo("");
+          setImage1("");
+          setImage2("");
+          setImage3("");
+          setUserId("");
+          setStepperCounter(0);
+          setMondayFrom("");
+          setMondayTo("");
+          setTuesdayFrom("");
+          setTuesdayTo("");
+          setWednesdayFrom("");
+          setWednesdayTo("");
+          setThursdayFrom("");
+          setThursdayTo("");
+          setFridayFrom("");
+          setFridayTo("");
+          setSaturdayFrom("");
+          setSaturdayTo("");
+          setSundayFrom("");
+          setSundayTo("");
+          setIsMondayClosed(false);
+          setIsTuesdayClosed(false);
+          setIsWednesdayClosed(false);
+          setIsThursdayClosed(false);
+          setIsFridayClosed(false);
+          setIsSaturdayClosed(false);
+          setIsSundayClosed(false);
         } else {
           setIsSubmitting(false);
           setOpenModel(false);
@@ -1646,28 +1734,29 @@ function Msme() {
   };
 
   const handleStep1Review = () => {
-
-    if(validateFieldsDetails1()){
-      if (typeOfBusinessDetails !== "Close Corporation (CC)" || typeOfBusinessDetails !== "Proprietary Limited Company (PTY)") {
+    if (validateFieldsDetails1()) {
+      if (
+        typeOfBusinessDetails !== "Close Corporation (CC)" ||
+        typeOfBusinessDetails !== "Proprietary Limited Company (PTY)"
+      ) {
         setBusinessRegistrationNumberDetails("");
         setBusinessRegistrationNumberError("");
-       }
+      }
       setStepperCounter(1);
     }
   };
   const handleStep2Review = () => {
-    if(validateFieldsDetails2()){
+    if (validateFieldsDetails2()) {
       setStepperCounter(2);
     }
-    
   };
   const handleStep3Review = () => {
-    if(validateFieldsDetails3()){
+    if (validateFieldsDetails3()) {
       setStepperCounter(3);
     }
   };
   const handleStep4Review = () => {
-    if(validateFieldsDetails4()){
+    if (validateFieldsDetails4()) {
       setStepperCounter(4);
     }
   };
@@ -1825,12 +1914,12 @@ function Msme() {
       headerName: "Created At",
       width: isSmallScreen ? 100 : 140,
     },
-    
+
     {
       field: "action",
       headerName: "",
       width: 50,
-      renderCell: (params) => (
+      renderCell: (params) =>
         currentUser.role === "Super admin" ? (
           <SlOptionsVertical
             style={{
@@ -1838,10 +1927,8 @@ function Msme() {
             }}
             onClick={() => handleView(params.row.id)}
           />
-        ) : null
-      ),
-    }
-    
+        ) : null,
+    },
   ];
   const rowsAll = allMSMEList.map((msme) => ({
     id: msme.id,
@@ -1979,6 +2066,12 @@ function Msme() {
   const filteredTownOptions = townList.map((option) => ({
     value: option.townName,
     label: option.id,
+    regionId: option.regionId
+  }));
+  const filteredByRegionOption = townList.filter((town) => town.regionId ===filteredTownOptions.regionId).map((option) => ({
+    value: option.townName,
+    label: option.id,
+    regionId: option.regionId
   }));
   const primatyIndustryOptions = primaryIndustryList.map((option) => ({
     value: option.industryName,
@@ -2153,6 +2246,7 @@ function Msme() {
         if (fileBusinessLogo) {
           formData.append("businessLogo", fileBusinessLogo);
         }
+        console.log("file business Logo: ", fileBusinessLogo);
         if (fileImage1) {
           formData.append("image1", fileImage1);
         }
@@ -2211,7 +2305,9 @@ function Msme() {
               Swal.fire({
                 position: "center",
                 icon: "success",
-                title: update ? "MSME Successfully Approved & Updated" : "MSME Successfully Approved",
+                title: update
+                  ? "MSME Successfully Updated"
+                  : "MSME Successfully Approved",
                 showConfirmButton: false,
                 timer: 3000,
               });
@@ -2246,6 +2342,7 @@ function Msme() {
         }
       } catch (error) {
         setIsSubmitting(false);
+        setUpdate(false);
         setOpenModel(false);
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
@@ -2305,8 +2402,10 @@ function Msme() {
               });
               setStepperCounter(0);
               setUpdatingDetails([]);
+              setUpdate(false);
             } else {
               setIsSubmitting(false);
+              setUpdate(false);
               await Swal.fire({
                 position: "center",
                 icon: "error",
@@ -2316,6 +2415,7 @@ function Msme() {
               });
             }
           } catch (error) {
+            setUpdate(false);
             handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
             setIsSubmitting(false);
@@ -2382,7 +2482,9 @@ function Msme() {
               });
               setStepperCounter(0);
               setUpdatingDetails([]);
+              setUpdate(false);
             } else {
+              setUpdate(false);
               await Swal.fire({
                 position: "center",
                 icon: "error",
@@ -2392,6 +2494,7 @@ function Msme() {
               });
             }
           } catch (error) {
+            setUpdate(false);
             handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
             setIsSubmitting(false);
@@ -2449,6 +2552,7 @@ function Msme() {
             console.log(data);
 
             if (response.ok) {
+              setUpdate(false);
               Swal.fire({
                 position: "center",
                 icon: "success",
@@ -2460,6 +2564,7 @@ function Msme() {
               setUpdatingDetails([]);
             } else {
               setIsSubmitting(false);
+              setUpdate(false);
               await Swal.fire({
                 position: "center",
                 icon: "error",
@@ -2469,6 +2574,7 @@ function Msme() {
               });
             }
           } catch (error) {
+            setUpdate(false);
             handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
             setIsSubmitting(false);
@@ -2537,6 +2643,7 @@ function Msme() {
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileBusinessLogo(selectedFile);
       setBusinessLogoDetails(objectUrl);
+      setUpdate(true);
     }
   };
   const handleFileChangeImage1 = (e) => {
@@ -2658,6 +2765,7 @@ function Msme() {
       //setFileImage1(null);
       console.log("here is the image 1 details: ", fileImage1);
       setImage1Details(objectUrl);
+      setUpdate(true);
     }
   };
   const handleFileChangeImage2Details = (e) => {
@@ -2687,6 +2795,7 @@ function Msme() {
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileImage2(selectedFile);
       setImage2Details(objectUrl);
+      setUpdate(true);
     }
   };
   const handleFileChangeImage3Details = (e) => {
@@ -2716,6 +2825,7 @@ function Msme() {
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileImage3(selectedFile);
       setImage3Details(objectUrl);
+      setUpdate(true);
     }
   };
   const clearFileInput = () => {
@@ -2753,6 +2863,7 @@ function Msme() {
     }
     inputRefBusinessLogo.current.value = "";
     setBusinessLogoDetails(null);
+    setUpdate(true);
   };
   const clearFileInputImage1Details = () => {
     if (image1Details) {
@@ -2763,6 +2874,7 @@ function Msme() {
     setFileImage1(null);
     console.log("here is the image 1 details: ", fileImage1);
     setImage1Details(null);
+    setUpdate(true);
   };
   const clearFileInputImage2Details = () => {
     if (image2Details) {
@@ -2771,6 +2883,7 @@ function Msme() {
     inputRef2Details.current.value = "";
     setFileImage2(null);
     setImage2Details(null);
+    setUpdate(true);
   };
   const clearFileInputImage3Details = () => {
     if (image3Details) {
@@ -2779,6 +2892,7 @@ function Msme() {
     inputRef3Details.current.value = "";
     setFileImage3(null);
     setImage3Details(null);
+    setUpdate(true);
   };
 
   return (
@@ -3013,22 +3127,24 @@ function Msme() {
                           </IconButton>
                         </Box>
                         {currentUser.role === "Super admin" && (
-                      <>
-                           <div onClick={handleOpen}>
-                          <MyButton text="Add MSME" />
-                        </div>
-                      </>
-                    )}
-                       
+                          <>
+                            <div onClick={handleOpen}>
+                              <MyButton text="Add MSME" />
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div className="col-12 mt-1">
-                        <p className="list-group">All MSME List</p>
+                        <p className="list-groupp">All MSME List</p>
                         {allMSMEList ? (
                           <>
                             <Box sx={{ height: 500, width: "100%" }}>
                               <DataGrid
                                 rows={filteredRows}
                                 sx={{
+                                  "& .MuiDataGrid-root": {
+                                    fontFamily: "Montserrat, sans-serif",
+                                  },
                                   "& .status-pending": {
                                     color: "rgb(234, 156, 0)",
                                   },
@@ -3039,10 +3155,16 @@ function Msme() {
                                     color: "green",
                                   },
                                   "& .MuiDataGrid-columnHeaders": {
-                                    fontWeight: "bold",
+                                    fontWeight: 800,
+                                    fontFamily: "Montserrat, sans-serif",
                                   },
                                   "& .MuiDataGrid-columnHeaderTitle": {
-                                    fontWeight: "bold",
+                                    fontWeight: 600,
+                                    fontFamily: "Montserrat, sans-serif",
+                                  },
+                                  "& .MuiDataGrid-cell": {
+                                    fontWeight: 400,
+                                    fontFamily: "Montserrat, sans-serif",
                                   },
                                 }}
                                 columns={columns}
@@ -3091,23 +3213,24 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for pending MSME"
-                            onChange={(e) => setSearchQueryPending(e.target.value)}
+                            onChange={(e) =>
+                              setSearchQueryPending(e.target.value)
+                            }
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
                           </IconButton>
                         </Box>
                         {currentUser.role === "Super admin" && (
-                      <>
-                        <div onClick={handleOpen}>
-                          <MyButton text="Add MSME" />
-                        </div>
-                      </>
-                    )}
-                        
+                          <>
+                            <div onClick={handleOpen}>
+                              <MyButton text="Add MSME" />
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div className="col-12 mt-1">
-                        <p className="list-group">Pending MSME List</p>
+                        <p className="list-groupp">Pending MSME List</p>
                         {pendingMSMEList ? (
                           <>
                             <Box sx={{ height: 500, width: "100%" }}>
@@ -3115,6 +3238,9 @@ function Msme() {
                                 rows={filteredRowsPending}
                                 columns={columns}
                                 sx={{
+                                  "& .MuiDataGrid-root": {
+                                    fontFamily: "Montserrat, sans-serif",
+                                  },
                                   "& .status-pending": {
                                     color: "rgb(234, 156, 0)",
                                   },
@@ -3125,10 +3251,16 @@ function Msme() {
                                     color: "green",
                                   },
                                   "& .MuiDataGrid-columnHeaders": {
-                                    fontWeight: "bold",
+                                    fontWeight: 800,
+                                    fontFamily: "Montserrat, sans-serif",
                                   },
                                   "& .MuiDataGrid-columnHeaderTitle": {
-                                    fontWeight: "bold",
+                                    fontWeight: 600,
+                                    fontFamily: "Montserrat, sans-serif",
+                                  },
+                                  "& .MuiDataGrid-cell": {
+                                    fontWeight: 400,
+                                    fontFamily: "Montserrat, sans-serif",
                                   },
                                 }}
                                 initialState={{
@@ -3176,23 +3308,24 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for a rejected MSME"
-                            onChange={(e) => setSearchQueryRejected(e.target.value)}
+                            onChange={(e) =>
+                              setSearchQueryRejected(e.target.value)
+                            }
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
                           </IconButton>
                         </Box>
                         {currentUser.role === "Super admin" && (
-                      <>
-                         <div onClick={handleOpen}>
-                          <MyButton text="Add MSME" />
-                        </div>
-                      </>
-                    )}
-                       
+                          <>
+                            <div onClick={handleOpen}>
+                              <MyButton text="Add MSME" />
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div className="col-12 mt-1">
-                        <p className="list-group">Rejected MSME List</p>
+                        <p className="list-groupp">Rejected MSME List</p>
                         {rejectedMSMEList ? (
                           <>
                             <Box sx={{ height: 500, width: "100%" }}>
@@ -3200,6 +3333,9 @@ function Msme() {
                                 rows={filteredRowsRejected}
                                 columns={columns}
                                 sx={{
+                                  "& .MuiDataGrid-root": {
+                                    fontFamily: "Montserrat, sans-serif",
+                                  },
                                   "& .status-pending": {
                                     color: "rgb(234, 156, 0)",
                                   },
@@ -3210,10 +3346,16 @@ function Msme() {
                                     color: "green",
                                   },
                                   "& .MuiDataGrid-columnHeaders": {
-                                    fontWeight: "bold",
+                                    fontWeight: 800,
+                                    fontFamily: "Montserrat, sans-serif",
                                   },
                                   "& .MuiDataGrid-columnHeaderTitle": {
-                                    fontWeight: "bold",
+                                    fontWeight: 600,
+                                    fontFamily: "Montserrat, sans-serif",
+                                  },
+                                  "& .MuiDataGrid-cell": {
+                                    fontWeight: 400,
+                                    fontFamily: "Montserrat, sans-serif",
                                   },
                                 }}
                                 initialState={{
@@ -3268,21 +3410,23 @@ function Msme() {
                           </IconButton>
                         </Box>
                         {currentUser.role === "Super admin" && (
-                      <>
-                        <div onClick={handleOpen}>
-                          <MyButton text="Add MSME" />
-                        </div>
-                      </>
-                    )}
-                        
+                          <>
+                            <div onClick={handleOpen}>
+                              <MyButton text="Add MSME" />
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div className="col-12 mt-1">
-                        <p className="list-group">Incomplete MSME List</p>
+                        <p className="list-groupp">Incomplete MSME List</p>
                         <Box sx={{ height: 500, width: "100%" }}>
                           <DataGrid
                             rows={rowsIncomplete}
                             columns={columns}
                             sx={{
+                              "& .MuiDataGrid-root": {
+                                fontFamily: "Montserrat, sans-serif",
+                              },
                               "& .status-pending": {
                                 color: "rgb(234, 156, 0)",
                               },
@@ -3293,10 +3437,16 @@ function Msme() {
                                 color: "green",
                               },
                               "& .MuiDataGrid-columnHeaders": {
-                                fontWeight: "bold",
+                                fontWeight: 800,
+                                fontFamily: "Montserrat, sans-serif",
                               },
                               "& .MuiDataGrid-columnHeaderTitle": {
-                                fontWeight: "bold",
+                                fontWeight: 600,
+                                fontFamily: "Montserrat, sans-serif",
+                              },
+                              "& .MuiDataGrid-cell": {
+                                fontWeight: 400,
+                                fontFamily: "Montserrat, sans-serif",
                               },
                             }}
                             initialState={{
@@ -3328,23 +3478,24 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for approved msme"
-                            onChange={(e) => setSearchQueryApproved(e.target.value)}
+                            onChange={(e) =>
+                              setSearchQueryApproved(e.target.value)
+                            }
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
                           </IconButton>
                         </Box>
                         {currentUser.role === "Super admin" && (
-                      <>
-                        <div onClick={handleOpen}>
-                          <MyButton text="Add MSME" />
-                        </div>
-                      </>
-                    )}
-                        
+                          <>
+                            <div onClick={handleOpen}>
+                              <MyButton text="Add MSME" />
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div className="col-12 mt-1">
-                        <p className="list-group">Approved MSME List</p>
+                        <p className="list-groupp">Approved MSME List</p>
                         {approvedMSMEList ? (
                           <>
                             <Box sx={{ height: 500, width: "100%" }}>
@@ -3352,6 +3503,9 @@ function Msme() {
                                 rows={filteredRowsApproved}
                                 columns={columns}
                                 sx={{
+                                  "& .MuiDataGrid-root": {
+                                    fontFamily: "Montserrat, sans-serif",
+                                  },
                                   "& .status-pending": {
                                     color: "rgb(234, 156, 0)",
                                   },
@@ -3362,10 +3516,16 @@ function Msme() {
                                     color: "green",
                                   },
                                   "& .MuiDataGrid-columnHeaders": {
-                                    fontWeight: "bold",
+                                    fontWeight: 800,
+                                    fontFamily: "Montserrat, sans-serif",
                                   },
                                   "& .MuiDataGrid-columnHeaderTitle": {
-                                    fontWeight: "bold",
+                                    fontWeight: 600,
+                                    fontFamily: "Montserrat, sans-serif",
+                                  },
+                                  "& .MuiDataGrid-cell": {
+                                    fontWeight: 400,
+                                    fontFamily: "Montserrat, sans-serif",
                                   },
                                 }}
                                 initialState={{
@@ -3505,32 +3665,32 @@ function Msme() {
                     setStepperCounter(0);
 
                     setIsMondayClosed(false);
-    setIsTuesdayClosed(false);
-    setIsWednesdayClosed(false);
-    setIsThursdayClosed(false);
-    setIsFridayClosed(false);
-    setIsSaturdayClosed(false);
-    setIsSundayClosed(false);
+                    setIsTuesdayClosed(false);
+                    setIsWednesdayClosed(false);
+                    setIsThursdayClosed(false);
+                    setIsFridayClosed(false);
+                    setIsSaturdayClosed(false);
+                    setIsSundayClosed(false);
 
-    setMondayFrom("");
-    setMondayTo("");
-    setTuesdayFrom("");
-    setTuesdayTo("");
-    setWednesdayFrom("");
-    setWednesdayTo("");
-    setThursdayFrom("");
-    setThursdayTo("");
-    setFridayFrom("");
-    setFridayTo("");
-    setSaturdayFrom("");
-    setSaturdayTo("");
-    setSundayFrom("");
-    setSundayTo("");
+                    setMondayFrom("");
+                    setMondayTo("");
+                    setTuesdayFrom("");
+                    setTuesdayTo("");
+                    setWednesdayFrom("");
+                    setWednesdayTo("");
+                    setThursdayFrom("");
+                    setThursdayTo("");
+                    setFridayFrom("");
+                    setFridayTo("");
+                    setSaturdayFrom("");
+                    setSaturdayTo("");
+                    setSundayFrom("");
+                    setSundayTo("");
                     setOpenModel(false);
                   }}
                 />
               </div>
-                
+
               <Box
                 sx={{ width: "100%" }}
                 style={{ marginTop: "10px", marginBottom: "20px" }}
@@ -3544,12 +3704,12 @@ function Msme() {
                 </Stepper>
               </Box>
               {numberOfDaysOpenError && (
-              <>
-                <div className="col-md-8 p-1 p-md-3 error-div d-flex justify-content-center align-items-center m-auto">
-                  <p>{numberOfDaysOpenError}</p>
-                </div>
-              </>
-            )}
+                <>
+                  <div className="col-md-8 p-1 p-md-3 error-div d-flex justify-content-center align-items-center m-auto">
+                    <p>{numberOfDaysOpenError}</p>
+                  </div>
+                </>
+              )}
               <Grid
                 container
                 spacing={{ xs: 1 }}
@@ -4309,487 +4469,564 @@ function Msme() {
                 {stepperCounter === 3 && (
                   <>
                     <Grid item xs={12} sm={6} md={6}>
-      <div className="form-group pb-3">
-        <label htmlFor="email" className="text-bold">Monday:</label>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 2 }}
-          columns={{ xs: 12, sm: 12, md: 12 }}
-          style={{ marginTop: "0px" }}
-        >
-          <Grid item xs={12} sm={12} md={12}>
-            <div className="form-group d-flex justify-content-between align-items-center">
-              <label className="pb-2 text-bold text-secondary">Closed:</label>
-              <Switch
-                checked={!isMondayClosed}
-                onChange={() => setIsMondayClosed(!isMondayClosed)}
-                
-              />
-            </div>
-          </Grid>
+                      <div className="form-group pb-3">
+                        <label htmlFor="email" className="text-bold">
+                          Monday:
+                        </label>
+                        <Grid
+                          container
+                          spacing={{ xs: 2, md: 2 }}
+                          columns={{ xs: 12, sm: 12, md: 12 }}
+                          style={{ marginTop: "0px" }}
+                        >
+                          <Grid item xs={12} sm={12} md={12}>
+                            <div className="form-group d-flex justify-content-between align-items-center">
+                              <label className="pb-2 text-bold text-secondary">
+                                Closed:
+                              </label>
+                              <Switch
+                                checked={!isMondayClosed}
+                                onChange={() =>
+                                  setIsMondayClosed(!isMondayClosed)
+                                }
+                              />
+                            </div>
+                          </Grid>
 
-          {isMondayClosed && (
-            <>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group">
-                  <label htmlFor="mondayFrom" className="pb-2 text-bold">
-                    From: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="08:00"
-                    autoComplete="off"
-                    name="mondayFrom"
-                    value={mondayFrom}
-                    onChange={(e) => {
-                      setMondayError("");
-                      setMondayFrom(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group pb-3">
-                  <label htmlFor="mondayTo" className="pb-2 text-bold">
-                    To: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="15:00"
-                    autoComplete="off"
-                    name="mondayTo"
-                    value={mondayTo}
-                    onChange={(e) => {
-                      setMondayError("");
-                      setMondayTo(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-            </>
-          )}
-        </Grid>
+                          {isMondayClosed && (
+                            <>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group">
+                                  <label
+                                    htmlFor="mondayFrom"
+                                    className="pb-2 text-bold"
+                                  >
+                                    From: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="08:00"
+                                    autoComplete="off"
+                                    name="mondayFrom"
+                                    value={mondayFrom}
+                                    onChange={(e) => {
+                                      setMondayError("");
+                                      setMondayFrom(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group pb-3">
+                                  <label
+                                    htmlFor="mondayTo"
+                                    className="pb-2 text-bold"
+                                  >
+                                    To: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="15:00"
+                                    autoComplete="off"
+                                    name="mondayTo"
+                                    value={mondayTo}
+                                    onChange={(e) => {
+                                      setMondayError("");
+                                      setMondayTo(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                            </>
+                          )}
+                        </Grid>
 
-        {mondayError && (
-          <p className="error mt-1">{mondayError}</p>
-        )}
-      </div>
+                        {mondayError && (
+                          <p className="error mt-1">{mondayError}</p>
+                        )}
+                      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-      <div className="form-group pb-3">
-        <label htmlFor="email" className="text-bold">Tuesday:</label>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 2 }}
-          columns={{ xs: 12, sm: 12, md: 12 }}
-          style={{ marginTop: "0px" }}
-        >
-          <Grid item xs={12} sm={12} md={12}>
-            <div className="form-group d-flex justify-content-between align-items-center">
-              <label className="pb-2 text-bold text-secondary">Closed:</label>
-              <Switch
-                checked={!isTuesdayClosed}
-                onChange={() => setIsTuesdayClosed(!isTuesdayClosed)}
-                
-              />
-            </div>
-          </Grid>
+                      <div className="form-group pb-3">
+                        <label htmlFor="email" className="text-bold">
+                          Tuesday:
+                        </label>
+                        <Grid
+                          container
+                          spacing={{ xs: 2, md: 2 }}
+                          columns={{ xs: 12, sm: 12, md: 12 }}
+                          style={{ marginTop: "0px" }}
+                        >
+                          <Grid item xs={12} sm={12} md={12}>
+                            <div className="form-group d-flex justify-content-between align-items-center">
+                              <label className="pb-2 text-bold text-secondary">
+                                Closed:
+                              </label>
+                              <Switch
+                                checked={!isTuesdayClosed}
+                                onChange={() =>
+                                  setIsTuesdayClosed(!isTuesdayClosed)
+                                }
+                              />
+                            </div>
+                          </Grid>
 
-          {isTuesdayClosed && (
-            <>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group">
-                  <label htmlFor="TuesdayFrom" className="pb-2 text-bold">
-                    From: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="08:00"
-                    autoComplete="off"
-                    name="mondayFrom"
-                    value={tuesdayFrom}
-                    onChange={(e) => {
-                      setTuesdayError("");
-                      setTuesdayFrom(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group pb-3">
-                  <label htmlFor="tuesdayTo" className="pb-2 text-bold">
-                    To: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="15:00"
-                    autoComplete="off"
-                    name="tuesdayTo"
-                    value={tuesdayTo}
-                    onChange={(e) => {
-                      setTuesdayError("");
-                      setTuesdayTo(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-            </>
-          )}
-        </Grid>
+                          {isTuesdayClosed && (
+                            <>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group">
+                                  <label
+                                    htmlFor="TuesdayFrom"
+                                    className="pb-2 text-bold"
+                                  >
+                                    From: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="08:00"
+                                    autoComplete="off"
+                                    name="mondayFrom"
+                                    value={tuesdayFrom}
+                                    onChange={(e) => {
+                                      setTuesdayError("");
+                                      setTuesdayFrom(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group pb-3">
+                                  <label
+                                    htmlFor="tuesdayTo"
+                                    className="pb-2 text-bold"
+                                  >
+                                    To: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="15:00"
+                                    autoComplete="off"
+                                    name="tuesdayTo"
+                                    value={tuesdayTo}
+                                    onChange={(e) => {
+                                      setTuesdayError("");
+                                      setTuesdayTo(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                            </>
+                          )}
+                        </Grid>
 
-        {tuesdayError && (
-          <p className="error mt-1">{tuesdayError}</p>
-        )}
-      </div>
+                        {tuesdayError && (
+                          <p className="error mt-1">{tuesdayError}</p>
+                        )}
+                      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-      <div className="form-group pb-3">
-        <label htmlFor="email" className="text-bold">Wednesday:</label>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 2 }}
-          columns={{ xs: 12, sm: 12, md: 12 }}
-          style={{ marginTop: "0px" }}
-        >
-          <Grid item xs={12} sm={12} md={12}>
-            <div className="form-group d-flex justify-content-between align-items-center">
-              <label className="pb-2 text-bold text-secondary">Closed:</label>
-              <Switch
-                checked={!isWednesdayClosed}
-                onChange={() => setIsWednesdayClosed(!isWednesdayClosed)}
-                
-              />
-            </div>
-          </Grid>
+                      <div className="form-group pb-3">
+                        <label htmlFor="email" className="text-bold">
+                          Wednesday:
+                        </label>
+                        <Grid
+                          container
+                          spacing={{ xs: 2, md: 2 }}
+                          columns={{ xs: 12, sm: 12, md: 12 }}
+                          style={{ marginTop: "0px" }}
+                        >
+                          <Grid item xs={12} sm={12} md={12}>
+                            <div className="form-group d-flex justify-content-between align-items-center">
+                              <label className="pb-2 text-bold text-secondary">
+                                Closed:
+                              </label>
+                              <Switch
+                                checked={!isWednesdayClosed}
+                                onChange={() =>
+                                  setIsWednesdayClosed(!isWednesdayClosed)
+                                }
+                              />
+                            </div>
+                          </Grid>
 
-          {isWednesdayClosed && (
-            <>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group">
-                  <label htmlFor="mondayFrom" className="pb-2 text-bold">
-                    From: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="08:00"
-                    autoComplete="off"
-                    name="wednesdayFrom"
-                    value={wednesdayFrom}
-                    onChange={(e) => {
-                      setWednesdayError("");
-                      setWednesdayFrom(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group pb-3">
-                  <label htmlFor="wednesdayTo" className="pb-2 text-bold">
-                    To: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="15:00"
-                    autoComplete="off"
-                    name="wednesdayTo"
-                    value={wednesdayTo}
-                    onChange={(e) => {
-                      setWednesdayError("");
-                      setWednesdayTo(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-            </>
-          )}
-        </Grid>
+                          {isWednesdayClosed && (
+                            <>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group">
+                                  <label
+                                    htmlFor="mondayFrom"
+                                    className="pb-2 text-bold"
+                                  >
+                                    From: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="08:00"
+                                    autoComplete="off"
+                                    name="wednesdayFrom"
+                                    value={wednesdayFrom}
+                                    onChange={(e) => {
+                                      setWednesdayError("");
+                                      setWednesdayFrom(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group pb-3">
+                                  <label
+                                    htmlFor="wednesdayTo"
+                                    className="pb-2 text-bold"
+                                  >
+                                    To: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="15:00"
+                                    autoComplete="off"
+                                    name="wednesdayTo"
+                                    value={wednesdayTo}
+                                    onChange={(e) => {
+                                      setWednesdayError("");
+                                      setWednesdayTo(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                            </>
+                          )}
+                        </Grid>
 
-        {wednesdayError && (
-          <p className="error mt-1">{wednesdayError}</p>
-        )}
-      </div>
+                        {wednesdayError && (
+                          <p className="error mt-1">{wednesdayError}</p>
+                        )}
+                      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-      <div className="form-group pb-3">
-        <label htmlFor="email" className="text-bold">Thursday:</label>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 2 }}
-          columns={{ xs: 12, sm: 12, md: 12 }}
-          style={{ marginTop: "0px" }}
-        >
-          <Grid item xs={12} sm={12} md={12}>
-            <div className="form-group d-flex justify-content-between align-items-center">
-              <label className="pb-2 text-bold text-secondary">Closed:</label>
-              <Switch
-                checked={!isThursdayClosed}
-                onChange={() => setIsThursdayClosed(!isThursdayClosed)}
-                
-              />
-            </div>
-          </Grid>
+                      <div className="form-group pb-3">
+                        <label htmlFor="email" className="text-bold">
+                          Thursday:
+                        </label>
+                        <Grid
+                          container
+                          spacing={{ xs: 2, md: 2 }}
+                          columns={{ xs: 12, sm: 12, md: 12 }}
+                          style={{ marginTop: "0px" }}
+                        >
+                          <Grid item xs={12} sm={12} md={12}>
+                            <div className="form-group d-flex justify-content-between align-items-center">
+                              <label className="pb-2 text-bold text-secondary">
+                                Closed:
+                              </label>
+                              <Switch
+                                checked={!isThursdayClosed}
+                                onChange={() =>
+                                  setIsThursdayClosed(!isThursdayClosed)
+                                }
+                              />
+                            </div>
+                          </Grid>
 
-          {isThursdayClosed && (
-            <>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group">
-                  <label htmlFor="thursdayFrom" className="pb-2 text-bold">
-                    From: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="08:00"
-                    autoComplete="off"
-                    name="thursdayFrom"
-                    value={thursdayFrom}
-                    onChange={(e) => {
-                      setThursdayError("");
-                      setThursdayFrom(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group pb-3">
-                  <label htmlFor="thursdayTo" className="pb-2 text-bold">
-                    To: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="15:00"
-                    autoComplete="off"
-                    name="thursdayTo"
-                    value={thursdayTo}
-                    onChange={(e) => {
-                      setThursdayError("");
-                      setThursdayTo(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-            </>
-          )}
-        </Grid>
+                          {isThursdayClosed && (
+                            <>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group">
+                                  <label
+                                    htmlFor="thursdayFrom"
+                                    className="pb-2 text-bold"
+                                  >
+                                    From: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="08:00"
+                                    autoComplete="off"
+                                    name="thursdayFrom"
+                                    value={thursdayFrom}
+                                    onChange={(e) => {
+                                      setThursdayError("");
+                                      setThursdayFrom(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group pb-3">
+                                  <label
+                                    htmlFor="thursdayTo"
+                                    className="pb-2 text-bold"
+                                  >
+                                    To: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="15:00"
+                                    autoComplete="off"
+                                    name="thursdayTo"
+                                    value={thursdayTo}
+                                    onChange={(e) => {
+                                      setThursdayError("");
+                                      setThursdayTo(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                            </>
+                          )}
+                        </Grid>
 
-        {thursdayError && (
-          <p className="error mt-1">{thursdayError}</p>
-        )}
-      </div>
+                        {thursdayError && (
+                          <p className="error mt-1">{thursdayError}</p>
+                        )}
+                      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-      <div className="form-group pb-3">
-        <label htmlFor="email" className="text-bold">Friday:</label>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 2 }}
-          columns={{ xs: 12, sm: 12, md: 12 }}
-          style={{ marginTop: "0px" }}
-        >
-          <Grid item xs={12} sm={12} md={12}>
-            <div className="form-group d-flex justify-content-between align-items-center">
-              <label className="pb-2 text-bold text-secondary">Closed:</label>
-              <Switch
-                checked={!isFridayClosed}
-                onChange={() => setIsFridayClosed(!isFridayClosed)}
-                
-              />
-            </div>
-          </Grid>
+                      <div className="form-group pb-3">
+                        <label htmlFor="email" className="text-bold">
+                          Friday:
+                        </label>
+                        <Grid
+                          container
+                          spacing={{ xs: 2, md: 2 }}
+                          columns={{ xs: 12, sm: 12, md: 12 }}
+                          style={{ marginTop: "0px" }}
+                        >
+                          <Grid item xs={12} sm={12} md={12}>
+                            <div className="form-group d-flex justify-content-between align-items-center">
+                              <label className="pb-2 text-bold text-secondary">
+                                Closed:
+                              </label>
+                              <Switch
+                                checked={!isFridayClosed}
+                                onChange={() =>
+                                  setIsFridayClosed(!isFridayClosed)
+                                }
+                              />
+                            </div>
+                          </Grid>
 
-          {isFridayClosed && (
-            <>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group">
-                  <label htmlFor="fridayFrom" className="pb-2 text-bold">
-                    From: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="08:00"
-                    autoComplete="off"
-                    name="fridayFrom"
-                    value={fridayFrom}
-                    onChange={(e) => {
-                      setFridayError("");
-                      setFridayFrom(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group pb-3">
-                  <label htmlFor="fridayTo" className="pb-2 text-bold">
-                    To: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="15:00"
-                    autoComplete="off"
-                    name="fridayTo"
-                    value={fridayTo}
-                    onChange={(e) => {
-                      setFridayError("");
-                      setFridayTo(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-            </>
-          )}
-        </Grid>
+                          {isFridayClosed && (
+                            <>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group">
+                                  <label
+                                    htmlFor="fridayFrom"
+                                    className="pb-2 text-bold"
+                                  >
+                                    From: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="08:00"
+                                    autoComplete="off"
+                                    name="fridayFrom"
+                                    value={fridayFrom}
+                                    onChange={(e) => {
+                                      setFridayError("");
+                                      setFridayFrom(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group pb-3">
+                                  <label
+                                    htmlFor="fridayTo"
+                                    className="pb-2 text-bold"
+                                  >
+                                    To: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="15:00"
+                                    autoComplete="off"
+                                    name="fridayTo"
+                                    value={fridayTo}
+                                    onChange={(e) => {
+                                      setFridayError("");
+                                      setFridayTo(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                            </>
+                          )}
+                        </Grid>
 
-        {fridayError && (
-          <p className="error mt-1">{fridayError}</p>
-        )}
-      </div>
+                        {fridayError && (
+                          <p className="error mt-1">{fridayError}</p>
+                        )}
+                      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-      <div className="form-group pb-3">
-        <label htmlFor="email" className="text-bold">Saturday:</label>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 2 }}
-          columns={{ xs: 12, sm: 12, md: 12 }}
-          style={{ marginTop: "0px" }}
-        >
-          <Grid item xs={12} sm={12} md={12}>
-            <div className="form-group d-flex justify-content-between align-items-center">
-              <label className="pb-2 text-bold text-secondary">Closed:</label>
-              <Switch
-                checked={!isSaturdayClosed}
-                onChange={() => setIsSaturdayClosed(!isSaturdayClosed)}
-                
-              />
-            </div>
-          </Grid>
+                      <div className="form-group pb-3">
+                        <label htmlFor="email" className="text-bold">
+                          Saturday:
+                        </label>
+                        <Grid
+                          container
+                          spacing={{ xs: 2, md: 2 }}
+                          columns={{ xs: 12, sm: 12, md: 12 }}
+                          style={{ marginTop: "0px" }}
+                        >
+                          <Grid item xs={12} sm={12} md={12}>
+                            <div className="form-group d-flex justify-content-between align-items-center">
+                              <label className="pb-2 text-bold text-secondary">
+                                Closed:
+                              </label>
+                              <Switch
+                                checked={!isSaturdayClosed}
+                                onChange={() =>
+                                  setIsSaturdayClosed(!isSaturdayClosed)
+                                }
+                              />
+                            </div>
+                          </Grid>
 
-          {isSaturdayClosed && (
-            <>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group">
-                  <label htmlFor="mondayFrom" className="pb-2 text-bold">
-                    From: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="08:00"
-                    autoComplete="off"
-                    name="saturdayFrom"
-                    value={saturdayFrom}
-                    onChange={(e) => {
-                      setSaturdayError("");
-                      setSaturdayFrom(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group pb-3">
-                  <label htmlFor="saturdayTo" className="pb-2 text-bold">
-                    To: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="15:00"
-                    autoComplete="off"
-                    name="saturdayTo"
-                    value={saturdayTo}
-                    onChange={(e) => {
-                      setSaturdayError("");
-                      setSaturdayTo(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-            </>
-          )}
-        </Grid>
+                          {isSaturdayClosed && (
+                            <>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group">
+                                  <label
+                                    htmlFor="mondayFrom"
+                                    className="pb-2 text-bold"
+                                  >
+                                    From: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="08:00"
+                                    autoComplete="off"
+                                    name="saturdayFrom"
+                                    value={saturdayFrom}
+                                    onChange={(e) => {
+                                      setSaturdayError("");
+                                      setSaturdayFrom(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group pb-3">
+                                  <label
+                                    htmlFor="saturdayTo"
+                                    className="pb-2 text-bold"
+                                  >
+                                    To: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="15:00"
+                                    autoComplete="off"
+                                    name="saturdayTo"
+                                    value={saturdayTo}
+                                    onChange={(e) => {
+                                      setSaturdayError("");
+                                      setSaturdayTo(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                            </>
+                          )}
+                        </Grid>
 
-        {saturdayError && (
-          <p className="error mt-1">{saturdayError}</p>
-        )}
-      </div>
+                        {saturdayError && (
+                          <p className="error mt-1">{saturdayError}</p>
+                        )}
+                      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-      <div className="form-group pb-3">
-        <label htmlFor="email" className="text-bold">Sunday:</label>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 2 }}
-          columns={{ xs: 12, sm: 12, md: 12 }}
-          style={{ marginTop: "0px" }}
-        >
-          <Grid item xs={12} sm={12} md={12}>
-            <div className="form-group d-flex justify-content-between align-items-center">
-              <label className="pb-2 text-bold text-secondary">Closed:</label>
-              <Switch
-                checked={!isSundayClosed}
-                onChange={() => setIsSundayClosed(!isSundayClosed)}
-                
-              />
-            </div>
-          </Grid>
+                      <div className="form-group pb-3">
+                        <label htmlFor="email" className="text-bold">
+                          Sunday:
+                        </label>
+                        <Grid
+                          container
+                          spacing={{ xs: 2, md: 2 }}
+                          columns={{ xs: 12, sm: 12, md: 12 }}
+                          style={{ marginTop: "0px" }}
+                        >
+                          <Grid item xs={12} sm={12} md={12}>
+                            <div className="form-group d-flex justify-content-between align-items-center">
+                              <label className="pb-2 text-bold text-secondary">
+                                Closed:
+                              </label>
+                              <Switch
+                                checked={!isSundayClosed}
+                                onChange={() =>
+                                  setIsSundayClosed(!isSundayClosed)
+                                }
+                              />
+                            </div>
+                          </Grid>
 
-          {isSundayClosed && (
-            <>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group">
-                  <label htmlFor="mondayFrom" className="pb-2 text-bold">
-                    From: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="08:00"
-                    autoComplete="off"
-                    name="sundayFrom"
-                    value={sundayFrom}
-                    onChange={(e) => {
-                      setSundayError("");
-                      setSundayFrom(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6} md={6}>
-                <div className="form-group pb-3">
-                  <label htmlFor="thursdayTo" className="pb-2 text-bold">
-                    To: <span>*</span>
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control place-holder"
-                    placeholder="15:00"
-                    autoComplete="off"
-                    name="thursdayTo"
-                    value={sundayTo}
-                    onChange={(e) => {
-                      setSundayError("");
-                      setSundayTo(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-            </>
-          )}
-        </Grid>
+                          {isSundayClosed && (
+                            <>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group">
+                                  <label
+                                    htmlFor="mondayFrom"
+                                    className="pb-2 text-bold"
+                                  >
+                                    From: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="08:00"
+                                    autoComplete="off"
+                                    name="sundayFrom"
+                                    value={sundayFrom}
+                                    onChange={(e) => {
+                                      setSundayError("");
+                                      setSundayFrom(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6}>
+                                <div className="form-group pb-3">
+                                  <label
+                                    htmlFor="thursdayTo"
+                                    className="pb-2 text-bold"
+                                  >
+                                    To: <span>*</span>
+                                  </label>
+                                  <input
+                                    type="time"
+                                    className="form-control place-holder"
+                                    placeholder="15:00"
+                                    autoComplete="off"
+                                    name="thursdayTo"
+                                    value={sundayTo}
+                                    onChange={(e) => {
+                                      setSundayError("");
+                                      setSundayTo(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                              </Grid>
+                            </>
+                          )}
+                        </Grid>
 
-        {sundayError && (
-          <p className="error mt-1">{sundayError}</p>
-        )}
-      </div>
+                        {sundayError && (
+                          <p className="error mt-1">{sundayError}</p>
+                        )}
+                      </div>
                     </Grid>
                     <div className="d-flex justify-content-between w-100">
                       <button
@@ -5286,7 +5523,9 @@ function Msme() {
                         </select>
                         {typeOfBusinessDetailsError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessDetailsError}</p>
+                            <p className="error mt-1">
+                              {typeOfBusinessDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5362,7 +5601,9 @@ function Msme() {
                         />
                         {businessRegistrationNameDetailsError && (
                           <>
-                            <p className="error mt-1">{businessRegistrationNameDetailsError}</p>
+                            <p className="error mt-1">
+                              {businessRegistrationNameDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5393,7 +5634,9 @@ function Msme() {
                         />
                         {businessDisplayNameDetailsError && (
                           <>
-                            <p className="error mt-1">{businessDisplayNameDetailsError}</p>
+                            <p className="error mt-1">
+                              {businessDisplayNameDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5423,7 +5666,9 @@ function Msme() {
                         />
                         {descriptionDetailsError && (
                           <>
-                            <p className="error mt-1">{descriptionDetailsError}</p>
+                            <p className="error mt-1">
+                              {descriptionDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5522,7 +5767,9 @@ function Msme() {
                         </select>
                         {primaryIndustryDetailsError && (
                           <>
-                            <p className="error mt-1">{primaryIndustryDetailsError}</p>
+                            <p className="error mt-1">
+                              {primaryIndustryDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5555,7 +5802,9 @@ function Msme() {
                         </select>
                         {secondaryIndustryDetailsError && (
                           <>
-                            <p className="error mt-1">{secondaryIndustryDetailsError}</p>
+                            <p className="error mt-1">
+                              {secondaryIndustryDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5585,7 +5834,9 @@ function Msme() {
                         />
                         {yearOfEstablishmentDetailsError && (
                           <>
-                            <p className="error mt-1">{yearOfEstablishmentDetailsError}</p>
+                            <p className="error mt-1">
+                              {yearOfEstablishmentDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5615,7 +5866,9 @@ function Msme() {
                         </select>
                         {annualTurnoverDetailsError && (
                           <>
-                            <p className="error mt-1">{annualTurnoverDetailsError}</p>
+                            <p className="error mt-1">
+                              {annualTurnoverDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5645,13 +5898,14 @@ function Msme() {
                         </select>
                         {numberOfEmployeesDetailsError && (
                           <>
-                            <p className="error mt-1">{numberOfEmployeesDetailsError}</p>
+                            <p className="error mt-1">
+                              {numberOfEmployeesDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
                     </Grid>
                     <div className="d-flex justify-content-end w-100">
-                  
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={handleStep1Review}
@@ -5659,7 +5913,6 @@ function Msme() {
                         Step 2
                         <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
-                      
                     </div>
                   </>
                 )}
@@ -5689,7 +5942,9 @@ function Msme() {
                         />
                         {foundersNameDetailsError && (
                           <>
-                            <p className="error mt-1">{foundersNameDetailsError}</p>
+                            <p className="error mt-1">
+                              {foundersNameDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5719,7 +5974,9 @@ function Msme() {
                         </select>
                         {foundersGenderDetailsError && (
                           <>
-                            <p className="error mt-1">{foundersGenderDetailsError}</p>
+                            <p className="error mt-1">
+                              {foundersGenderDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5747,7 +6004,9 @@ function Msme() {
                         />
                         {foundersAgeDetailsError && (
                           <>
-                            <p className="error mt-1">{foundersAgeDetailsError}</p>
+                            <p className="error mt-1">
+                              {foundersAgeDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5802,7 +6061,9 @@ function Msme() {
                         />
                         {businessAddressDetailsError && (
                           <>
-                            <p className="error mt-1">{businessAddressDetailsError}</p>
+                            <p className="error mt-1">
+                              {businessAddressDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5830,45 +6091,47 @@ function Msme() {
                         />
                         {phoneNumberDetailsError && (
                           <>
-                            <p className="error mt-1">{phoneNumberDetailsError}</p>
+                            <p className="error mt-1">
+                              {phoneNumberDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
                     </Grid>
-                    
-                      <Grid item xs={12} sm={6} md={6}>
-                        <div className="form-group pb-md-2">
-                          <label
-                            htmlFor="whatsAppNumber"
-                            className="pb-2 text-bold"
-                          >
-                            What's App Number:
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control place-holder"
-                            placeholder="+264 81 *** ****"
-                            disabled={
-                              currentUser.role === "Super admin" ? false : true
-                            }
-                            value={whatsAppNumberDetails}
-                            onChange={(e) => {
-                              setUpdate(true);
-                              setWhatsAppNumberDetailsError("");
-                              setWhatsAppNumberDetails(e.target.value);
-                            }}
-                            autoComplete="off"
-                            name="email"
-                          />
-                          {whatsAppNumberDetailsError && (
-                            <>
-                              <p className="error mt-1">
-                                {whatsAppNumberDetailsError}
-                              </p>
-                            </>
-                          )}
-                        </div>
-                      </Grid>
+
+                    <Grid item xs={12} sm={6} md={6}>
+                      <div className="form-group pb-md-2">
+                        <label
+                          htmlFor="whatsAppNumber"
+                          className="pb-2 text-bold"
+                        >
+                          What's App Number:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control place-holder"
+                          placeholder="+264 81 *** ****"
+                          disabled={
+                            currentUser.role === "Super admin" ? false : true
+                          }
+                          value={whatsAppNumberDetails}
+                          onChange={(e) => {
+                            setUpdate(true);
+                            setWhatsAppNumberDetailsError("");
+                            setWhatsAppNumberDetails(e.target.value);
+                          }}
+                          autoComplete="off"
+                          name="email"
+                        />
+                        {whatsAppNumberDetailsError && (
+                          <>
+                            <p className="error mt-1">
+                              {whatsAppNumberDetailsError}
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    </Grid>
 
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
@@ -5896,7 +6159,9 @@ function Msme() {
                         />
                         {businessEmailDetailsError && (
                           <>
-                            <p className="error mt-1">{businessEmailDetailsError}</p>
+                            <p className="error mt-1">
+                              {businessEmailDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5925,7 +6190,9 @@ function Msme() {
                         />
                         {websiteLinkDetailsError && (
                           <>
-                            <p className="error mt-1">{websiteLinkDetailsError}</p>
+                            <p className="error mt-1">
+                              {websiteLinkDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5954,7 +6221,9 @@ function Msme() {
                         />
                         {twitterLinkDetailsError && (
                           <>
-                            <p className="error mt-1">{twitterLinkDetailsError}</p>
+                            <p className="error mt-1">
+                              {twitterLinkDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -5983,7 +6252,9 @@ function Msme() {
                         />
                         {facebookLinkDetailsError && (
                           <>
-                            <p className="error mt-1">{facebookLinkDetailsError}</p>
+                            <p className="error mt-1">
+                              {facebookLinkDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -6012,7 +6283,9 @@ function Msme() {
                         />
                         {instagramLinkDetailsError && (
                           <>
-                            <p className="error mt-1">{instagramLinkDetailsError}</p>
+                            <p className="error mt-1">
+                              {instagramLinkDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -6041,15 +6314,15 @@ function Msme() {
                         />
                         {linkedInLinkDetailsError && (
                           <>
-                            <p className="error mt-1">{linkedInLinkDetailsError}</p>
+                            <p className="error mt-1">
+                              {linkedInLinkDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
                     </Grid>
 
                     <div className="d-flex justify-content-between w-100">
-                      
-
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(1)}
@@ -6150,7 +6423,9 @@ function Msme() {
                         />
                         {wednesdayDetailsError && (
                           <>
-                            <p className="error mt-1">{wednesdayDetailsError}</p>
+                            <p className="error mt-1">
+                              {wednesdayDetailsError}
+                            </p>
                           </>
                         )}
                       </div>
@@ -6268,7 +6543,7 @@ function Msme() {
                       </div>
                     </Grid>
                     <div className="d-flex justify-content-between w-100">
-                    <button
+                      <button
                         className="btn btn-success m-1 p-2 modelButton text-bold"
                         onClick={() => setStepperCounter(2)}
                       >
@@ -6635,49 +6910,44 @@ function Msme() {
 
                     <Grid item xs={12}>
                       <div className="d-flex justify-content-between w-100">
-                      <button
-                        className="btn btn-success m-1 p-2 modelButton text-bold"
-                        onClick={() => setStepperCounter(3)}
-                      >
-                        <KeyboardBackspaceIcon
-                          style={{ marginRight: "10px" }}
-                        />
-                        Step 4
-                      </button>
+                        <button
+                          className="btn btn-success m-1 p-2 modelButton text-bold"
+                          onClick={() => setStepperCounter(3)}
+                        >
+                          <KeyboardBackspaceIcon
+                            style={{ marginRight: "10px" }}
+                          />
+                          Step 4
+                        </button>
                         {currentUser?.role === "Super admin" && (
                           <div className="">
-                            {
-                              updatingDetails?.status !== "Rejected" && (
-                                <button
+                            {updatingDetails?.status !== "Rejected" && (
+                              <button
                                 className="btn btn-danger m-1 p-2 modelButton text-bold"
                                 onClick={reject}
                               >
                                 Reject
                               </button>
-                              )
-                            }
-                           
-                           {
-                              updatingDetails?.status !== "Approved" && (
-                                <button
-                              className="btn btn-success m-1 p-2 modelButton text-bold"
-                              onClick={approve}
-                            >
-                              Approve
-                            </button>
-                              )
-                           }
-                           {
-                              update && updatingDetails?.status !== "Pending" && updatingDetails?.status !== "Rejected"&& (
-                                <button
-                              className="btn btn-success m-1 p-2 modelButton text-bold"
-                              onClick={approve}
-                            >
-                              Update
-                            </button>
-                              )
-                           }
+                            )}
 
+                            {updatingDetails?.status !== "Approved" && (
+                              <button
+                                className="btn btn-success m-1 p-2 modelButton text-bold"
+                                onClick={approve}
+                              >
+                                Approve
+                              </button>
+                            )}
+
+                            {update &&
+                              updatingDetails?.status !== "Pending" && (
+                                <button
+                                  className="btn btn-success m-1 p-2 modelButton text-bold"
+                                  onClick={approve}
+                                >
+                                  Update
+                                </button>
+                              )}
                           </div>
                         )}
                         {updatingDetails?.status === "Approved" &&

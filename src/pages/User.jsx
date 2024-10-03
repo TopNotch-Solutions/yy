@@ -1057,7 +1057,7 @@ function User() {
                     )}
                   </div>
                   <div className="col-12 mt-1">
-                    <p className="list-group">Admin List</p>
+                    <p className="list-groupp">Admin List</p>
                     {adminList ? (
                       <>
                         <Box sx={{ height: 500, width: "100%" }}>
@@ -1065,8 +1065,11 @@ function User() {
                             rows={filteredRows}
                             columns={columns}
                             sx={{
+                              "& .MuiDataGrid-root": {
+                                fontFamily: "Montserrat, sans-serif",
+                              },
                               "& .status-pending": {
-                                color: "yellow",
+                                color: "rgb(234, 156, 0)",
                               },
                               "& .status-rejected": {
                                 color: "red",
@@ -1075,10 +1078,16 @@ function User() {
                                 color: "green",
                               },
                               "& .MuiDataGrid-columnHeaders": {
-                                fontWeight: "bold",
+                                fontWeight: 800,
+                                fontFamily: "Montserrat, sans-serif",
                               },
                               "& .MuiDataGrid-columnHeaderTitle": {
-                                fontWeight: "bold",
+                                fontWeight: 600,
+                                fontFamily: "Montserrat, sans-serif",
+                              },
+                              "& .MuiDataGrid-cell": {
+                                fontWeight: 400,
+                                fontFamily: "Montserrat, sans-serif",
                               },
                             }}
                             initialState={{

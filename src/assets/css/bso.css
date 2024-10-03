@@ -15,6 +15,7 @@
 }
 .text-bold{
   font-weight: bold;
+  font-family: "Montserrat", sans-serif;
 }
 .msme-table{
     overflow-x: auto;
@@ -57,15 +58,7 @@
     z-index: 1;
     border: 1px solid #1674BB;
   }
-  
-  /* .iconC{
-  border-radius: 60%;
-  position: absolute;
-  color: #00AAE9;
-  padding: 10px; 
-  border:1px solid #00AAE9;
-  position: absolute;
-  } */
+
   
   .profile{
     position: relative;
@@ -88,12 +81,12 @@
     top: 25px; /* Adjust as needed to position the icon vertically */
     right: 15px; /* Adjust as needed to position the icon horizontally */
     background-color: #00AAE9; /* Optional: Add background color to make icon more visible */
-    border-radius: 50%; /* Make the icon circular */
+    border-radius: 50%; 
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30px; /* Adjust as needed */
-    height: 30px; /* Adjust as needed */
+    width: 30px;
+    height: 30px; 
   }
   
   .profile-card {

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTheme, useMediaQuery } from "@mui/material";
 import "../assets/css/Dashboard.css";
-import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
+import {
+  toggleIsSubmittingTrue,
+  toggleIsSubmittingfalse,
+} from "../redux/reducers/submittingReducer";
 import CircularProgress from "@mui/material/CircularProgress";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Box from "@mui/material/Box";
@@ -623,41 +626,41 @@ function Dashboard() {
               </div>
               <div className="row">
                 <div className="col-12">
-                  {
-                    lineData ? <>
-                     <ResponsiveContainer width="100%" height={301}>
-                    <LineChart data={datamy} width="100%">
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" />
-                      <YAxis interval={0} />
-                      <Tooltip />
-                      <Legend />
-                      <Line
-                        type="monotone"
-                        dataKey="currentMonth"
-                        stroke="rgba(21, 78, 138, 1)"
-                        activeDot={{ r: 8 }}
-                      />
-                      <Line
-                        type="monotone"
-                        dataKey="previousMonth"
-                        stroke="rgba(210, 31, 53, 1)"
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                    </> : <>
-                     <div
-                            className="d-flex justify-content-center align-items-center"
-                            style={{ height: 301, width: "100%" }}
-                          >
-                            <div style={{ textAlign: "center" }}>
-                              <CircularProgress color="inherit" />
-                              
-                            </div>
-                          </div>
+                  {lineData ? (
+                    <>
+                      <ResponsiveContainer width="100%" height={301}>
+                        <LineChart data={datamy} width="100%">
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="date" />
+                          <YAxis interval={0} />
+                          <Tooltip />
+                          <Legend />
+                          <Line
+                            type="monotone"
+                            dataKey="currentMonth"
+                            stroke="rgba(21, 78, 138, 1)"
+                            activeDot={{ r: 8 }}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="previousMonth"
+                            stroke="rgba(210, 31, 53, 1)"
+                          />
+                        </LineChart>
+                      </ResponsiveContainer>
                     </>
-                  }
-                 
+                  ) : (
+                    <>
+                      <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ height: 301, width: "100%" }}
+                      >
+                        <div style={{ textAlign: "center" }}>
+                          <CircularProgress color="inherit" />
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -673,115 +676,115 @@ function Dashboard() {
               <div className="d-flex justify-content-between align-items-center border-bottom ">
                 <h6 className="header-padding">Top 5 performing categories</h6>
               </div>
-              {
-                  topCategory ? <>
+              {topCategory ? (
+                <>
                   <div style={{ height: 300 }}>
-                <ResponsivePie
-                  data={data}
-                  margin={{ top: 30, right: 10, bottom: 30, left: 40 }}
-                  innerRadius={0.5}
-                  padAngle={0.7}
-                  cornerRadius={3}
-                  activeOuterRadiusOffset={8}
-                  borderWidth={1}
-                  borderColor={{
-                    from: "color",
-                    modifiers: [["darker", 0.2]],
-                  }}
-                  arcLinkLabelsSkipAngle={10}
-                  arcLinkLabelsTextColor="#333333"
-                  arcLinkLabelsThickness={2}
-                  arcLinkLabelsColor={{ from: "color" }}
-                  arcLabelsSkipAngle={10}
-                  arcLabelsTextColor={{
-                    from: "color",
-                    modifiers: [["darker", 8]],
-                  }}
-                  defs={[
-                    {
-                      id: "dots",
-                      type: "patternDots",
-                      background: "inherit",
-                      color: "rgba(255, 255, 255, 0.3)",
-                      size: 4,
-                      padding: 1,
-                      stagger: true,
-                    },
-                    {
-                      id: "lines",
-                      type: "patternLines",
-                      background: "inherit",
-                      color: "rgba(255, 255, 255, 0.3)",
-                      rotation: -45,
-                      lineWidth: 6,
-                      spacing: 10,
-                    },
-                  ]}
-                  fill={[
-                    {
-                      match: {
-                        id: "ruby",
-                      },
-                      id: "dots",
-                    },
-                    {
-                      match: {
-                        id: "c",
-                      },
-                      id: "dots",
-                    },
-                    {
-                      match: {
-                        id: "go",
-                      },
-                      id: "dots",
-                    },
-                    {
-                      match: {
-                        id: "python",
-                      },
-                      id: "dots",
-                    },
-                    {
-                      match: {
-                        id: "scala",
-                      },
-                      id: "lines",
-                    },
-                    {
-                      match: {
-                        id: "lisp",
-                      },
-                      id: "lines",
-                    },
-                    {
-                      match: {
-                        id: "elixir",
-                      },
-                      id: "lines",
-                    },
-                    {
-                      match: {
-                        id: "javascript",
-                      },
-                      id: "lines",
-                    },
-                  ]}
-                />
-              </div>
-                  </> : <>
+                    <ResponsivePie
+                      data={data}
+                      margin={{ top: 30, right: 10, bottom: 30, left: 40 }}
+                      innerRadius={0.5}
+                      padAngle={0.7}
+                      cornerRadius={3}
+                      activeOuterRadiusOffset={8}
+                      borderWidth={1}
+                      borderColor={{
+                        from: "color",
+                        modifiers: [["darker", 0.2]],
+                      }}
+                      arcLinkLabelsSkipAngle={10}
+                      arcLinkLabelsTextColor="#333333"
+                      arcLinkLabelsThickness={2}
+                      arcLinkLabelsColor={{ from: "color" }}
+                      arcLabelsSkipAngle={10}
+                      arcLabelsTextColor={{
+                        from: "color",
+                        modifiers: [["darker", 8]],
+                      }}
+                      defs={[
+                        {
+                          id: "dots",
+                          type: "patternDots",
+                          background: "inherit",
+                          color: "rgba(255, 255, 255, 0.3)",
+                          size: 4,
+                          padding: 1,
+                          stagger: true,
+                        },
+                        {
+                          id: "lines",
+                          type: "patternLines",
+                          background: "inherit",
+                          color: "rgba(255, 255, 255, 0.3)",
+                          rotation: -45,
+                          lineWidth: 6,
+                          spacing: 10,
+                        },
+                      ]}
+                      fill={[
+                        {
+                          match: {
+                            id: "ruby",
+                          },
+                          id: "dots",
+                        },
+                        {
+                          match: {
+                            id: "c",
+                          },
+                          id: "dots",
+                        },
+                        {
+                          match: {
+                            id: "go",
+                          },
+                          id: "dots",
+                        },
+                        {
+                          match: {
+                            id: "python",
+                          },
+                          id: "dots",
+                        },
+                        {
+                          match: {
+                            id: "scala",
+                          },
+                          id: "lines",
+                        },
+                        {
+                          match: {
+                            id: "lisp",
+                          },
+                          id: "lines",
+                        },
+                        {
+                          match: {
+                            id: "elixir",
+                          },
+                          id: "lines",
+                        },
+                        {
+                          match: {
+                            id: "javascript",
+                          },
+                          id: "lines",
+                        },
+                      ]}
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
                   <div
-                            className="d-flex justify-content-center align-items-center"
-                            style={{ height: 300, width: "100%" }}
-                          >
-                            <div style={{ textAlign: "center" }}>
-                              <CircularProgress color="inherit" />
-                              
-                            </div>
-                          </div>
-                  </>
-                }
-              
+                    className="d-flex justify-content-center align-items-center"
+                    style={{ height: 300, width: "100%" }}
+                  >
+                    <div style={{ textAlign: "center" }}>
+                      <CircularProgress color="inherit" />
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </Box>
 
@@ -791,7 +794,7 @@ function Dashboard() {
           >
             <div className="col-12 listing-msme p-4 shadow rounded-3 mb-4">
               <div className="col-12 mt-1">
-                <p className="list-group">All MSME List</p>
+                <p className="list-groupp">All MSME List</p>
                 {allMSMEList ? (
                   <>
                     <Box sx={{ height: 500, width: "100%" }}>
@@ -799,6 +802,9 @@ function Dashboard() {
                         rows={rows}
                         columns={columns}
                         sx={{
+                          "& .MuiDataGrid-root": {
+                            fontFamily: "Montserrat, sans-serif",
+                          },
                           "& .status-pending": {
                             color: "rgb(234, 156, 0)",
                           },
@@ -809,16 +815,22 @@ function Dashboard() {
                             color: "green",
                           },
                           "& .MuiDataGrid-columnHeaders": {
-                            fontWeight: "bold",
+                            fontWeight: 800,
+                            fontFamily: "Montserrat, sans-serif",
                           },
                           "& .MuiDataGrid-columnHeaderTitle": {
-                            fontWeight: "bold",
+                            fontWeight: 600,
+                            fontFamily: "Montserrat, sans-serif",
+                          },
+                          "& .MuiDataGrid-cell": {
+                            fontWeight: 400,
+                            fontFamily: "Montserrat, sans-serif",
                           },
                         }}
                         initialState={{
                           pagination: {
                             paginationModel: {
-                              pageSize: 25, 
+                              pageSize: 25,
                             },
                           },
                         }}
@@ -827,6 +839,7 @@ function Dashboard() {
                         disableRowSelectionOnClick
                       />
                     </Box>
+                    ;
                   </>
                 ) : (
                   <>

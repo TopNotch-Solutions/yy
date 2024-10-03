@@ -83,7 +83,7 @@ const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
                 }}
                 style={{ textDecoration: "none" }}
               >
-                <h3 className="title text">In4msme Portal</h3>
+                <h4 className="title text">In4msme Portal</h4>
               </NavLink>
             </Tooltip>
           </div>

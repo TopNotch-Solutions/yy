@@ -17,7 +17,7 @@
   }
   .close_icon{
     cursor: pointer;
-    margin-left: 1px;
+    margin-left: 5px;
     margin-top: 10px;
   }
   .header{
@@ -60,7 +60,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px 15px 0px 10px;
-    margin-bottom: 25px;
+    margin-bottom: 29px;
   }
   .sidebar-title > span{
     display: none;

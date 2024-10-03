@@ -826,7 +826,7 @@ function Bso() {
                   
                 </div>
                 <div className="col-12 mt-1">
-                  <p className="list-group">BSO List</p>
+                  <p className="list-groupp">BSO List</p>
                   {totalBsos ? (
                     <>
                       <Box sx={{ height: 500, width: "100%" }}>
@@ -834,8 +834,11 @@ function Bso() {
                           rows={filteredRows}
                           columns={columns}
                           sx={{
+                            "& .MuiDataGrid-root": {
+                              fontFamily: "Montserrat, sans-serif",
+                            },
                             "& .status-pending": {
-                              color: "yellow",
+                              color: "rgb(234, 156, 0)",
                             },
                             "& .status-rejected": {
                               color: "red",
@@ -844,10 +847,16 @@ function Bso() {
                               color: "green",
                             },
                             "& .MuiDataGrid-columnHeaders": {
-                              fontWeight: "bold",
+                              fontWeight: 800,
+                              fontFamily: "Montserrat, sans-serif",
                             },
                             "& .MuiDataGrid-columnHeaderTitle": {
-                              fontWeight: "bold",
+                              fontWeight: 600,
+                              fontFamily: "Montserrat, sans-serif",
+                            },
+                            "& .MuiDataGrid-cell": {
+                              fontWeight: 400,
+                              fontFamily: "Montserrat, sans-serif",
                             },
                           }}
                           initialState={{

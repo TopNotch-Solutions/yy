@@ -827,12 +827,15 @@ const rowsAll = allMSMEList.map((msme) => ({
               {
                 activeTab === 0 &&<>
                   <div className="col-12 mt-1">
-                <p className="list-group">All Reports</p>
+                <p className="list-groupp">All Reports</p>
                 <Box sx={{ height: 400, width: "100%" }}>
                   <DataGrid
                     rows={rows}
                     columns={columns}
                     sx={{
+                      "& .MuiDataGrid-root": {
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                       "& .status-pending": {
                         color: "rgb(234, 156, 0)",
                       },
@@ -843,11 +846,17 @@ const rowsAll = allMSMEList.map((msme) => ({
                         color: "green",
                       },
                       "& .MuiDataGrid-columnHeaders": {
-      fontWeight: 'bold', 
-    },
-    "& .MuiDataGrid-columnHeaderTitle": {
-      fontWeight: 'bold', 
-    }
+                        fontWeight: 800,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-columnHeaderTitle": {
+                        fontWeight: 600,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-cell": {
+                        fontWeight: 400,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                     }}
                     initialState={{
                       pagination: {
@@ -867,7 +876,7 @@ const rowsAll = allMSMEList.map((msme) => ({
               {
                 activeTab === 1 &&<>
                 <div className="col-12 mt-1">
-                <p className="list-group text-center">All Approved MSMEs Report</p>
+                <p className="list-groupp text-center">All Approved MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
                     {allMSMEList.length > 0 ? <><DownloadButton onClick={handleDownloadAllMSME}/></> :null}
@@ -877,6 +886,9 @@ const rowsAll = allMSMEList.map((msme) => ({
                     rows={rowsAll}
                     columns={columns1}
                     sx={{
+                      "& .MuiDataGrid-root": {
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                       "& .status-pending": {
                         color: "rgb(234, 156, 0)",
                       },
@@ -887,11 +899,17 @@ const rowsAll = allMSMEList.map((msme) => ({
                         color: "green",
                       },
                       "& .MuiDataGrid-columnHeaders": {
-      fontWeight: 'bold', 
-    },
-    "& .MuiDataGrid-columnHeaderTitle": {
-      fontWeight: 'bold', 
-    }
+                        fontWeight: 800,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-columnHeaderTitle": {
+                        fontWeight: 600,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-cell": {
+                        fontWeight: 400,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                     }}
                     initialState={{
                       pagination: {
@@ -911,7 +929,7 @@ const rowsAll = allMSMEList.map((msme) => ({
               {
                 activeTab === 2 &&<>
                 <div className="col-12 mt-1">
-                <p className="list-group text-center">All Pending MSMEs Report</p>
+                <p className="list-groupp text-center">All Pending MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
                     {allMSMEPendingList.length > 0 ? <><DownloadButton onClick={handleDownloadAllMSMEPending}/></> : null}
@@ -921,6 +939,9 @@ const rowsAll = allMSMEList.map((msme) => ({
                     rows={rowsAllPending}
                     columns={columns2}
                     sx={{
+                      "& .MuiDataGrid-root": {
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                       "& .status-pending": {
                         color: "rgb(234, 156, 0)",
                       },
@@ -931,11 +952,17 @@ const rowsAll = allMSMEList.map((msme) => ({
                         color: "green",
                       },
                       "& .MuiDataGrid-columnHeaders": {
-      fontWeight: 'bold', 
-    },
-    "& .MuiDataGrid-columnHeaderTitle": {
-      fontWeight: 'bold', 
-    }
+                        fontWeight: 800,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-columnHeaderTitle": {
+                        fontWeight: 600,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-cell": {
+                        fontWeight: 400,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                     }}
                     initialState={{
                       pagination: {
@@ -955,7 +982,7 @@ const rowsAll = allMSMEList.map((msme) => ({
               {
                 activeTab === 3 &&<>
                 <div className="col-12 mt-1">
-                <p className="list-group text-center">All Rejected MSMEs Report</p>
+                <p className="list-groupp text-center">All Rejected MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
   <BackButton onClick={() => setActiveTab(0)} />
   {allMSMERejectedList.length > 0 ? (
@@ -968,6 +995,9 @@ const rowsAll = allMSMEList.map((msme) => ({
                     rows={rowsRejected}
                     columns={columns3}
                     sx={{
+                      "& .MuiDataGrid-root": {
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                       "& .status-pending": {
                         color: "rgb(234, 156, 0)",
                       },
@@ -978,11 +1008,17 @@ const rowsAll = allMSMEList.map((msme) => ({
                         color: "green",
                       },
                       "& .MuiDataGrid-columnHeaders": {
-      fontWeight: 'bold', 
-    },
-    "& .MuiDataGrid-columnHeaderTitle": {
-      fontWeight: 'bold', 
-    }
+                        fontWeight: 800,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-columnHeaderTitle": {
+                        fontWeight: 600,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-cell": {
+                        fontWeight: 400,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                     }}
                     initialState={{
                       pagination: {
@@ -1002,7 +1038,7 @@ const rowsAll = allMSMEList.map((msme) => ({
               {
                 activeTab === 5 &&<>
                 <div className="col-12 mt-1">
-                <p className="list-group text-center">All BSO Report</p>
+                <p className="list-groupp text-center">All BSO Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
                     {
@@ -1015,6 +1051,9 @@ const rowsAll = allMSMEList.map((msme) => ({
                     rows={rowsBSO}
                     columns={column4}
                     sx={{
+                      "& .MuiDataGrid-root": {
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                       "& .status-pending": {
                         color: "rgb(234, 156, 0)",
                       },
@@ -1025,11 +1064,17 @@ const rowsAll = allMSMEList.map((msme) => ({
                         color: "green",
                       },
                       "& .MuiDataGrid-columnHeaders": {
-      fontWeight: 'bold', 
-    },
-    "& .MuiDataGrid-columnHeaderTitle": {
-      fontWeight: 'bold', 
-    }
+                        fontWeight: 800,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-columnHeaderTitle": {
+                        fontWeight: 600,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-cell": {
+                        fontWeight: 400,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                     }}
                     initialState={{
                       pagination: {
@@ -1049,7 +1094,7 @@ const rowsAll = allMSMEList.map((msme) => ({
               {
                 activeTab === 6 &&<>
                 <div className="col-12 mt-1">
-                <p className="list-group text-center">All System Users</p>
+                <p className="list-groupp text-center">All System Users</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
                     {
@@ -1061,6 +1106,9 @@ const rowsAll = allMSMEList.map((msme) => ({
                     rows={rowsUsers}
                     columns={columns5}
                     sx={{
+                      "& .MuiDataGrid-root": {
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                       "& .status-pending": {
                         color: "rgb(234, 156, 0)",
                       },
@@ -1071,11 +1119,17 @@ const rowsAll = allMSMEList.map((msme) => ({
                         color: "green",
                       },
                       "& .MuiDataGrid-columnHeaders": {
-      fontWeight: 'bold', 
-    },
-    "& .MuiDataGrid-columnHeaderTitle": {
-      fontWeight: 'bold', 
-    }
+                        fontWeight: 800,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-columnHeaderTitle": {
+                        fontWeight: 600,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-cell": {
+                        fontWeight: 400,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                     }}
                     initialState={{
                       pagination: {
@@ -1095,7 +1149,7 @@ const rowsAll = allMSMEList.map((msme) => ({
               {
                 activeTab === 4 &&<>
                 <div className="col-12 mt-1">
-                <p className="list-group text-center">All Blocked MSMEs Report</p>
+                <p className="list-groupp text-center">All Blocked MSMEs Report</p>
                 <div className="w-100 d-flex justify-content-between">
                   <BackButton onClick={() =>setActiveTab(0)}/>
                     {
@@ -1107,6 +1161,9 @@ const rowsAll = allMSMEList.map((msme) => ({
                     rows={rowsAllBlocked}
                     columns={columns6}
                     sx={{
+                      "& .MuiDataGrid-root": {
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                       "& .status-pending": {
                         color: "rgb(234, 156, 0)",
                       },
@@ -1117,11 +1174,17 @@ const rowsAll = allMSMEList.map((msme) => ({
                         color: "green",
                       },
                       "& .MuiDataGrid-columnHeaders": {
-      fontWeight: 'bold', 
-    },
-    "& .MuiDataGrid-columnHeaderTitle": {
-      fontWeight: 'bold', 
-    }
+                        fontWeight: 800,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-columnHeaderTitle": {
+                        fontWeight: 600,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
+                      "& .MuiDataGrid-cell": {
+                        fontWeight: 400,
+                        fontFamily: "Montserrat, sans-serif",
+                      },
                     }}
                     initialState={{
                       pagination: {

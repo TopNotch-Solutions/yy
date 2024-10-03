@@ -1184,7 +1184,7 @@ const validateFields1 = () => {
                       
                     </div>
                     <div className="col-12 mt-1">
-                      <p className="list-group">Opportunity List</p>
+                      <p className="list-groupp">Opportunity List</p>
                       {opportunitiesList ? (
                         <>
                           <Box sx={{ height: 500, width: "100%" }}>
@@ -1192,8 +1192,11 @@ const validateFields1 = () => {
                               rows={filteredRows}
                               columns={columns}
                               sx={{
+                                "& .MuiDataGrid-root": {
+                                  fontFamily: "Montserrat, sans-serif",
+                                },
                                 "& .status-pending": {
-                                  color: "yellow",
+                                  color: "rgb(234, 156, 0)",
                                 },
                                 "& .status-rejected": {
                                   color: "red",
@@ -1202,10 +1205,16 @@ const validateFields1 = () => {
                                   color: "green",
                                 },
                                 "& .MuiDataGrid-columnHeaders": {
-                                  fontWeight: "bold",
+                                  fontWeight: 800,
+                                  fontFamily: "Montserrat, sans-serif",
                                 },
                                 "& .MuiDataGrid-columnHeaderTitle": {
-                                  fontWeight: "bold",
+                                  fontWeight: 600,
+                                  fontFamily: "Montserrat, sans-serif",
+                                },
+                                "& .MuiDataGrid-cell": {
+                                  fontWeight: 400,
+                                  fontFamily: "Montserrat, sans-serif",
                                 },
                               }}
                               initialState={{
@@ -1269,15 +1278,18 @@ const validateFields1 = () => {
                       
                     </div>
                     <div className="col-12 mt-1">
-                      <p className="list-group">Image List</p>
+                      <p className="list-groupp">Image List</p>
                       {mobileImagesList ? (
                         <>
                           <Box sx={{ height: 500, width: "100%" }}>
                             <DataGrid
                               rows={filteredRows1}
                               sx={{
+                                "& .MuiDataGrid-root": {
+                                  fontFamily: "Montserrat, sans-serif",
+                                },
                                 "& .status-pending": {
-                                  color: "yellow",
+                                  color: "rgb(234, 156, 0)",
                                 },
                                 "& .status-rejected": {
                                   color: "red",
@@ -1286,10 +1298,16 @@ const validateFields1 = () => {
                                   color: "green",
                                 },
                                 "& .MuiDataGrid-columnHeaders": {
-                                  fontWeight: "bold",
+                                  fontWeight: 800,
+                                  fontFamily: "Montserrat, sans-serif",
                                 },
                                 "& .MuiDataGrid-columnHeaderTitle": {
-                                  fontWeight: "bold",
+                                  fontWeight: 600,
+                                  fontFamily: "Montserrat, sans-serif",
+                                },
+                                "& .MuiDataGrid-cell": {
+                                  fontWeight: 400,
+                                  fontFamily: "Montserrat, sans-serif",
                                 },
                               }}
                               columns={columns1}
