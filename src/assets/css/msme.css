@@ -13,8 +13,22 @@
     width: fit-content;
     font-weight: 700;
 }
+.text-boldd{
+  font-weight: 700;
+}
+input::placeholder,
+input,
+textarea,
+.submission,
+.back,
+.btn,
+textarea::placeholder,
+select
+{
+  font-family: "Montserrat", sans-serif;
+}
 .text-bold{
-  font-weight: bold;
+  font-weight: 500;
 }
 .msme-table{
     overflow-x: auto;

@@ -50,6 +50,19 @@ const largeStyle = {
   boxShadow: 24,
   p: 4,
 };
+const largeNotificationStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "50%",
+  height: "80%",
+  overflowY: "auto",
+  bgcolor: "background.paper",
+  border: "2px solid #fff",
+  boxShadow: 24,
+  p: 4,
+};
 
 function Notifications() {
   const theme = useTheme();
@@ -1075,7 +1088,7 @@ function Notifications() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
+        <Box sx={isSmallScreen ? mobileStyle : largeNotificationStyle}>
           <div className="d-flex justify-content-between align-items-center">
             <div></div>
             <h1 className="text-center">Add New Notification</h1>
@@ -1138,7 +1151,7 @@ function Notifications() {
           >
             <Grid item xs={12} sm={6} md={6}>
               <div className="form-group pb-3">
-                <label htmlFor="email" className="pb-2 text-bold">
+                <label htmlFor="email" className="pb-2 text-boldd">
                   Title: <span>*</span>
                 </label>
                 <input
@@ -1160,7 +1173,7 @@ function Notifications() {
                 )}
               </div>
               <div className="form-group pb-3">
-                <label htmlFor="email" className="pb-2 text-bold">
+                <label htmlFor="email" className="pb-2 text-boldd">
                   Prority: <span>*</span>
                 </label>
                 <select
@@ -1190,7 +1203,7 @@ function Notifications() {
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <div className="form-group pb-3">
-                <label htmlFor="email" className="pb-2 text-bold">
+                <label htmlFor="email" className="pb-2 text-boldd">
                   Notification: <span>*</span>
                 </label>
                 <textarea
@@ -1224,7 +1237,7 @@ function Notifications() {
             <Grid item xs={12}>
               <div className="float-end">
                 <button
-                  className="btn btn-success m-1 p-2 modelButton text-bold"
+                  className="btn btn-success m-1 p-2 modelButton text-boldd"
                   onClick={handleStep5}
                 >
                   Send

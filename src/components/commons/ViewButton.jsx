@@ -15,6 +15,7 @@ const ViewButton = ({ onClick }) => {
         paddingLeft: "10px",
         borderRadius: "5px",
         cursor: "pointer",
+        fontFamily:"Montserrat, sans-serif",
         width: "50%",
       }}
     >

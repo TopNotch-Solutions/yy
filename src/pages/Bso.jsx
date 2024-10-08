@@ -930,7 +930,7 @@ function Bso() {
             >
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Name: <span>*</span>
                   </label>
                   <input
@@ -953,7 +953,7 @@ function Bso() {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Type: <span>*</span>
                   </label>
                   <select
@@ -981,7 +981,7 @@ function Bso() {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-3">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Contact Number: <span>*</span>
                   </label>
                   <input
@@ -1004,7 +1004,7 @@ function Bso() {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Website Link:<span>*</span>
                   </label>
                   <input
@@ -1027,7 +1027,7 @@ function Bso() {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Email: <span>*</span>
                   </label>
                   <input
@@ -1098,7 +1098,7 @@ function Bso() {
                 ) : (
                   <>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Logo: <span>*</span>
                       </label>
                       <input
@@ -1121,7 +1121,7 @@ function Bso() {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Description: <span>*</span>
                   </label>
                   <textarea
@@ -1195,7 +1195,7 @@ function Bso() {
             >
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Name: <span>*</span>
                   </label>
                   <input
@@ -1220,7 +1220,7 @@ function Bso() {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Type: <span>*</span>
                   </label>
                   <select
@@ -1250,7 +1250,7 @@ function Bso() {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-3">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Contact Number: <span>*</span>
                   </label>
                   <input
@@ -1275,7 +1275,7 @@ function Bso() {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Website Link:<span>*</span>
                   </label>
                   <input
@@ -1300,7 +1300,7 @@ function Bso() {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Email: <span>*</span>
                   </label>
                   <input
@@ -1377,7 +1377,7 @@ function Bso() {
                 ) : (
                   <>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Logo: <span>*</span>
                       </label>
                       <input
@@ -1400,7 +1400,7 @@ function Bso() {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Description: <span>*</span>
                   </label>
                   <textarea

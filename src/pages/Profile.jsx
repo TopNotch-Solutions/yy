@@ -468,7 +468,7 @@ function Profile() {
         </div>
         <div className="col-12 rounded-3 mt-4 border p-4 d-flex flex-column justify-content-start align-items-start b-g me-3">
           <div className="d-flex justify-content-between align-items-center w-100">
-            <h6>Personal Information</h6>
+            <h6 className="text-boldd">Personal Information</h6>
             <Stack direction="row" spacing={2}>
               {!isEditing ? (
                 <Button
@@ -621,7 +621,7 @@ function Profile() {
           </Grid>
         </div>
         <div className="col-12 rounded-3 mt-4 border p-4 d-flex flex-column justify-content-start align-items-start b-g me-3">
-          <h6>Security Information</h6>
+          <h6 className="text-boldd">Security Information</h6>
           <Grid
             container
             spacing={{ xs: 1, md: 1 }}

@@ -1165,7 +1165,7 @@ function User() {
               >
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="firstName" className="pb-2 text-bold">
+                    <label htmlFor="firstName" className="pb-2 text-boldd">
                       First Name: <span>*</span>
                     </label>
                     <input
@@ -1189,7 +1189,7 @@ function User() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="lastName" className="pb-2 text-bold">
+                    <label htmlFor="lastName" className="pb-2 text-boldd">
                       Last Name: <span>*</span>
                     </label>
                     <input
@@ -1213,7 +1213,7 @@ function User() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="email" className="pb-2 text-bold">
+                    <label htmlFor="email" className="pb-2 text-boldd">
                       Email: <span>*</span>
                     </label>
                     <input
@@ -1237,7 +1237,7 @@ function User() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="department" className="pb-2 text-bold">
+                    <label htmlFor="department" className="pb-2 text-boldd">
                       Department: <span>*</span>
                     </label>
                     <select
@@ -1266,7 +1266,7 @@ function User() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="role" className="pb-2 text-bold">
+                    <label htmlFor="role" className="pb-2 text-boldd">
                       Role: <span>*</span>
                     </label>
                     <select
@@ -1295,7 +1295,7 @@ function User() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="contactNumber" className="pb-2 text-bold">
+                    <label htmlFor="contactNumber" className="pb-2 text-boldd">
                       Contact Number: <span>*</span>
                     </label>
                     <input
@@ -1319,7 +1319,7 @@ function User() {
                 </Grid>
                 <div className="d-flex justify-content-center w-100 mt-md-4">
                   <button
-                    className="btn btn-success m-1 p-2 w-50 text-bold"
+                    className="btn btn-success m-1 p-2 w-50 text-boldd"
                     onClick={handleSubmit}
                   >
                     Submit
@@ -1378,7 +1378,7 @@ function User() {
               >
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="firstName" className="pb-2 text-bold">
+                    <label htmlFor="firstName" className="pb-2 text-boldd">
                       First Name: <span>*</span>
                     </label>
                     <input
@@ -1403,7 +1403,7 @@ function User() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="lastName" className="pb-2 text-bold">
+                    <label htmlFor="lastName" className="pb-2 text-boldd">
                       Last Name: <span>*</span>
                     </label>
                     <input
@@ -1428,7 +1428,7 @@ function User() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="email" className="pb-2 text-bold">
+                    <label htmlFor="email" className="pb-2 text-boldd">
                       Email: <span>*</span>
                     </label>
                     <input
@@ -1453,7 +1453,7 @@ function User() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="department" className="pb-2 text-bold">
+                    <label htmlFor="department" className="pb-2 text-boldd">
                       Department: <span>*</span>
                     </label>
                     <select
@@ -1483,7 +1483,7 @@ function User() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="role" className="pb-2 text-bold">
+                    <label htmlFor="role" className="pb-2 text-boldd">
                       Role: <span>*</span>
                     </label>
                     <select
@@ -1513,7 +1513,7 @@ function User() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <div className="form-group pb-md-2">
-                    <label htmlFor="contactNumberDetails" className="pb-2 text-bold">
+                    <label htmlFor="contactNumberDetails" className="pb-2 text-boldd">
                       Contact Number: <span>*</span>
                     </label>
                     <input
@@ -1540,7 +1540,7 @@ function User() {
                 </Grid>
                 <div className="d-flex justify-content-center w-100 mt-md-4">
                   <button
-                    className="btn btn-success m-1 p-2 w-50 text-bold"
+                    className="btn btn-success m-1 p-2 w-50 text-boldd"
                     onClick={handleSubmitUpdate}
                   >
                     Update

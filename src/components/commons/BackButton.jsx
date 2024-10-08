@@ -16,6 +16,7 @@ const BackButton = ({ onClick }) => {
         padding: "6px",
         paddingLeft: "10px",
         borderRadius: "5px",
+        fontFamily:"Montserrat, sans-serif",
         cursor: "pointer",
         width: isSmallScreen ? "30%" : "13%",
       }}

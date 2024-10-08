@@ -1427,7 +1427,7 @@ const validateFields1 = () => {
                 <>
                   <Grid item xs={12} sm={6} md={6}>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Description: <span>*</span>
                       </label>
                       <textarea
@@ -1450,7 +1450,7 @@ const validateFields1 = () => {
                       )}
                     </div>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Link:
                       </label>
                       <input
@@ -1525,7 +1525,7 @@ const validateFields1 = () => {
                     ) : (
                       <>
                         <div className="form-group pb-md-2">
-                          <label htmlFor="email" className="pb-2 text-bold">
+                          <label htmlFor="email" className="pb-2 text-boldd">
                             Image: <span>*</span>
                           </label>
                           <input
@@ -1557,7 +1557,7 @@ const validateFields1 = () => {
                 <>
                   <Grid item xs={12} sm={6} md={6}>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Description: <span>*</span>
                       </label>
                       <textarea
@@ -1580,7 +1580,7 @@ const validateFields1 = () => {
                       )}
                     </div>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Link:
                       </label>
                       <input
@@ -1655,7 +1655,7 @@ const validateFields1 = () => {
                     ) : (
                       <>
                         <div className="form-group pb-md-2">
-                          <label htmlFor="email" className="pb-2 text-bold">
+                          <label htmlFor="email" className="pb-2 text-boldd">
                             Image: <span>*</span>
                           </label>
                           <input
@@ -1720,7 +1720,7 @@ const validateFields1 = () => {
             >
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Description: <span>*</span>
                   </label>
                   <input
@@ -1794,7 +1794,7 @@ const validateFields1 = () => {
                 ) : (
                   <>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Image: <span>*</span>
                       </label>
                       <input
@@ -1913,7 +1913,7 @@ const validateFields1 = () => {
                 <>
                   <Grid item xs={12} sm={6} md={6}>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Description: <span>*</span>
                       </label>
                       <textarea
@@ -1939,7 +1939,7 @@ const validateFields1 = () => {
                       )}
                     </div>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Link:
                       </label>
                       <input
@@ -2019,7 +2019,7 @@ const validateFields1 = () => {
                     ) : (
                       <>
                         <div className="form-group pb-md-2">
-                          <label htmlFor="email" className="pb-2 text-bold">
+                          <label htmlFor="email" className="pb-2 text-boldd">
                             Image: <span>*</span>
                           </label>
                           <input
@@ -2054,7 +2054,7 @@ const validateFields1 = () => {
                 <>
                   <Grid item xs={12} sm={6} md={6}>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Description: <span>*</span>
                       </label>
                       <textarea
@@ -2080,7 +2080,7 @@ const validateFields1 = () => {
                       )}
                     </div>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Link:
                       </label>
                       <input
@@ -2161,7 +2161,7 @@ const validateFields1 = () => {
                     ) : (
                       <>
                         <div className="form-group pb-md-2">
-                          <label htmlFor="email" className="pb-2 text-bold">
+                          <label htmlFor="email" className="pb-2 text-boldd">
                             Image: <span>*</span>
                           </label>
                           <input
@@ -2237,7 +2237,7 @@ const validateFields1 = () => {
             >
               <Grid item xs={12} sm={6} md={6}>
                 <div className="form-group pb-md-2">
-                  <label htmlFor="email" className="pb-2 text-bold">
+                  <label htmlFor="email" className="pb-2 text-boldd">
                     Description: <span>*</span>
                   </label>
                   <input
@@ -2320,7 +2320,7 @@ const validateFields1 = () => {
                 ) : (
                   <>
                     <div className="form-group pb-md-2">
-                      <label htmlFor="email" className="pb-2 text-bold">
+                      <label htmlFor="email" className="pb-2 text-boldd">
                         Image: <span>*</span>
                       </label>
                       <input
