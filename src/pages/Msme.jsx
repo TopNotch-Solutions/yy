@@ -6720,10 +6720,10 @@ function Msme() {
                                 Business image 1:
                               </label>
                             </div>
-                            <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
+                            <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3">
                               <div className="position-relative">
                                 <div
-                                  className="bg-white rounded-circle position-absolute camera-topp d-flex align-items-center justify-content-center "
+                                  className="bg-white rounded-circle position-absolute camera-topp d-flex align-items-center justify-content-center"
                                   style={{
                                     width: "30px",
                                     height: "30px",
