@@ -98,10 +98,12 @@ function Msme() {
   const [totalRegisteration, setTotalRegistration] = useState("");
   const [pendingRegisteration, setPendingRegistration] = useState("");
   const [rejectedRegisteration, setRejectedRegistration] = useState("");
+  const [incompleteRegisteration, setIncompleteRegistration] = useState("");
   const [allMSMEList, setAllMSMEList] = useState([]);
   const [pendingMSMEList, setPendingMSMEList] = useState([]);
   const [rejectedMSMEList, setRejectedMSMEList] = useState([]);
   const [approvedMSMEList, setApprovedMSMEList] = useState([]);
+  const [incompleteMSMEList, setIncompleteMSMEList] = useState([]);
   const [approvedRegisteration, setIApprovedRegistration] = useState("");
   const [stepperCounter, setStepperCounter] = useState(0);
   const [buttonActive, setButonActive] = useState(1);
@@ -414,6 +416,13 @@ function Msme() {
     setImage3Details("");
     setStepperCounter(0);
     setOpenModelView(false);
+    setMondayDetailsError("");
+                    setTuesdayDetailsError("");
+                    setWednesdayDetailsError("");
+                    setThursdayDetailsError("");
+                    setFridayDetailsError("");
+                    setSaturdayDetailsError("");
+                    setSundayDetailsError("");
   };
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -599,6 +608,48 @@ function Msme() {
 
     fetchApprovedCount();
   }, [isSubmitting]);
+  useEffect(() => {
+    const fetchIncompleteCount = async () => {
+      try {
+        dispatch(toggleIsSubmittingTrue());
+        const response = await fetch(
+          "http://localhost:4000/msme/admin/incompleteCount",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
+            },
+            credentials: "include",
+          }
+        );
+
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
+        }
+
+        if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
+          setIncompleteRegistration(data.count);
+        } else {
+          dispatch(toggleIsSubmittingfalse());
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
+        }
+      } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
+        handleAuthFailure({ dispatch, navigate, type: "network" });
+      }
+    };
+
+    fetchIncompleteCount();
+  }, [isSubmitting]);
 
   useEffect(() => {
     const fetchMsmeAllMSME = async () => {
@@ -771,6 +822,51 @@ function Msme() {
     fetchMsmeApprovedMSME();
   }, [isSubmitting]);
 
+  useEffect(() => {
+    const fetchMsmeIncompleteMSME = async () => {
+      try {
+        dispatch(toggleIsSubmittingTrue());
+        const response = await fetch(
+          "http://localhost:4000/msme/admin/all/incomplete",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
+            },
+            credentials: "include",
+          }
+        );
+
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
+        }
+
+        console.log(data.message);
+        if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
+          setIncompleteMSMEList(data.data);
+        } else {
+          console.log("else is getting executed");
+          dispatch(toggleIsSubmittingfalse());
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
+        }
+      } catch (error) {
+        console.log("catch is getting executed");
+        dispatch(toggleIsSubmittingfalse());
+        handleAuthFailure({ dispatch, navigate, type: "network" });
+      }
+    };
+
+    fetchMsmeIncompleteMSME();
+  }, [isSubmitting]);
   useEffect(() => {
     const fetchAllRegions = async () => {
       try {
@@ -1460,8 +1556,8 @@ function Msme() {
         isValid = false;
       } else {
 
-        if (field.value !== "closed" && !timeFormatRegex.test(field.value)) {
-          field.setError(`${field.name} has an invalid time format. Expected format is 12:00 AM - 12:00 PM or "closed".`);
+        if (field.value !== "Closed" && !timeFormatRegex.test(field.value)) {
+          field.setError(`${field.name} has an invalid time format. Expected format is 12-hour formate(e.g. 12:00 AM - 12:00 PM) or "Closed".`);
           isValid = false;
         } else {
   
@@ -1548,37 +1644,37 @@ function Msme() {
     if (validateFields4()) {
       const updatedTimes = {
         monday: !isMondayClosed
-          ? "closed"
+          ? "Closed"
           : `${convertTo12HourFormat(mondayFrom)} - ${convertTo12HourFormat(
               mondayTo
             )}`,
         tuesday: !isTuesdayClosed
-          ? "closed"
+          ? "Closed"
           : `${convertTo12HourFormat(tuesdayFrom)} - ${convertTo12HourFormat(
               tuesdayTo
             )}`,
         wednesday: !isWednesdayClosed
-          ? "closed"
+          ? "Closed"
           : `${convertTo12HourFormat(wednesdayFrom)} - ${convertTo12HourFormat(
               wednesdayTo
             )}`,
         thursday: !isThursdayClosed
-          ? "closed"
+          ? "Closed"
           : `${convertTo12HourFormat(thursdayFrom)} - ${convertTo12HourFormat(
               thursdayTo
             )}`,
         friday: !isFridayClosed
-          ? "closed"
+          ? "Closed"
           : `${convertTo12HourFormat(fridayFrom)} - ${convertTo12HourFormat(
               fridayTo
             )}`,
         saturday: !isSaturdayClosed
-          ? "closed"
+          ? "Closed"
           : `${convertTo12HourFormat(saturdayFrom)} - ${convertTo12HourFormat(
               saturdayTo
             )}`,
         sunday: !isSundayClosed
-          ? "closed"
+          ? "Closed"
           : `${convertTo12HourFormat(sundayFrom)} - ${convertTo12HourFormat(
               sundayTo
             )}`,
@@ -1872,7 +1968,25 @@ function Msme() {
       handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
-  const rowsIncomplete = [];
+  const rowsIncomplete = incompleteMSMEList.map((msme) => ({
+    id: msme.id,
+    registrationName: msme.registrationName,
+    email: msme?.email,
+    region: msme.region,
+    town: msme.town,
+    primaryIndustry: msme.primaryIndustry,
+    annualTurnover: msme.annualTurnOver,
+    foundersName: msme.foundersName,
+    status: msme.status,
+    isBlocked: msme.isBlocked,
+    createdAt: msme.createdAt,
+  }));
+
+  const rowsIncompleteFiltered = rowsIncomplete.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toString().toLowerCase().includes(searchQueryIncomplete.toLowerCase())
+    )
+  );
 
   const columns = [
     {
@@ -2979,7 +3093,7 @@ function Msme() {
               gridAutoRows="140px"
               gap={isSmallScreen ? "0px" : "10px"}
             >
-              <Box
+              {/* <Box
                 marginTop={"10px"}
                 gridColumn={isSmallScreen ? "span 12" : "span 3"}
                 display="flex"
@@ -3002,7 +3116,7 @@ function Msme() {
                     </Tooltip>
                   </div>
                 </div>
-              </Box>
+              </Box> */}
 
               <Box
                 marginTop={"10px"}
@@ -3021,7 +3135,10 @@ function Msme() {
                   </div>
                   <div className="d-flex align-items-center justify-content-start text-center">
                     <div className="p-1 border rounded-2">
-                      <StickyNote2Icon sx={{ color: "rgba(0, 149, 71, 1)" }} />
+                      
+                       <StickyNote2Icon
+                        sx={{ color: "rgba(251, 177, 34, 1)" }}
+                      />
                     </div>
                     <Tooltip title={pendingRegisteration}>
                       <p className="digit text pointer">
@@ -3077,13 +3194,38 @@ function Msme() {
                   </div>
                   <div className="d-flex align-items-center justify-content-start text-center">
                     <div className="p-1 border rounded-2">
-                      <StickyNote2Icon
-                        sx={{ color: "rgba(251, 177, 34, 1)" }}
-                      />
+                    <StickyNote2Icon sx={{ color: "rgba(0, 149, 71, 1)" }} />
                     </div>
                     <Tooltip title={approvedRegisteration}>
                       <p className="digit text pointer">
                         {approvedRegisteration}
+                      </p>
+                    </Tooltip>
+                  </div>
+                </div>
+              </Box>
+              <Box
+                marginTop={"10px"}
+                gridColumn={isSmallScreen ? "span 12" : "span 3"}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <div className="col-12 p-4 shadow rounded-2">
+                  <div className="d-flex justify-content-between">
+                    <Tooltip title="Incomplete Registrations" className="pointer">
+                      <p className="text">Incomplete Registrations</p>
+                    </Tooltip>
+
+                    <ArrowForwardIosIcon />
+                  </div>
+                  <div className="d-flex align-items-center justify-content-start text-center">
+                    <div className="p-1 border rounded-2">
+                    <StickyNote2Icon sx={{ color: "rgba(21, 78, 138, 1)" }} />
+                    </div>
+                    <Tooltip title={incompleteRegisteration}>
+                      <p className="digit text pointer">
+                        {incompleteRegisteration}
                       </p>
                     </Tooltip>
                   </div>
@@ -3464,7 +3606,7 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for a incomplete"
-                            //onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={(e) => setSearchQueryIncomplete(e.target.value)}
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
@@ -3482,7 +3624,7 @@ function Msme() {
                         <p className="list-groupp">Incomplete MSME List</p>
                         <Box sx={{ height: 500, width: "100%" }}>
                           <DataGrid
-                            rows={rowsIncomplete}
+                            rows={rowsIncompleteFiltered}
                             columns={columns}
                             sx={{
                               "& .MuiDataGrid-root": {
@@ -5505,6 +5647,13 @@ function Msme() {
                     setTypeOfBusinessDetails("");
                     setRegionDetails("");
                     setTownDetails("");
+                    setMondayDetailsError("");
+                    setTuesdayDetailsError("");
+                    setWednesdayDetailsError("");
+                    setThursdayDetailsError("");
+                    setFridayDetailsError("");
+                    setSaturdayDetailsError("");
+                    setSundayDetailsError("");
                     setPrimaryIndustryDetails("");
                     setSecondaryIndustryDetails("");
                     setYearOfEstablishmentDetails("");
@@ -5838,7 +5987,7 @@ function Msme() {
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
                         <label htmlFor="email" className="pb-2 text-boldd">
-                          Secondary Industry: <span>*</span>
+                          Secondary Industry:
                         </label>
                         <select
                           class="form-select"
