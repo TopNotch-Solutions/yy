@@ -4,7 +4,6 @@ import { login } from "../redux/reducers/authReducer";
 
 const handleAuthFailure = ({dispatch, navigate, type}) => {
     if (type === 'auth') {
-    
       dispatch(toggleSidebarfalse());
       dispatch(login({ user: {} }));
       navigate("/");

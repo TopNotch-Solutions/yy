@@ -3,6 +3,7 @@ import { IconButton, useTheme, useMediaQuery } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { toggleIsSubmittingTrue,toggleIsSubmittingfalse } from "../redux/reducers/submittingReducer";
 import InputBase from "@mui/material/InputBase";
+import Select from "react-select";
 import "../assets/css/notifications.css";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -88,12 +89,15 @@ function Notifications() {
   const [allUnread, setAllUnread] = useState([]);
   const [allRead, setAllRead] = useState([]);
   const [allSent, setAllSent] = useState([]);
+  const [allUserList, setAllUserList] = useState([]);
+  const [userId, setUserId] = useState("");
+  const [userIdError, setUserIdError] = useState("");
   const [singleAdminNotification, setSingleAdminNotification] = useState([]);
   const [sentAdminNotification, setSentAdminNotification] = useState({});
   const [openModel, setOpenModel] = useState(false);
   const [openModelSent, setOpenModelSent] = useState(false);
   const [openModelView, setOpenModelView] = useState(false);
-
+  const DropdownIndicator = () => null;
   const tokenHeader = currentUser.token;
   const handleOpen = () => setOpenModel(true);
   const handleOpenSent = () => setOpenModelSent(true);
@@ -111,6 +115,48 @@ function Notifications() {
   const handleCloseSent = () => {
     setOpenModelSent(false);
   };
+  useEffect(() => {
+    const fetchAllUser = async () => {
+      try {
+        dispatch(toggleIsSubmittingTrue());
+        const response = await fetch(
+          "http://localhost:4000/msme/admin/all/user",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
+            },
+            credentials: "include",
+          }
+        );
+
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+
+        if (newTokenHeader) {
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
+        }
+
+        if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
+          setAllUserList(data.data);
+        } else {
+          dispatch(toggleIsSubmittingfalse());
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
+        }
+      } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
+        handleAuthFailure({ dispatch, navigate, type: "network" });
+      }
+    };
+
+    fetchAllUser();
+  }, [isSubmitting]);
   useEffect(() => {
     const fetchAllAdminNotifications = async () => {
       try {
@@ -286,8 +332,89 @@ function Notifications() {
     fetchAllRead();
   }, [isSubmitting]);
 
+  const userOptions = allUserList.map((option) => ({
+    label: `${option.firstName} ${option.lastName}`,
+    value: option.id,
+  }));
+
   const handleStep5 = async () => {
     if (validateFields()) {
+      try {
+        dispatch(toggleIsSubmittingTrue());
+        setIsSubmitting(true);
+        const requestData = {
+          title,
+          priority,
+          notification,
+          notificationActive,
+          type: "Alert",
+          senderId: currentUser.id,
+        };
+        const response = await fetch(
+          `http://localhost:4000/notifications/admin/create`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${tokenHeader}`,
+            },
+            credentials: "include",
+            body: JSON.stringify(requestData),
+          }
+        );
+        const data = await response.json();
+        const newTokenHeader = response.headers.get("Authorization");
+        
+        if (newTokenHeader) {
+          dispatch(
+            updateToken({
+              token: newTokenHeader,
+            })
+          );
+        }else{
+          handleAuthFailure({ dispatch, navigate, type: "auth" });
+        }
+
+        if (response.ok) {
+          dispatch(toggleIsSubmittingfalse());
+          setOpenModel(false);
+          setIsSubmitting(false);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Notification successfully added",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          setTitle("");
+          setPriority("");
+          setNotification("");
+        } else {
+          dispatch(toggleIsSubmittingfalse());
+          setIsSubmitting(false);
+          setOpenModel(false);
+          await Swal.fire({
+            position: "center",
+            icon: "error",
+            title: `${data.message}`,
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          setTitle("");
+          setPriority("");
+          setNotification("");
+          
+        }
+      } catch (error) {
+        dispatch(toggleIsSubmittingfalse());
+        setIsSubmitting(false);
+        setOpenModel(false);
+        handleAuthFailure({ dispatch, navigate, type: "network" });
+      }
+    }
+  };
+  const handleStep6 = async () => {
+    if (validateFields1()) {
       try {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
@@ -718,9 +845,29 @@ function Notifications() {
       name: "Notification",
     },
   ];
+  const fields1 = [
+    { value: title, setError: setTitleError, name: "Title" },
+    { value: userId, setError: setUserIdError, name: "MSME name" },
+    {
+      value: notification,
+      setError: setNotificationError,
+      name: "Notification",
+    },
+  ];
   const validateFields = () => {
     let isValid = true;
     fields.forEach((field) => {
+      field.setError("");
+      if (!field.value) {
+        field.setError(`${field.name} is required.`);
+        isValid = false;
+      }
+    });
+    return isValid;
+  };
+  const validateFields1 = () => {
+    let isValid = true;
+    fields1.forEach((field) => {
       field.setError("");
       if (!field.value) {
         field.setError(`${field.name} is required.`);
@@ -1126,7 +1273,7 @@ function Notifications() {
                     setNotificationActive("All");
                   }}
                 >
-                  All
+                  All Users
                 </button>
                 <button
                   className={
@@ -1138,12 +1285,26 @@ function Notifications() {
                     setNotificationActive("Business");
                   }}
                 >
-                  Business
+                  All Business Users
                 </button>
+                {/* <button
+                  className={
+                    notificationActive === "Single"
+                      ? "btn btn-success m-1 p-2 p-xl-3 flex-grow-1"
+                      : "btn button-grey m-1 p-2 p-xl-3 flex-grow-1"
+                  }
+                  onClick={() => {
+                    setNotificationActive("Single");
+                  }}
+                >
+                  MSME User
+                </button> */}
               </div>
             </div>
           </div>
-          <Grid
+          {
+            (notificationActive === "All" || notificationActive === "Business") ? (
+              <Grid
             container
             spacing={{ xs: 1, md: 1 }}
             columns={{ xs: 12, sm: 12, md: 12 }}
@@ -1152,7 +1313,7 @@ function Notifications() {
             <Grid item xs={12} sm={6} md={6}>
               <div className="form-group pb-3">
                 <label htmlFor="email" className="pb-2 text-boldd">
-                  Title: <span>*</span>
+                  Subject: <span>*</span>
                 </label>
                 <input
                   type="text"
@@ -1245,6 +1406,112 @@ function Notifications() {
               </div>
             </Grid>
           </Grid>
+            ) : (
+              <Grid
+              container
+              spacing={{ xs: 1, md: 1 }}
+              columns={{ xs: 12, sm: 12, md: 12 }}
+              style={{ marginTop: "10px" }}
+            >
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group pb-3">
+                  <label htmlFor="email" className="pb-2 text-boldd">
+                    Subject: <span>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={title}
+                    className="form-control place-holder"
+                    placeholder="Enter title"
+                    autoComplete="off"
+                    name="email"
+                    onChange={(e) => {
+                      setTitleError("");
+                      setTitle(e.target.value);
+                    }}
+                  />
+                  {titleError && (
+                    <>
+                      <p className="error mt-1">{titleError}</p>
+                    </>
+                  )}
+                </div>
+                <div className="form-group pb-3">
+                              <label htmlFor="email" className="pb-2 text-boldd">
+                                User Name: <span>*</span>
+                              </label>
+                              <Select
+                                value={userOptions.find(
+                                  (option) => option.value === userId
+                                )}
+                                onChange={(selectedOption) => {
+                                  setUserIdError("");
+                                  setUserId(
+                                    selectedOption ? selectedOption.value : ""
+                                  );
+                                  if(!setUserId){
+                                    setUserId("")
+                                  }
+                                }}
+                                options={userOptions}
+                                placeholder="Select user"
+                                isSearchable
+                                classNamePrefix="react-select"
+                                components={{ DropdownIndicator }}
+                              />
+                              {userIdError && (
+                                <>
+                                  <p className="error mt-1">{userIdError}</p>
+                                </>
+                              )}
+                            </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <div className="form-group pb-3">
+                  <label htmlFor="email" className="pb-2 text-boldd">
+                    Notification: <span>*</span>
+                  </label>
+                  <textarea
+                    type="textArea"
+                    rows="5"
+                    cols="50"
+                    value={notification}
+                    className="form-control place-holder"
+                    maxlength="700"
+                    placeholder="Type here.........."
+                    autoComplete="off"
+                    name="email"
+                    onChange={(e) => {
+                      setTextCounter(e.target.value.length);
+                      setNotificationError("");
+                      setNotification(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="float-end text-counter">
+                  <span>{textCounter}</span>
+                  <span>/700</span>
+                </div>
+                {notificationError && (
+                  <>
+                    <p className="error mt-1">{notificationError}</p>
+                  </>
+                )}
+              </Grid>
+  
+              <Grid item xs={12}>
+                <div className="float-end">
+                  <button
+                    className="btn btn-success m-1 p-2 modelButton text-boldd"
+                    onClick={handleStep6}
+                  >
+                    Send
+                  </button>
+                </div>
+              </Grid>
+            </Grid>
+            )
+          }
         </Box>
       </Modal>
       <Modal

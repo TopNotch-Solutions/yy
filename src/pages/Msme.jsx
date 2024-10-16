@@ -18,6 +18,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import { SlOptionsVertical } from "react-icons/sl";
 import Swal from "sweetalert2";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import Backdrop from "@mui/material/Backdrop";
@@ -36,6 +38,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { login } from "../redux/reducers/authReducer";
 import handleAuthFailure from "../utils/handleAuthFailure";
+import { RemoveWhiteSpaces } from "../utils/removeWhiteSpaces";
 
 const mobileStyle = {
   position: "absolute",
@@ -317,10 +320,18 @@ function Msme() {
   const [isSaturdayClosed, setIsSaturdayClosed] = useState(false);
   const [isSundayClosed, setIsSundayClosed] = useState(false);
   const [update, setUpdate] = useState(false);
-  const [removeBusinessProfileImage, setRemoveBusinessProfileImage] = useState(false);
+  const [removeBusinessProfileImage, setRemoveBusinessProfileImage] =
+    useState(false);
   const [removeImage1, setRemoveImage1] = useState(false);
   const [removeImage2, setRemoveImage2] = useState(false);
   const [removeImage3, setRemoveImage3] = useState(false);
+  const [addNotification, setAddNotification] = useState(false);
+  const [notificationTitle, setNotificationTitle] = useState("");
+  const [notificationTitleError, setNotificationTitleError] = useState("");
+  const [notificationDescription, setNotificationDescription] = useState("");
+  const [sendingNotification, setsendingNotification] = useState(false);
+  const [notificationDescriptionError, setNotificationDescriptionError] =
+    useState("");
   const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
@@ -417,12 +428,17 @@ function Msme() {
     setStepperCounter(0);
     setOpenModelView(false);
     setMondayDetailsError("");
-                    setTuesdayDetailsError("");
-                    setWednesdayDetailsError("");
-                    setThursdayDetailsError("");
-                    setFridayDetailsError("");
-                    setSaturdayDetailsError("");
-                    setSundayDetailsError("");
+    setNotificationDescription("");
+    setNotificationTitle("");
+    setNotificationDescriptionError("");
+    setNotificationTitleError("");
+    setAddNotification(false);
+    setTuesdayDetailsError("");
+    setWednesdayDetailsError("");
+    setThursdayDetailsError("");
+    setFridayDetailsError("");
+    setSaturdayDetailsError("");
+    setSundayDetailsError("");
   };
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -1356,7 +1372,7 @@ function Msme() {
       isUrl: true,
     },
   ];
-
+  const fieldsDetails5 = [];
   const fieldsDetails4 = [
     { value: mondayDetails, setError: setMondayDetailsError, name: "Monday" },
     {
@@ -1382,7 +1398,29 @@ function Msme() {
     },
     { value: sundayDetails, setError: setSundayDetailsError, name: "Sunday" },
   ];
-  const fieldsDetails5 = [];
+  const fieldNotification = [
+    {
+      value: notificationDescription,
+      setError: setNotificationDescriptionError,
+      name: "Description",
+    },
+    {
+      value: notificationTitle,
+      setError: setNotificationTitleError,
+      name: "Title",
+    },
+  ];
+  const validateNotification = () => {
+    let isValid = true;
+    fieldNotification.forEach((field) => {
+      field.setError("");
+      if (!field.value) {
+        field.setError(`${field.name} is required.`);
+        isValid = false;
+      }
+    });
+    return isValid;
+  };
   const validateFields1 = () => {
     let isValid = true;
     fields1.forEach((field) => {
@@ -1547,27 +1585,27 @@ function Msme() {
 
   const validateFieldsDetails4 = () => {
     let isValid = true;
-  
+
     fieldsDetails4.forEach((field) => {
-      field.setError(""); 
+      field.setError("");
 
       if (!field.value) {
         field.setError(`${field.name} is required.`);
         isValid = false;
       } else {
-
         if (field.value !== "Closed" && !timeFormatRegex.test(field.value)) {
-          field.setError(`${field.name} has an invalid time format. Expected format is 12-hour formate(e.g. 12:00 AM - 12:00 PM) or "Closed".`);
+          field.setError(
+            `${field.name} has an invalid time format. Expected format is 12-hour formate(e.g. 12:00 AM - 12:00 PM) or "Closed".`
+          );
           isValid = false;
         } else {
-  
           if (timeFormatRegex.test(field.value)) {
             field.value = field.value.replace(/\s*-\s*/, " - ");
           }
         }
       }
     });
-  
+
     return isValid;
   };
 
@@ -1582,11 +1620,8 @@ function Msme() {
     });
     return isValid;
   };
-  const timeFormatRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM) - (0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$|^((0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]) - ((0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9])$|^(0:00 AM - 12:00 PM)$/;
-
-
-
-;
+  const timeFormatRegex =
+    /^(0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM) - (0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$|^((0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]) - ((0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9])$|^(0:00 AM - 12:00 PM)$/;
 
   const isValidURL = (url) => {
     const regex = new RegExp(
@@ -1984,7 +2019,10 @@ function Msme() {
 
   const rowsIncompleteFiltered = rowsIncomplete.filter((row) =>
     Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchQueryIncomplete.toLowerCase())
+      value
+        .toString()
+        .toLowerCase()
+        .includes(searchQueryIncomplete.toLowerCase())
     )
   );
 
@@ -2201,13 +2239,15 @@ function Msme() {
   const filteredTownOptions = townList.map((option) => ({
     value: option.townName,
     label: option.id,
-    regionId: option.regionId
+    regionId: option.regionId,
   }));
-  const filteredByRegionOption = townList.filter((town) => town.regionId ===filteredTownOptions.regionId).map((option) => ({
-    value: option.townName,
-    label: option.id,
-    regionId: option.regionId
-  }));
+  const filteredByRegionOption = townList
+    .filter((town) => town.regionId === filteredTownOptions.regionId)
+    .map((option) => ({
+      value: option.townName,
+      label: option.id,
+      regionId: option.regionId,
+    }));
   const primatyIndustryOptions = primaryIndustryList.map((option) => ({
     value: option.industryName,
   }));
@@ -2391,19 +2431,23 @@ function Msme() {
         if (fileImage3) {
           formData.append("image3", fileImage3);
         }
-        if(removeBusinessProfileImage){
-          formData.append("removeImage", removeBusinessProfileImage)
+        if (removeBusinessProfileImage) {
+          formData.append("removeImage", removeBusinessProfileImage);
         }
-        if(removeImage1){
-          formData.append("removeImage1", removeImage1)
+        if (removeImage1) {
+          formData.append("removeImage1", removeImage1);
         }
-        if(removeImage2){
-          formData.append("removeImage2", removeImage2)
+        if (removeImage2) {
+          formData.append("removeImage2", removeImage2);
         }
-        if(removeImage3){
-          formData.append("removeImage3", removeImage3)
+        if (removeImage3) {
+          formData.append("removeImage3", removeImage3);
         }
-        console.log("Here is image 1: ",fileBusinessLogo, removeBusinessProfileImage);
+        console.log(
+          "Here is image 1: ",
+          fileBusinessLogo,
+          removeBusinessProfileImage
+        );
         const response = await fetch(
           `http://localhost:4000/msme/admin/update/${updatingDetails.id}`,
           {
@@ -2469,6 +2513,10 @@ function Msme() {
               setFileImage1(null);
               setFileImage2(null);
               setFileImage3(null);
+              setsendingNotification(false);
+              setNotificationDescription("");
+              setNotificationTitle("");
+              setAddNotification(false);
             } else {
               await Swal.fire({
                 position: "center",
@@ -2562,6 +2610,10 @@ function Msme() {
               setRemoveImage1(false);
               setRemoveImage2(false);
               setRemoveImage3(false);
+              setsendingNotification(false);
+              setNotificationDescription("");
+              setNotificationTitle("");
+              setAddNotification(false);
             } else {
               setIsSubmitting(false);
               setUpdate(false);
@@ -2646,6 +2698,10 @@ function Msme() {
               setRemoveImage1(false);
               setRemoveImage2(false);
               setRemoveImage3(false);
+              setsendingNotification(false);
+              setNotificationDescription("");
+              setNotificationTitle("");
+              setAddNotification(false);
             } else {
               setUpdate(false);
               await Swal.fire({
@@ -2729,6 +2785,10 @@ function Msme() {
               setRemoveImage1(false);
               setRemoveImage2(false);
               setRemoveImage3(false);
+              setsendingNotification(false);
+              setNotificationDescription("");
+              setNotificationTitle("");
+              setAddNotification(false);
             } else {
               setIsSubmitting(false);
               setUpdate(false);
@@ -2752,6 +2812,64 @@ function Msme() {
       });
     } catch (error) {
       handleAuthFailure({ dispatch, navigate, type: "network" });
+    }
+  };
+  const sendNotification = async () => {
+    if (addNotification) {
+      setNotificationDescription(RemoveWhiteSpaces(notificationDescription));
+      setNotificationTitle(RemoveWhiteSpaces(notificationTitle));
+      if (validateNotification()) {
+        try {
+          setsendingNotification(true);
+          const response = await fetch(
+            `http://localhost:4000/notifications/admin/create/single/${updatingDetails.id}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `${tokenHeader}`,
+              },
+              credentials: "include",
+              body: JSON.stringify({
+                notification: notificationDescription,
+                title: notificationTitle,
+              }),
+            }
+          );
+
+          const data = await response.json();
+          const newTokenHeader = response.headers.get("Authorization");
+
+          if (newTokenHeader) {
+            dispatch(
+              updateToken({
+                token: newTokenHeader,
+              })
+            );
+          } else {
+            handleAuthFailure({ dispatch, navigate, type: "auth" });
+          }
+          if (response.ok) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Notification successfully sent",
+              showConfirmButton: false,
+              timer: 3000,
+            });
+            setsendingNotification(false);
+            setNotificationDescription("");
+            setNotificationTitle("");
+            setAddNotification(false);
+          } else {
+            setsendingNotification(false);
+            setUpdate(false);
+          }
+        } catch (error) {
+          setsendingNotification(false);
+          handleAuthFailure({ dispatch, navigate, type: "network" });
+        }
+      }
     }
   };
   const handleFileChange = (e) => {
@@ -3135,8 +3253,7 @@ function Msme() {
                   </div>
                   <div className="d-flex align-items-center justify-content-start text-center">
                     <div className="p-1 border rounded-2">
-                      
-                       <StickyNote2Icon
+                      <StickyNote2Icon
                         sx={{ color: "rgba(251, 177, 34, 1)" }}
                       />
                     </div>
@@ -3194,7 +3311,7 @@ function Msme() {
                   </div>
                   <div className="d-flex align-items-center justify-content-start text-center">
                     <div className="p-1 border rounded-2">
-                    <StickyNote2Icon sx={{ color: "rgba(0, 149, 71, 1)" }} />
+                      <StickyNote2Icon sx={{ color: "rgba(0, 149, 71, 1)" }} />
                     </div>
                     <Tooltip title={approvedRegisteration}>
                       <p className="digit text pointer">
@@ -3213,7 +3330,10 @@ function Msme() {
               >
                 <div className="col-12 p-4 shadow rounded-2">
                   <div className="d-flex justify-content-between">
-                    <Tooltip title="Incomplete Registrations" className="pointer">
+                    <Tooltip
+                      title="Incomplete Registrations"
+                      className="pointer"
+                    >
                       <p className="text">Incomplete Registrations</p>
                     </Tooltip>
 
@@ -3221,7 +3341,7 @@ function Msme() {
                   </div>
                   <div className="d-flex align-items-center justify-content-start text-center">
                     <div className="p-1 border rounded-2">
-                    <StickyNote2Icon sx={{ color: "rgba(21, 78, 138, 1)" }} />
+                      <StickyNote2Icon sx={{ color: "rgba(21, 78, 138, 1)" }} />
                     </div>
                     <Tooltip title={incompleteRegisteration}>
                       <p className="digit text pointer">
@@ -3606,7 +3726,9 @@ function Msme() {
                           <InputBase
                             sx={{ ml: 2, flex: 1 }}
                             placeholder="Search for a incomplete"
-                            onChange={(e) => setSearchQueryIncomplete(e.target.value)}
+                            onChange={(e) =>
+                              setSearchQueryIncomplete(e.target.value)
+                            }
                           />
                           <IconButton type="button" sx={{ p: 1 }}>
                             <SearchIcon />
@@ -3900,7 +4022,7 @@ function Msme() {
               >
                 <Stepper activeStep={stepperCounter} alternativeLabel>
                   {steps.map((label) => (
-                    <Step key={label} >
+                    <Step key={label}>
                       <StepLabel>{label}</StepLabel>
                     </Step>
                   ))}
@@ -4046,7 +4168,10 @@ function Msme() {
                         typeOfBusiness !== "Close Corporation (CC)" && (
                           <>
                             <div className="form-group pb-3">
-                              <label htmlFor="email" className="pb-2 text-boldd">
+                              <label
+                                htmlFor="email"
+                                className="pb-2 text-boldd"
+                              >
                                 User Name: <span>*</span>
                               </label>
                               <Select
@@ -4076,7 +4201,10 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="description" className="pb-2 text-boldd">
+                        <label
+                          htmlFor="description"
+                          className="pb-2 text-boldd"
+                        >
                           Business Description: <span>*</span>
                         </label>
                         <textarea
@@ -4452,7 +4580,10 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
-                        <label htmlFor="phoneNumber" className="pb-2 text-boldd">
+                        <label
+                          htmlFor="phoneNumber"
+                          className="pb-2 text-boldd"
+                        >
                           Phone Number: <span>*</span>
                         </label>
                         <input
@@ -5290,7 +5421,10 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2 text-boldd">
+                              <label
+                                htmlFor="email"
+                                className="pb-2 text-boldd"
+                              >
                                 Business image 1:
                               </label>
                             </div>
@@ -5368,7 +5502,10 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2 text-boldd">
+                              <label
+                                htmlFor="email"
+                                className="pb-2 text-boldd"
+                              >
                                 Business Logo:
                               </label>
                             </div>
@@ -5448,7 +5585,10 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2 text-boldd">
+                              <label
+                                htmlFor="email"
+                                className="pb-2 text-boldd"
+                              >
                                 Business image 2:
                               </label>
                             </div>
@@ -5526,7 +5666,10 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2 text-boldd">
+                              <label
+                                htmlFor="email"
+                                className="pb-2 text-boldd"
+                              >
                                 Business image 3:
                               </label>
                             </div>
@@ -5683,6 +5826,11 @@ function Msme() {
                     setImage2Details("");
                     setImage3Details("");
                     setStepperCounter(0);
+                    setNotificationDescription("");
+                    setNotificationTitle("");
+                    setAddNotification(false);
+                    setNotificationDescriptionError("");
+                    setNotificationTitleError("");
                     setOpenModelView(false);
                   }}
                 />
@@ -5853,7 +6001,10 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="description" className="pb-2 text-boldd">
+                        <label
+                          htmlFor="description"
+                          className="pb-2 text-boldd"
+                        >
                           Business Description: <span>*</span>
                         </label>
                         <textarea
@@ -6280,7 +6431,10 @@ function Msme() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
-                        <label htmlFor="phoneNumber" className="pb-2 text-boldd">
+                        <label
+                          htmlFor="phoneNumber"
+                          className="pb-2 text-boldd"
+                        >
                           Phone Number: <span>*</span>
                         </label>
                         <input
@@ -6779,8 +6933,11 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2 text-boldd">
-                                Business logo: 
+                              <label
+                                htmlFor="email"
+                                className="pb-2 text-boldd"
+                              >
+                                Business logo:
                               </label>
                             </div>
                             <div className="col-12 p-1 d-flex flex-column justify-content-center align-items-center b-g me-3 ">
@@ -6865,7 +7022,10 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2 text-boldd">
+                              <label
+                                htmlFor="email"
+                                className="pb-2 text-boldd"
+                              >
                                 Business image 1:
                               </label>
                             </div>
@@ -6951,7 +7111,10 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2 text-boldd">
+                              <label
+                                htmlFor="email"
+                                className="pb-2 text-boldd"
+                              >
                                 Business image 2:
                               </label>
                             </div>
@@ -7037,7 +7200,10 @@ function Msme() {
                         <>
                           <div>
                             <div className="form-group pb-md-2">
-                              <label htmlFor="email" className="pb-2 text-boldd">
+                              <label
+                                htmlFor="email"
+                                className="pb-2 text-boldd"
+                              >
                                 Business image 3:
                               </label>
                             </div>
@@ -7115,6 +7281,138 @@ function Msme() {
                             )}
                           </div>
                         </>
+                      )}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Tooltip
+                        title={
+                          addNotification
+                            ? "Dismiss notification"
+                            : "Send a notification to the current business user"
+                        }
+                      >
+                        <div
+                          className="d-flex pointer"
+                          onClick={() => {
+                            if (!addNotification) {
+                              setNotificationDescriptionError("");
+                              setNotificationTitleError("");
+                              setNotificationDescription("");
+                              setNotificationTitle("");
+                            }
+                            setAddNotification(!addNotification);
+                          }}
+                        >
+                          <p className="text-bold">Send Notification</p>
+                          {addNotification ? (
+                            <IoIosArrowUp
+                              style={{
+                                marginTop: "3px",
+                                fontSize: "20px",
+                                marginLeft: "5px",
+                              }}
+                            />
+                          ) : (
+                            <IoIosArrowDown
+                              style={{
+                                marginTop: "3px",
+                                fontSize: "20px",
+                                marginLeft: "5px",
+                              }}
+                            />
+                          )}
+                        </div>
+                      </Tooltip>
+                      {addNotification && (
+                        <Grid
+                          container
+                          spacing={{ xs: 1, md: 2 }}
+                          columns={{ xs: 12, sm: 12, md: 12 }}
+                        >
+                          <Grid item xs={12} sm={6} md={6}>
+                            <div className="form-group pb-md-2">
+                              <label htmlFor="email" className="text-boldd">
+                                Subject: <span>*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control place-holder"
+                                placeholder="Enter title"
+                                disabled={
+                                  currentUser.role === "Super admin"
+                                    ? false
+                                    : true
+                                }
+                                value={notificationTitle}
+                                onChange={(e) => {
+                                  setNotificationTitleError("");
+                                  setNotificationTitle(e.target.value);
+                                }}
+                                autoComplete="off"
+                                name="email"
+                              />
+                              {notificationTitleError && (
+                                <>
+                                  <p className="error mt-1">
+                                    {notificationTitleError}
+                                  </p>
+                                </>
+                              )}
+                            </div>
+                          </Grid>
+                          <Grid item xs={12} sm={6} md={6}>
+                            <div className="form-group pb-md-2">
+                              <label htmlFor="email" className="text-boldd">
+                                Notification: <span>*</span>
+                              </label>
+                              <textarea
+                                type="text"
+                                rows={5}
+                                className="form-control place-holder"
+                                placeholder="Type here........"
+                                disabled={
+                                  currentUser.role === "Super admin"
+                                    ? false
+                                    : true
+                                }
+                                value={notificationDescription}
+                                onChange={(e) => {
+                                  setNotificationDescriptionError("");
+                                  setNotificationDescription(e.target.value);
+                                }}
+                                autoComplete="off"
+                                name="email"
+                              />
+                              {notificationDescriptionError && (
+                                <>
+                                  <p className="error mt-1">
+                                    {notificationDescriptionError}
+                                  </p>
+                                </>
+                              )}
+                            </div>
+                          </Grid>
+                          <Grid
+                            item
+                            xs={12}
+                            container
+                            justifyContent="flex-end"
+                          >
+                            <button
+                              className="btn btn-success m-1 p-2 modelButtonn text-boldd"
+                              onClick={sendNotification}
+                            >
+                              {sendingNotification ? (
+                                <CircularProgress
+                                  sx={{ color: "white", paddingTop: "2px" }}
+                                  size={19}
+                                />
+                              ) : (
+                                "Send Notification"
+                              )}
+                            </button>
+                          </Grid>
+                        </Grid>
                       )}
                     </Grid>
 
