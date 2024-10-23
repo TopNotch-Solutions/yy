@@ -311,6 +311,7 @@ function Msme() {
   const [image2DetailsError, setImage2DetailsError] = useState("");
   const [image3Details, setImage3Details] = useState("");
   const [image3DetailsError, setImage3DetailsError] = useState("");
+  const [notificationSuccess, setNotificationSuccess] = useState(false);
 
   const [isMondayClosed, setIsMondayClosed] = useState(false);
   const [isTuesdayClosed, setIsTuesdayClosed] = useState(false);
@@ -2460,77 +2461,105 @@ function Msme() {
         const data = await response.json();
         console.log(data.message);
         if (response.ok) {
-          try {
-            setIsSubmitting(true);
-
-            const response = await fetch(
-              `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
-              {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `${tokenHeader}`,
-                },
-                credentials: "include",
-                body: JSON.stringify({
-                  status: "Approved",
-                }),
-              }
-            );
-
-            const data = await response.json();
-            const newTokenHeader = response.headers.get("Authorization");
-
-            if (newTokenHeader) {
-              dispatch(
-                updateToken({
-                  token: newTokenHeader,
-                })
+          if(updatingDetails.status === "Pending"){
+            try {
+              setIsSubmitting(true);
+  
+              const response = await fetch(
+                `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `${tokenHeader}`,
+                  },
+                  credentials: "include",
+                  body: JSON.stringify({
+                    status: "Approved",
+                  }),
+                }
               );
-            } else {
-              handleAuthFailure({ dispatch, navigate, type: "auth" });
-            }
-            console.log(data);
-
-            if (response.ok) {
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: update
-                  ? "MSME Successfully Updated"
-                  : "MSME Successfully Approved",
-                showConfirmButton: false,
-                timer: 3000,
-              });
-              setStepperCounter(0);
-              setUpdatingDetails([]);
+  
+              const data = await response.json();
+              const newTokenHeader = response.headers.get("Authorization");
+  
+              if (newTokenHeader) {
+                dispatch(
+                  updateToken({
+                    token: newTokenHeader,
+                  })
+                );
+              } else {
+                handleAuthFailure({ dispatch, navigate, type: "auth" });
+              }
+              console.log(data);
+  
+              if (response.ok) {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: updatingDetails.status === 'Pending' ? "MSME Successfully Approved" : (
+                    update ? "MSME Successfully Updated" : "MSME Successfully Approved"
+                ),
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+                setStepperCounter(0);
+                setUpdatingDetails([]);
+                setUpdate(false);
+                setRemoveBusinessProfileImage(false);
+                setRemoveImage1(false);
+                setRemoveImage2(false);
+                setRemoveImage3(false);
+                setFileBusinessLogo(null);
+                setFileImage1(null);
+                setFileImage2(null);
+                setFileImage3(null);
+                setsendingNotification(false);
+                setNotificationDescription("");
+                setNotificationTitle("");
+                setAddNotification(false);
+              } else {
+                await Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: `${data.message}`,
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+              }
+            } catch (error) {
+              handleAuthFailure({ dispatch, navigate, type: "network" });
+            } finally {
+              setIsSubmitting(false);
               setUpdate(false);
-              setRemoveBusinessProfileImage(false);
-              setRemoveImage1(false);
-              setRemoveImage2(false);
-              setRemoveImage3(false);
-              setFileBusinessLogo(null);
-              setFileImage1(null);
-              setFileImage2(null);
-              setFileImage3(null);
-              setsendingNotification(false);
-              setNotificationDescription("");
-              setNotificationTitle("");
-              setAddNotification(false);
-            } else {
-              await Swal.fire({
-                position: "center",
-                icon: "error",
-                title: `${data.message}`,
-                showConfirmButton: false,
-                timer: 3000,
-              });
             }
-          } catch (error) {
-            handleAuthFailure({ dispatch, navigate, type: "network" });
-          } finally {
+          }else{
             setIsSubmitting(false);
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: updatingDetails.status === 'Pending' ? "MSME Successfully Approved" : (
+                update ? "MSME Successfully Updated" : "MSME Successfully Approved"
+            ),
+              showConfirmButton: false,
+              timer: 3000,
+            });
+            setStepperCounter(0);
+            setUpdatingDetails([]);
             setUpdate(false);
+            setRemoveBusinessProfileImage(false);
+            setRemoveImage1(false);
+            setRemoveImage2(false);
+            setRemoveImage3(false);
+            setFileBusinessLogo(null);
+            setFileImage1(null);
+            setFileImage2(null);
+            setFileImage3(null);
+            setsendingNotification(false);
+            setNotificationDescription("");
+            setNotificationTitle("");
+            setAddNotification(false);
           }
         } else {
           setIsSubmitting(false);
@@ -2850,17 +2879,14 @@ function Msme() {
             handleAuthFailure({ dispatch, navigate, type: "auth" });
           }
           if (response.ok) {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Notification successfully sent",
-              showConfirmButton: false,
-              timer: 3000,
-            });
+            setNotificationSuccess(true);
             setsendingNotification(false);
             setNotificationDescription("");
             setNotificationTitle("");
             setAddNotification(false);
+            setTimeout(() => {
+              setNotificationSuccess(false);
+            }, 4000);
           } else {
             setsendingNotification(false);
             setUpdate(false);
@@ -7414,8 +7440,14 @@ function Msme() {
                           </Grid>
                         </Grid>
                       )}
-                    </Grid>
-
+                    </Grid >
+                    {notificationSuccess && (
+        <Grid item xs={12}>
+          <div className="success-message">
+            <p className="animated-success">Notification successfully sent!</p>
+          </div>
+        </Grid>
+      )}
                     <Grid item xs={12}>
                       <div className="d-flex justify-content-between w-100">
                         <button

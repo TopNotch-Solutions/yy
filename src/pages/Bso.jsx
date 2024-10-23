@@ -902,6 +902,7 @@ function Bso() {
             <div className="d-flex justify-content-between align-items-center">
               <div></div>
               <h1 className="text-center">Add New BSO</h1>
+              <Tooltip title="Close">
               <CgCloseR
                 style={{
                   color: "red",
@@ -919,6 +920,7 @@ function Bso() {
                   setOpenModel(false);
                 }}
               />
+              </Tooltip>
             </div>
 
             <div></div>
@@ -987,7 +989,7 @@ function Bso() {
                   <input
                     type="text"
                     className="form-control place-holder"
-                    placeholder="+264 *** ****"
+                    placeholder="081*******"
                     autoComplete="off"
                     name="email"
                     onChange={(e) => {
@@ -1161,6 +1163,7 @@ function Bso() {
             <div className="d-flex justify-content-between align-items-center">
               <div></div>
               <h1 className="text-center">Update BSO</h1>
+              <Tooltip title="Close">
               <CgCloseR
                 style={{
                   color: "red",
@@ -1179,6 +1182,8 @@ function Bso() {
                   setOpenModelEdit(false);
                 }}
               />
+              </Tooltip>
+             
             </div>
             {updatingFail && (
               <>

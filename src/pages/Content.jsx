@@ -486,6 +486,7 @@ function Content() {
           console.log(data);
 
           if (response.ok) {
+            setIsSubmitting(false);
             dispatch(toggleIsSubmittingfalse());
             Swal.fire({
               position: "center",
@@ -495,6 +496,7 @@ function Content() {
               timer: 3000,
             });
           } else {
+            setIsSubmitting(false);
             dispatch(toggleIsSubmittingfalse());
             await Swal.fire({
               position: "center",
@@ -557,6 +559,7 @@ function Content() {
           console.log(data);
 
           if (response.ok) {
+            setIsSubmitting(false);
             dispatch(toggleIsSubmittingfalse());
             Swal.fire({
               position: "center",
@@ -566,6 +569,7 @@ function Content() {
               timer: 3000,
             });
           } else {
+            setIsSubmitting(false);
             dispatch(toggleIsSubmittingfalse());
             await Swal.fire({
               position: "center",
