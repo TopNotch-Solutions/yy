@@ -312,6 +312,7 @@ function Msme() {
   const [image3Details, setImage3Details] = useState("");
   const [image3DetailsError, setImage3DetailsError] = useState("");
   const [notificationSuccess, setNotificationSuccess] = useState(false);
+  const [notificationFail, setNotificationFail] = useState(false);
 
   const [isMondayClosed, setIsMondayClosed] = useState(false);
   const [isTuesdayClosed, setIsTuesdayClosed] = useState(false);
@@ -1945,7 +1946,7 @@ function Msme() {
         console.log("Login successful", data.data);
         setIsSubmitting(false);
         setUpdatingDetails(data.data);
-
+        console.log(data.data)
         setBusinessAddressDetails(data.data.businessRegistrationName);
         setBusinessRegistrationNameDetails(data.data.businessRegistrationName);
         setBusinessRegistrationNumberDetails(
@@ -2020,12 +2021,10 @@ function Msme() {
 
   const rowsIncompleteFiltered = rowsIncomplete.filter((row) =>
     Object.values(row).some((value) =>
-      value
-        .toString()
-        .toLowerCase()
-        .includes(searchQueryIncomplete.toLowerCase())
+      (value ? value.toString() : "").toLowerCase().includes(searchQueryIncomplete.toLowerCase())
     )
   );
+  
 
   const columns = [
     {
@@ -2119,7 +2118,7 @@ function Msme() {
   }));
   const filteredRows = rowsAll.filter((row) =>
     Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      (value ? value.toString() : "").toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
   const rowsPending = pendingMSMEList.map((msme) => ({
@@ -2137,9 +2136,10 @@ function Msme() {
   }));
   const filteredRowsPending = rowsPending.filter((row) =>
     Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchQueryPending.toLowerCase())
+      (value ? value.toString() : "").toLowerCase().includes(searchQueryPending.toLowerCase())
     )
   );
+  
   const rowsRejected = rejectedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.registrationName,
@@ -2155,9 +2155,10 @@ function Msme() {
   }));
   const filteredRowsRejected = rowsRejected.filter((row) =>
     Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchQueryRejected.toLowerCase())
+      (value ? value.toString() : "").toLowerCase().includes(searchQueryRejected.toLowerCase())
     )
   );
+  
   const rowsApproved = approvedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.registrationName,
@@ -2173,9 +2174,10 @@ function Msme() {
   }));
   const filteredRowsApproved = rowsApproved.filter((row) =>
     Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchQueryApproved.toLowerCase())
+      (value ? value.toString() : "").toLowerCase().includes(searchQueryApproved.toLowerCase())
     )
   );
+  
 
   const typeOfBusinessOptions = [
     {
@@ -2237,13 +2239,30 @@ function Msme() {
     label: option.regionName,
     value: option.id,
   }));
-  const filteredTownOptions = townList.map((option) => ({
+  const filteredTownOptions = townList
+  .filter((option) => option.regionId === region) // Only towns in the selected region
+  .map((option) => ({
     value: option.townName,
     label: option.id,
-    regionId: option.regionId,
   }));
+  const filteredTownOptionsDetails = townList
+  .filter((option) => option.regionId === regionDetails) // Only towns in the selected region
+  .map((option) => ({
+    value: option.townName,
+    label: option.id,
+  }));
+  console.log("Region details: ", regionDetails, "Town details here: ",townDetails, "filtered list: ",)
+  console.log("This is the filtered options: ", "filtered here: ",filteredTownOptions, townList, "Region here: ", region)
   const filteredByRegionOption = townList
-    .filter((town) => town.regionId === filteredTownOptions.regionId)
+    .filter((town) => town.regionId === region)
+    .map((option) => ({
+      value: option.townName,
+      label: option.id,
+      regionId: option.regionId,
+    }));
+
+    const filteredByRegionOptionDetails = townList
+    .filter((town) => town.regionId === regionDetails)
     .map((option) => ({
       value: option.townName,
       label: option.id,
@@ -2461,7 +2480,7 @@ function Msme() {
         const data = await response.json();
         console.log(data.message);
         if (response.ok) {
-          if(updatingDetails.status === "Pending"){
+          if(updatingDetails.status === "Pending" || updatingDetails.status === "Rejected"){
             try {
               setIsSubmitting(true);
   
@@ -2888,7 +2907,11 @@ function Msme() {
               setNotificationSuccess(false);
             }, 4000);
           } else {
+            setNotificationFail(true);
             setsendingNotification(false);
+            setTimeout(() => {
+              setNotificationFail(false);
+            }, 4000);
             setUpdate(false);
           }
         } catch (error) {
@@ -4275,6 +4298,7 @@ function Msme() {
                               options={userOptions}
                               placeholder="Select user"
                               isSearchable
+                              isClearable
                               classNamePrefix="react-select"
                               components={{ DropdownIndicator }}
                             />
@@ -4295,7 +4319,8 @@ function Msme() {
                           value={region}
                           onChange={(e) => {
                             setRegionError("");
-                            setRegion(e.target.value);
+                            let number= parseInt(e.target.value)
+                            setRegion(number);
                             console.log(region);
                           }}
                         >
@@ -4303,7 +4328,7 @@ function Msme() {
                             Select region
                           </option>
                           {regionOptions.map((option) => (
-                            <option value={option.label} key={option.value}>
+                            <option value={option.value} key={option.value}>
                               {option.label}
                             </option>
                           ))}
@@ -4315,7 +4340,9 @@ function Msme() {
                         )}
                       </div>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={6}>
+                    {
+                      region && (
+                        <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
                         <label htmlFor="email" className="pb-2 text-boldd">
                           Town: <span>*</span>
@@ -4331,7 +4358,7 @@ function Msme() {
                           <option value="" disabled selected>
                             Select town
                           </option>
-                          {filteredTownOptions.map((option) => (
+                          {filteredByRegionOption.map((option) => (
                             <option value={option.value} key={option.label}>
                               {option.value}
                             </option>
@@ -4344,6 +4371,8 @@ function Msme() {
                         )}
                       </div>
                     </Grid>
+                      )
+                    }
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
                         <label htmlFor="email" className="pb-2 text-boldd">
@@ -4466,7 +4495,7 @@ function Msme() {
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
                         onClick={handleStep1}
                       >
-                        Step 2
+                        Next
                         <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
@@ -4563,13 +4592,13 @@ function Msme() {
                         <KeyboardBackspaceIcon
                           style={{ marginRight: "10px" }}
                         />
-                        Step 1
+                        Back
                       </button>
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
                         onClick={handleStep2}
                       >
-                        Step 3
+                        Next
                         <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
@@ -4814,13 +4843,13 @@ function Msme() {
                         <KeyboardBackspaceIcon
                           style={{ marginRight: "10px" }}
                         />
-                        Step 2
+                        Back
                       </button>
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
                         onClick={handleStep3}
                       >
-                        Step 4
+                        Next
                         <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
@@ -5396,13 +5425,13 @@ function Msme() {
                         <KeyboardBackspaceIcon
                           style={{ marginRight: "10px" }}
                         />
-                        Step 3
+                        Back
                       </button>
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
                         onClick={handleStep4}
                       >
-                        Step 5
+                        Next
                         <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
@@ -5777,7 +5806,7 @@ function Msme() {
                         <KeyboardBackspaceIcon
                           style={{ marginRight: "10px" }}
                         />
-                        Step 4
+                        Back
                       </button>
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
@@ -6071,7 +6100,9 @@ function Msme() {
                           onChange={(e) => {
                             setUpdate(true);
                             setRegionDetailsError("");
-                            setRegionDetails(e.target.value);
+                            let updatedRegion = parseInt(e.target.value)
+                            setRegionDetails(updatedRegion);
+                            setTownDetails("");
                           }}
                           disabled={
                             currentUser.role === "Super admin" ? false : true
@@ -6113,11 +6144,15 @@ function Msme() {
                           <option value="" disabled selected>
                             Select town
                           </option>
-                          {filteredTownOptions.map((option) => (
-                            <option value={option.value} key={option.value}>
-                              {option.value}
-                            </option>
-                          ))}
+                         
+                          {
+                            filteredTownOptionsDetails.map((option) => (
+                              <option value={option.value} key={option.value}>
+                                {option.value}
+                              </option>
+                            ))
+                          }
+                          
                         </select>
                         {townDetailsError && (
                           <>
@@ -6297,7 +6332,7 @@ function Msme() {
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
                         onClick={handleStep1Review}
                       >
-                        Step 2
+                        Next
                         <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
@@ -6407,13 +6442,13 @@ function Msme() {
                         <KeyboardBackspaceIcon
                           style={{ marginRight: "10px" }}
                         />
-                        Step 1
+                        Back
                       </button>
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
                         onClick={handleStep2Review}
                       >
-                        Step 3
+                        Next
                         <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
@@ -6720,13 +6755,13 @@ function Msme() {
                         <KeyboardBackspaceIcon
                           style={{ marginRight: "10px" }}
                         />
-                        Step 2
+                        Back
                       </button>
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
                         onClick={handleStep3Review}
                       >
-                        Step 4
+                        Next
                         <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
@@ -6940,13 +6975,13 @@ function Msme() {
                         <KeyboardBackspaceIcon
                           style={{ marginRight: "10px" }}
                         />
-                        Step 3
+                        Back
                       </button>
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
                         onClick={handleStep4Review}
                       >
-                        Step 5
+                        Next
                         <EastIcon style={{ marginLeft: "10px" }} />
                       </button>
                     </div>
@@ -7355,6 +7390,13 @@ function Msme() {
                           spacing={{ xs: 1, md: 2 }}
                           columns={{ xs: 12, sm: 12, md: 12 }}
                         >
+                         {notificationFail && (
+        <Grid item xs={12}>
+          <div className="success-message">
+            <p className="animated-danger">Notification not sent! Check your network & try again.</p>
+          </div>
+        </Grid>
+      )}
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-md-2">
                               <label htmlFor="email" className="text-boldd">
@@ -7457,7 +7499,7 @@ function Msme() {
                           <KeyboardBackspaceIcon
                             style={{ marginRight: "10px" }}
                           />
-                          Step 4
+                          Back
                         </button>
                         {currentUser?.role === "Super admin" && (
                           <div className="">
@@ -7480,7 +7522,7 @@ function Msme() {
                             )}
 
                             {update &&
-                              updatingDetails?.status !== "Pending" && (
+                              updatingDetails?.status !== "Pending" && updatingDetails?.status !== "Rejected" && updatingDetails?.status !== "Incomplete" && (
                                 <button
                                   className="btn btn-success m-1 p-2 modelButton text-boldd"
                                   onClick={approve}
@@ -7494,7 +7536,7 @@ function Msme() {
                           updatingDetails?.isBlocked === false &&
                           currentUser?.role === "Super admin" && (
                             <button
-                              className="btn btn-danger m-1 p-2 modelButton text-boldd"
+                              className="btn btn-warning m-1 p-2 modelButton text-boldd"
                               onClick={block}
                             >
                               Block
@@ -7504,7 +7546,7 @@ function Msme() {
                           updatingDetails?.isBlocked === true &&
                           currentUser?.role === "Super admin" && (
                             <button
-                              className="btn btn-danger m-1 p-2 modelButton text-boldd"
+                              className="btn btn-warning m-1 p-2 modelButton text-boldd"
                               onClick={unBlock}
                             >
                               Unblock
