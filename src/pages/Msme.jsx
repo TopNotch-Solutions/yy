@@ -1946,7 +1946,7 @@ function Msme() {
         console.log("Login successful", data.data);
         setIsSubmitting(false);
         setUpdatingDetails(data.data);
-        console.log(data.data)
+        console.log("Here is the value we are looking for:",data.data)
         setBusinessAddressDetails(data.data.businessRegistrationName);
         setBusinessRegistrationNameDetails(data.data.businessRegistrationName);
         setBusinessRegistrationNumberDetails(
@@ -2280,6 +2280,7 @@ function Msme() {
   }));
 
   const approve = async () => {
+    console.log(`Here is the registration number before modification: ${businessAddressDetails} ${businessRegistrationNumberDetails}`, )
     setOpenModelView(false);
     if (
       updatingDetails.businessRegistrationName ===
@@ -2334,7 +2335,7 @@ function Msme() {
           if (result.isConfirmed) {
             try {
               setIsSubmitting(true);
-
+              console.log("Here is the updating value: ", updatingDetails.id)
               const response = await fetch(
                 `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
                 {
@@ -2349,7 +2350,7 @@ function Msme() {
                   }),
                 }
               );
-
+              
               const data = await response.json();
               const newTokenHeader = response.headers.get("Authorization");
 
@@ -2362,7 +2363,7 @@ function Msme() {
               } else {
                 handleAuthFailure({ dispatch, navigate, type: "auth" });
               }
-              console.log(data.message);
+              console.warn("Here is the message:",data.message);
 
               if (response.ok) {
                 Swal.fire({
@@ -2405,10 +2406,13 @@ function Msme() {
           "businessRegistrationName",
           businessRegistrationNameDetails
         );
-        formData.append(
-          "businessRegistrationNumber",
-          businessRegistrationNumberDetails
-        );
+        if(typeOfBusinessDetails === "Close Corporation (CC)" || typeOfBusinessDetails === "Proprietary Limited Company (PTY)"){
+          formData.append(
+            "businessRegistrationNumber",
+            businessRegistrationNumberDetails
+          );
+        }
+        console.log("registration Number here: " , businessRegistrationNumberDetails)
         formData.append("businessDisplayName", businessDisplayNameDetails);
         formData.append("typeOfBusiness", typeOfBusinessDetails);
         formData.append("description", descriptionDetails);
@@ -2478,12 +2482,12 @@ function Msme() {
         );
 
         const data = await response.json();
-        console.log(data.message);
+        console.log("Formdata formdata formdata: ", formData);
         if (response.ok) {
-          if(updatingDetails.status === "Pending" || updatingDetails.status === "Rejected"){
+          if(updatingDetails.status === "Pending" || updatingDetails.status === "Rejected" || updatingDetails.status === "Incomplete"){
             try {
               setIsSubmitting(true);
-  
+              console.log("Here is the updating value: ", updatingDetails.id)
               const response = await fetch(
                 `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
                 {
@@ -2517,7 +2521,7 @@ function Msme() {
                 Swal.fire({
                   position: "center",
                   icon: "success",
-                  title: updatingDetails.status === 'Pending' ? "MSME Successfully Approved" : (
+                  title: (updatingDetails.status === 'Pending' || updatingDetails.status === 'Incomplete') ? "MSME Successfully Approved" : (
                     update ? "MSME Successfully Updated" : "MSME Successfully Approved"
                 ),
                   showConfirmButton: false,
