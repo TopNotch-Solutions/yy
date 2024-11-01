@@ -16,7 +16,6 @@ const initialState = {
       },
     },
   });
-  console.log("inittail state",initialState)
   export const { toggleAuthenticationTrue, toggleAuthenticationfalse} = authenticationSlice.actions
 
   export default authenticationSlice.reducer

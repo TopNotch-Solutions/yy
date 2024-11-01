@@ -27,7 +27,6 @@ const Topbar = ({ OpenSidebar }) => {
   const [allNotificationsCount,setAllNotificationsCount] = useState(0);
   let firstLetter = CapitalizeFirstLetter(currentUser?.firstName);
   let secondLetter = CapitalizeFirstLetter(currentUser?.lastName);
-  console.log("current user topbar: ",currentUser)
   useEffect(() => {
     const fetchAllAdminNotificationsCount = async () => {
       try {
@@ -50,7 +49,6 @@ const Topbar = ({ OpenSidebar }) => {
         }));
 
         if (response.ok) {
-          console.log("Login successful", data);
           setAllNotificationsCount(data.count);
         } else {
         }
@@ -78,8 +76,6 @@ const Topbar = ({ OpenSidebar }) => {
         }));
 
       if (response.ok) {
-        console.log("Login successful", data);
-
         dispatch(toggleSidebarfalse());
         dispatch(
           login({
@@ -102,7 +98,6 @@ const Topbar = ({ OpenSidebar }) => {
       // toast.error("Network error. Please check your network connection and try again");
     }
   };
-  console.log(currentUser)
   return (
     <Box
       width="100%"

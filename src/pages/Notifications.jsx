@@ -230,7 +230,6 @@ function Notifications() {
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
-          console.log("Login successful", data);
           setAllUnread(data.data);
         } else {
           dispatch(toggleIsSubmittingfalse());
@@ -274,7 +273,6 @@ function Notifications() {
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
-          console.log("Login successful", data);
           setAllSent(data.data);
         } else {
           dispatch(toggleIsSubmittingfalse());
@@ -569,7 +567,6 @@ function Notifications() {
       }else{
         handleAuthFailure({ dispatch, navigate, type: "auth" });
       }
-      console.log("This is the data: ", data);
       if (response.ok) {
         dispatch(toggleIsSubmittingfalse());
         setIsSubmitting(false);
@@ -632,7 +629,6 @@ function Notifications() {
           }else{
             handleAuthFailure({ dispatch, navigate, type: "auth" });
           }
-          console.log(data);
           if (response.ok) {
             dispatch(toggleIsSubmittingfalse());
             Swal.fire({
@@ -691,7 +687,6 @@ function Notifications() {
       }else{
         handleAuthFailure({ dispatch, navigate, type: "auth" });
       }
-      console.log(data);
       if (response.ok) {
         setIsSubmitting(false);
         dispatch(toggleIsSubmittingfalse());

@@ -56,7 +56,6 @@ function Reporting() {
       
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
-          console.log("Login successful approved", data);
           setAllMSMEList(data.data);
         }else {
           dispatch(toggleIsSubmittingfalse());
@@ -771,7 +770,6 @@ const rowsAll = allMSMEList.map((msme) => ({
   }
   const handleDownloadAllUsers =() =>{
     try{
-      console.log(allUserList)
       var wb = XLSX.utils.book_new();
       var ws = XLSX.utils.json_to_sheet(allUserList);
       XLSX.utils.book_append_sheet(wb,ws, "All System User List");
@@ -788,7 +786,6 @@ const rowsAll = allMSMEList.map((msme) => ({
   }
   const handleDownloadAllBlocked =() =>{
     try{
-      console.log(allMSMEBlockedList)
       var wb = XLSX.utils.book_new();
       var ws = XLSX.utils.json_to_sheet(allMSMEBlockedList);
       XLSX.utils.book_append_sheet(wb,ws, "All Blocked MSME List");

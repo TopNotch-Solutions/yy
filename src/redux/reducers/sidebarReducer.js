@@ -16,7 +16,6 @@ const initialState = {
       },
     },
   });
-  console.log("inittail state",initialState)
   export const { toggleSidebarTrue, toggleSidebarfalse} = sidebarSlice.actions
 
   export default sidebarSlice.reducer

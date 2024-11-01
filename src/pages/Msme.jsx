@@ -482,7 +482,6 @@ function Msme() {
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
-          console.log("Login successful", data);
           setTotalRegistration(data.count);
         } else {
           dispatch(toggleIsSubmittingfalse());
@@ -526,7 +525,6 @@ function Msme() {
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
-          console.log("Login successful", data);
           setPendingRegistration(data.count);
         } else {
           dispatch(toggleIsSubmittingfalse());
@@ -726,7 +724,6 @@ function Msme() {
 
         const data = await response.json();
         const newTokenHeader = response.headers.get("Authorization");
-        console.log(data.message);
         if (newTokenHeader) {
           dispatch(
             updateToken({
@@ -821,17 +818,14 @@ function Msme() {
           );
         }
 
-        console.log(data.message);
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
           setApprovedMSMEList(data.data);
         } else {
-          console.log("else is getting executed");
           dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        console.log("catch is getting executed");
         dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
@@ -867,17 +861,14 @@ function Msme() {
           );
         }
 
-        console.log(data.message);
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
           setIncompleteMSMEList(data.data);
         } else {
-          console.log("else is getting executed");
           dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
         }
       } catch (error) {
-        console.log("catch is getting executed");
         dispatch(toggleIsSubmittingfalse());
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
@@ -1725,17 +1716,6 @@ function Msme() {
       setSaturday(updatedTimes.saturday);
       setSunday(updatedTimes.sunday);
 
-      // Now log the updated times object directly
-      console.log(
-        updatedTimes.monday,
-        updatedTimes.tuesday,
-        updatedTimes.wednesday,
-        updatedTimes.thursday,
-        updatedTimes.friday,
-        updatedTimes.saturday,
-        updatedTimes.sunday
-      );
-
       try {
         setIsSubmitting(true);
         const formData = new FormData();
@@ -1889,13 +1869,6 @@ function Msme() {
 
   const handleStep1Review = () => {
     if (validateFieldsDetails1()) {
-      if (
-        typeOfBusinessDetails !== "Close Corporation (CC)" ||
-        typeOfBusinessDetails !== "Proprietary Limited Company (PTY)"
-      ) {
-        setBusinessRegistrationNumberDetails("");
-        setBusinessRegistrationNumberError("");
-      }
       setStepperCounter(1);
     }
   };
@@ -1941,12 +1914,9 @@ function Msme() {
       } else {
         handleAuthFailure({ dispatch, navigate, type: "auth" });
       }
-      console.log("Login successful", data.data);
       if (response.ok) {
-        console.log("Login successful", data.data);
         setIsSubmitting(false);
         setUpdatingDetails(data.data);
-        console.log("Here is the value we are looking for:",data.data)
         setBusinessAddressDetails(data.data.businessRegistrationName);
         setBusinessRegistrationNameDetails(data.data.businessRegistrationName);
         setBusinessRegistrationNumberDetails(
@@ -2001,7 +1971,6 @@ function Msme() {
       }
     } catch (error) {
       setIsSubmitting(false);
-      console.error("Network Error:", error);
       handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
@@ -2251,8 +2220,6 @@ function Msme() {
     value: option.townName,
     label: option.id,
   }));
-  console.log("Region details: ", regionDetails, "Town details here: ",townDetails, "filtered list: ",)
-  console.log("This is the filtered options: ", "filtered here: ",filteredTownOptions, townList, "Region here: ", region)
   const filteredByRegionOption = townList
     .filter((town) => town.regionId === region)
     .map((option) => ({
@@ -2280,7 +2247,6 @@ function Msme() {
   }));
 
   const approve = async () => {
-    console.log(`Here is the registration number before modification: ${businessAddressDetails} ${businessRegistrationNumberDetails}`, )
     setOpenModelView(false);
     if (
       updatingDetails.businessRegistrationName ===
@@ -2335,7 +2301,6 @@ function Msme() {
           if (result.isConfirmed) {
             try {
               setIsSubmitting(true);
-              console.log("Here is the updating value: ", updatingDetails.id)
               const response = await fetch(
                 `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
                 {
@@ -2363,7 +2328,6 @@ function Msme() {
               } else {
                 handleAuthFailure({ dispatch, navigate, type: "auth" });
               }
-              console.warn("Here is the message:",data.message);
 
               if (response.ok) {
                 Swal.fire({
@@ -2398,7 +2362,6 @@ function Msme() {
         handleAuthFailure({ dispatch, navigate, type: "network" });
       }
     } else {
-      console.log("Updating the ");
       try {
         setIsSubmitting(true);
         const formData = new FormData();
@@ -2411,8 +2374,12 @@ function Msme() {
             "businessRegistrationNumber",
             businessRegistrationNumberDetails
           );
+        }else{
+          formData.append(
+            "businessRegistrationNumber",
+            ""
+          );
         }
-        console.log("registration Number here: " , businessRegistrationNumberDetails)
         formData.append("businessDisplayName", businessDisplayNameDetails);
         formData.append("typeOfBusiness", typeOfBusinessDetails);
         formData.append("description", descriptionDetails);
@@ -2445,7 +2412,6 @@ function Msme() {
         if (fileBusinessLogo) {
           formData.append("businessLogo", fileBusinessLogo);
         }
-        console.log("file business Logo: ", fileBusinessLogo);
         if (fileImage1) {
           formData.append("image1", fileImage1);
         }
@@ -2467,11 +2433,6 @@ function Msme() {
         if (removeImage3) {
           formData.append("removeImage3", removeImage3);
         }
-        console.log(
-          "Here is image 1: ",
-          fileBusinessLogo,
-          removeBusinessProfileImage
-        );
         const response = await fetch(
           `http://localhost:4000/msme/admin/update/${updatingDetails.id}`,
           {
@@ -2482,12 +2443,10 @@ function Msme() {
         );
 
         const data = await response.json();
-        console.log("Formdata formdata formdata: ", formData);
         if (response.ok) {
           if(updatingDetails.status === "Pending" || updatingDetails.status === "Rejected" || updatingDetails.status === "Incomplete"){
             try {
               setIsSubmitting(true);
-              console.log("Here is the updating value: ", updatingDetails.id)
               const response = await fetch(
                 `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
                 {
@@ -2515,7 +2474,6 @@ function Msme() {
               } else {
                 handleAuthFailure({ dispatch, navigate, type: "auth" });
               }
-              console.log(data);
   
               if (response.ok) {
                 Swal.fire({
@@ -2645,7 +2603,6 @@ function Msme() {
             } else {
               handleAuthFailure({ dispatch, navigate, type: "auth" });
             }
-            console.log(data);
 
             if (response.ok) {
               Swal.fire({
@@ -2733,7 +2690,6 @@ function Msme() {
             } else {
               handleAuthFailure({ dispatch, navigate, type: "auth" });
             }
-            console.log(data);
 
             if (response.ok) {
               Swal.fire({
@@ -2820,7 +2776,6 @@ function Msme() {
             } else {
               handleAuthFailure({ dispatch, navigate, type: "auth" });
             }
-            console.log(data);
 
             if (response.ok) {
               setUpdate(false);
@@ -3011,7 +2966,6 @@ function Msme() {
 
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileImage1(selectedFile);
-      console.log("Here is went the file is changed", fileImage1);
       setImage1(objectUrl);
     }
   };
@@ -3098,11 +3052,7 @@ function Msme() {
       }
 
       const objectUrl = URL.createObjectURL(selectedFile);
-      console.log("here is the image 1 details: ", fileImage1);
       setFileImage1(selectedFile);
-
-      //setFileImage1(null);
-      console.log("here is the image 1 details: ", fileImage1);
       setImage1Details(objectUrl);
       setUpdate(true);
       setRemoveImage1(false);
@@ -3182,7 +3132,6 @@ function Msme() {
       URL.revokeObjectURL(image1);
     }
     inputRef1.current.value = "";
-    console.log("Here is file when clearing", fileImage1);
     setImage1(null);
   };
   const clearFileInputImage2 = () => {
@@ -3213,9 +3162,7 @@ function Msme() {
       URL.revokeObjectURL(image1Details);
     }
     inputRef1Details.current.value = "";
-    console.log("here is the image 1 details: ", fileImage1);
     setFileImage1(null);
-    console.log("here is the image 1 details: ", fileImage1);
     setImage1Details(null);
     setUpdate(true);
     setRemoveImage1(true);
@@ -5977,6 +5924,7 @@ function Msme() {
                                 setBusinessRegistrationNumberDetails(
                                   e.target.value
                                 );
+                                console.log("After update", businessRegistrationNumberDetails);
                               }}
                               name="email"
                             />
@@ -6334,7 +6282,10 @@ function Msme() {
                     <div className="d-flex justify-content-end w-100">
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
-                        onClick={handleStep1Review}
+                        onClick={() =>{
+                          console.log("Registration number msme-information: ", businessRegistrationNumberDetails)
+                          handleStep1Review()
+                        }}
                       >
                         Next
                         <EastIcon style={{ marginLeft: "10px" }} />
@@ -6450,7 +6401,10 @@ function Msme() {
                       </button>
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
-                        onClick={handleStep2Review}
+                        onClick={() =>{
+                          console.log("registration number after founder information: ",businessRegistrationNumberDetails)
+                          handleStep2Review()
+                        }}
                       >
                         Next
                         <EastIcon style={{ marginLeft: "10px" }} />
@@ -6781,7 +6735,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6809,7 +6763,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6837,7 +6791,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6867,7 +6821,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6895,7 +6849,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6923,7 +6877,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6951,7 +6905,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="founder's name"
+                          placeholder="8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -7529,7 +7483,10 @@ function Msme() {
                               updatingDetails?.status !== "Pending" && updatingDetails?.status !== "Rejected" && updatingDetails?.status !== "Incomplete" && (
                                 <button
                                   className="btn btn-success m-1 p-2 modelButton text-boldd"
-                                  onClick={approve}
+                                  onClick={() =>{
+                                    console.log("registration number before sending: ", businessRegistrationNumberDetails);
+                                    approve()
+                                  }}
                                 >
                                   Update
                                 </button>

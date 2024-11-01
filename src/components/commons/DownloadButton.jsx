@@ -19,7 +19,7 @@ const DownloadButton = ({ onClick,data }) => {
         borderRadius: "5px",
         fontFamily:"Montserrat, sans-serif",
         cursor: "pointer",
-        width: isSmallScreen ? "45%" : "14%",
+        width: isSmallScreen ? "45%" : "16%",
       }}
     >
       Download

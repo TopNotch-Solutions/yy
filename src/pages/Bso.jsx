@@ -198,7 +198,6 @@ function Bso() {
         }
 
         if (response.ok) {
-          console.log("Login successful", data);
           setBsoList(data.data);
         } else {
           dispatch(toggleIsSubmittingfalse());
@@ -484,7 +483,6 @@ function Bso() {
       }
 
       if (response.ok) {
-        console.log("Login successful", data);
         setUpdatingDetails(data.data);
         setNameDetails(data.data.name);
         setTypeDetails(data.data.type);
@@ -547,7 +545,6 @@ function Bso() {
             }else{
               handleAuthFailure({ dispatch, navigate, type: "auth" });
             }
-            console.log(data);
 
             if (response.ok) {
               dispatch(toggleIsSubmittingfalse());
@@ -691,7 +688,6 @@ function Bso() {
       const objectUrl = URL.createObjectURL(selectedFile);
       setFile(selectedFile);
       setLogo(objectUrl);
-      console.log(logo);
     }
   };
   const handleFileChange1 = (e) => {
@@ -722,7 +718,6 @@ function Bso() {
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileUpdate(selectedFile);
       setLogoDetails(objectUrl);
-      console.log(logoDetails);
     }
   };
 

@@ -378,7 +378,6 @@ function User() {
       }
 
       if (response.ok) {
-        console.log("Login successful", data);
         setUpdatingDetails(data.data);
         setFirstNameDetails(data.data.firstName);
         setLastNameDetails(data.data.lastName);
@@ -404,7 +403,6 @@ function User() {
     //setOpenModelEditing(true)
   };
   const handleDeletion = async (email) => {
-    console.log(currentUser.email, email);
     if (currentUser.email === email) {
       Swal.fire({
         title: "Are you sure?",
@@ -444,7 +442,6 @@ function User() {
             }else{
               handleAuthFailure({ dispatch, navigate, type: "auth" });
             }
-            console.log(data);
             if (response.ok) {
               dispatch(toggleSidebarfalse());
               dispatch(
@@ -454,7 +451,6 @@ function User() {
               );
               navigate("/");
             } else {
-              console.error("Server Error:", data.message);
               await Swal.fire({
                 position: "center",
                 icon: "error",
@@ -510,7 +506,6 @@ function User() {
             }else{
               handleAuthFailure({ dispatch, navigate, type: "auth" });
             }
-            console.log(data);
             if (response.ok) {
               Swal.fire({
                 position: "center",
@@ -520,7 +515,6 @@ function User() {
                 timer: 3000,
               });
             } else {
-              console.error("Server Error:", data.message);
               await Swal.fire({
                 position: "center",
                 icon: "error",
@@ -747,8 +741,6 @@ function User() {
             contactNumber: contactNumberDetails,
             role: roleDetails,
           };
-          console.log(requestData);
-          console.log("This is my token header for today", tokenHeader);
           const response = await fetch(
             `http://localhost:4000/auth/admin/update/user/details/${updatingDetails.id}`,
             {
@@ -828,7 +820,6 @@ function User() {
           contactNumber,
           role,
         };
-        console.log(requestData);
 
         const response = await fetch(
           "http://localhost:4000/auth/admin/signup",

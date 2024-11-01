@@ -16,7 +16,6 @@ const initialState = {
       },
     },
   });
-  console.log("inittail state",initialState)
   export const { toggleIsSubmittingTrue, toggleIsSubmittingfalse} = isSubmittingSlice.actions
 
   export default isSubmittingSlice.reducer

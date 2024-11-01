@@ -99,12 +99,8 @@ const AdminLogin = () => {
         const data = await response.json();
 
         if (response.ok) {
-          console.log("Login successful", data);
-
           setIsSubmitting(false);
           setUserId(data.userId);
-          console.log(data);
-          console.log(data.userId);
           setTwoFactorDigits("");
           dispatch(toggleAuthenticationTrue());
         } else {
@@ -175,7 +171,6 @@ const AdminLogin = () => {
           dispatch(updateToken({
             token: `Bearer ${data.currentUser.token}`
           }));
-          console.log("I am the current user",currentUser)
           navigate("/Dashboard");
         } else {
           setIsSubmitting(false);

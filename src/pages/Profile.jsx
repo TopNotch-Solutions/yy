@@ -124,7 +124,6 @@ function Profile() {
 
   const handleFileUpload = async () => {
     try {
-      console.log(newProfilePic);
       setIsSubmitting(true);
       const response = await fetch(
         `http://localhost:4000/auth/admin/update/profile-image/${currentUser.id}`,
@@ -233,7 +232,6 @@ function Profile() {
 
         if (response.ok) {
           setIsSubmitting(false);
-          console.log("Login successful", data);
           Swal.fire({
             position: "center",
             icon: "success",
@@ -330,7 +328,6 @@ function Profile() {
               showConfirmButton: false,
               timer: 3000,
             });
-            console.log(data.currentUser)
             dispatch(login({
               user: data.currentUser
             }));

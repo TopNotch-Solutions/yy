@@ -366,14 +366,12 @@ function Content() {
       }
 
       if (response.ok) {
-        console.log("Login successful", data);
         dispatch(toggleIsSubmittingfalse());
         setUpdatingDetails(data.data);
         setDescriptionDetails(data.data.description);
         setImageDetails(data.data.image);
         setUserDetails(data.data.user);
         setLinkDetails(data.data.link);
-        console.log(updatingDetails);
         setOpenModelEdit(true);
         //setAdminList(data.data);
       } else {
@@ -420,7 +418,6 @@ function Content() {
       }
 
       if (response.ok) {
-        console.log("Login successful", data);
         dispatch(toggleIsSubmittingfalse());
         setUpdatingImageDetails(data.data);
         setDescriptionImageDetails(data.data.description);
@@ -483,7 +480,6 @@ function Content() {
           }else{
             handleAuthFailure({ dispatch, navigate, type: "auth" });
           }
-          console.log(data);
 
           if (response.ok) {
             setIsSubmitting(false);
@@ -556,7 +552,6 @@ function Content() {
           }else{
             handleAuthFailure({ dispatch, navigate, type: "auth" });
           }
-          console.log(data);
 
           if (response.ok) {
             setIsSubmitting(false);
@@ -785,7 +780,6 @@ const validateFields1 = () => {
       const objectUrl = URL.createObjectURL(selectedFile);
       setFile(selectedFile);
       setImage(objectUrl);
-      console.log(image);
     }
   };
 
@@ -824,7 +818,6 @@ const validateFields1 = () => {
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileMobileImage(selectedFile);
       setImageImage(objectUrl);
-      console.log(image);
     }
   };
   const clearFileInputImage = () => {
@@ -863,7 +856,6 @@ const validateFields1 = () => {
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileMobileImage(selectedFile);
       setImageDetails(objectUrl);
-      console.log(image);
     }
   };
   const clearFileInputUpdateOpportunity = () => {
@@ -901,7 +893,6 @@ const validateFields1 = () => {
       const objectUrl = URL.createObjectURL(selectedFile);
       setFileMobileImageDetails(selectedFile);
       setImageImageDetails(objectUrl);
-      console.log(image);
     }
   };
   const clearFileInputUpdateImage = () => {

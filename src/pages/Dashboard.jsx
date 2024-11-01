@@ -227,7 +227,6 @@ function Dashboard() {
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
-          console.log("Login successful", data);
           setRejectedRegistration(data.count);
         } else {
           dispatch(toggleIsSubmittingfalse());
@@ -271,7 +270,6 @@ function Dashboard() {
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
-          console.log("Login successful", data);
           setIApprovedRegistration(data.count);
         } else {
           dispatch(toggleIsSubmittingfalse());
@@ -434,7 +432,6 @@ function Dashboard() {
       width: isSmallScreen ? 120 : 180,
     },
   ];
-  console.log(allMSMEList);
   const rows = allMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.businessRegistrationName,
@@ -480,7 +477,7 @@ function Dashboard() {
       color: "hsl(193, 70%, 50%)",
     },
   ];
-  console.log("data", data, fourthElement);
+
   return (
     <div className="container-fluid mt-4">
       <p className="msme">Dashboard</p>
