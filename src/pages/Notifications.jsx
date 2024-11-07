@@ -1368,7 +1368,7 @@ function Notifications() {
                   cols="50"
                   value={notification}
                   className="form-control place-holder"
-                  maxlength="700"
+                  maxlength="1500"
                   placeholder="Type here.........."
                   autoComplete="off"
                   name="email"
@@ -1381,7 +1381,7 @@ function Notifications() {
               </div>
               <div className="float-end text-counter">
                 <span>{textCounter}</span>
-                <span>/700</span>
+                <span>/1500</span>
               </div>
               {notificationError && (
                 <>

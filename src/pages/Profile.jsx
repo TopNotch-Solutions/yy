@@ -161,7 +161,7 @@ function Profile() {
             icon: "error",
             title: `Something went wrong during data update`,
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -171,7 +171,7 @@ function Profile() {
         icon: "success",
         title: "Profile image successfully updated!",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 4000,
       });
       setProfilePic(data.profileImage);
 
@@ -195,7 +195,7 @@ function Profile() {
         icon: "error",
         title: `Passwords do not match!`,
         showConfirmButton: false,
-        timer: 3000,
+        timer: 4000,
       });
     } else {
       try {
@@ -237,7 +237,7 @@ function Profile() {
             icon: "success",
             title: "Password successfully updated!",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           setCurrentPassword("");
           setNewPassword("");
@@ -249,7 +249,7 @@ function Profile() {
             icon: "error",
             title: `${data.message}`,
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           
         }
@@ -282,7 +282,7 @@ function Profile() {
           icon: "info",
           title: `You have not made any changes`,
           showConfirmButton: false,
-          timer: 3000,
+          timer: 4000,
         });
       } else {
         try {
@@ -326,7 +326,7 @@ function Profile() {
               icon: "success",
               title: "Admin details successfully updated!",
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
             dispatch(login({
               user: data.currentUser
@@ -339,7 +339,7 @@ function Profile() {
               icon: "error",
               title: `${data.message}`,
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
             
           }

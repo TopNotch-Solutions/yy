@@ -716,7 +716,7 @@ const rowsAll = allMSMEList.map((msme) => ({
         icon: "error",
         title: `Check your internet connection and try again!`,
         showConfirmButton: false,
-        timer: 3000
+        timer: 4000
       });
     }
   }
@@ -732,7 +732,7 @@ const rowsAll = allMSMEList.map((msme) => ({
         icon: "error",
         title: `Check your internet connection and try again!`,
         showConfirmButton: false,
-        timer: 3000
+        timer: 4000
       });
     }
   }
@@ -748,7 +748,7 @@ const rowsAll = allMSMEList.map((msme) => ({
         icon: "error",
         title: `Check your internet connection and try again!`,
         showConfirmButton: false,
-        timer: 3000
+        timer: 4000
       });
     }
   }
@@ -764,7 +764,7 @@ const rowsAll = allMSMEList.map((msme) => ({
         icon: "error",
         title: `Check your internet connection and try again!`,
         showConfirmButton: false,
-        timer: 3000
+        timer: 4000
       });
     }
   }
@@ -780,7 +780,7 @@ const rowsAll = allMSMEList.map((msme) => ({
         icon: "error",
         title: `Check your internet connection and try again!`,
         showConfirmButton: false,
-        timer: 3000
+        timer: 4000
       });
     }
   }
@@ -796,7 +796,7 @@ const rowsAll = allMSMEList.map((msme) => ({
         icon: "error",
         title: `Check your internet connection and try again!`,
         showConfirmButton: false,
-        timer: 3000
+        timer: 4000
       });
     }
   }

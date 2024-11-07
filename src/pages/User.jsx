@@ -456,7 +456,7 @@ function User() {
                 icon: "error",
                 title: `${data.message}`,
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
               
             }
@@ -512,7 +512,7 @@ function User() {
                 icon: "success",
                 title: "Admin Successfully Deleted",
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
             } else {
               await Swal.fire({
@@ -520,7 +520,7 @@ function User() {
                 icon: "error",
                 title: `${data.message}`,
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
               
             }
@@ -775,7 +775,7 @@ function User() {
               icon: "success",
               title: "Admin Details Successfully Updated",
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
             setFirstNameDetails("");
             setLastNameDetails("");
@@ -791,7 +791,7 @@ function User() {
               icon: "error",
               title: `${data.message}`,
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
             setFirstNameDetails("");
             setLastNameDetails("");
@@ -855,7 +855,7 @@ function User() {
             icon: "success",
             title: "Admin Successfully Added",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           setFirstName("");
           setLastName("");
@@ -871,7 +871,7 @@ function User() {
             icon: "error",
             title: `${data.message}`,
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           setFirstName("");
           setLastName("");

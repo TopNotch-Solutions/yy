@@ -39,6 +39,7 @@ import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import { login } from "../redux/reducers/authReducer";
 import handleAuthFailure from "../utils/handleAuthFailure";
 import { RemoveWhiteSpaces } from "../utils/removeWhiteSpaces";
+import { convert24To12Hour } from "../utils/timeConvertion";
 
 const mobileStyle = {
   position: "absolute",
@@ -334,6 +335,8 @@ function Msme() {
   const [sendingNotification, setsendingNotification] = useState(false);
   const [notificationDescriptionError, setNotificationDescriptionError] =
     useState("");
+    const [textCounter, setTextCounter] = useState(0);
+    const [textCounterDetails, setTextCounterDetails] = useState(0);
   const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
@@ -1673,37 +1676,37 @@ function Msme() {
       const updatedTimes = {
         monday: !isMondayClosed
           ? "Closed"
-          : `${convertTo12HourFormat(mondayFrom)} - ${convertTo12HourFormat(
+          : `${convert24To12Hour(mondayFrom)} - ${convert24To12Hour(
               mondayTo
             )}`,
         tuesday: !isTuesdayClosed
           ? "Closed"
-          : `${convertTo12HourFormat(tuesdayFrom)} - ${convertTo12HourFormat(
+          : `${convert24To12Hour(tuesdayFrom)} - ${convert24To12Hour(
               tuesdayTo
             )}`,
         wednesday: !isWednesdayClosed
           ? "Closed"
-          : `${convertTo12HourFormat(wednesdayFrom)} - ${convertTo12HourFormat(
+          : `${convert24To12Hour(wednesdayFrom)} - ${convert24To12Hour(
               wednesdayTo
             )}`,
         thursday: !isThursdayClosed
           ? "Closed"
-          : `${convertTo12HourFormat(thursdayFrom)} - ${convertTo12HourFormat(
+          : `${convert24To12Hour(thursdayFrom)} - ${convert24To12Hour(
               thursdayTo
             )}`,
         friday: !isFridayClosed
           ? "Closed"
-          : `${convertTo12HourFormat(fridayFrom)} - ${convertTo12HourFormat(
+          : `${convert24To12Hour(fridayFrom)} - ${convert24To12Hour(
               fridayTo
             )}`,
         saturday: !isSaturdayClosed
           ? "Closed"
-          : `${convertTo12HourFormat(saturdayFrom)} - ${convertTo12HourFormat(
+          : `${convert24To12Hour(saturdayFrom)} - ${convert24To12Hour(
               saturdayTo
             )}`,
         sunday: !isSundayClosed
           ? "Closed"
-          : `${convertTo12HourFormat(sundayFrom)} - ${convertTo12HourFormat(
+          : `${convert24To12Hour(sundayFrom)} - ${convert24To12Hour(
               sundayTo
             )}`,
       };
@@ -1787,7 +1790,7 @@ function Msme() {
             icon: "success",
             title: "Record successfully inserted",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           setBusinessAddress("");
           setBusinessRegistrationName("");
@@ -1856,7 +1859,7 @@ function Msme() {
             icon: "error",
             title: `Internal server error: ${data.message}`,
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
         }
       } catch (error) {
@@ -1924,6 +1927,7 @@ function Msme() {
         );
         setBusinessDisplayNameDetails(data.data.businessDisplayName);
         setDescriptionDetails(data.data.description);
+        setTextCounterDetails(data.data.description.length);
         setTypeOfBusinessDetails(data.data.typeOfBusiness);
         setRegionDetails(data.data.region);
         setTownDetails(data.data.town);
@@ -2335,18 +2339,19 @@ function Msme() {
                   icon: "success",
                   title: "MSME Successfully Approved",
                   showConfirmButton: false,
-                  timer: 3000,
+                  timer: 4000,
                 });
                 setStepperCounter(0);
                 setUpdatingDetails([]);
                 setUpdate(false);
               } else {
+                setStepperCounter(0);
                 await Swal.fire({
                   position: "center",
                   icon: "error",
                   title: `${data.message}`,
                   showConfirmButton: false,
-                  timer: 3000,
+                  timer: 4000,
                 });
               }
             } catch (error) {
@@ -2395,13 +2400,37 @@ function Msme() {
         formData.append("founderGender", foundersGenderDetails);
         formData.append("businessAddress", businessAddressDetails);
         formData.append("phoneNumber", phoneNumberDetails);
-        formData.append("whatsAppNumber", whatsAppNumberDetails);
         formData.append("email", businessEmailDetails);
-        formData.append("website", websiteLinkDetails);
-        formData.append("twitter", twitterLinkDetails);
-        formData.append("facebook", facebookLinkDetails);
-        formData.append("instagram", instagramLinkDetails);
-        formData.append("linkedln", linkedInLinkDetails);
+        if(whatsAppNumberDetails){
+          formData.append("whatsAppNumber", whatsAppNumberDetails);
+        }else{
+          formData.append("whatsAppNumber", "");
+        }
+        if(websiteLinkDetails){
+          formData.append("website", websiteLinkDetails);
+        }else{
+          formData.append("website", "");
+        }
+        if(twitterLinkDetails){
+          formData.append("twitter", twitterLinkDetails);
+        }else{
+          formData.append("twitter", "");
+        }
+        if(facebookLinkDetails){
+          formData.append("facebook", facebookLinkDetails);
+        }else{
+          formData.append("facebook", "");
+        }
+        if(instagramLinkDetails){
+          formData.append("instagram", instagramLinkDetails);
+        }else{
+          formData.append("instagram", "");
+        }
+        if(linkedInLinkDetails){
+          formData.append("linkedln", linkedInLinkDetails);
+        }else{
+          formData.append("linkedln", "");
+        }
         formData.append("monday", mondayDetails);
         formData.append("tuesday", tuesdayDetails);
         formData.append("wednesday", wednesdayDetails);
@@ -2483,7 +2512,7 @@ function Msme() {
                     update ? "MSME Successfully Updated" : "MSME Successfully Approved"
                 ),
                   showConfirmButton: false,
-                  timer: 3000,
+                  timer: 4000,
                 });
                 setStepperCounter(0);
                 setUpdatingDetails([]);
@@ -2501,12 +2530,13 @@ function Msme() {
                 setNotificationTitle("");
                 setAddNotification(false);
               } else {
+                setStepperCounter(0);
                 await Swal.fire({
                   position: "center",
                   icon: "error",
                   title: `${data.message}`,
                   showConfirmButton: false,
-                  timer: 3000,
+                  timer: 4000,
                 });
               }
             } catch (error) {
@@ -2524,7 +2554,7 @@ function Msme() {
                 update ? "MSME Successfully Updated" : "MSME Successfully Approved"
             ),
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
             setStepperCounter(0);
             setUpdatingDetails([]);
@@ -2550,7 +2580,7 @@ function Msme() {
             icon: "error",
             title: `Internal server error: ${data.message}`,
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
         }
       } catch (error) {
@@ -2610,7 +2640,7 @@ function Msme() {
                 icon: "success",
                 title: "MSME Rejected",
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
               setStepperCounter(0);
               setUpdatingDetails([]);
@@ -2624,6 +2654,7 @@ function Msme() {
               setNotificationTitle("");
               setAddNotification(false);
             } else {
+              setStepperCounter(0);
               setIsSubmitting(false);
               setUpdate(false);
               await Swal.fire({
@@ -2631,7 +2662,7 @@ function Msme() {
                 icon: "error",
                 title: `${data.message}`,
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
             }
           } catch (error) {
@@ -2697,7 +2728,7 @@ function Msme() {
                 icon: "success",
                 title: "MSME Block",
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
               setStepperCounter(0);
               setUpdatingDetails([]);
@@ -2717,10 +2748,11 @@ function Msme() {
                 icon: "error",
                 title: `${data.message}`,
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
             }
           } catch (error) {
+            setStepperCounter(0);
             setUpdate(false);
             handleAuthFailure({ dispatch, navigate, type: "network" });
           } finally {
@@ -2784,7 +2816,7 @@ function Msme() {
                 icon: "success",
                 title: "MSME Unblock",
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
               setStepperCounter(0);
               setUpdatingDetails([]);
@@ -2797,6 +2829,7 @@ function Msme() {
               setNotificationTitle("");
               setAddNotification(false);
             } else {
+              setStepperCounter(0);
               setIsSubmitting(false);
               setUpdate(false);
               await Swal.fire({
@@ -2804,7 +2837,7 @@ function Msme() {
                 icon: "error",
                 title: `${data.message}`,
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
             }
           } catch (error) {
@@ -4210,22 +4243,30 @@ function Msme() {
                         <textarea
                           type="text"
                           rows={5}
+                           maxlength="700"
                           className="form-control place-holder"
                           placeholder="Start typing....."
                           value={description}
                           autoComplete="off"
                           name="description"
                           onChange={(e) => {
+                            setTextCounter(e.target.value.length)
                             setDescriptionError("");
                             setDescription(e.target.value);
                           }}
                         />
-                        {descriptionError && (
+                       
+                        
+                      </div>
+                      <div className="float-end text-counter">
+                <span>{textCounter}</span>
+                <span>/700</span>
+              </div>
+              {descriptionError && (
                           <>
                             <p className="error mt-1">{descriptionError}</p>
                           </>
                         )}
-                      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       {(typeOfBusiness ===
@@ -6018,6 +6059,7 @@ function Msme() {
                           type="text"
                           rows={7}
                           cols={10}
+                          maxlength="700"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6028,18 +6070,24 @@ function Msme() {
                             setUpdate(true);
                             setDescriptionDetailsError("");
                             setDescriptionDetails(e.target.value);
+                            setTextCounterDetails(e.target.value.length);
                           }}
                           autoComplete="off"
                           name="description"
                         />
-                        {descriptionDetailsError && (
+                       
+                      </div>
+                      <div className="float-end text-counter">
+                <span>{textCounterDetails}</span>
+                <span>/700</span>
+              </div>
+              {descriptionDetailsError && (
                           <>
                             <p className="error mt-1">
                               {descriptionDetailsError}
                             </p>
                           </>
                         )}
-                      </div>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
@@ -6735,7 +6783,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="8:00 AM - 6:00 PM"
+                          placeholder="e.g 8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6763,7 +6811,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="8:00 AM - 6:00 PM"
+                          placeholder="e.g 8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6791,7 +6839,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="8:00 AM - 6:00 PM"
+                          placeholder="e.g 8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6821,7 +6869,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="8:00 AM - 6:00 PM"
+                          placeholder="e.g 8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6849,7 +6897,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="8:00 AM - 6:00 PM"
+                          placeholder="e.g 8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6877,7 +6925,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="8:00 AM - 6:00 PM"
+                          placeholder="e.g 8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }
@@ -6905,7 +6953,7 @@ function Msme() {
                         <input
                           type="text"
                           className="form-control place-holder"
-                          placeholder="8:00 AM - 6:00 PM"
+                          placeholder="e.g 8:00 AM - 6:00 PM"
                           disabled={
                             currentUser.role === "Super admin" ? false : true
                           }

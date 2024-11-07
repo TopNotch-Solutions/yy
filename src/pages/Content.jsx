@@ -258,7 +258,7 @@ function Content() {
             icon: "success",
             title: "Opportunity Successfully Added",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           setDescription("");
           setImage("");
@@ -268,7 +268,7 @@ function Content() {
             icon: "error",
             title: `${data.message}`,
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
         }
       } catch (error) {
@@ -309,7 +309,7 @@ function Content() {
             icon: "success",
             title: "Image Successfully Added",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           setDescriptionImage("");
           setImageImage("");
@@ -322,7 +322,7 @@ function Content() {
             icon: "error",
             title: `${data.message}`,
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           setDescriptionImage("");
           setImageImage("");
@@ -489,7 +489,7 @@ function Content() {
               icon: "success",
               title: "Opportunity Successfully Deleted",
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
           } else {
             setIsSubmitting(false);
@@ -499,7 +499,7 @@ function Content() {
               icon: "error",
               title: `${data.message}`,
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
             
           }
@@ -561,7 +561,7 @@ function Content() {
               icon: "success",
               title: "Image Successfully Deleted",
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
           } else {
             setIsSubmitting(false);
@@ -571,7 +571,7 @@ function Content() {
               icon: "error",
               title: `${data.message}`,
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
           }
         } catch (error) {

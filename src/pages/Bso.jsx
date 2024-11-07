@@ -355,7 +355,7 @@ function Bso() {
             icon: "success",
             title: "Bso successfully added",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           setName("");
           setType("");
@@ -373,7 +373,7 @@ function Bso() {
             icon: "error",
             title: `${data.message}`,
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
           });
           setName("");
           setType("");
@@ -553,7 +553,7 @@ function Bso() {
                 icon: "success",
                 title: "Bso Successfully Deleted",
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
               
             } else {
@@ -563,7 +563,7 @@ function Bso() {
                 icon: "error",
                 title: `${data.message}`,
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 4000,
               });
 
             }
@@ -625,7 +625,7 @@ function Bso() {
               icon: "success",
               title: "BSO Details Successfully Updated",
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
             setNameDetails("");
             setTypeDetails("");
@@ -643,7 +643,7 @@ function Bso() {
               icon: "error",
               title: `${data.message}`,
               showConfirmButton: false,
-              timer: 3000,
+              timer: 4000,
             });
             setNameDetails("");
             setTypeDetails("");
