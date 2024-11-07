@@ -1976,6 +1976,7 @@ function Msme() {
       }
     } catch (error) {
       setIsSubmitting(false);
+      console.error("Error in handleView:", error); 
       handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
