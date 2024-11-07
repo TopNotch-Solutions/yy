@@ -1920,6 +1920,7 @@ function Msme() {
       if (response.ok) {
         setIsSubmitting(false);
         setUpdatingDetails(data.data);
+        console.log(updatingDetails);
         setBusinessAddressDetails(data.data.businessRegistrationName);
         setBusinessRegistrationNameDetails(data.data.businessRegistrationName);
         setBusinessRegistrationNumberDetails(
