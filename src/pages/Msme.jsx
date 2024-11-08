@@ -40,6 +40,7 @@ import { login } from "../redux/reducers/authReducer";
 import handleAuthFailure from "../utils/handleAuthFailure";
 import { RemoveWhiteSpaces } from "../utils/removeWhiteSpaces";
 import { convert24To12Hour } from "../utils/timeConvertion";
+import { validateTimeRangeOrClosed } from "../utils/validateTime";
 
 const mobileStyle = {
   position: "absolute",
@@ -335,8 +336,8 @@ function Msme() {
   const [sendingNotification, setsendingNotification] = useState(false);
   const [notificationDescriptionError, setNotificationDescriptionError] =
     useState("");
-    const [textCounter, setTextCounter] = useState(0);
-    const [textCounterDetails, setTextCounterDetails] = useState(0);
+  const [textCounter, setTextCounter] = useState(0);
+  const [textCounterDetails, setTextCounterDetails] = useState(0);
   const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
@@ -1589,9 +1590,9 @@ function Msme() {
         field.setError(`${field.name} is required.`);
         isValid = false;
       } else {
-        if (field.value !== "Closed" && !timeFormatRegex.test(field.value)) {
+        if (!validateTimeRangeOrClosed(field.value)) {
           field.setError(
-            `${field.name} has an invalid time format. Expected format is 12-hour formate(e.g. 12:00 AM - 12:00 PM) or "Closed".`
+            `${field.name} has an invalid time format. Expected format is 12-hour formate(e.g. 8:00 AM - 12:00 PM) or "Closed".`
           );
           isValid = false;
         } else {
@@ -1676,9 +1677,7 @@ function Msme() {
       const updatedTimes = {
         monday: !isMondayClosed
           ? "Closed"
-          : `${convert24To12Hour(mondayFrom)} - ${convert24To12Hour(
-              mondayTo
-            )}`,
+          : `${convert24To12Hour(mondayFrom)} - ${convert24To12Hour(mondayTo)}`,
         tuesday: !isTuesdayClosed
           ? "Closed"
           : `${convert24To12Hour(tuesdayFrom)} - ${convert24To12Hour(
@@ -1696,9 +1695,7 @@ function Msme() {
             )}`,
         friday: !isFridayClosed
           ? "Closed"
-          : `${convert24To12Hour(fridayFrom)} - ${convert24To12Hour(
-              fridayTo
-            )}`,
+          : `${convert24To12Hour(fridayFrom)} - ${convert24To12Hour(fridayTo)}`,
         saturday: !isSaturdayClosed
           ? "Closed"
           : `${convert24To12Hour(saturdayFrom)} - ${convert24To12Hour(
@@ -1706,9 +1703,7 @@ function Msme() {
             )}`,
         sunday: !isSundayClosed
           ? "Closed"
-          : `${convert24To12Hour(sundayFrom)} - ${convert24To12Hour(
-              sundayTo
-            )}`,
+          : `${convert24To12Hour(sundayFrom)} - ${convert24To12Hour(sundayTo)}`,
       };
 
       setMonday(updatedTimes.monday);
@@ -1976,7 +1971,7 @@ function Msme() {
       }
     } catch (error) {
       setIsSubmitting(false);
-      console.error("Error in handleView:", error); 
+      console.error("Error in handleView:", error);
       handleAuthFailure({ dispatch, navigate, type: "network" });
     }
   };
@@ -1996,10 +1991,11 @@ function Msme() {
 
   const rowsIncompleteFiltered = rowsIncomplete.filter((row) =>
     Object.values(row).some((value) =>
-      (value ? value.toString() : "").toLowerCase().includes(searchQueryIncomplete.toLowerCase())
+      (value ? value.toString() : "")
+        .toLowerCase()
+        .includes(searchQueryIncomplete.toLowerCase())
     )
   );
-  
 
   const columns = [
     {
@@ -2093,7 +2089,9 @@ function Msme() {
   }));
   const filteredRows = rowsAll.filter((row) =>
     Object.values(row).some((value) =>
-      (value ? value.toString() : "").toLowerCase().includes(searchQuery.toLowerCase())
+      (value ? value.toString() : "")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
     )
   );
   const rowsPending = pendingMSMEList.map((msme) => ({
@@ -2111,10 +2109,12 @@ function Msme() {
   }));
   const filteredRowsPending = rowsPending.filter((row) =>
     Object.values(row).some((value) =>
-      (value ? value.toString() : "").toLowerCase().includes(searchQueryPending.toLowerCase())
+      (value ? value.toString() : "")
+        .toLowerCase()
+        .includes(searchQueryPending.toLowerCase())
     )
   );
-  
+
   const rowsRejected = rejectedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.registrationName,
@@ -2130,10 +2130,12 @@ function Msme() {
   }));
   const filteredRowsRejected = rowsRejected.filter((row) =>
     Object.values(row).some((value) =>
-      (value ? value.toString() : "").toLowerCase().includes(searchQueryRejected.toLowerCase())
+      (value ? value.toString() : "")
+        .toLowerCase()
+        .includes(searchQueryRejected.toLowerCase())
     )
   );
-  
+
   const rowsApproved = approvedMSMEList.map((msme) => ({
     id: msme.id,
     registrationName: msme.registrationName,
@@ -2149,10 +2151,11 @@ function Msme() {
   }));
   const filteredRowsApproved = rowsApproved.filter((row) =>
     Object.values(row).some((value) =>
-      (value ? value.toString() : "").toLowerCase().includes(searchQueryApproved.toLowerCase())
+      (value ? value.toString() : "")
+        .toLowerCase()
+        .includes(searchQueryApproved.toLowerCase())
     )
   );
-  
 
   const typeOfBusinessOptions = [
     {
@@ -2215,17 +2218,17 @@ function Msme() {
     value: option.id,
   }));
   const filteredTownOptions = townList
-  .filter((option) => option.regionId === region) // Only towns in the selected region
-  .map((option) => ({
-    value: option.townName,
-    label: option.id,
-  }));
+    .filter((option) => option.regionId === region) // Only towns in the selected region
+    .map((option) => ({
+      value: option.townName,
+      label: option.id,
+    }));
   const filteredTownOptionsDetails = townList
-  .filter((option) => option.regionId === regionDetails) // Only towns in the selected region
-  .map((option) => ({
-    value: option.townName,
-    label: option.id,
-  }));
+    .filter((option) => option.regionId === regionDetails) // Only towns in the selected region
+    .map((option) => ({
+      value: option.townName,
+      label: option.id,
+    }));
   const filteredByRegionOption = townList
     .filter((town) => town.regionId === region)
     .map((option) => ({
@@ -2234,7 +2237,7 @@ function Msme() {
       regionId: option.regionId,
     }));
 
-    const filteredByRegionOptionDetails = townList
+  const filteredByRegionOptionDetails = townList
     .filter((town) => town.regionId === regionDetails)
     .map((option) => ({
       value: option.townName,
@@ -2321,7 +2324,7 @@ function Msme() {
                   }),
                 }
               );
-              
+
               const data = await response.json();
               const newTokenHeader = response.headers.get("Authorization");
 
@@ -2376,16 +2379,16 @@ function Msme() {
           "businessRegistrationName",
           businessRegistrationNameDetails
         );
-        if(typeOfBusinessDetails === "Close Corporation (CC)" || typeOfBusinessDetails === "Proprietary Limited Company (PTY)"){
+        if (
+          typeOfBusinessDetails === "Close Corporation (CC)" ||
+          typeOfBusinessDetails === "Proprietary Limited Company (PTY)"
+        ) {
           formData.append(
             "businessRegistrationNumber",
             businessRegistrationNumberDetails
           );
-        }else{
-          formData.append(
-            "businessRegistrationNumber",
-            ""
-          );
+        } else {
+          formData.append("businessRegistrationNumber", "");
         }
         formData.append("businessDisplayName", businessDisplayNameDetails);
         formData.append("typeOfBusiness", typeOfBusinessDetails);
@@ -2403,34 +2406,34 @@ function Msme() {
         formData.append("businessAddress", businessAddressDetails);
         formData.append("phoneNumber", phoneNumberDetails);
         formData.append("email", businessEmailDetails);
-        if(whatsAppNumberDetails){
+        if (whatsAppNumberDetails) {
           formData.append("whatsAppNumber", whatsAppNumberDetails);
-        }else{
+        } else {
           formData.append("whatsAppNumber", "");
         }
-        if(websiteLinkDetails){
+        if (websiteLinkDetails) {
           formData.append("website", websiteLinkDetails);
-        }else{
+        } else {
           formData.append("website", "");
         }
-        if(twitterLinkDetails){
+        if (twitterLinkDetails) {
           formData.append("twitter", twitterLinkDetails);
-        }else{
+        } else {
           formData.append("twitter", "");
         }
-        if(facebookLinkDetails){
+        if (facebookLinkDetails) {
           formData.append("facebook", facebookLinkDetails);
-        }else{
+        } else {
           formData.append("facebook", "");
         }
-        if(instagramLinkDetails){
+        if (instagramLinkDetails) {
           formData.append("instagram", instagramLinkDetails);
-        }else{
+        } else {
           formData.append("instagram", "");
         }
-        if(linkedInLinkDetails){
+        if (linkedInLinkDetails) {
           formData.append("linkedln", linkedInLinkDetails);
-        }else{
+        } else {
           formData.append("linkedln", "");
         }
         formData.append("monday", mondayDetails);
@@ -2475,7 +2478,11 @@ function Msme() {
 
         const data = await response.json();
         if (response.ok) {
-          if(updatingDetails.status === "Pending" || updatingDetails.status === "Rejected" || updatingDetails.status === "Incomplete"){
+          if (
+            updatingDetails.status === "Pending" ||
+            updatingDetails.status === "Rejected" ||
+            updatingDetails.status === "Incomplete"
+          ) {
             try {
               setIsSubmitting(true);
               const response = await fetch(
@@ -2492,10 +2499,10 @@ function Msme() {
                   }),
                 }
               );
-  
+
               const data = await response.json();
               const newTokenHeader = response.headers.get("Authorization");
-  
+
               if (newTokenHeader) {
                 dispatch(
                   updateToken({
@@ -2505,14 +2512,18 @@ function Msme() {
               } else {
                 handleAuthFailure({ dispatch, navigate, type: "auth" });
               }
-  
+
               if (response.ok) {
                 Swal.fire({
                   position: "center",
                   icon: "success",
-                  title: (updatingDetails.status === 'Pending' || updatingDetails.status === 'Incomplete') ? "MSME Successfully Approved" : (
-                    update ? "MSME Successfully Updated" : "MSME Successfully Approved"
-                ),
+                  title:
+                    updatingDetails.status === "Pending" ||
+                    updatingDetails.status === "Incomplete"
+                      ? "MSME Successfully Approved"
+                      : update
+                      ? "MSME Successfully Updated"
+                      : "MSME Successfully Approved",
                   showConfirmButton: false,
                   timer: 4000,
                 });
@@ -2547,14 +2558,17 @@ function Msme() {
               setIsSubmitting(false);
               setUpdate(false);
             }
-          }else{
+          } else {
             setIsSubmitting(false);
             Swal.fire({
               position: "center",
               icon: "success",
-              title: updatingDetails.status === 'Pending' ? "MSME Successfully Approved" : (
-                update ? "MSME Successfully Updated" : "MSME Successfully Approved"
-            ),
+              title:
+                updatingDetails.status === "Pending"
+                  ? "MSME Successfully Approved"
+                  : update
+                  ? "MSME Successfully Updated"
+                  : "MSME Successfully Approved",
               showConfirmButton: false,
               timer: 4000,
             });
@@ -4245,30 +4259,28 @@ function Msme() {
                         <textarea
                           type="text"
                           rows={5}
-                           maxlength="700"
+                          maxlength="700"
                           className="form-control place-holder"
                           placeholder="Start typing....."
                           value={description}
                           autoComplete="off"
                           name="description"
                           onChange={(e) => {
-                            setTextCounter(e.target.value.length)
+                            setTextCounter(e.target.value.length);
                             setDescriptionError("");
                             setDescription(e.target.value);
                           }}
                         />
-                       
-                        
                       </div>
                       <div className="float-end text-counter">
-                <span>{textCounter}</span>
-                <span>/700</span>
-              </div>
-              {descriptionError && (
-                          <>
-                            <p className="error mt-1">{descriptionError}</p>
-                          </>
-                        )}
+                        <span>{textCounter}</span>
+                        <span>/700</span>
+                      </div>
+                      {descriptionError && (
+                        <>
+                          <p className="error mt-1">{descriptionError}</p>
+                        </>
+                      )}
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       {(typeOfBusiness ===
@@ -4313,7 +4325,7 @@ function Msme() {
                           value={region}
                           onChange={(e) => {
                             setRegionError("");
-                            let number= parseInt(e.target.value)
+                            let number = parseInt(e.target.value);
                             setRegion(number);
                             console.log(region);
                           }}
@@ -4334,39 +4346,37 @@ function Msme() {
                         )}
                       </div>
                     </Grid>
-                    {
-                      region && (
-                        <Grid item xs={12} sm={6} md={6}>
-                      <div className="form-group pb-3">
-                        <label htmlFor="email" className="pb-2 text-boldd">
-                          Town: <span>*</span>
-                        </label>
-                        <select
-                          class="form-select"
-                          value={town}
-                          onChange={(e) => {
-                            setTownError("");
-                            setTown(e.target.value);
-                          }}
-                        >
-                          <option value="" disabled selected>
-                            Select town
-                          </option>
-                          {filteredByRegionOption.map((option) => (
-                            <option value={option.value} key={option.label}>
-                              {option.value}
+                    {region && (
+                      <Grid item xs={12} sm={6} md={6}>
+                        <div className="form-group pb-3">
+                          <label htmlFor="email" className="pb-2 text-boldd">
+                            Town: <span>*</span>
+                          </label>
+                          <select
+                            class="form-select"
+                            value={town}
+                            onChange={(e) => {
+                              setTownError("");
+                              setTown(e.target.value);
+                            }}
+                          >
+                            <option value="" disabled selected>
+                              Select town
                             </option>
-                          ))}
-                        </select>
-                        {townError && (
-                          <>
-                            <p className="error mt-1">{townError}</p>
-                          </>
-                        )}
-                      </div>
-                    </Grid>
-                      )
-                    }
+                            {filteredByRegionOption.map((option) => (
+                              <option value={option.value} key={option.label}>
+                                {option.value}
+                              </option>
+                            ))}
+                          </select>
+                          {townError && (
+                            <>
+                              <p className="error mt-1">{townError}</p>
+                            </>
+                          )}
+                        </div>
+                      </Grid>
+                    )}
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-3">
                         <label htmlFor="email" className="pb-2 text-boldd">
@@ -5967,7 +5977,10 @@ function Msme() {
                                 setBusinessRegistrationNumberDetails(
                                   e.target.value
                                 );
-                                console.log("After update", businessRegistrationNumberDetails);
+                                console.log(
+                                  "After update",
+                                  businessRegistrationNumberDetails
+                                );
                               }}
                               name="email"
                             />
@@ -6077,19 +6090,18 @@ function Msme() {
                           autoComplete="off"
                           name="description"
                         />
-                       
                       </div>
                       <div className="float-end text-counter">
-                <span>{textCounterDetails}</span>
-                <span>/700</span>
-              </div>
-              {descriptionDetailsError && (
-                          <>
-                            <p className="error mt-1">
-                              {descriptionDetailsError}
-                            </p>
-                          </>
-                        )}
+                        <span>{textCounterDetails}</span>
+                        <span>/700</span>
+                      </div>
+                      {descriptionDetailsError && (
+                        <>
+                          <p className="error mt-1">
+                            {descriptionDetailsError}
+                          </p>
+                        </>
+                      )}
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <div className="form-group pb-md-2">
@@ -6102,7 +6114,7 @@ function Msme() {
                           onChange={(e) => {
                             setUpdate(true);
                             setRegionDetailsError("");
-                            let updatedRegion = parseInt(e.target.value)
+                            let updatedRegion = parseInt(e.target.value);
                             setRegionDetails(updatedRegion);
                             setTownDetails("");
                           }}
@@ -6146,15 +6158,12 @@ function Msme() {
                           <option value="" disabled selected>
                             Select town
                           </option>
-                         
-                          {
-                            filteredTownOptionsDetails.map((option) => (
-                              <option value={option.value} key={option.value}>
-                                {option.value}
-                              </option>
-                            ))
-                          }
-                          
+
+                          {filteredTownOptionsDetails.map((option) => (
+                            <option value={option.value} key={option.value}>
+                              {option.value}
+                            </option>
+                          ))}
                         </select>
                         {townDetailsError && (
                           <>
@@ -6332,9 +6341,12 @@ function Msme() {
                     <div className="d-flex justify-content-end w-100">
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
-                        onClick={() =>{
-                          console.log("Registration number msme-information: ", businessRegistrationNumberDetails)
-                          handleStep1Review()
+                        onClick={() => {
+                          console.log(
+                            "Registration number msme-information: ",
+                            businessRegistrationNumberDetails
+                          );
+                          handleStep1Review();
                         }}
                       >
                         Next
@@ -6451,9 +6463,12 @@ function Msme() {
                       </button>
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
-                        onClick={() =>{
-                          console.log("registration number after founder information: ",businessRegistrationNumberDetails)
-                          handleStep2Review()
+                        onClick={() => {
+                          console.log(
+                            "registration number after founder information: ",
+                            businessRegistrationNumberDetails
+                          );
+                          handleStep2Review();
                         }}
                       >
                         Next
@@ -7398,13 +7413,16 @@ function Msme() {
                           spacing={{ xs: 1, md: 2 }}
                           columns={{ xs: 12, sm: 12, md: 12 }}
                         >
-                         {notificationFail && (
-        <Grid item xs={12}>
-          <div className="success-message">
-            <p className="animated-danger">Notification not sent! Check your network & try again.</p>
-          </div>
-        </Grid>
-      )}
+                          {notificationFail && (
+                            <Grid item xs={12}>
+                              <div className="success-message">
+                                <p className="animated-danger">
+                                  Notification not sent! Check your network &
+                                  try again.
+                                </p>
+                              </div>
+                            </Grid>
+                          )}
                           <Grid item xs={12} sm={6} md={6}>
                             <div className="form-group pb-md-2">
                               <label htmlFor="email" className="text-boldd">
@@ -7490,14 +7508,16 @@ function Msme() {
                           </Grid>
                         </Grid>
                       )}
-                    </Grid >
+                    </Grid>
                     {notificationSuccess && (
-        <Grid item xs={12}>
-          <div className="success-message">
-            <p className="animated-success">Notification successfully sent!</p>
-          </div>
-        </Grid>
-      )}
+                      <Grid item xs={12}>
+                        <div className="success-message">
+                          <p className="animated-success">
+                            Notification successfully sent!
+                          </p>
+                        </div>
+                      </Grid>
+                    )}
                     <Grid item xs={12}>
                       <div className="d-flex justify-content-between w-100">
                         <button
@@ -7530,12 +7550,17 @@ function Msme() {
                             )}
 
                             {update &&
-                              updatingDetails?.status !== "Pending" && updatingDetails?.status !== "Rejected" && updatingDetails?.status !== "Incomplete" && (
+                              updatingDetails?.status !== "Pending" &&
+                              updatingDetails?.status !== "Rejected" &&
+                              updatingDetails?.status !== "Incomplete" && (
                                 <button
                                   className="btn btn-success m-1 p-2 modelButton text-boldd"
-                                  onClick={() =>{
-                                    console.log("registration number before sending: ", businessRegistrationNumberDetails);
-                                    approve()
+                                  onClick={() => {
+                                    console.log(
+                                      "registration number before sending: ",
+                                      businessRegistrationNumberDetails
+                                    );
+                                    approve();
                                   }}
                                 >
                                   Update
