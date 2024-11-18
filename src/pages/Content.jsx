@@ -1043,7 +1043,7 @@ const validateFields1 = () => {
           formData.append("description", descriptionDetails);
           formData.append("user", userDetails);
           formData.append("opportunity-image", fileMobileImage);
-          formData.append("ink", linkDetails);
+          formData.append("link", linkDetails);
 
           const response = await fetch(
             `http://localhost:4000/opportunities/admin/update/${updatingDetails.id}`,
