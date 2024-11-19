@@ -84,7 +84,7 @@ const AdminLogin = () => {
     if (validateForm()) {
       try {
         setIsSubmitting(true);
-        const response = await fetch("http://localhost:4000/auth/admin/login", {
+        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -143,7 +143,7 @@ const AdminLogin = () => {
         console.log(userId);
         setIsSubmitting(true);
         const response = await fetch(
-          "http://localhost:4000/auth/admin/verify-otp",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/verify-otp",
           {
             method: "POST",
             headers: {

@@ -31,7 +31,7 @@ const Topbar = ({ OpenSidebar }) => {
     const fetchAllAdminNotificationsCount = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/totalNotificationCount`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/totalNotificationCount`,
           {
             method: "GET",
             headers: {
@@ -60,7 +60,7 @@ const Topbar = ({ OpenSidebar }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:4000/auth/admin/logout", {
+      const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/logout", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

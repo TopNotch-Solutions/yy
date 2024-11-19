@@ -19,7 +19,7 @@ function SubmitEmail() {
     if (validateForm()) {
       try {
         setIsSubmitting(true);
-        const response = await fetch("http://localhost:4000/auth/admin/forgot-password", {
+        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/forgot-password", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
