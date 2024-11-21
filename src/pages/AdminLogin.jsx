@@ -10,9 +10,11 @@ import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
 import {toggleAuthenticationTrue, toggleAuthenticationfalse} from "../redux/reducers/twoFactorReducer";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateToken } from "../redux/reducers/authReducer";
+import { updateToken} from "../redux/reducers/authReducer";
+import {updateServerToken } from "../redux/reducers/serverReducer";
 import { login } from "../redux/reducers/authReducer";
 import { toggleActiveTab } from "../redux/reducers/tabsReducer";
+import { fetchOAuthToken } from "../utils/fectchOAuthToken";
 
 const AdminLogin = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -34,6 +36,7 @@ const AdminLogin = () => {
   useEffect(() => {
     dispatch(toggleSidebarfalse());
     dispatch(toggleActiveTab({ activeTab: 1 }));
+    dispatch(updateServerToken({serverToken: ''}))
   }, []);
 
   useEffect(() => {
@@ -82,38 +85,60 @@ const AdminLogin = () => {
     }
 
     if (validateForm()) {
+
       try {
-        setIsSubmitting(true);
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          setIsSubmitting(false);
-          setUserId(data.userId);
-          setTwoFactorDigits("");
-          dispatch(toggleAuthenticationTrue());
+        // Fetch OAuth token
+        const tokenData = await fetchOAuthToken();
+      
+        if (tokenData.access_token) {
+          try {
+            setIsSubmitting(true);
+    
+            const loginResponse = await fetch("http://localhost:4000/auth/admin/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${tokenData.access_token}`,
+              },
+              credentials: "include",
+              body: JSON.stringify({
+                email: email,
+                password: password,
+              }),
+            });
+      
+            const loginData = await loginResponse.json();
+      
+            if (loginResponse.ok) {
+              setIsSubmitting(false);
+              setUserId(loginData.userId); 
+              setTwoFactorDigits(""); 
+              dispatch(toggleAuthenticationTrue());
+            } else {
+              setIsSubmitting(false);
+              toast.error(`Invalid credentails. Verify & try again!`);
+            }
+          } catch (error) {
+            // Handle network error during login request
+            setIsSubmitting(false);
+            toast.error(
+              "Network error.",
+              "Please check your network connection and try again.Please check your network connection and try again"
+            );
+          }
         } else {
-          setIsSubmitting(false);
-          toast.error(`Wrong username or password:`);
+          toast.error(
+            "Network error.",
+            "Please check your network connection and try again.Please check your network connection and try again"
+          );
         }
       } catch (error) {
-        setIsSubmitting(false);
-        toast.error(
-          "Network error. Please check your network connection and try again",
-          "Please check your network connection and try again"
-        );
+        // Handle error during token fetch
+        console.error("Error fetching OAuth token:", error);
+        toast.error("Unable to fetch token. Please check your network and try again.");
       }
+      
+      
     }
   };
 
@@ -139,50 +164,61 @@ const AdminLogin = () => {
 
     setTwoFactorDigitsError("");
     if (validateTwoFactor()) {
-      try {
-        console.log(userId);
-        setIsSubmitting(true);
-        const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/verify-otp",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify({
-              userId,
-              otp: twoFactorDigits,
-            }),
-          }
-        );
-
-        const data = await response.json();
-
-        if (response.ok) {
-
-          dispatch(toggleSidebarTrue());
-          dispatch(
-            login({
-              user: data.currentUser,
-            })
+      const tokenData = await fetchOAuthToken();
+      
+      if (tokenData.access_token) {
+        try {
+          console.log(userId);
+          setIsSubmitting(true);
+          const response = await fetch(
+            "http://localhost:4000/auth/admin/verify-otp",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${tokenData.access_token}`,
+              },
+              credentials: "include",
+              body: JSON.stringify({
+                userId,
+                otp: twoFactorDigits,
+              }),
+            }
           );
-          dispatch(toggleAuthenticationfalse());
-          dispatch(updateToken({
-            token: `Bearer ${data.currentUser.token}`
-          }));
-          navigate("/Dashboard");
-        } else {
+  
+          const data = await response.json();
+  
+          if (response.ok) {
+  
+            dispatch(toggleSidebarTrue());
+            dispatch(
+              login({
+                user: data.currentUser,
+              })
+            );
+            dispatch(toggleAuthenticationfalse());
+            dispatch(updateServerToken({
+              serverToken: `Bearer ${tokenData.access_token}`
+            }));
+            console.log("Here is my custom token before saving it: ",data.currentUser.token)
+            dispatch(updateToken({
+              token: `Bearer ${data.currentUser.token}`
+            }));
+            console.log("Here is my custom token after saving it: ",currentUser)
+            navigate("/Dashboard");
+          } else {
+            setIsSubmitting(false);
+            toast.error(`${data.message}:`);
+          }
+        } catch (error) {
           setIsSubmitting(false);
-          toast.error(`${data.message}:`);
+          toast.error(
+            "Network error. Please check your network connection and try again",
+            "Please check your network connection and try again"
+          );
         }
-      } catch (error) {
-        setIsSubmitting(false);
-        toast.error(
-          "Network error. Please check your network connection and try again",
-          "Please check your network connection and try again"
-        );
       }
+      
     }
   };
   return (

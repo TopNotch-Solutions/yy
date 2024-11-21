@@ -13,6 +13,7 @@ import { toggleSidebarfalse } from "../../redux/reducers/sidebarReducer";
 import { login } from "../../redux/reducers/authReducer";
 import { useNavigate } from "react-router-dom";
 import { updateToken } from "../../redux/reducers/authReducer";
+import { updateServerToken } from "../../redux/reducers/serverReducer";
 import { toggleActiveTab } from "../../redux/reducers/tabsReducer";
 import Swal from "sweetalert2";
 
@@ -20,6 +21,7 @@ const Topbar = ({ OpenSidebar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.user);
+  const serverToken = useSelector((state) => state.server.serverToken);
   const updatingState = useSelector((state) => state.submitting.isSubmitting);
   const [isSubmitting, setIsSubmitting] = useState(false);
   let fullName = currentUser?.firstName + currentUser?.lastName;
@@ -28,26 +30,28 @@ const Topbar = ({ OpenSidebar }) => {
   let firstLetter = CapitalizeFirstLetter(currentUser?.firstName);
   let secondLetter = CapitalizeFirstLetter(currentUser?.lastName);
   useEffect(() => {
+    console.log("Here is my custom token before saving it: ",serverToken, tokenHeader)
     const fetchAllAdminNotificationsCount = async () => {
       try {
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/totalNotificationCount`,
+          `http://localhost:4000/notifications/admin/totalNotificationCount`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${tokenHeader}`,
+              Authorization: `${serverToken}`,
+              'x-access-token': `${tokenHeader}`
             },
             credentials: "include",
           }
         );
-
+        
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
+        const newTokenHeader = response.headers.get('x-access-token');
         dispatch(updateToken({
           token: newTokenHeader
         }));
-
+        console.log("Here is my custom token after saving it: ",response)
         if (response.ok) {
           setAllNotificationsCount(data.count);
         } else {
@@ -60,17 +64,18 @@ const Topbar = ({ OpenSidebar }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/logout", {
+      const response = await fetch("http://localhost:4000/auth/admin/logout", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `${tokenHeader}`,
+          'x-access-token': `${tokenHeader}`
         },
         credentials: "include",
       });
 
       const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
+        const newTokenHeader = response.headers.get('x-access-token');
         dispatch(updateToken({
           token: newTokenHeader
         }));

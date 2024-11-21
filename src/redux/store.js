@@ -3,6 +3,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import sidebarReducer from './reducers/sidebarReducer';
 import authReducer from "./reducers/authReducer";
+import serverReducer from "./reducers/serverReducer";
 import storage from 'redux-persist/lib/storage';
 import tabsReducer from './reducers/tabsReducer';
 import authenticationReducer  from './reducers/twoFactorReducer';
@@ -15,6 +16,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  server: serverReducer,
   sidebar: sidebarReducer,
   tabs: tabsReducer,
   authentication:authenticationReducer,

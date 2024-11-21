@@ -50,7 +50,7 @@ function Profile() {
   const [department, setDepartment] = useState(currentUser.department);
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const serverToken = useSelector((state) => state.server.serverToken);
   const tokenHeader = currentUser.token;
   const buttonStyle = {
     color: "red",
@@ -126,12 +126,13 @@ function Profile() {
     try {
       setIsSubmitting(true);
       const response = await fetch(
-        `https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/update/profile-image/${currentUser.id}`,
+        `http://localhost:4000/auth/admin/update/profile-image/${currentUser.id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${tokenHeader}`,
+            Authorization: `${serverToken}`,
+            'x-access-token': `${tokenHeader}`
           },
           credentials: "include",
           body: JSON.stringify({
@@ -143,7 +144,7 @@ function Profile() {
       
 
       const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
+        const newTokenHeader = response.headers.get('x-access-token');
         
         if (newTokenHeader) {
           dispatch(
@@ -201,12 +202,13 @@ function Profile() {
       try {
         setIsSubmitting(true);
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/change-password`,
+          `http://localhost:4000/auth/admin/change-password`,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${tokenHeader}`,
+              Authorization: `${serverToken}`,
+              'x-access-token': `${tokenHeader}`
             },
             credentials: "include",
             body: JSON.stringify({
@@ -218,7 +220,7 @@ function Profile() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
+        const newTokenHeader = response.headers.get('x-access-token');
         
         if (newTokenHeader) {
           dispatch(
@@ -288,12 +290,13 @@ function Profile() {
         try {
           setIsSubmitting(true);
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/update/details`,
+            `http://localhost:4000/auth/admin/update/details`,
             {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `${tokenHeader}`,
+                Authorization: `${serverToken}`,
+                'x-access-token': `${tokenHeader}`
               },
               credentials: "include",
               body: JSON.stringify({
@@ -307,7 +310,7 @@ function Profile() {
           );
 
           const data = await response.json();
-        const newTokenHeader = response.headers.get('Authorization');
+        const newTokenHeader = response.headers.get('x-access-token');
        
         if (newTokenHeader) {
           dispatch(

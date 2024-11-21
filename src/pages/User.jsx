@@ -60,6 +60,7 @@ function User() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.user);
+  const serverToken = useSelector((state) => state.server.serverToken);
 
   const [totalSystemUsers, setTotalSystemUsers] = useState("");
   const [totalSuperUser, setTotalSuperUser] = useState("");
@@ -136,19 +137,20 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/system-users",
+          "http://localhost:4000/system/all/system-users",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${tokenHeader}`,
+              Authorization: `${serverToken}`,
+              'x-access-token': `${tokenHeader}`
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("Authorization");
+        const newTokenHeader = response.headers.get("x-access-token");
 
         if (newTokenHeader) {
           dispatch(
@@ -179,19 +181,20 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/super-admin-count",
+          "http://localhost:4000/system/all/super-admin-count",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${tokenHeader}`,
+              Authorization: `${serverToken}`,
+              'x-access-token': `${tokenHeader}`
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("Authorization");
+        const newTokenHeader = response.headers.get("x-access-token");
 
         if (newTokenHeader) {
           dispatch(
@@ -222,19 +225,20 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/admin-count",
+          "http://localhost:4000/system/all/admin-count",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${tokenHeader}`,
+              Authorization: `${serverToken}`,
+              'x-access-token': `${tokenHeader}`
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("Authorization");
+        const newTokenHeader = response.headers.get("x-access-token");
 
         if (newTokenHeader) {
           dispatch(
@@ -265,19 +269,20 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/app-user-count",
+          "http://localhost:4000/system/all/app-user-count",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${tokenHeader}`,
+              Authorization: `${serverToken}`,
+              'x-access-token': `${tokenHeader}`
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("Authorization");
+        const newTokenHeader = response.headers.get("x-access-token");
 
         if (newTokenHeader) {
           dispatch(
@@ -307,19 +312,20 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/admin/list",
+          "http://localhost:4000/system/all/admin/list",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${tokenHeader}`,
+              Authorization: `${serverToken}`,
+              'x-access-token': `${tokenHeader}`
             },
             credentials: "include",
           }
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("Authorization");
+        const newTokenHeader = response.headers.get("x-access-token");
 
         if (newTokenHeader) {
           dispatch(
@@ -349,12 +355,13 @@ function User() {
     try {
       console.log("token before: ", tokenHeader);
       const response = await fetch(
-        "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/update/email",
+        "http://localhost:4000/auth/admin/update/email",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${tokenHeader}`,
+            Authorization: `${serverToken}`,
+            'x-access-token': `${tokenHeader}`
           },
           body: JSON.stringify({
             email,
@@ -364,7 +371,7 @@ function User() {
 
       const data = await response.json();
 
-      const newTokenHeader = response.headers.get("Authorization");
+      const newTokenHeader = response.headers.get("x-access-token");
       console.log("My new token: ", newTokenHeader);
       
       if (newTokenHeader) {
@@ -418,12 +425,13 @@ function User() {
             setIsSubmitting(true);
 
             const response = await fetch(
-              "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/delete",
+              "http://localhost:4000/auth/admin/delete",
               {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
-                  Authorization: `${tokenHeader}`,
+                  Authorization: `${serverToken}`,
+                  'x-access-token': `${tokenHeader}`
                 },
                 credentials: "include",
                 body: JSON.stringify({ email }),
@@ -431,7 +439,7 @@ function User() {
             );
 
             const data = await response.json();
-            const newTokenHeader = response.headers.get("Authorization");
+            const newTokenHeader = response.headers.get("x-access-token");
             
             if (newTokenHeader) {
               dispatch(
@@ -482,12 +490,13 @@ function User() {
             setIsSubmitting(true);
 
             const response = await fetch(
-              "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/delete",
+              "http://localhost:4000/auth/admin/delete",
               {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
-                  Authorization: `${tokenHeader}`,
+                  Authorization: `${serverToken}`,
+                  'x-access-token': `${tokenHeader}`
                 },
                 credentials: "include",
                 body: JSON.stringify({ email }),
@@ -495,7 +504,7 @@ function User() {
             );
 
             const data = await response.json();
-            const newTokenHeader = response.headers.get("Authorization");
+            const newTokenHeader = response.headers.get("x-access-token");
            
             if (newTokenHeader) {
               dispatch(
@@ -742,12 +751,13 @@ function User() {
             role: roleDetails,
           };
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/update/user/details/${updatingDetails.id}`,
+            `http://localhost:4000/auth/admin/update/user/details/${updatingDetails.id}`,
             {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `${tokenHeader}`,
+                Authorization: `${serverToken}`,
+                'x-access-token': `${tokenHeader}`
               },
               credentials: "include",
               body: JSON.stringify(requestData),
@@ -755,7 +765,7 @@ function User() {
           );
 
           const data = await response.json();
-          const newTokenHeader = response.headers.get("Authorization");
+          const newTokenHeader = response.headers.get("x-access-token");
           
           if (newTokenHeader) {
             dispatch(
@@ -822,12 +832,13 @@ function User() {
         };
 
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/signup",
+          "http://localhost:4000/auth/admin/signup",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${tokenHeader}`,
+              Authorization: `${serverToken}`,
+              'x-access-token': `${tokenHeader}`
             },
             credentials: "include",
             body: JSON.stringify(requestData),
@@ -835,7 +846,7 @@ function User() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("Authorization");
+        const newTokenHeader = response.headers.get("x-access-token");
         
         if (newTokenHeader) {
           dispatch(

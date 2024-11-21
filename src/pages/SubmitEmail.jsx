@@ -3,6 +3,7 @@ import "../assets/css/AdminLogin.css";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function SubmitEmail() {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ function SubmitEmail() {
   const [emailError, setEmailError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const serverToken = useSelector((state) => state.server.serverToken);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,10 +21,11 @@ function SubmitEmail() {
     if (validateForm()) {
       try {
         setIsSubmitting(true);
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/forgot-password", {
+        const response = await fetch("http://localhost:4000/auth/admin/forgot-password", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${serverToken}`,
           },
           credentials: 'include',
           body: JSON.stringify({
