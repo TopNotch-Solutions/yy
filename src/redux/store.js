@@ -12,6 +12,8 @@ import isSubmittingReducer from './reducers/submittingReducer';
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist:["auth","server","sidebar","tabs","authentication", "submitting"],
+  debug:true
 };
 
 const rootReducer = combineReducers({

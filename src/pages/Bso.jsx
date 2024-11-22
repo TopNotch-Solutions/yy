@@ -328,7 +328,6 @@ function Bso() {
   
 
   const handleStep5 = async () => {
-    console.log(logo);
     if (validateFields1()) {
       try {
         setIsSubmitting(true);

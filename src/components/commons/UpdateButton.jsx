@@ -19,7 +19,7 @@ const UpdateButton = ({ onClick }) => {
         cursor: "pointer",
         marginRight: "10px",
         fontFamily:"Montserrat, sans-serif",
-        width: isSmallScreen ? "40%" : "30%",
+        width: isSmallScreen ? "40%" : "40%",
       }}
     >
       Update

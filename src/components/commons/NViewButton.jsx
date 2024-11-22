@@ -18,7 +18,7 @@ const NViewButton = ({ onClick }) => {
         cursor: "pointer",
         fontFamily:"Montserrat, sans-serif",
         marginRight: "10px",
-        width: isSmallScreen ? "40%" : "30%",
+        width: isSmallScreen ? "40%" : "40%",
       }}
     >
       View

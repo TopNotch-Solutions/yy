@@ -145,7 +145,6 @@ function Profile() {
 
       const data = await response.json();
         const newTokenHeader = response.headers.get('x-access-token');
-        
         if (newTokenHeader) {
           dispatch(
             updateToken({
@@ -311,7 +310,6 @@ function Profile() {
 
           const data = await response.json();
         const newTokenHeader = response.headers.get('x-access-token');
-       
         if (newTokenHeader) {
           dispatch(
             updateToken({

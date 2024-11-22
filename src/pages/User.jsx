@@ -353,7 +353,6 @@ function User() {
 
   const handleUpdate = async (email) => {
     try {
-      console.log("token before: ", tokenHeader);
       const response = await fetch(
         "http://localhost:4000/auth/admin/update/email",
         {
@@ -372,7 +371,6 @@ function User() {
       const data = await response.json();
 
       const newTokenHeader = response.headers.get("x-access-token");
-      console.log("My new token: ", newTokenHeader);
       
       if (newTokenHeader) {
         dispatch(

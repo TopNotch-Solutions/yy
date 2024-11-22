@@ -135,7 +135,7 @@ const AdminLogin = () => {
       } catch (error) {
         // Handle error during token fetch
         console.error("Error fetching OAuth token:", error);
-        toast.error("Unable to fetch token. Please check your network and try again.");
+        toast.error("Unableto fetch token. Please check your network and try again.");
       }
       
       
@@ -168,7 +168,6 @@ const AdminLogin = () => {
       
       if (tokenData.access_token) {
         try {
-          console.log(userId);
           setIsSubmitting(true);
           const response = await fetch(
             "http://localhost:4000/auth/admin/verify-otp",
@@ -196,15 +195,14 @@ const AdminLogin = () => {
                 user: data.currentUser,
               })
             );
-            dispatch(toggleAuthenticationfalse());
             dispatch(updateServerToken({
               serverToken: `Bearer ${tokenData.access_token}`
             }));
-            console.log("Here is my custom token before saving it: ",data.currentUser.token)
             dispatch(updateToken({
               token: `Bearer ${data.currentUser.token}`
             }));
-            console.log("Here is my custom token after saving it: ",currentUser)
+            dispatch(toggleAuthenticationfalse());
+           
             navigate("/Dashboard");
           } else {
             setIsSubmitting(false);

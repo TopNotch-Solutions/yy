@@ -12,6 +12,7 @@ import { CapitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
 import { toggleSidebarfalse } from "../../redux/reducers/sidebarReducer";
 import { login } from "../../redux/reducers/authReducer";
 import { useNavigate } from "react-router-dom";
+import { toggleAuthenticationfalse} from "../../redux/reducers/twoFactorReducer";
 import { updateToken } from "../../redux/reducers/authReducer";
 import { updateServerToken } from "../../redux/reducers/serverReducer";
 import { toggleActiveTab } from "../../redux/reducers/tabsReducer";
@@ -30,7 +31,6 @@ const Topbar = ({ OpenSidebar }) => {
   let firstLetter = CapitalizeFirstLetter(currentUser?.firstName);
   let secondLetter = CapitalizeFirstLetter(currentUser?.lastName);
   useEffect(() => {
-    console.log("Here is my custom token before saving it: ",serverToken, tokenHeader)
     const fetchAllAdminNotificationsCount = async () => {
       try {
         const response = await fetch(
@@ -51,7 +51,6 @@ const Topbar = ({ OpenSidebar }) => {
         dispatch(updateToken({
           token: newTokenHeader
         }));
-        console.log("Here is my custom token after saving it: ",response)
         if (response.ok) {
           setAllNotificationsCount(data.count);
         } else {
@@ -81,6 +80,7 @@ const Topbar = ({ OpenSidebar }) => {
         }));
 
       if (response.ok) {
+        dispatch(toggleAuthenticationfalse());
         dispatch(toggleSidebarfalse());
         dispatch(
           login({
@@ -89,7 +89,9 @@ const Topbar = ({ OpenSidebar }) => {
         );
         navigate("/");
       } else {
+        dispatch(toggleAuthenticationfalse())
         dispatch(toggleSidebarfalse());
+        
         dispatch(
           login({
             user: {},

@@ -2271,7 +2271,7 @@ function Msme() {
     value: option.industryName,
   }));
   const userOptions = allUserList.map((option) => ({
-    label: `${option.firstName} ${option.lastName}`,
+    label: `${option.firstName} ${option.lastName} (${option.email})`,
     value: option.id,
   }));
 
@@ -4246,34 +4246,32 @@ function Msme() {
                         typeOfBusiness !== "Close Corporation (CC)" && (
                           <>
                             <div className="form-group pb-3">
-                              <label
-                                htmlFor="email"
-                                className="pb-2 text-boldd"
-                              >
-                                User Name: <span>*</span>
-                              </label>
-                              <Select
-                                value={userOptions.find(
-                                  (option) => option.value === userId
-                                )}
-                                onChange={(selectedOption) => {
-                                  setUserIdError("");
-                                  setUserId(
-                                    selectedOption ? selectedOption.value : ""
-                                  );
-                                }}
-                                options={userOptions}
-                                placeholder="Select user"
-                                isSearchable
-                                classNamePrefix="react-select"
-                                components={{ DropdownIndicator }}
-                              />
-                              {userIdError && (
-                                <>
-                                  <p className="error mt-1">{userIdError}</p>
-                                </>
+                            <label htmlFor="email" className="pb-2 text-boldd">
+                              User Name: <span>*</span>
+                            </label>
+                            <Select
+                              value={userOptions.find(
+                                (option) => option.value === userId
                               )}
-                            </div>
+                              onChange={(selectedOption) => {
+                                setUserIdError("");
+                                setUserId(
+                                  selectedOption ? selectedOption.value : ""
+                                );
+                              }}
+                              options={userOptions}
+                              placeholder="Select user"
+                              isSearchable
+                              isClearable
+                              classNamePrefix="react-select"
+                              components={{ DropdownIndicator }}
+                            />
+                            {userIdError && (
+                              <>
+                                <p className="error mt-1">{userIdError}</p>
+                              </>
+                            )}
+                          </div>
                           </>
                         )}
                     </Grid>
