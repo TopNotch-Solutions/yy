@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/reducers/authReducer";
 import { useLocation } from 'react-router-dom';
+import { fetchOAuthToken } from "../utils/fectchOAuthToken";
 
 function ForgotPassword() {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -75,42 +76,46 @@ function ForgotPassword() {
     setPasswordError("");
 
     if (validateForm()) {
-      try {
-        setIsSubmitting(true);
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/newPassword", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${serverToken}`
-          },
-          
-          body: JSON.stringify({
-            newPassword:password,
-            confirmPassword,
-            token,
-            userId
-          }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
+      const tokenData = await fetchOAuthToken();
+      if (tokenData.access_token) {
+        try {
+          setIsSubmitting(true);
+          const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/newPassword", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${tokenData.access_token}`
+            },
+            
+            body: JSON.stringify({
+              newPassword:password,
+              confirmPassword,
+              token,
+              userId
+            }),
+          });
+  
+          const data = await response.json();
+  
+          if (response.ok) {
+            setIsSubmitting(false);
+            setPassword("");
+            setConfirmPassword("");
+            setSuccess(true);
+            toast.success(data.message);
+          } else {
+            setIsSubmitting(false);
+            toast.error(data.message);
+          }
+        } catch (error) {
           setIsSubmitting(false);
-          setPassword("");
-          setConfirmPassword("");
-          setSuccess(true);
-          toast.success(data.message);
-        } else {
-          setIsSubmitting(false);
-          toast.error(data.message);
+          toast.error(
+            "Network error. Please check your network connection and try again",
+            "Please check your network connection and try again"
+          );
         }
-      } catch (error) {
-        setIsSubmitting(false);
-        toast.error(
-          "Network error. Please check your network connection and try again",
-          "Please check your network connection and try again"
-        );
       }
+      
     }
   };
 

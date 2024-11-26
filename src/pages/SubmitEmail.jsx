@@ -4,6 +4,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { fetchOAuthToken } from "../utils/fectchOAuthToken";
 
 function SubmitEmail() {
   const [email, setEmail] = useState("");
@@ -19,38 +20,41 @@ function SubmitEmail() {
     setEmailError("");
 
     if (validateForm()) {
-      try {
-        setIsSubmitting(true);
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/forgot-password", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${serverToken}`,
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            email
-          }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
+      const tokenData = await fetchOAuthToken();
+      if (tokenData.access_token) {
+        try {
+          setIsSubmitting(true);
+          const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/forgot-password", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${tokenData.access_token}`,
+            },
+            body: JSON.stringify({
+              email
+            }),
+          });
+  
+          const data = await response.json();
+  
+          if (response.ok) {
+              setIsSubmitting(false);
+              setEmail("");
+              toast.success(data.message);
+              
+          } else {
             setIsSubmitting(false);
-            setEmail("");
-            toast.success(data.message);
-            
-        } else {
+            toast.error("Username not found in our database. Verify username and try again!");
+          }
+        } catch (error) {
           setIsSubmitting(false);
-          toast.error("Username not found in our database. Verify username and try again!");
+          toast.error(
+            "Network error. Please check your network connection and try again",
+            "Please check your network connection and try again"
+          );
         }
-      } catch (error) {
-        setIsSubmitting(false);
-        toast.error(
-          "Network error. Please check your network connection and try again",
-          "Please check your network connection and try again"
-        );
       }
+      
     }
   };
 
