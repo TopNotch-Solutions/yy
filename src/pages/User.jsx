@@ -137,7 +137,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/system/all/system-users",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/system-users",
           {
             method: "GET",
             headers: {
@@ -145,7 +145,7 @@ function User() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -181,7 +181,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/system/all/super-admin-count",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/super-admin-count",
           {
             method: "GET",
             headers: {
@@ -189,7 +189,7 @@ function User() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -225,7 +225,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/system/all/admin-count",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/admin-count",
           {
             method: "GET",
             headers: {
@@ -233,7 +233,7 @@ function User() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -269,7 +269,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/system/all/app-user-count",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/app-user-count",
           {
             method: "GET",
             headers: {
@@ -277,7 +277,7 @@ function User() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -312,7 +312,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/system/all/admin/list",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/admin/list",
           {
             method: "GET",
             headers: {
@@ -320,7 +320,7 @@ function User() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -354,7 +354,7 @@ function User() {
   const handleUpdate = async (email) => {
     try {
       const response = await fetch(
-        "http://localhost:4000/auth/admin/update/email",
+        "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/update/email",
         {
           method: "POST",
           headers: {
@@ -423,7 +423,7 @@ function User() {
             setIsSubmitting(true);
 
             const response = await fetch(
-              "http://localhost:4000/auth/admin/delete",
+              "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/delete",
               {
                 method: "DELETE",
                 headers: {
@@ -431,7 +431,7 @@ function User() {
                   Authorization: `${serverToken}`,
                   'x-access-token': `${tokenHeader}`
                 },
-                credentials: "include",
+                
                 body: JSON.stringify({ email }),
               }
             );
@@ -488,7 +488,7 @@ function User() {
             setIsSubmitting(true);
 
             const response = await fetch(
-              "http://localhost:4000/auth/admin/delete",
+              "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/delete",
               {
                 method: "DELETE",
                 headers: {
@@ -496,7 +496,7 @@ function User() {
                   Authorization: `${serverToken}`,
                   'x-access-token': `${tokenHeader}`
                 },
-                credentials: "include",
+                
                 body: JSON.stringify({ email }),
               }
             );
@@ -749,7 +749,7 @@ function User() {
             role: roleDetails,
           };
           const response = await fetch(
-            `http://localhost:4000/auth/admin/update/user/details/${updatingDetails.id}`,
+            `https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/update/user/details/${updatingDetails.id}`,
             {
               method: "PUT",
               headers: {
@@ -757,7 +757,7 @@ function User() {
                 Authorization: `${serverToken}`,
                 'x-access-token': `${tokenHeader}`
               },
-              credentials: "include",
+              
               body: JSON.stringify(requestData),
             }
           );
@@ -830,7 +830,7 @@ function User() {
         };
 
         const response = await fetch(
-          "http://localhost:4000/auth/admin/signup",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/signup",
           {
             method: "POST",
             headers: {
@@ -838,7 +838,7 @@ function User() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
             body: JSON.stringify(requestData),
           }
         );

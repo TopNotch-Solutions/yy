@@ -13,7 +13,7 @@ const ViewReports = ({ selectedRow }) => {
     useEffect(() => {
       if (selectedRow) {
         const fetchData = async () => {
-          fetch("http://localhost:4000/contracts/staffContracts")
+          fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/contracts/staffContracts")
         .then((res) => res.json())
         .then((data) => setData(data))
         .catch((err) => console.log(err));

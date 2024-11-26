@@ -121,7 +121,7 @@ function Notifications() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/user",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/user",
           {
             method: "GET",
             headers: {
@@ -129,7 +129,7 @@ function Notifications() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -165,7 +165,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/single/notifications`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/single/notifications`,
           {
             method: "GET",
             headers: {
@@ -173,7 +173,7 @@ function Notifications() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -209,7 +209,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/all/unread-notification`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/all/unread-notification`,
           {
             method: "GET",
             headers: {
@@ -217,7 +217,7 @@ function Notifications() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -253,7 +253,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/all/sent-by-admin`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/all/sent-by-admin`,
           {
             method: "GET",
             headers: {
@@ -261,7 +261,7 @@ function Notifications() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -297,7 +297,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/all/read-notification`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/all/read-notification`,
           {
             method: "GET",
             headers: {
@@ -305,7 +305,7 @@ function Notifications() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -355,7 +355,7 @@ function Notifications() {
           senderId: currentUser.id,
         };
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/create`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/create`,
           {
             method: "POST",
             headers: {
@@ -363,7 +363,7 @@ function Notifications() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
             body: JSON.stringify(requestData),
           }
         );
@@ -432,7 +432,7 @@ function Notifications() {
           senderId: currentUser.id,
         };
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/create`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/create`,
           {
             method: "POST",
             headers: {
@@ -440,7 +440,7 @@ function Notifications() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
             body: JSON.stringify(requestData),
           }
         );
@@ -500,7 +500,7 @@ function Notifications() {
       dispatch(toggleIsSubmittingTrue());
       setIsSubmitting(true);
       const response = await fetch(
-        `http://localhost:4000/notifications/admin/single/${id}`,
+        `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -508,7 +508,7 @@ function Notifications() {
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         }
       );
 
@@ -553,7 +553,7 @@ function Notifications() {
       dispatch(toggleIsSubmittingTrue());
       setIsSubmitting(true);
       const response = await fetch(
-        `http://localhost:4000/notifications/admin/single/sent-by-admin/${id}`,
+        `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/single/sent-by-admin/${id}`,
         {
           method: "GET",
           headers: {
@@ -561,7 +561,7 @@ function Notifications() {
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         }
       );
 
@@ -616,7 +616,7 @@ function Notifications() {
           setIsSubmitting(true);
           dispatch(toggleIsSubmittingTrue());
           const response = await fetch(
-            `http://localhost:4000/notifications/admin/delete/${id}`,
+            `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/delete/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -624,7 +624,7 @@ function Notifications() {
                 Authorization: `${serverToken}`,
                 'x-access-token': `${tokenHeader}`
               },
-              credentials: "include",
+              
             }
           );
 
@@ -675,7 +675,7 @@ function Notifications() {
       setIsSubmitting(true);
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `http://localhost:4000/notifications/admin/delete/${updatedId}`,
+        `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/delete/${updatedId}`,
         {
           method: "DELETE",
           headers: {
@@ -683,7 +683,7 @@ function Notifications() {
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         }
       );
 

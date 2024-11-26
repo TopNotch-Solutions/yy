@@ -94,13 +94,13 @@ const AdminLogin = () => {
           try {
             setIsSubmitting(true);
     
-            const loginResponse = await fetch("http://localhost:4000/auth/admin/login", {
+            const loginResponse = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/login", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${tokenData.access_token}`,
               },
-              credentials: "include",
+              //
               body: JSON.stringify({
                 email: email,
                 password: password,
@@ -170,14 +170,14 @@ const AdminLogin = () => {
         try {
           setIsSubmitting(true);
           const response = await fetch(
-            "http://localhost:4000/auth/admin/verify-otp",
+            "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/verify-otp",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${tokenData.access_token}`,
               },
-              credentials: "include",
+              //
               body: JSON.stringify({
                 userId,
                 otp: twoFactorDigits,

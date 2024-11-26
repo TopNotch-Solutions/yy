@@ -9,7 +9,7 @@ export const fetchOAuthToken = async () => {
         body: new URLSearchParams({
           'grant_type': 'client_credentials',
         }).toString(),
-        credentials: 'include',
+        //credentials: 'include',
       });
   
       if (!response.ok) {

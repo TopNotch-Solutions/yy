@@ -79,7 +79,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/monthly/registeration",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/monthly/registeration",
           {
             method: "GET",
             headers: {
@@ -87,7 +87,7 @@ function Dashboard() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            //
           }
         );
 
@@ -118,7 +118,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/totalCount",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/totalCount",
           {
             method: "GET",
             headers: {
@@ -126,7 +126,7 @@ function Dashboard() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+           // 
           }
         );
 
@@ -162,7 +162,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/pendingCount",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/pendingCount",
           {
             method: "GET",
             headers: {
@@ -170,7 +170,7 @@ function Dashboard() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            //
           }
         );
 
@@ -206,7 +206,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/rejectedCount",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/rejectedCount",
           {
             method: "GET",
             headers: {
@@ -214,7 +214,7 @@ function Dashboard() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            //
           }
         );
 
@@ -250,7 +250,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/approvedCount",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/approvedCount",
           {
             method: "GET",
             headers: {
@@ -258,7 +258,7 @@ function Dashboard() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            //
           }
         );
 
@@ -292,14 +292,14 @@ function Dashboard() {
     const fetchMsmeAllMSME = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/msme/admin/all", {
+        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          //
         });
 
         const data = await response.json();
@@ -316,6 +316,7 @@ function Dashboard() {
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
           setAllMSMEList(data.data);
+          console.log("Here is the data: ", data.data)
         } else {
           dispatch(toggleIsSubmittingfalse());
           handleAuthFailure({ dispatch, navigate, type: "auth" });
@@ -333,7 +334,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/top5/categories",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/top5/categories",
           {
             method: "GET",
             headers: {
@@ -341,7 +342,7 @@ function Dashboard() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            //
           }
         );
 

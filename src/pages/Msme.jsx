@@ -463,7 +463,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/totalCount",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/totalCount",
           {
             method: "GET",
             headers: {
@@ -471,7 +471,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -507,7 +507,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/pendingCount",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/pendingCount",
           {
             method: "GET",
             headers: {
@@ -515,7 +515,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -551,7 +551,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/rejectedCount",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/rejectedCount",
           {
             method: "GET",
             headers: {
@@ -559,7 +559,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -595,7 +595,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/approvedCount",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/approvedCount",
           {
             method: "GET",
             headers: {
@@ -603,7 +603,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -638,7 +638,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/incompleteCount",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/incompleteCount",
           {
             method: "GET",
             headers: {
@@ -646,7 +646,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -681,14 +681,14 @@ function Msme() {
     const fetchMsmeAllMSME = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/msme/admin/all", {
+        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         });
 
         const data = await response.json();
@@ -722,7 +722,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/pending",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/pending",
           {
             method: "GET",
             headers: {
@@ -730,7 +730,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -765,7 +765,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/rejected",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/rejected",
           {
             method: "GET",
             headers: {
@@ -773,7 +773,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -809,7 +809,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/approved",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/approved",
           {
             method: "GET",
             headers: {
@@ -817,7 +817,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -853,7 +853,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/incomplete",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/incomplete",
           {
             method: "GET",
             headers: {
@@ -861,7 +861,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -895,14 +895,14 @@ function Msme() {
     const fetchAllRegions = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/region/admin/all", {
+        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/region/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         });
 
         const data = await response.json();
@@ -936,14 +936,14 @@ function Msme() {
     const fetchAllTowns = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/town/admin/all", {
+        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/town/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         });
 
         const data = await response.json();
@@ -976,7 +976,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/primaryIndustry/admin/all",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/primaryIndustry/admin/all",
           {
             method: "GET",
             headers: {
@@ -984,7 +984,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -1019,7 +1019,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/secondaryIndustry/admin/all",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/secondaryIndustry/admin/all",
           {
             method: "GET",
             headers: {
@@ -1027,7 +1027,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -1062,7 +1062,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/user",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/user",
           {
             method: "GET",
             headers: {
@@ -1070,7 +1070,7 @@ function Msme() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -1783,10 +1783,10 @@ function Msme() {
         console.log("This is my formdata", formData);
 
         const response = await fetch(
-          "http://localhost:4000/msme/admin/create",
+          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/create",
           {
             method: "POST",
-            credentials: "include",
+            
             headers:{
               Authorization: `${serverToken}`,
             },
@@ -1908,7 +1908,7 @@ function Msme() {
     try {
       setIsSubmitting(true);
       const response = await fetch(
-        `http://localhost:4000/msme/admin/single/${id}`,
+        `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -1916,7 +1916,7 @@ function Msme() {
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         }
       );
 
@@ -2331,7 +2331,7 @@ function Msme() {
             try {
               setIsSubmitting(true);
               const response = await fetch(
-                `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
+                `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/status/${updatingDetails.id}`,
                 {
                   method: "PUT",
                   headers: {
@@ -2339,7 +2339,7 @@ function Msme() {
                     Authorization: `${serverToken}`,
                     'x-access-token': `${tokenHeader}`
                   },
-                  credentials: "include",
+                  
                   body: JSON.stringify({
                     status: "Approved",
                   }),
@@ -2489,10 +2489,10 @@ function Msme() {
           formData.append("removeImage3", removeImage3);
         }
         const response = await fetch(
-          `http://localhost:4000/msme/admin/update/${updatingDetails.id}`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/update/${updatingDetails.id}`,
           {
             method: "PUT",
-            credentials: "include",
+            
             headers:{
               Authorization: `${serverToken}`,
             },
@@ -2510,7 +2510,7 @@ function Msme() {
             try {
               setIsSubmitting(true);
               const response = await fetch(
-                `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
+                `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/status/${updatingDetails.id}`,
                 {
                   method: "PUT",
                   headers: {
@@ -2518,7 +2518,7 @@ function Msme() {
                     Authorization: `${serverToken}`,
                     'x-access-token': `${tokenHeader}`
                   },
-                  credentials: "include",
+                  
                   body: JSON.stringify({
                     status: "Approved",
                   }),
@@ -2648,7 +2648,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
+              `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/status/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2656,7 +2656,7 @@ function Msme() {
                   Authorization: `${serverToken}`,
                   'x-access-token': `${tokenHeader}`
                 },
-                credentials: "include",
+                
                 body: JSON.stringify({
                   status: "Rejected",
                 }),
@@ -2737,7 +2737,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `http://localhost:4000/msme/admin/block/${updatingDetails.id}`,
+              `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/block/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2745,7 +2745,7 @@ function Msme() {
                   Authorization: `${serverToken}`,
                   'x-access-token': `${tokenHeader}`
                 },
-                credentials: "include",
+                
                 body: JSON.stringify({
                   block: true,
                 }),
@@ -2825,7 +2825,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `http://localhost:4000/msme/admin/block/${updatingDetails.id}`,
+              `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/block/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2833,7 +2833,7 @@ function Msme() {
                   Authorization: `${serverToken}`,
                   'x-access-token': `${tokenHeader}`
                 },
-                credentials: "include",
+                
                 body: JSON.stringify({
                   block: false,
                 }),
@@ -2906,7 +2906,7 @@ function Msme() {
         try {
           setsendingNotification(true);
           const response = await fetch(
-            `http://localhost:4000/notifications/admin/create/single/${updatingDetails.id}`,
+            `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/create/single/${updatingDetails.id}`,
             {
               method: "POST",
               headers: {
@@ -2914,7 +2914,7 @@ function Msme() {
                 Authorization: `${serverToken}`,
                 'x-access-token': `${tokenHeader}`
               },
-              credentials: "include",
+              
               body: JSON.stringify({
                 notification: notificationDescription,
                 title: notificationTitle,
@@ -7084,7 +7084,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo
                                       ?.businessLogo === businessLogoDetails
-                                      ? `http://localhost:4000/msmes/${businessLogoDetails}`
+                                      ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/msmes/${businessLogoDetails}`
                                       : businessLogoDetails
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7173,7 +7173,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image1 ===
                                     image1Details
-                                      ? `http://localhost:4000/msmes/${image1Details}`
+                                      ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/msmes/${image1Details}`
                                       : image1Details
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7262,7 +7262,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image2 ===
                                     image2Details
-                                      ? `http://localhost:4000/msmes/${image2Details}`
+                                      ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/msmes/${image2Details}`
                                       : image2Details
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7351,7 +7351,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image3 ===
                                     image3Details
-                                      ? `http://localhost:4000/msmes/${image3Details}`
+                                      ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/msmes/${image3Details}`
                                       : image3Details
                                   }
                                   className=" img-responsive img-thumbnail"

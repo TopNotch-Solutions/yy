@@ -137,14 +137,14 @@ function Bso() {
     const fetchTotalCount = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/bso/admin/count", {
+        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/count", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         });
 
         const data = await response.json();
@@ -178,14 +178,14 @@ function Bso() {
     const fetchApprovedCount = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/bso/admin/all", {
+        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         });
 
         const data = await response.json();
@@ -340,9 +340,9 @@ function Bso() {
         formData.append("description", description);
         formData.append("bso-image", file);
         formData.append("website", website);
-        const response = await fetch("http://localhost:4000/bso/admin/create", {
+        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/create", {
           method: "POST",
-          credentials: "include",
+          
           headers:{
             Authorization: `${serverToken}`,
           
@@ -463,7 +463,7 @@ function Bso() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `http://localhost:4000/bso/admin/single/${id}`,
+        `https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -471,7 +471,7 @@ function Bso() {
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         }
       );
 
@@ -529,7 +529,7 @@ function Bso() {
             setIsSubmitting(true);
             dispatch(toggleIsSubmittingTrue());
             const response = await fetch(
-              `http://localhost:4000/bso/admin/delete/${id}`,
+              `https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/delete/${id}`,
               {
                 method: "DELETE",
                 headers: {
@@ -537,7 +537,7 @@ function Bso() {
                   Authorization: `${serverToken}`,
                   'x-access-token': `${tokenHeader}`
                 },
-                credentials: "include",
+                
               }
             );
 
@@ -614,10 +614,10 @@ function Bso() {
           formData.append("bso-image", fileUpdate);
           formData.append("website", websiteDetails);
           const response = await fetch(
-            `http://localhost:4000/bso/admin/update/${updatingDetails.id}`,
+            `https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
-              credentials: "include",
+              
               headers:{
                 Authorization: `${serverToken}`,
               },
@@ -1367,7 +1367,7 @@ function Bso() {
                           <img
                             src={
                               updatingDetails.logo === logoDetails
-                                ? `http://localhost:4000/bsos/${logoDetails}`
+                                ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/bsos/${logoDetails}`
                                 : logoDetails
                             }
                             className=" img-responsive img-thumbnail"

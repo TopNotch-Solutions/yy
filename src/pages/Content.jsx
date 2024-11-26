@@ -148,7 +148,7 @@ function Content() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          `http://localhost:4000/opportunities/admin/all`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/all`,
           {
             method: "GET",
             headers: {
@@ -156,7 +156,7 @@ function Content() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -191,7 +191,7 @@ function Content() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          `http://localhost:4000/admin/mobile-images/all`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/admin/mobile-images/all`,
           {
             method: "GET",
             headers: {
@@ -199,7 +199,7 @@ function Content() {
               Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
-            credentials: "include",
+            
           }
         );
 
@@ -245,7 +245,7 @@ function Content() {
         formData.append("link", link);
 
         const response = await fetch(
-          `http://localhost:4000/opportunities/admin/create`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/create`,
           {
             method: "POST",
             headers:{
@@ -297,10 +297,10 @@ function Content() {
         formData.append("description", descriptionImage);
         formData.append("mobile-image", fileMobileImage);
         const response = await fetch(
-          `http://localhost:4000/admin/mobile-images/create`,
+          `https://api-gw.mtc.com.na/mdt-nipdb/v1/admin/mobile-images/create`,
           {
             method: "POST",
-            credentials: "include",
+            
             headers:{
               Authorization: `${serverToken}`,
             },
@@ -350,7 +350,7 @@ function Content() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `http://localhost:4000/opportunities/admin/single/${id}`,
+        `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -358,7 +358,7 @@ function Content() {
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         }
       );
 
@@ -403,7 +403,7 @@ function Content() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `http://localhost:4000/admin/mobile-images/single/${id}`,
+        `https://api-gw.mtc.com.na/mdt-nipdb/v1/admin/mobile-images/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -411,7 +411,7 @@ function Content() {
             Authorization: `${serverToken}`,
             'x-access-token': `${tokenHeader}`
           },
-          credentials: "include",
+          
         }
       );
 
@@ -468,7 +468,7 @@ function Content() {
           setIsSubmitting(true);
           dispatch(toggleIsSubmittingTrue());
           const response = await fetch(
-            `http://localhost:4000/opportunities/admin/delete/${id}`,
+            `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/delete/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -476,7 +476,7 @@ function Content() {
                 Authorization: `${serverToken}`,
                 'x-access-token': `${tokenHeader}`
               },
-              credentials: "include",
+              
             }
           );
 
@@ -541,7 +541,7 @@ function Content() {
           dispatch(toggleIsSubmittingTrue());
 
           const response = await fetch(
-            `http://localhost:4000/admin/mobile-images/delete/${id}`,
+            `https://api-gw.mtc.com.na/mdt-nipdb/v1/admin/mobile-images/delete/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -549,7 +549,7 @@ function Content() {
                 Authorization: `${serverToken}`,
                 'x-access-token': `${tokenHeader}`
               },
-              credentials: "include",
+              
             }
           );
 
@@ -937,10 +937,10 @@ const validateFields1 = () => {
           formData.append("opportunity-image", fileMobileImage);
           formData.append("link", linkDetails);
           const response = await fetch(
-            `http://localhost:4000/opportunities/admin/update/${updatingDetails.id}`,
+            `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
-              credentials: "include",
+              
               headers:{
                 Authorization: `${serverToken}`,
               },
@@ -999,10 +999,10 @@ const validateFields1 = () => {
           formData.append("mobile-image", fileMobileImageDetails);
           console.log("yo", descriptionDetails, fileMobileImageDetails);
           const response = await fetch(
-            `http://localhost:4000/admin/mobile-images/update/${updatingImageDetails.id}`,
+            `https://api-gw.mtc.com.na/mdt-nipdb/v1/admin/mobile-images/update/${updatingImageDetails.id}`,
             {
               method: "PUT",
-              credentials: "include",
+              
               headers:{
                 Authorization: `${serverToken}`,
               },
@@ -1065,10 +1065,10 @@ const validateFields1 = () => {
           formData.append("link", linkDetails);
 
           const response = await fetch(
-            `http://localhost:4000/opportunities/admin/update/${updatingDetails.id}`,
+            `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
-              credentials: "include",
+              
               headers:{
                 Authorization: `${serverToken}`,
               },
@@ -2015,7 +2015,7 @@ const validateFields1 = () => {
                               <img
                                 src={
                                   updatingDetails.image === imageDetails
-                                    ? `http://localhost:4000/opportunities/` +
+                                    ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/` +
                                       imageDetails
                                     : imageDetails
                                 }
@@ -2157,7 +2157,7 @@ const validateFields1 = () => {
                               <img
                                 src={
                                   updatingDetails.image === imageDetails
-                                    ? `http://localhost:4000/opportunities/` +
+                                    ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/` +
                                       imageDetails
                                     : imageDetails
                                 }
@@ -2317,7 +2317,7 @@ const validateFields1 = () => {
                             src={
                               updatingImageDetails.mobileImage ===
                               imageImageDetails
-                                ? `http://localhost:4000/mobile-images/${imageImageDetails}`
+                                ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/mobile-images/${imageImageDetails}`
                                 : imageImageDetails
                             }
                             className="img-responsive img-thumbnail"
