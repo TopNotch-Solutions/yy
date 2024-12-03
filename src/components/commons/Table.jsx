@@ -11,7 +11,7 @@ function Table(){
   const [employeeData, setEmployeeData] = useState([]);
 
   useEffect(() => {
-    fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/devices/staffHandsets")
+    fetch("http://localhost:4000/devices/staffHandsets")
       .then((res) => res.json())
       .then((data) => setData(data))
       .catch((err) => console.log(err));

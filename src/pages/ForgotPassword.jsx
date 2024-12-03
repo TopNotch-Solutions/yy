@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../assets/css/AdminLogin.css";
-import logo from "../assets/images/in4logo.png";
-import mtclogo from "../assets/images/banner.png";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { toast } from "react-toastify";
-import { toggleSidebarTrue } from "../redux/reducers/sidebarReducer";
 import { toggleSidebarfalse } from "../redux/reducers/sidebarReducer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../redux/reducers/authReducer";
-import { useLocation } from 'react-router-dom';
 import { fetchOAuthToken } from "../utils/fectchOAuthToken";
 
 function ForgotPassword() {
@@ -80,7 +74,7 @@ function ForgotPassword() {
       if (tokenData.access_token) {
         try {
           setIsSubmitting(true);
-          const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/newPassword", {
+          const response = await fetch("http://localhost:4000/auth/admin/newPassword", {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -120,123 +114,100 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="">
-      <div className="d-flex vh-100 w-100 ">
-        <div className="m-auto col-11 col-md-10 col-lg-6 col-xl-5 d-flex flex-column justify-content-center align-items-center">
-          <div className="d-flex align-items-center">
-            <h3 className="portal-text">IN4MSME Portal</h3>
-          </div>
-          <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
-            <form onSubmit={handleForgotPassword}>
-              <h3>Create New Password</h3>
-              <p className="pb-md-3">Enter new password</p>
-              <div
-                className={`form-group pb-3 position-relative ${
-                  passwordError ? "error-class" : ""
-                }`}
-              >
-                <label htmlFor="password" className="pb-2">
-                  New Password
-                </label>
-                <input
-                  type={passwordShown ? "text" : "password"}
-                  value={password}
-                  className="form-control place-holder"
-                  id="password"
-                  placeholder="***************"
-                  autoComplete="off"
-                  name="password"
-                  onChange={(e) => {
-                    setPasswordError("");
-                    setPassword(e.target.value);
-                  }}
-                />
-                {passwordError && (
-                  <>
-                    <p className="error mt-1">{passwordError}</p>
-                  </>
-                )}
-                <span
-                  className={`${
-                    passwordError
-                      ? "show-password-top"
-                      : "show-password mt-1 position-absolute translate-middle-y pr-4"
-                  }`}
-                  onClick={togglePassword}
-                  style={{ cursor: "pointer" }}
-                >
-                  {passwordShown ? (
-                    <VisibilityIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
-                  ) : (
-                    <VisibilityOffIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
-                  )}
-                </span>
-              </div>
-              <div
-                className={`form-group pb-3 position-relative ${
-                  confirmPasswordError ? "error-class" : ""
-                }`}
-              >
-                <label htmlFor="password" className="pb-2">
-                  Confirm Password
-                </label>
-                <input
-                  type={passwordConfirmShown ? "text" : "password"}
-                  value={confirmPassword}
-                  className="form-control place-holder"
-                  id="password"
-                  placeholder="***************"
-                  autoComplete="off"
-                  name="password"
-                  onChange={(e) => {
-                    setConfirmPasswordError("");
-                    setConfirmPassword(e.target.value);
-                  }}
-                />
-                {confirmPasswordError && (
-                  <>
-                    <p className="error mt-1">{confirmPasswordError}</p>
-                  </>
-                )}
-                <span
-                  className={`${
-                    confirmPasswordError
-                      ? "show-password-top"
-                      : "show-password mt-1 position-absolute translate-middle-y pr-4"
-                  }`}
-                  onClick={toggleConfirmPassword}
-                  style={{ cursor: "pointer" }}
-                >
-                  {passwordConfirmShown ? (
-                    <VisibilityIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
-                  ) : (
-                    <VisibilityOffIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
-                  )}
-                </span>
-              </div>
-              <button
-                type="submit"
-                className="submission"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <div className="loader"></div>
-                ) : (
-                  "Submit"
-                )}
-              </button>
-              {success && (
-                <div className="mt-2 d-flex justify-content-center">
+    <div className="login-container">
+      <div className="login-wrapper-centered">
+        <div className="login-form-section">
+          <div className="login-form-wrapper">
+            <h1 className="login-title">IN4MSME Portal</h1>
+            
+            <div className="login-card">
+              {success ? (
+                <div className="auth-form text-center">
+                  <h2>Password Reset Successful!</h2>
+                  <p className="auth-subtitle">
+                    Your password has been successfully updated.
+                  </p>
                   <button
-                    onClick={() =>navigate('/')}
-                    className="back"
-                
+                    type="button"
+                    onClick={() => navigate('/')}
+                    className="back-button"
                   >
-                    Login
+                    Back to Login
                   </button>
                 </div>
+              ) : (
+                <form onSubmit={handleForgotPassword} className="auth-form">
+                  <h2>Create New Password</h2>
+                  <p className="auth-subtitle">
+                    Please enter your new password below
+                  </p>
+
+                  <div className="form-field">
+                    <label>New Password</label>
+                    <div className="password-input">
+                      <input
+                        type={passwordShown ? "text" : "password"}
+                        value={password}
+                        placeholder="Enter new password"
+                        onChange={(e) => {
+                          setPasswordError("");
+                          setPassword(e.target.value);
+                        }}
+                        className={passwordError ? "error-input" : ""}
+                      />
+                      <button 
+                        type="button"
+                        className="toggle-password"
+                        onClick={togglePassword}
+                      >
+                        {passwordShown ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                      </button>
+                    </div>
+                    {passwordError && (
+                      <span className="error-message">{passwordError}</span>
+                    )}
+                  </div>
+
+                  <div className="form-field">
+                    <label>Confirm Password</label>
+                    <div className="password-input">
+                      <input
+                        type={passwordConfirmShown ? "text" : "password"}
+                        value={confirmPassword}
+                        placeholder="Confirm new password"
+                        onChange={(e) => {
+                          setConfirmPasswordError("");
+                          setConfirmPassword(e.target.value);
+                        }}
+                        className={confirmPasswordError ? "error-input" : ""}
+                      />
+                      <button 
+                        type="button"
+                        className="toggle-password"
+                        onClick={toggleConfirmPassword}
+                      >
+                        {passwordConfirmShown ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                      </button>
+                    </div>
+                    {confirmPasswordError && (
+                      <span className="error-message">{confirmPasswordError}</span>
+                    )}
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    className="submit-button"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <div className="loader"></div>
+                    ) : (
+                      "Reset Password"
+                    )}
+                  </button>
+                </form>
               )}
-            </form>
+            </div>
           </div>
         </div>
       </div>

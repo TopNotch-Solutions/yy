@@ -94,13 +94,12 @@ const AdminLogin = () => {
           try {
             setIsSubmitting(true);
     
-            const loginResponse = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/login", {
+            const loginResponse = await fetch("http://localhost:4000/auth/admin/login", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${tokenData.access_token}`,
               },
-              //
               body: JSON.stringify({
                 email: email,
                 password: password,
@@ -170,7 +169,7 @@ const AdminLogin = () => {
         try {
           setIsSubmitting(true);
           const response = await fetch(
-            "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/verify-otp",
+            "http://localhost:4000/auth/admin/verify-otp",
             {
               method: "POST",
               headers: {
@@ -220,188 +219,139 @@ const AdminLogin = () => {
     }
   };
   return (
-    <div className="">
-      <div className="d-flex vh-100 w-100">
-        <div className="d-none d-lg-block d-lg-flex col-lg-6 col-xl-7 justify-content-center align-items-center left-box">
-          <img
-            src={logo}
-            alt="Illustration"
-            className="img-fluid mtc-logo-login"
-          />
+    <div className="login-container">
+      <div className="login-wrapper">
+        {/* Left side with logo */}
+        <div className="login-logo-section">
+          <img src={logo} alt="IN4MSME Logo" className="login-logo" />
         </div>
-        {isUserAuthenticated ? (
-          <>
-            <div className="m-auto col-11 col-md-10 col-lg-6 col-xl-5 d-flex flex-column justify-content-center align-items-center">
-              <div className="d-flex align-items-center">
-                <h3 className="portal-text">IN4MSME Portal</h3>
-              </div>
-              <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
-                <form>
-                  <h3>Enter your code</h3>
-                  <p className="pb-md-3 text-secondary">
-                    Enter the 4-digit code on your email. It may take a minute
-                    to arrive
+
+        {/* Right side with forms */}
+        <div className="login-form-section">
+          <div className="login-form-wrapper">
+            <h1 className="login-title">IN4MSME Portal</h1>
+            
+            <div className="login-card">
+              {isUserAuthenticated ? (
+                // Two Factor Authentication Form
+                <form className="auth-form">
+                  <h2>Enter your code</h2>
+                  <p className="auth-subtitle">
+                    Enter the 4-digit code sent to your email
                   </p>
-                  <div className="form-group pb-3">
-                    <label htmlFor="twoFactorCode" className="pb-2">
-                      2FA code
-                    </label>
+                  
+                  <div className="form-field">
+                    <label>2FA Code</label>
                     <input
                       type="text"
                       value={twoFactorDigits || ""}
-                      className="form-control place-holder"
                       placeholder="****"
-                      autoComplete="off"
-                      name="twoFactorCode"
                       onChange={(e) => {
                         setTwoFactorDigitsError("");
                         setTwoFactorDigits(e.target.value);
                       }}
+                      className={twoFactorDigitsError ? "error-input" : ""}
                     />
                     {twoFactorDigitsError && (
-                      <>
-                        <p className="error mt-1">{twoFactorDigitsError}</p>
-                      </>
+                      <span className="error-message">{twoFactorDigitsError}</span>
                     )}
                   </div>
 
-                  <button
+                  <button 
                     onClick={handleTwoFactorAuthentication}
-                    className="submission"
+                    className="submit-button"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? <div className="loader"></div> : "Submit"}
+                    {isSubmitting ? <div className="loader"></div> : "Verify Code"}
                   </button>
-                  <div className="mt-2 d-flex justify-content-center">
-                    
-                    <button
+
+                  <button
                     onClick={() => {
                       setPassword("");
                       setEmail("");
                       dispatch(toggleAuthenticationfalse());
                       window.location.reload();
                     }}
-                    className="back"
-                
+                    className="back-button"
                   >
-                    Back
+                    Back to Login
                   </button>
-                  </div>
                 </form>
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="m-auto col-11 col-md-10 col-lg-6 col-xl-5 d-flex flex-column justify-content-center align-items-center">
-              <div className="d-flex align-items-center"> 
-                <h3 className="portal-text">IN4MSME Portal</h3>
-              </div>
-              <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
-                <form>
-                  <h3>Sign in to account</h3>
-                  <p className="pb-md-3 text-secondary">
-                    Welcome back. Sign into your account
-                  </p>
-                  <div className="form-group pb-3">
-                    <label htmlFor="username" className="pb-2">
-                      Username
-                    </label>
+              ) : (
+                // Main Login Form
+                <form className="auth-form">
+                  <h2>Sign in to account</h2>
+                  <p className="auth-subtitle">Welcome back! Please sign in to continue</p>
+
+                  <div className="form-field">
+                    <label>Username</label>
                     <input
                       type="text"
                       value={email || ""}
-                      className="form-control place-holder"
                       placeholder="example@nipdb.com.na"
-                      autoComplete="off"
-                      name="username"
                       onChange={(e) => {
                         setEmailError("");
                         setEmail(e.target.value);
                       }}
+                      className={emailError ? "error-input" : ""}
                     />
-                    {emailError && (
-                      <>
-                        <p className="error mt-1">{emailError}</p>
-                      </>
-                    )}
+                    {emailError && <span className="error-message">{emailError}</span>}
                   </div>
-                  <div
-                    className={`form-group pb-3 position-relative ${
-                      emailError ? "error-class" : ""
-                    }`}
-                  >
-                    <label htmlFor="password" className="pb-2">
-                      Password
-                    </label>
-                    <input
-                      type={passwordShown ? "text" : "password"}
-                      className="form-control place-holder"
-                      id="password"
-                      placeholder="***************"
-                      value={password || ""}
-                      autoComplete="off"
-                      name="password"
-                      onChange={(e) => {
-                        setPasswordError("");
-                        setPassword(e.target.value);
-                      }}
-                    />
-                    {passwordError && (
-                      <>
-                        <p className="error mt-1">{passwordError}</p>
-                      </>
-                    )}
-                    <span
-                      className={`${
-                        passwordError
-                          ? "show-password-top"
-                          : "show-password mt-1 position-absolute translate-middle-y pr-4"
-                      }`}
-                      onClick={togglePassword}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {passwordShown ? (
-                        <VisibilityIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
-                      ) : (
-                        <VisibilityOffIcon
-                          sx={{ color: "rgba(0, 0, 0, 0.5)" }}
-                        />
-                      )}
-                    </span>
-                  </div>
-                  <div
-                    className={`form-group form-check mb-4 ${
-                      passwordError ? "error-class" : ""
-                    }`}
-                  >
-                    <div className="text-end forgot-div">
-                      <p className="forgot-text">
-                        <span onClick={() => navigate("/Submit")}>
-                          Forgot Password
-                        </span>
-                      </p>
+
+                  <div className="form-field">
+                    <label>Password</label>
+                    <div className="password-input">
+                      <input
+                        type={passwordShown ? "text" : "password"}
+                        value={password || ""}
+                        placeholder="Enter your password"
+                        onChange={(e) => {
+                          setPasswordError("");
+                          setPassword(e.target.value);
+                        }}
+                        className={passwordError ? "error-input" : ""}
+                      />
+                      <button 
+                        type="button"
+                        className="toggle-password"
+                        onClick={togglePassword}
+                      >
+                        {passwordShown ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                      </button>
                     </div>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="rememberPassword"
-                      checked={rememberPassword}
-                  onChange={() => setRememberPassword(!rememberPassword)}
-                    />
-                    <label className="form-check-label" htmlFor="rememberPassword">Remember password</label>
+                    {passwordError && <span className="error-message">{passwordError}</span>}
                   </div>
+
+                  <div className="form-actions">
+                    <label className="remember-me">
+                      <input
+                        type="checkbox"
+                        checked={rememberPassword}
+                        onChange={() => setRememberPassword(!rememberPassword)}
+                      />
+                      <span>Remember me</span>
+                    </label>
+                    <button 
+                      type="button"
+                      className="forgot-password"
+                      onClick={() => navigate("/Submit")}
+                    >
+                      Forgot Password?
+                    </button>
+                  </div>
+
                   <button
                     onClick={handleSubmit}
-                    className="submission"
+                    className="submit-button"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? <div className="loader"></div> : "Sign in"}
                   </button>
                 </form>
-              </div>
+              )}
             </div>
-          </>
-        )}
+          </div>
+        </div>
       </div>
     </div>
   );

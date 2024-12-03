@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Box, IconButton, Avatar } from "@mui/material";
+import { Box, IconButton, Avatar, Tooltip } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import logo from "../../assets/images/nipdb-logo.jpg";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import Dropdown from "react-bootstrap/Dropdown";
 import Badge from "@mui/material/Badge";
-import { BsPersonGear, BsGear, BsBoxArrowRight } from "react-icons/bs";
-import "../../assets/css/TopBar.css";
+import { BsPersonGear, BsBoxArrowRight } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import logo from "../../assets/images/nipdb-logo.jpg";
+import "../../assets/css/TopBar.css";
 import { CapitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
 import { toggleSidebarfalse } from "../../redux/reducers/sidebarReducer";
 import { login } from "../../redux/reducers/authReducer";
-import { useNavigate } from "react-router-dom";
 import { toggleAuthenticationfalse} from "../../redux/reducers/twoFactorReducer";
 import { updateToken } from "../../redux/reducers/authReducer";
 import { updateServerToken } from "../../redux/reducers/serverReducer";
@@ -34,7 +34,7 @@ const Topbar = ({ OpenSidebar }) => {
     const fetchAllAdminNotificationsCount = async () => {
       try {
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/totalNotificationCount`,
+          `http://localhost:4000/notifications/admin/totalNotificationCount`,
           {
             method: "GET",
             headers: {
@@ -63,7 +63,7 @@ const Topbar = ({ OpenSidebar }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/logout", {
+      const response = await fetch("http://localhost:4000/auth/admin/logout", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -107,91 +107,103 @@ const Topbar = ({ OpenSidebar }) => {
   };
   return (
     <Box
-      width="100%"
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-      p={2}
-      borderBottom="1px solid #DCDCDC"
+      className="topbar-container"
+      sx={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "0.75rem 1.5rem",
+        background: "white",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+        position: "sticky",
+        top: 0,
+        zIndex: 1000
+      }}
     >
-      <div className="d-none d-lg-block">
-        <Box display="flex" borderRadius="3px" height={"45px"}>
-          <img rounded-full w-8 h-8 src={logo} alt="user-profile" />
+      <div className="topbar-left">
+        <Box display="flex" alignItems="center" gap={2}>
+          <div className="d-none d-lg-block">
+            <img 
+              src={logo} 
+              alt="logo" 
+              className="topbar-logo"
+            />
+          </div>
+          <div className="d-block d-lg-none">
+            <IconButton 
+              onClick={OpenSidebar}
+              sx={{ color: "#009547" }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </div>
         </Box>
       </div>
-      <div className="d-block d-lg-none" style={{ cursor: "pointer" }}>
-        <MenuIcon style={{ fontSize: "1.8rem" }} onClick={OpenSidebar} />
-      </div>
 
-      <Box display="flex" alignItems="center">
-        {
-          allNotificationsCount === 0 ?<>
-          <div className="mtop" href="/notifications" onClick={() =>{
-             dispatch(toggleActiveTab({ activeTab: 6 }));
-             navigate('/notifications')
+      <Box display="flex" alignItems="center" gap={2}>
+        <Tooltip title="Notifications">
+          <div className="notification-icon" onClick={() => {
+            dispatch(toggleActiveTab({ activeTab: 6 }));
+            navigate('/notifications');
           }}>
-          <IconButton>
-              <NotificationsOutlinedIcon />
-          </IconButton>
-        </div>
-          </>: <>
-          <div className="mtop" href="/notifications" onClick={() =>{
+            <IconButton sx={{ color: "#666" }}>
+              {allNotificationsCount > 0 ? (
+                <Badge badgeContent={allNotificationsCount} max={99} color="primary">
+                  <NotificationsOutlinedIcon />
+                </Badge>
+              ) : (
+                <NotificationsOutlinedIcon />
+              )}
+            </IconButton>
+          </div>
+        </Tooltip>
 
-             dispatch(toggleActiveTab({ activeTab: 6 }));
-             navigate('/notifications')
-          }}>
-          <IconButton>
-            <Badge badgeContent={allNotificationsCount} max={99} color="primary">
-              <NotificationsOutlinedIcon />
-            </Badge>
-          </IconButton>
-        </div>
-          </>
-        }
-
-        <div className="d-none d-sm-inline-flex">
-          <div
-            className="wapper-topbar"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "end",
-            }}
-          >
-            <p className="username-text">
+        <div className="user-info d-none d-sm-flex">
+          <div className="user-details">
+            <p className="user-name">
               {fullName.length <= 14
                 ? currentUser?.firstName + " " + currentUser?.lastName
                 : currentUser?.lastName}
             </p>
-            <p className="role-text">{currentUser?.role}</p>
+            <p className="user-role">{currentUser?.role}</p>
           </div>
         </div>
-        
-        {currentUser?.profileImage ? (
-          <Avatar alt="User Profile" src={currentUser?.profileImage} />
-        ) : (
-          <Avatar
-            sx={{ bgcolor: "#1976d2" }}
-          >{`${firstLetter}${secondLetter}`}</Avatar>
-        )}
 
-<Dropdown className="dropdown" autoClose="outside">
-  <Dropdown.Toggle variant="" id="dropdown-basic" style={{ border: "none" }}>
-  </Dropdown.Toggle>
-  <Dropdown.Menu className="dropdown-menu">
-    <Dropdown.Item href="/profile" onClick={() => {
-        dispatch(toggleActiveTab({ activeTab: 8 }));
-    }}>
-      <BsPersonGear style={{ marginRight: "10px" }} />
-      Profile
-    </Dropdown.Item>
-    <Dropdown.Item onClick={handleLogout}>
-      <BsBoxArrowRight style={{ marginRight: "10px" }} />
-      Logout
-    </Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown>
+        <div className="user-avatar">
+          {currentUser?.profileImage ? (
+            <Avatar 
+              alt="User Profile" 
+              src={currentUser?.profileImage}
+              sx={{ width: 40, height: 40 }}
+            />
+          ) : (
+            <Avatar
+              sx={{ 
+                bgcolor: "#1976d2",
+                width: 40,
+                height: 40
+              }}
+            >{`${firstLetter}${secondLetter}`}</Avatar>
+          )}
+        </div>
 
+        <Dropdown className="user-dropdown" autoClose="outside">
+          <Dropdown.Toggle variant="" id="dropdown-basic" className="dropdown-toggle">
+          </Dropdown.Toggle>
+          <Dropdown.Menu className="dropdown-menu">
+            <Dropdown.Item 
+              href="/profile" 
+              onClick={() => dispatch(toggleActiveTab({ activeTab: 8 }))}
+              className="dropdown-item"
+            >
+              <BsPersonGear /> Profile
+            </Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout} className="dropdown-item">
+              <BsBoxArrowRight /> Logout
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </Box>
     </Box>
   );

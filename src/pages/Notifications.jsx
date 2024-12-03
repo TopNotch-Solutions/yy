@@ -121,7 +121,7 @@ function Notifications() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/user",
+          "http://localhost:4000/msme/admin/all/user",
           {
             method: "GET",
             headers: {
@@ -165,7 +165,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/single/notifications`,
+          `http://localhost:4000/notifications/admin/single/notifications`,
           {
             method: "GET",
             headers: {
@@ -209,7 +209,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/all/unread-notification`,
+          `http://localhost:4000/notifications/admin/all/unread-notification`,
           {
             method: "GET",
             headers: {
@@ -253,7 +253,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/all/sent-by-admin`,
+          `http://localhost:4000/notifications/admin/all/sent-by-admin`,
           {
             method: "GET",
             headers: {
@@ -297,7 +297,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/all/read-notification`,
+          `http://localhost:4000/notifications/admin/all/read-notification`,
           {
             method: "GET",
             headers: {
@@ -355,7 +355,7 @@ function Notifications() {
           senderId: currentUser.id,
         };
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/create`,
+          `http://localhost:4000/notifications/admin/create`,
           {
             method: "POST",
             headers: {
@@ -432,7 +432,7 @@ function Notifications() {
           senderId: currentUser.id,
         };
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/create`,
+          `http://localhost:4000/notifications/admin/create`,
           {
             method: "POST",
             headers: {
@@ -500,7 +500,7 @@ function Notifications() {
       dispatch(toggleIsSubmittingTrue());
       setIsSubmitting(true);
       const response = await fetch(
-        `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/single/${id}`,
+        `http://localhost:4000/notifications/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -553,7 +553,7 @@ function Notifications() {
       dispatch(toggleIsSubmittingTrue());
       setIsSubmitting(true);
       const response = await fetch(
-        `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/single/sent-by-admin/${id}`,
+        `http://localhost:4000/notifications/admin/single/sent-by-admin/${id}`,
         {
           method: "GET",
           headers: {
@@ -616,7 +616,7 @@ function Notifications() {
           setIsSubmitting(true);
           dispatch(toggleIsSubmittingTrue());
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/delete/${id}`,
+            `http://localhost:4000/notifications/admin/delete/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -675,7 +675,7 @@ function Notifications() {
       setIsSubmitting(true);
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/delete/${updatedId}`,
+        `http://localhost:4000/notifications/admin/delete/${updatedId}`,
         {
           method: "DELETE",
           headers: {
@@ -1336,7 +1336,7 @@ function Notifications() {
                 />
                 {titleError && (
                   <>
-                    <p className="error mt-1">{titleError}</p>
+                    <p className="error-message">{titleError}</p>
                   </>
                 )}
               </div>
@@ -1364,7 +1364,7 @@ function Notifications() {
                 </select>
                 {priorityError && (
                   <>
-                    <p className="error mt-1">{priorityError}</p>
+                    <p className="error-message">{priorityError}</p>
                   </>
                 )}
               </div>
@@ -1397,7 +1397,7 @@ function Notifications() {
               </div>
               {notificationError && (
                 <>
-                  <p className="error mt-1">{notificationError}</p>
+                  <p className="error-message">{notificationError}</p>
                 </>
               )}
             </Grid>
@@ -1439,7 +1439,7 @@ function Notifications() {
                   />
                   {titleError && (
                     <>
-                      <p className="error mt-1">{titleError}</p>
+                      <p className="error-message">{titleError}</p>
                     </>
                   )}
                 </div>
@@ -1468,7 +1468,7 @@ function Notifications() {
                               />
                               {userIdError && (
                                 <>
-                                  <p className="error mt-1">{userIdError}</p>
+                                  <p className="error-message">{userIdError}</p>
                                 </>
                               )}
                             </div>
@@ -1501,7 +1501,7 @@ function Notifications() {
                 </div>
                 {notificationError && (
                   <>
-                    <p className="error mt-1">{notificationError}</p>
+                    <p className="error-message">{notificationError}</p>
                   </>
                 )}
               </Grid>

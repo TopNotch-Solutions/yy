@@ -148,7 +148,7 @@ function Content() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/all`,
+          `http://localhost:4000/opportunities/admin/all`,
           {
             method: "GET",
             headers: {
@@ -191,7 +191,7 @@ function Content() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/admin/mobile-images/all`,
+          `http://localhost:4000/admin/mobile-images/all`,
           {
             method: "GET",
             headers: {
@@ -245,7 +245,7 @@ function Content() {
         formData.append("link", link);
 
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/create`,
+          `http://localhost:4000/opportunities/admin/create`,
           {
             method: "POST",
             headers:{
@@ -297,7 +297,7 @@ function Content() {
         formData.append("description", descriptionImage);
         formData.append("mobile-image", fileMobileImage);
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/admin/mobile-images/create`,
+          `http://localhost:4000/admin/mobile-images/create`,
           {
             method: "POST",
             
@@ -350,7 +350,7 @@ function Content() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/single/${id}`,
+        `http://localhost:4000/opportunities/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -403,7 +403,7 @@ function Content() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `https://api-gw.mtc.com.na/mdt-nipdb/v1/admin/mobile-images/single/${id}`,
+        `http://localhost:4000/admin/mobile-images/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -468,7 +468,7 @@ function Content() {
           setIsSubmitting(true);
           dispatch(toggleIsSubmittingTrue());
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/delete/${id}`,
+            `http://localhost:4000/opportunities/admin/delete/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -541,7 +541,7 @@ function Content() {
           dispatch(toggleIsSubmittingTrue());
 
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/admin/mobile-images/delete/${id}`,
+            `http://localhost:4000/admin/mobile-images/delete/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -937,7 +937,7 @@ const validateFields1 = () => {
           formData.append("opportunity-image", fileMobileImage);
           formData.append("link", linkDetails);
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/update/${updatingDetails.id}`,
+            `http://localhost:4000/opportunities/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
               
@@ -999,7 +999,7 @@ const validateFields1 = () => {
           formData.append("mobile-image", fileMobileImageDetails);
           console.log("yo", descriptionDetails, fileMobileImageDetails);
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/admin/mobile-images/update/${updatingImageDetails.id}`,
+            `http://localhost:4000/admin/mobile-images/update/${updatingImageDetails.id}`,
             {
               method: "PUT",
               
@@ -1065,7 +1065,7 @@ const validateFields1 = () => {
           formData.append("link", linkDetails);
 
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/admin/update/${updatingDetails.id}`,
+            `http://localhost:4000/opportunities/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
               
@@ -1462,7 +1462,7 @@ const validateFields1 = () => {
                       />
                       {descriptionError && (
                         <>
-                          <p className="error mt-1">{descriptionError}</p>
+                          <p className="error-message">{descriptionError}</p>
                         </>
                       )}
                     </div>
@@ -1484,7 +1484,7 @@ const validateFields1 = () => {
                       />
                       {linkError && (
                         <>
-                          <p className="error mt-1">{linkError}</p>
+                          <p className="error-message">{linkError}</p>
                         </>
                       )}
                     </div>
@@ -1556,7 +1556,7 @@ const validateFields1 = () => {
                           />
                           {imageError && (
                             <>
-                              <p className="error mt-1">{imageError}</p>
+                              <p className="error-message">{imageError}</p>
                             </>
                           )}
                         </div>
@@ -1592,7 +1592,7 @@ const validateFields1 = () => {
                       />
                       {descriptionError && (
                         <>
-                          <p className="error mt-1">{descriptionError}</p>
+                          <p className="error-message">{descriptionError}</p>
                         </>
                       )}
                     </div>
@@ -1614,7 +1614,7 @@ const validateFields1 = () => {
                       />
                       {linkError && (
                         <>
-                          <p className="error mt-1">{linkError}</p>
+                          <p className="error-message">{linkError}</p>
                         </>
                       )}
                     </div>
@@ -1686,7 +1686,7 @@ const validateFields1 = () => {
                           />
                           {imageError && (
                             <>
-                              <p className="error mt-1">{imageError}</p>
+                              <p className="error-message">{imageError}</p>
                             </>
                           )}
                         </div>
@@ -1753,7 +1753,7 @@ const validateFields1 = () => {
                   />
                   {descriptionImageError && (
                     <>
-                      <p className="error mt-1">{descriptionImageError}</p>
+                      <p className="error-message">{descriptionImageError}</p>
                     </>
                   )}
                 </div>
@@ -1825,7 +1825,7 @@ const validateFields1 = () => {
                       />
                       {imageImageError && (
                         <>
-                          <p className="error mt-1">{imageImageError}</p>
+                          <p className="error-message">{imageImageError}</p>
                         </>
                       )}
                     </div>
@@ -1949,7 +1949,7 @@ const validateFields1 = () => {
                       />
                       {descriptionDetailsError && (
                         <>
-                          <p className="error mt-1">
+                          <p className="error-message">
                             {descriptionDetailsError}
                           </p>
                         </>
@@ -1973,7 +1973,7 @@ const validateFields1 = () => {
                       />
                       {linkDetailsError && (
                         <>
-                          <p className="error mt-1">{linkDetailsError}</p>
+                          <p className="error-message">{linkDetailsError}</p>
                         </>
                       )}
                     </div>
@@ -2015,7 +2015,7 @@ const validateFields1 = () => {
                               <img
                                 src={
                                   updatingDetails.image === imageDetails
-                                    ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/` +
+                                    ? `http://localhost:4000/opportunities/` +
                                       imageDetails
                                     : imageDetails
                                 }
@@ -2050,7 +2050,7 @@ const validateFields1 = () => {
                           />
                           {imageDetailsError && (
                             <>
-                              <p className="error mt-1">{imageDetailsError}</p>
+                              <p className="error-message">{imageDetailsError}</p>
                             </>
                           )}
                         </div>
@@ -2090,7 +2090,7 @@ const validateFields1 = () => {
                       />
                       {descriptionDetailsError && (
                         <>
-                          <p className="error mt-1">
+                          <p className="error-message">
                             {descriptionDetailsError}
                           </p>
                         </>
@@ -2115,7 +2115,7 @@ const validateFields1 = () => {
                       />
                       {linkDetailsError && (
                         <>
-                          <p className="error mt-1">{linkDetailsError}</p>
+                          <p className="error-message">{linkDetailsError}</p>
                         </>
                       )}
                     </div>
@@ -2157,7 +2157,7 @@ const validateFields1 = () => {
                               <img
                                 src={
                                   updatingDetails.image === imageDetails
-                                    ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/opportunities/` +
+                                    ? `http://localhost:4000/opportunities/` +
                                       imageDetails
                                     : imageDetails
                                 }
@@ -2192,7 +2192,7 @@ const validateFields1 = () => {
                           />
                           {imageDetailsError && (
                             <>
-                              <p className="error mt-1">{imageDetailsError}</p>
+                              <p className="error-message">{imageDetailsError}</p>
                             </>
                           )}
                         </div>
@@ -2272,7 +2272,7 @@ const validateFields1 = () => {
                   />
                   {descriptionImageDetailsError && (
                     <>
-                      <p className="error mt-1">
+                      <p className="error-message">
                         {descriptionImageDetailsError}
                       </p>
                     </>
@@ -2317,7 +2317,7 @@ const validateFields1 = () => {
                             src={
                               updatingImageDetails.mobileImage ===
                               imageImageDetails
-                                ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/mobile-images/${imageImageDetails}`
+                                ? `http://localhost:4000/mobile-images/${imageImageDetails}`
                                 : imageImageDetails
                             }
                             className="img-responsive img-thumbnail"
@@ -2351,7 +2351,7 @@ const validateFields1 = () => {
                       />
                       {imageImageDetailsError && (
                         <>
-                          <p className="error mt-1">{imageImageDetailsError}</p>
+                          <p className="error-message">{imageImageDetailsError}</p>
                         </>
                       )}
                     </div>

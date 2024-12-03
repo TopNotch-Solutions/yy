@@ -137,7 +137,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/system-users",
+          "http://localhost:4000/system/all/system-users",
           {
             method: "GET",
             headers: {
@@ -181,7 +181,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/super-admin-count",
+          "http://localhost:4000/system/all/super-admin-count",
           {
             method: "GET",
             headers: {
@@ -225,7 +225,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/admin-count",
+          "http://localhost:4000/system/all/admin-count",
           {
             method: "GET",
             headers: {
@@ -269,7 +269,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/app-user-count",
+          "http://localhost:4000/system/all/app-user-count",
           {
             method: "GET",
             headers: {
@@ -312,7 +312,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/admin/list",
+          "http://localhost:4000/system/all/admin/list",
           {
             method: "GET",
             headers: {
@@ -354,7 +354,7 @@ function User() {
   const handleUpdate = async (email) => {
     try {
       const response = await fetch(
-        "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/update/email",
+        "http://localhost:4000/auth/admin/update/email",
         {
           method: "POST",
           headers: {
@@ -423,7 +423,7 @@ function User() {
             setIsSubmitting(true);
 
             const response = await fetch(
-              "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/delete",
+              "http://localhost:4000/auth/admin/delete",
               {
                 method: "DELETE",
                 headers: {
@@ -488,7 +488,7 @@ function User() {
             setIsSubmitting(true);
 
             const response = await fetch(
-              "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/delete",
+              "http://localhost:4000/auth/admin/delete",
               {
                 method: "DELETE",
                 headers: {
@@ -749,7 +749,7 @@ function User() {
             role: roleDetails,
           };
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/update/user/details/${updatingDetails.id}`,
+            `http://localhost:4000/auth/admin/update/user/details/${updatingDetails.id}`,
             {
               method: "PUT",
               headers: {
@@ -830,7 +830,7 @@ function User() {
         };
 
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/signup",
+          "http://localhost:4000/auth/admin/signup",
           {
             method: "POST",
             headers: {
@@ -1182,7 +1182,7 @@ function User() {
                     />
                     {firstNameError && (
                       <>
-                        <p className="error mt-1">{firstNameError}</p>
+                        <p className="error-message">{firstNameError}</p>
                       </>
                     )}
                   </div>
@@ -1206,7 +1206,7 @@ function User() {
                     />
                     {lastNameError && (
                       <>
-                        <p className="error mt-1">{lastNameError}</p>
+                        <p className="error-message">{lastNameError}</p>
                       </>
                     )}
                   </div>
@@ -1230,7 +1230,7 @@ function User() {
                     />
                     {emailError && (
                       <>
-                        <p className="error mt-1">{emailError}</p>
+                        <p className="error-message">{emailError}</p>
                       </>
                     )}
                   </div>
@@ -1259,7 +1259,7 @@ function User() {
                     </select>
                     {departmentError && (
                       <>
-                        <p className="error mt-1">{departmentError}</p>
+                        <p className="error-message">{departmentError}</p>
                       </>
                     )}
                   </div>
@@ -1288,7 +1288,7 @@ function User() {
                     </select>
                     {roleError && (
                       <>
-                        <p className="error mt-1">{roleError}</p>
+                        <p className="error-message">{roleError}</p>
                       </>
                     )}
                   </div>
@@ -1312,7 +1312,7 @@ function User() {
                     />
                     {contactNumberError && (
                       <>
-                        <p className="error mt-1">{contactNumberError}</p>
+                        <p className="error-message">{contactNumberError}</p>
                       </>
                     )}
                   </div>
@@ -1396,7 +1396,7 @@ function User() {
                     />
                     {firstNameDetailsError && (
                       <>
-                        <p className="error mt-1">{firstNameDetailsError}</p>
+                        <p className="error-message">{firstNameDetailsError}</p>
                       </>
                     )}
                   </div>
@@ -1421,7 +1421,7 @@ function User() {
                     />
                     {lastNameDetailsError && (
                       <>
-                        <p className="error mt-1">{lastNameDetailsError}</p>
+                        <p className="error-message">{lastNameDetailsError}</p>
                       </>
                     )}
                   </div>
@@ -1446,7 +1446,7 @@ function User() {
                     />
                     {emailDetailsError && (
                       <>
-                        <p className="error mt-1">{emailDetailsError}</p>
+                        <p className="error-message">{emailDetailsError}</p>
                       </>
                     )}
                   </div>
@@ -1476,7 +1476,7 @@ function User() {
                     </select>
                     {departmentDetailsError && (
                       <>
-                        <p className="error mt-1">{departmentDetailsError}</p>
+                        <p className="error-message">{departmentDetailsError}</p>
                       </>
                     )}
                   </div>
@@ -1506,7 +1506,7 @@ function User() {
                     </select>
                     {roleDetailsError && (
                       <>
-                        <p className="error mt-1">{roleDetailsError}</p>
+                        <p className="error-message">{roleDetailsError}</p>
                       </>
                     )}
                   </div>
@@ -1531,7 +1531,7 @@ function User() {
                     />
                     {contactNumberDetailsError && (
                       <>
-                        <p className="error mt-1">
+                        <p className="error-message">
                           {contactNumberDetailsError}
                         </p>
                       </>

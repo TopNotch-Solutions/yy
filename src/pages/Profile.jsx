@@ -126,7 +126,7 @@ function Profile() {
     try {
       setIsSubmitting(true);
       const response = await fetch(
-        `https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/update/profile-image/${currentUser.id}`,
+        `http://localhost:4000/auth/admin/update/profile-image/${currentUser.id}`,
         {
           method: "PUT",
           headers: {
@@ -201,7 +201,7 @@ function Profile() {
       try {
         setIsSubmitting(true);
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/change-password`,
+          `http://localhost:4000/auth/admin/change-password`,
           {
             method: "PUT",
             headers: {
@@ -289,7 +289,7 @@ function Profile() {
         try {
           setIsSubmitting(true);
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/update/details`,
+            `http://localhost:4000/auth/admin/update/details`,
             {
               method: "PUT",
               headers: {
@@ -643,18 +643,16 @@ function Profile() {
                   }}
                 />
                 <span
-                      className="show-password mt-1 position-absolute translate-middle-y pr-4"
-                      onClick={() =>setCurrentPasswordShown(!currentPasswordShown)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {currentPasswordShown ? (
-                        <VisibilityIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
-                      ) : (
-                        <VisibilityOffIcon
-                          sx={{ color: "rgba(0, 0, 0, 0.5)" }}
-                        />
-                      )}
-                    </span>
+                  className="show-password"
+                  onClick={() => setCurrentPasswordShown(!currentPasswordShown)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {currentPasswordShown ? (
+                    <VisibilityIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
+                  ) : (
+                    <VisibilityOffIcon sx={{ color: "rgba(0, 0, 0, 0.5)" }} />
+                  )}
+                </span>
               </div>
             </Grid>
             <Grid item xs={12} sm={5} md={5}></Grid>

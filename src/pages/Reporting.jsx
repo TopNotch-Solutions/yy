@@ -35,7 +35,7 @@ function Reporting() {
     const fetchMsmeAllMSME = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/approved", {
+        const response = await fetch("http://localhost:4000/msme/admin/all/approved", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -74,7 +74,7 @@ function Reporting() {
     const fetchMsmeAllMSMEPending = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/pending", {
+        const response = await fetch("http://localhost:4000/msme/admin/all/pending", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -113,7 +113,7 @@ function Reporting() {
     const fetchMsmeAllMSMERejected = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/rejected", {
+        const response = await fetch("http://localhost:4000/msme/admin/all/rejected", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -152,7 +152,7 @@ function Reporting() {
     const fetchMsmeAllMSMEBlocked = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/blocked", {
+        const response = await fetch("http://localhost:4000/msme/admin/all/blocked", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -191,7 +191,7 @@ function Reporting() {
     const fetchMsmeAllBSO = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/all/download", {
+        const response = await fetch("http://localhost:4000/bso/admin/all/download", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -230,7 +230,7 @@ function Reporting() {
     const fetchMsmeAllUsers = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/system/all/admin/list/download", {
+        const response = await fetch("http://localhost:4000/system/all/admin/list/download", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

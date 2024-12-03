@@ -314,4 +314,23 @@
       }
   }
 
+  .form-group.position-relative {
+    position: relative;
+  }
+
+  .show-password {
+    position: absolute;
+    right: 10px;
+    top: 60%; /* Default for large screens */
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  /* Add media query for small screens */
+  @media only screen and (max-width: 576px) {
+    .show-password {
+      top: 65%; /* Adjusted for small screens */
+    }
+  }
+
   

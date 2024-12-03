@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import "../assets/css/AdminLogin.css";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { toast } from "react-toastify";
@@ -8,7 +8,6 @@ import { fetchOAuthToken } from "../utils/fectchOAuthToken";
 
 function SubmitEmail() {
   const [email, setEmail] = useState("");
-
   const [emailError, setEmailError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -24,7 +23,7 @@ function SubmitEmail() {
       if (tokenData.access_token) {
         try {
           setIsSubmitting(true);
-          const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/auth/admin/forgot-password", {
+          const response = await fetch("http://localhost:4000/auth/admin/forgot-password", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -70,52 +69,59 @@ function SubmitEmail() {
     return valid;
   };
   return (
-    <div className="">
-      <div className="d-flex vh-100 w-100 ">
-        <div className="m-auto col-11 col-md-10 col-lg-6 col-xl-5 d-flex flex-column justify-content-center align-items-center">
-          <div className="d-flex align-items-center">
-            <h3 className="portal-text">IN4MSME Portal</h3>
-          </div>
-          <div className="col-12 col-sm-9 col-md-8 col-lg-10 col-xl-9 p-4 position-relative  p-lg-4 p-xxl-5 rounded-3 bg-white shadow text-start">
-          <form onSubmit={handleSubmit}>
-                <h3>Email Submission</h3>
-                <p className="pb-md-3 text-secondary">To reset your password, submit your email address below. If we can find you in the database, an email will be sent to your email address, with instructions how to get access again.</p>
-                <div className="form-group pb-3">
-                  <label htmlFor="email" className="pb-2">
-                    Username
-                  </label>
+    <div className="login-container">
+      <div className="login-wrapper-centered">
+        <div className="login-form-section">
+          <div className="login-form-wrapper">
+            <h1 className="login-title">IN4MSME Portal</h1>
+            
+            <div className="login-card">
+              <form onSubmit={handleSubmit} className="auth-form">
+                <h2>Reset Password</h2>
+                <p className="auth-subtitle">
+                  Enter your email address below. If we find your account, 
+                  we'll send password reset instructions to your email.
+                </p>
+
+                <div className="form-field">
+                  <label>Email Address</label>
                   <input
-                    type="text"
+                    type="email"
                     value={email}
-                    className="form-control place-holder"
                     placeholder="example@nipdb.com.na"
-                    autoComplete="off"
-                    name="email"
                     onChange={(e) => {
                       setEmailError("");
                       setEmail(e.target.value);
                     }}
+                    className={emailError ? "error-input" : ""}
                   />
                   {emailError && (
-                    <>
-                      <p className="error mt-1">{emailError}</p>
-                    </>
+                    <span className="error-message">{emailError}</span>
                   )}
                 </div>
-                <button type="submit" className="submission" disabled={isSubmitting}>
-                {isSubmitting ? <div className="loader"></div> : "Submit"}
+
+                <button 
+                  type="submit" 
+                  className="submit-button"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <div className="loader"></div>
+                  ) : (
+                    "Submit"
+                  )}
                 </button>
-                <div className="mt-2 d-flex justify-content-center">
+
                 <button
-                    onClick={() =>navigate('/')}
-                    className="back"
-                
-                  >
-                    Back
-                  </button>
-                {/* <p className="back-to-login" onClick={() =>navigate('/')}>back to login</p> */}
-                </div>
+                  type="button"
+                  onClick={() => navigate('/')}
+                  className="back-button"
+                >
+                  {/* <ArrowBackIosNewIcon sx={{ fontSize: 16, marginRight: 1 }} /> */}
+                  Back to Login
+                </button>
               </form>
+            </div>
           </div>
         </div>
       </div>
@@ -123,4 +129,4 @@ function SubmitEmail() {
   );
 }
 
-export default SubmitEmail
+export default SubmitEmail;

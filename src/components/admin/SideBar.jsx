@@ -2,208 +2,99 @@ import React, { useEffect, useState } from "react";
 import {
   Dashboard as DashboardIcon,
   PeopleAlt as PeopleAltIcon,
-  Devices as DevicesIcon,
-  CardGiftcard as CardGiftcardIcon,
-  BarChart as BarChartIcon,
-  CalendarMonth as CalendarMonthIcon,
-  CloudUpload as CloudUploadIcon,
-  Settings as SettingsIcon,
-  HelpOutline as HelpOutlineIcon,
-  Close as CloseIcon,
-  MonetizationOn as MonetizationOnIcon,
-  HeadsetMic as HeadsetMicIcon,
   Assignment as AssignmentIcon,
   DevicesOther as DevicesOtherIcon,
-  Slideshow as SlideshowIcon,
+  Close as CloseIcon,
 } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import Tooltip from "@mui/material/Tooltip";
-import "../../assets/css/Sidebar.css";
 import { NavLink } from "react-router-dom";
-import nipd from "../../assets/images/in4logo.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleActiveTab } from "../../redux/reducers/tabsReducer";
-import { useSelector } from "react-redux";
+import "../../assets/css/Sidebar.css";
+
+const menuItems = [
+  { id: 1, title: "Dashboard", icon: DashboardIcon, path: "/Dashboard" },
+  { id: 2, title: "Manage MSMEs", icon: AddBusinessIcon, path: "/Msme" },
+  { id: 3, title: "Manage Users", icon: PeopleAltIcon, path: "/Users" },
+  { id: 4, title: "Manage BSOs", icon: DevicesOtherIcon, path: "/Bso" },
+  { id: 5, title: "Manage Content", icon: AssignmentIcon, path: "/Content" },
+  { id: 6, title: "Notifications", icon: NotificationsIcon, path: "/Notifications" },
+  { id: 7, title: "Reporting", icon: PictureAsPdfIcon, path: "/Reporting" },
+  { id: 8, title: "Profile", icon: AccountCircleIcon, path: "/Profile" },
+];
 
 const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
   const dispatch = useDispatch();
   const activeSidebarTab = useSelector((state) => state.tabs.activeTab);
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [navList, setNavList] = useState(activeSidebarTab);
 
-  const handleResize = () => {
-    if (window.innerWidth >= 992) {
-      window.location.reload();
-    }
-    setIsLargeScreen(window.innerWidth >= 992);
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 992);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     setNavList(activeSidebarTab);
   }, [activeSidebarTab]);
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const handleNavLinkClick = () => {
+  const handleNavLinkClick = (id) => {
     if (!isLargeScreen) {
       OpenSidebar();
-      //   dispatch(toggleSidebar());
     }
-  };
-
-  const handleSubMenuToggle = () => {
-    setIsSubMenuOpen(!isSubMenuOpen);
+    dispatch(toggleActiveTab({ activeTab: id }));
   };
 
   return (
     <aside
-      id="sidebar"
-      style={{ width: 250 }}
-      className={openSidebarToggle ? "sidebar-responsive" : ""}
+      className={`sidebar-container ${openSidebarToggle ? "sidebar-responsive" : ""}`}
+      style={{
+        width: "280px"
+      }}
     >
-      <div className="sidebar-title">
-        <div className="sidebar-brand d-flex align-items-center">
-          <div className="logo-div d-flex align-items-center">
-            <Tooltip title="in4msme portal">
-              <NavLink
-                to="/Dashboard"
-                onClick={() => {
-                  handleNavLinkClick();
-                  dispatch(toggleActiveTab({ activeTab: 1 }));
-                  // setNavList(activeSidebarTab);
-                }}
-                style={{ textDecoration: "none" }}
-              >
-                <h4 className="title text">In4msme Portal</h4>
-              </NavLink>
-            </Tooltip>
-          </div>
+      <div className="sidebar-header">
+        <div className="sidebar-brand">
+          <Tooltip title="in4msme portal">
+            <NavLink
+              to="/Dashboard"
+              onClick={() => handleNavLinkClick(1)}
+              className="brand-link"
+            >
+              <h4 className="brand-title">In4msme Portal</h4>
+            </NavLink>
+          </Tooltip>
         </div>
-        <span className="close_icon">
-          <CloseIcon
-            onClick={handleNavLinkClick}
-            style={{ fontSize: "2rem", color: "white" }}
-          />
-        </span>
+        <button className="close-button" onClick={OpenSidebar}>
+          <CloseIcon />
+        </button>
       </div>
-      <hr className="line" />
 
-      <ul className="sidebar-list">
-        <NavLink
-          to="/Dashboard"
-          onClick={() => {
-            handleNavLinkClick();
-            dispatch(toggleActiveTab({ activeTab: 1 }));
-            //setNavList(activeSidebarTab);
-            //setNavList("1");
-          }}
-        >
-          <li className={navList === 1 ? "backNav" : "sidebar-list-item first-link"}>
-            <DashboardIcon /> Dashboard
-          </li>
-        </NavLink>
-        <NavLink
-          to="/Msme"
-          onClick={() => {
-            handleNavLinkClick();
-            dispatch(toggleActiveTab({ activeTab: 2 }));
-            //setNavList(activeSidebarTab);
-            //setNavList("2");
-          }}
-        >
-          <li className={navList === 2 ? "backNav" : "sidebar-list-item"}>
-            <AddBusinessIcon /> Manage MSMEs
-          </li>
-        </NavLink>
-        <NavLink
-          to="/Users"
-          onClick={() => {
-            handleNavLinkClick();
-            dispatch(toggleActiveTab({ activeTab: 3 }));
-            //setNavList(activeSidebarTab);
-            //setNavList("3");
-          }}
-        >
-          <li className={navList === 3 ? "backNav" : "sidebar-list-item"}>
-            <PeopleAltIcon /> Manage USERs
-          </li>
-        </NavLink>
-        <NavLink
-          to="/Bso"
-          onClick={() => {
-            handleNavLinkClick();
-            dispatch(toggleActiveTab({ activeTab: 4 }));
-            //setNavList(activeSidebarTab);
-            //setNavList("4");
-          }}
-        >
-          <li className={navList === 4 ? "backNav" : "sidebar-list-item"}>
-            <DevicesOtherIcon /> Manage BSOs
-          </li>
-        </NavLink>
-        <NavLink
-          to="/Content"
-          onClick={() => {
-            handleNavLinkClick();
-            dispatch(toggleActiveTab({ activeTab: 5 }));
-            // setNavList(activeSidebarTab);
-            //setNavList("5");
-          }}
-        >
-          <li className={navList === 5 ? "backNav" : "sidebar-list-item"}>
-            <AssignmentIcon /> Manage Content
-          </li>
-        </NavLink>
-        <NavLink
-          to="/Notifications"
-          onClick={() => {
-            handleNavLinkClick();
-            dispatch(toggleActiveTab({ activeTab: 6 }));
-            //setNavList(activeSidebarTab);
-            //setNavList("6");
-          }}
-        >
-          <li className={navList === 6 ? "backNav" : "sidebar-list-item"}>
-            <NotificationsIcon /> Notifications
-          </li>
-        </NavLink>
-        <NavLink
-          to="/Reporting"
-          onClick={() => {
-            handleNavLinkClick();
-            dispatch(toggleActiveTab({ activeTab: 7 }));
-            //setNavList(activeSidebarTab);
-            //setNavList("7");
-          }}
-        >
-          <li className={navList === 7 ? "backNav" : "sidebar-list-item"}>
-            <PictureAsPdfIcon /> Reporting
-          </li>
-        </NavLink>
-
-        {/* {role === 3 && renderUserLinks()}  */}
-        <NavLink
-          to="/Profile"
-          onClick={() => {
-            handleNavLinkClick();
-            dispatch(toggleActiveTab({ activeTab: 8 }));
-            //setNavList(activeSidebarTab);
-            //setNavList("8");
-          }}
-        >
-          <li className={navList === 8 ? "backNav" : "sidebar-list-item"}>
-            <AccountCircleIcon /> Profile
-          </li>
-        </NavLink>
-      </ul>
+      <div className="sidebar-content">
+        <nav className="sidebar-nav">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={item.id}
+                to={item.path}
+                className={`nav-link ${navList === item.id ? "active" : ""}`}
+                onClick={() => handleNavLinkClick(item.id)}
+              >
+                <Icon className="nav-icon" />
+                <span className="nav-text">{item.title}</span>
+              </NavLink>
+            );
+          })}
+        </nav>
+      </div>
     </aside>
   );
 };

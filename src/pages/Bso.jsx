@@ -137,7 +137,7 @@ function Bso() {
     const fetchTotalCount = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/count", {
+        const response = await fetch("http://localhost:4000/bso/admin/count", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -178,7 +178,7 @@ function Bso() {
     const fetchApprovedCount = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/all", {
+        const response = await fetch("http://localhost:4000/bso/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -340,7 +340,7 @@ function Bso() {
         formData.append("description", description);
         formData.append("bso-image", file);
         formData.append("website", website);
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/create", {
+        const response = await fetch("http://localhost:4000/bso/admin/create", {
           method: "POST",
           
           headers:{
@@ -463,7 +463,7 @@ function Bso() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/single/${id}`,
+        `http://localhost:4000/bso/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -529,7 +529,7 @@ function Bso() {
             setIsSubmitting(true);
             dispatch(toggleIsSubmittingTrue());
             const response = await fetch(
-              `https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/delete/${id}`,
+              `http://localhost:4000/bso/admin/delete/${id}`,
               {
                 method: "DELETE",
                 headers: {
@@ -614,7 +614,7 @@ function Bso() {
           formData.append("bso-image", fileUpdate);
           formData.append("website", websiteDetails);
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/bso/admin/update/${updatingDetails.id}`,
+            `http://localhost:4000/bso/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
               
@@ -953,7 +953,7 @@ function Bso() {
                   />
                   {nameError && (
                     <>
-                      <p className="error mt-1">{nameError}</p>
+                      <p className="error-message">{nameError}</p>
                     </>
                   )}
                 </div>
@@ -981,7 +981,7 @@ function Bso() {
                   </select>
                   {typeError && (
                     <>
-                      <p className="error mt-1">{typeError}</p>
+                      <p className="error-message">{typeError}</p>
                     </>
                   )}
                 </div>
@@ -1004,7 +1004,7 @@ function Bso() {
                   />
                   {contactNumberError && (
                     <>
-                      <p className="error mt-1">{contactNumberError}</p>
+                      <p className="error-message">{contactNumberError}</p>
                     </>
                   )}
                 </div>
@@ -1027,7 +1027,7 @@ function Bso() {
                   />
                   {websiteError && (
                     <>
-                      <p className="error mt-1">{websiteError}</p>
+                      <p className="error-message">{websiteError}</p>
                     </>
                   )}
                 </div>
@@ -1050,7 +1050,7 @@ function Bso() {
                   />
                   {emailError && (
                     <>
-                      <p className="error mt-1">{emailError}</p>
+                      <p className="error-message">{emailError}</p>
                     </>
                   )}
                 </div>
@@ -1119,7 +1119,7 @@ function Bso() {
                       />
                       {logoError && (
                         <>
-                          <p className="error mt-1">{logoError}</p>
+                          <p className="error-message">{logoError}</p>
                         </>
                       )}
                     </div>
@@ -1145,7 +1145,7 @@ function Bso() {
                   />
                   {descriptionError && (
                     <>
-                      <p className="error mt-1">{descriptionError}</p>
+                      <p className="error-message">{descriptionError}</p>
                     </>
                   )}
                 </div>
@@ -1223,7 +1223,7 @@ function Bso() {
                   />
                   {nameDetailsError && (
                     <>
-                      <p className="error mt-1">{nameDetailsError}</p>
+                      <p className="error-message">{nameDetailsError}</p>
                     </>
                   )}
                 </div>
@@ -1253,7 +1253,7 @@ function Bso() {
                   </select>
                   {typeDetailsError && (
                     <>
-                      <p className="error mt-1">{typeDetailsError}</p>
+                      <p className="error-message">{typeDetailsError}</p>
                     </>
                   )}
                 </div>
@@ -1278,7 +1278,7 @@ function Bso() {
                   />
                   {contactNumberDetailsError && (
                     <>
-                      <p className="error mt-1">{contactNumberDetailsError}</p>
+                      <p className="error-message">{contactNumberDetailsError}</p>
                     </>
                   )}
                 </div>
@@ -1303,7 +1303,7 @@ function Bso() {
                   />
                   {websiteDetailsError && (
                     <>
-                      <p className="error mt-1">{websiteDetailsError}</p>
+                      <p className="error-message">{websiteDetailsError}</p>
                     </>
                   )}
                 </div>
@@ -1328,7 +1328,7 @@ function Bso() {
                   />
                   {emailDetailsError && (
                     <>
-                      <p className="error mt-1">{emailDetailsError}</p>
+                      <p className="error-message">{emailDetailsError}</p>
                     </>
                   )}
                 </div>
@@ -1367,7 +1367,7 @@ function Bso() {
                           <img
                             src={
                               updatingDetails.logo === logoDetails
-                                ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/bsos/${logoDetails}`
+                                ? `http://localhost:4000/bsos/${logoDetails}`
                                 : logoDetails
                             }
                             className=" img-responsive img-thumbnail"
@@ -1401,7 +1401,7 @@ function Bso() {
                       />
                       {logoDetailsError && (
                         <>
-                          <p className="error mt-1">{logoDetailsError}</p>
+                          <p className="error-message">{logoDetailsError}</p>
                         </>
                       )}
                     </div>
@@ -1429,7 +1429,7 @@ function Bso() {
                   />
                   {descriptionDetailsError && (
                     <>
-                      <p className="error mt-1">{descriptionDetailsError}</p>
+                      <p className="error-message">{descriptionDetailsError}</p>
                     </>
                   )}
                 </div>

@@ -42,32 +42,58 @@ import { RemoveWhiteSpaces } from "../utils/removeWhiteSpaces";
 import { convert24To12Hour } from "../utils/timeConvertion";
 import { validateTimeRangeOrClosed } from "../utils/validateTime";
 
-const mobileStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "90%",
-  height: "80%",
-  overflowY: "scroll",
-  bgcolor: "background.paper",
-  border: "2px solid #fff",
-  boxShadow: 24,
-  p: 4,
-};
+// const mobileStyle = {
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: {
+//     xs: '95%',
+//     sm: '80%', 
+//     md: '70%'
+//   },
+//   height: "80%",
+//   overflowY: "scroll",
+//   bgcolor: "background.paper",
+//   border: "2px solid #fff",
+//   boxShadow: 24,
+//   p: 4,
+// };
 
-const largeStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "50%",
+// const largeStyle = {
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: {
+//     xs: '95%',
+//     sm: '80%', 
+//     md: '70%'
+//   },
+//   height: "80%",
+//   overflowY: "auto",
+//   bgcolor: "background.paper",
+//   border: "2px solid #fff",
+//   boxShadow: 24,
+//   p: 4,
+// };
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: {
+    xs: '95%',
+    sm: '90%', 
+    md: '70%',
+    xl: '50%',
+    xxl: '30%'
+  },
   height: "80%",
-  overflowY: "auto",
-  bgcolor: "background.paper",
-  border: "2px solid #fff",
-  boxShadow: 24,
+  bgcolor: 'background.paper',
+  boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
   p: 4,
+  overflowY: 'auto'
 };
 
 const steps = [
@@ -463,7 +489,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/totalCount",
+          "http://localhost:4000/msme/admin/totalCount",
           {
             method: "GET",
             headers: {
@@ -507,7 +533,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/pendingCount",
+          "http://localhost:4000/msme/admin/pendingCount",
           {
             method: "GET",
             headers: {
@@ -551,7 +577,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/rejectedCount",
+          "http://localhost:4000/msme/admin/rejectedCount",
           {
             method: "GET",
             headers: {
@@ -595,7 +621,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/approvedCount",
+          "http://localhost:4000/msme/admin/approvedCount",
           {
             method: "GET",
             headers: {
@@ -638,7 +664,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/incompleteCount",
+          "http://localhost:4000/msme/admin/incompleteCount",
           {
             method: "GET",
             headers: {
@@ -681,7 +707,7 @@ function Msme() {
     const fetchMsmeAllMSME = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all", {
+        const response = await fetch("http://localhost:4000/msme/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -722,7 +748,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/pending",
+          "http://localhost:4000/msme/admin/all/pending",
           {
             method: "GET",
             headers: {
@@ -765,7 +791,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/rejected",
+          "http://localhost:4000/msme/admin/all/rejected",
           {
             method: "GET",
             headers: {
@@ -809,7 +835,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/approved",
+          "http://localhost:4000/msme/admin/all/approved",
           {
             method: "GET",
             headers: {
@@ -853,7 +879,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/incomplete",
+          "http://localhost:4000/msme/admin/all/incomplete",
           {
             method: "GET",
             headers: {
@@ -895,7 +921,7 @@ function Msme() {
     const fetchAllRegions = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/region/admin/all", {
+        const response = await fetch("http://localhost:4000/region/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -936,7 +962,7 @@ function Msme() {
     const fetchAllTowns = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/town/admin/all", {
+        const response = await fetch("http://localhost:4000/town/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -976,7 +1002,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/primaryIndustry/admin/all",
+          "http://localhost:4000/primaryIndustry/admin/all",
           {
             method: "GET",
             headers: {
@@ -1019,7 +1045,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/secondaryIndustry/admin/all",
+          "http://localhost:4000/secondaryIndustry/admin/all",
           {
             method: "GET",
             headers: {
@@ -1062,7 +1088,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all/user",
+          "http://localhost:4000/msme/admin/all/user",
           {
             method: "GET",
             headers: {
@@ -1783,7 +1809,7 @@ function Msme() {
         console.log("This is my formdata", formData);
 
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/create",
+          "http://localhost:4000/msme/admin/create",
           {
             method: "POST",
             
@@ -1908,7 +1934,7 @@ function Msme() {
     try {
       setIsSubmitting(true);
       const response = await fetch(
-        `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/single/${id}`,
+        `http://localhost:4000/msme/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -2331,7 +2357,7 @@ function Msme() {
             try {
               setIsSubmitting(true);
               const response = await fetch(
-                `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/status/${updatingDetails.id}`,
+                `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
                 {
                   method: "PUT",
                   headers: {
@@ -2489,7 +2515,7 @@ function Msme() {
           formData.append("removeImage3", removeImage3);
         }
         const response = await fetch(
-          `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/update/${updatingDetails.id}`,
+          `http://localhost:4000/msme/admin/update/${updatingDetails.id}`,
           {
             method: "PUT",
             
@@ -2510,7 +2536,7 @@ function Msme() {
             try {
               setIsSubmitting(true);
               const response = await fetch(
-                `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/status/${updatingDetails.id}`,
+                `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
                 {
                   method: "PUT",
                   headers: {
@@ -2648,7 +2674,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/status/${updatingDetails.id}`,
+              `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2737,7 +2763,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/block/${updatingDetails.id}`,
+              `http://localhost:4000/msme/admin/block/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2825,7 +2851,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/block/${updatingDetails.id}`,
+              `http://localhost:4000/msme/admin/block/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2906,7 +2932,7 @@ function Msme() {
         try {
           setsendingNotification(true);
           const response = await fetch(
-            `https://api-gw.mtc.com.na/mdt-nipdb/v1/notifications/admin/create/single/${updatingDetails.id}`,
+            `http://localhost:4000/notifications/admin/create/single/${updatingDetails.id}`,
             {
               method: "POST",
               headers: {
@@ -3972,7 +3998,7 @@ function Msme() {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
+            <Box sx={modalStyle}>
               <div className="d-flex justify-content-between align-items-center">
                 <div></div>
                 <h1 className="text-center">Add New MSME</h1>
@@ -4145,7 +4171,7 @@ function Msme() {
                         </select>
                         {typeOfBusinessError && (
                           <>
-                            <p className="error mt-1">{typeOfBusinessError}</p>
+                            <p className="error-message">{typeOfBusinessError}</p>
                           </>
                         )}
                       </div>
@@ -4175,7 +4201,7 @@ function Msme() {
                             />
                             {businessRegistrationNumberError && (
                               <>
-                                <p className="error mt-1">
+                                <p className="error-message">
                                   {businessRegistrationNumberError}
                                 </p>
                               </>
@@ -4207,7 +4233,7 @@ function Msme() {
                         />
                         {businessRegistrationNameError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {businessRegistrationNameError}
                             </p>
                           </>
@@ -4236,7 +4262,7 @@ function Msme() {
                         />
                         {setBusinessDisplayNameError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {businessDisplayNameError}
                             </p>
                           </>
@@ -4268,7 +4294,7 @@ function Msme() {
                             />
                             {userIdError && (
                               <>
-                                <p className="error mt-1">{userIdError}</p>
+                                <p className="error-message">{userIdError}</p>
                               </>
                             )}
                           </div>
@@ -4305,7 +4331,7 @@ function Msme() {
                       </div>
                       {descriptionError && (
                         <>
-                          <p className="error mt-1">{descriptionError}</p>
+                          <p className="error-message">{descriptionError}</p>
                         </>
                       )}
                     </Grid>
@@ -4337,7 +4363,7 @@ function Msme() {
                             />
                             {userIdError && (
                               <>
-                                <p className="error mt-1">{userIdError}</p>
+                                <p className="error-message">{userIdError}</p>
                               </>
                             )}
                           </div>
@@ -4368,7 +4394,7 @@ function Msme() {
                         </select>
                         {regionError && (
                           <>
-                            <p className="error mt-1">{regionError}</p>
+                            <p className="error-message">{regionError}</p>
                           </>
                         )}
                       </div>
@@ -4398,7 +4424,7 @@ function Msme() {
                           </select>
                           {townError && (
                             <>
-                              <p className="error mt-1">{townError}</p>
+                              <p className="error-message">{townError}</p>
                             </>
                           )}
                         </div>
@@ -4428,7 +4454,7 @@ function Msme() {
                         </select>
                         {primaryIndustryError && (
                           <>
-                            <p className="error mt-1">{primaryIndustryError}</p>
+                            <p className="error-message">{primaryIndustryError}</p>
                           </>
                         )}
                       </div>
@@ -4457,7 +4483,7 @@ function Msme() {
                         </select>
                         {secondaryIndustryError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {secondaryIndustryError}
                             </p>
                           </>
@@ -4485,7 +4511,7 @@ function Msme() {
                         />
                         {yearOfEstablishmentError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {yearOfEstablishmentError}
                             </p>
                           </>
@@ -4516,7 +4542,7 @@ function Msme() {
                         </select>
                         {annualTurnoverError && (
                           <>
-                            <p className="error mt-1">{annualTurnoverError}</p>
+                            <p className="error-message">{annualTurnoverError}</p>
                           </>
                         )}
                       </div>
@@ -4554,7 +4580,7 @@ function Msme() {
                         />
                         {foundersNameError && (
                           <>
-                            <p className="error mt-1">{foundersNameError}</p>
+                            <p className="error-message">{foundersNameError}</p>
                           </>
                         )}
                       </div>
@@ -4583,7 +4609,7 @@ function Msme() {
                         </select>
                         {foundersGenderError && (
                           <>
-                            <p className="error mt-1">{foundersGenderError}</p>
+                            <p className="error-message">{foundersGenderError}</p>
                           </>
                         )}
                       </div>
@@ -4609,7 +4635,7 @@ function Msme() {
                         />
                         {foundersAgeError && (
                           <>
-                            <p className="error mt-1">{foundersAgeError}</p>
+                            <p className="error-message">{foundersAgeError}</p>
                           </>
                         )}
                       </div>
@@ -4659,7 +4685,7 @@ function Msme() {
                         />
                         {businessAddressError && (
                           <>
-                            <p className="error mt-1">{businessAddressError}</p>
+                            <p className="error-message">{businessAddressError}</p>
                           </>
                         )}
                       </div>
@@ -4686,7 +4712,7 @@ function Msme() {
                         />
                         {phoneNumberError && (
                           <>
-                            <p className="error mt-1">{phoneNumberError}</p>
+                            <p className="error-message">{phoneNumberError}</p>
                           </>
                         )}
                       </div>
@@ -4713,7 +4739,7 @@ function Msme() {
                         />
                         {whatsAppNumberError && (
                           <>
-                            <p className="error mt-1">{whatsAppNumberError}</p>
+                            <p className="error-message">{whatsAppNumberError}</p>
                           </>
                         )}
                       </div>
@@ -4740,7 +4766,7 @@ function Msme() {
                         />
                         {businessEmailError && (
                           <>
-                            <p className="error mt-1">{businessEmailError}</p>
+                            <p className="error-message">{businessEmailError}</p>
                           </>
                         )}
                       </div>
@@ -4764,7 +4790,7 @@ function Msme() {
                         />
                         {websiteLinkError && (
                           <>
-                            <p className="error mt-1">{websiteLinkError}</p>
+                            <p className="error-message">{websiteLinkError}</p>
                           </>
                         )}
                       </div>
@@ -4788,7 +4814,7 @@ function Msme() {
                         />
                         {twitterLinkError && (
                           <>
-                            <p className="error mt-1">{twitterLinkError}</p>
+                            <p className="error-message">{twitterLinkError}</p>
                           </>
                         )}
                       </div>
@@ -4812,7 +4838,7 @@ function Msme() {
                         />
                         {facebookLinkError && (
                           <>
-                            <p className="error mt-1">{facebookLinkError}</p>
+                            <p className="error-message">{facebookLinkError}</p>
                           </>
                         )}
                       </div>
@@ -4836,7 +4862,7 @@ function Msme() {
                         />
                         {instagramLinkError && (
                           <>
-                            <p className="error mt-1">{instagramLinkError}</p>
+                            <p className="error-message">{instagramLinkError}</p>
                           </>
                         )}
                       </div>
@@ -4860,7 +4886,7 @@ function Msme() {
                         />
                         {linkedInLinkError && (
                           <>
-                            <p className="error mt-1">{linkedInLinkError}</p>
+                            <p className="error-message">{linkedInLinkError}</p>
                           </>
                         )}
                       </div>
@@ -4964,7 +4990,7 @@ function Msme() {
                         </Grid>
 
                         {mondayError && (
-                          <p className="error mt-1">{mondayError}</p>
+                          <p className="error-message">{mondayError}</p>
                         )}
                       </div>
                     </Grid>
@@ -5044,7 +5070,7 @@ function Msme() {
                         </Grid>
 
                         {tuesdayError && (
-                          <p className="error mt-1">{tuesdayError}</p>
+                          <p className="error-message">{tuesdayError}</p>
                         )}
                       </div>
                     </Grid>
@@ -5124,7 +5150,7 @@ function Msme() {
                         </Grid>
 
                         {wednesdayError && (
-                          <p className="error mt-1">{wednesdayError}</p>
+                          <p className="error-message">{wednesdayError}</p>
                         )}
                       </div>
                     </Grid>
@@ -5204,7 +5230,7 @@ function Msme() {
                         </Grid>
 
                         {thursdayError && (
-                          <p className="error mt-1">{thursdayError}</p>
+                          <p className="error-message">{thursdayError}</p>
                         )}
                       </div>
                     </Grid>
@@ -5284,7 +5310,7 @@ function Msme() {
                         </Grid>
 
                         {fridayError && (
-                          <p className="error mt-1">{fridayError}</p>
+                          <p className="error-message">{fridayError}</p>
                         )}
                       </div>
                     </Grid>
@@ -5364,7 +5390,7 @@ function Msme() {
                         </Grid>
 
                         {saturdayError && (
-                          <p className="error mt-1">{saturdayError}</p>
+                          <p className="error-message">{saturdayError}</p>
                         )}
                       </div>
                     </Grid>
@@ -5444,7 +5470,7 @@ function Msme() {
                         </Grid>
 
                         {sundayError && (
-                          <p className="error mt-1">{sundayError}</p>
+                          <p className="error-message">{sundayError}</p>
                         )}
                       </div>
                     </Grid>
@@ -5497,7 +5523,7 @@ function Msme() {
                         </select>
                         {numberOfEmployeesError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {numberOfEmployeesError}
                             </p>
                           </>
@@ -5576,7 +5602,7 @@ function Msme() {
                             />
                             {image1Error && (
                               <>
-                                <p className="error mt-1">{image1Error}</p>
+                                <p className="error-message">{image1Error}</p>
                               </>
                             )}
                           </div>
@@ -5657,7 +5683,7 @@ function Msme() {
                             />
                             {businessLogoError && (
                               <>
-                                <p className="error mt-1">
+                                <p className="error-message">
                                   {businessLogoError}
                                 </p>
                               </>
@@ -5740,7 +5766,7 @@ function Msme() {
                             />
                             {image2Error && (
                               <>
-                                <p className="error mt-1">{image2Error}</p>
+                                <p className="error-message">{image2Error}</p>
                               </>
                             )}
                           </div>
@@ -5821,7 +5847,7 @@ function Msme() {
                             />
                             {image3Error && (
                               <>
-                                <p className="error mt-1">{image3Error}</p>
+                                <p className="error-message">{image3Error}</p>
                               </>
                             )}
                           </div>
@@ -5857,7 +5883,7 @@ function Msme() {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={isSmallScreen ? mobileStyle : largeStyle}>
+            <Box sx={modalStyle}>
               <div className="d-flex justify-content-between align-items-center">
                 <div></div>
                 <h1 className="text-center">MSME Review</h1>
@@ -5967,7 +5993,7 @@ function Msme() {
                         </select>
                         {typeOfBusinessDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {typeOfBusinessDetailsError}
                             </p>
                           </>
@@ -6013,7 +6039,7 @@ function Msme() {
                             />
                             {businessRegistrationNumberDetailsError && (
                               <>
-                                <p className="error mt-1">
+                                <p className="error-message">
                                   {businessRegistrationNumberDetailsError}
                                 </p>
                               </>
@@ -6049,7 +6075,7 @@ function Msme() {
                         />
                         {businessRegistrationNameDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {businessRegistrationNameDetailsError}
                             </p>
                           </>
@@ -6082,7 +6108,7 @@ function Msme() {
                         />
                         {businessDisplayNameDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {businessDisplayNameDetailsError}
                             </p>
                           </>
@@ -6124,7 +6150,7 @@ function Msme() {
                       </div>
                       {descriptionDetailsError && (
                         <>
-                          <p className="error mt-1">
+                          <p className="error-message">
                             {descriptionDetailsError}
                           </p>
                         </>
@@ -6160,7 +6186,7 @@ function Msme() {
                         </select>
                         {regionDetailsError && (
                           <>
-                            <p className="error mt-1">{regionDetailsError}</p>
+                            <p className="error-message">{regionDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -6194,7 +6220,7 @@ function Msme() {
                         </select>
                         {townDetailsError && (
                           <>
-                            <p className="error mt-1">{townDetailsError}</p>
+                            <p className="error-message">{townDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -6227,7 +6253,7 @@ function Msme() {
                         </select>
                         {primaryIndustryDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {primaryIndustryDetailsError}
                             </p>
                           </>
@@ -6262,7 +6288,7 @@ function Msme() {
                         </select>
                         {secondaryIndustryDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {secondaryIndustryDetailsError}
                             </p>
                           </>
@@ -6294,7 +6320,7 @@ function Msme() {
                         />
                         {yearOfEstablishmentDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {yearOfEstablishmentDetailsError}
                             </p>
                           </>
@@ -6326,7 +6352,7 @@ function Msme() {
                         </select>
                         {annualTurnoverDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {annualTurnoverDetailsError}
                             </p>
                           </>
@@ -6358,7 +6384,7 @@ function Msme() {
                         </select>
                         {numberOfEmployeesDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {numberOfEmployeesDetailsError}
                             </p>
                           </>
@@ -6408,7 +6434,7 @@ function Msme() {
                         />
                         {foundersNameDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {foundersNameDetailsError}
                             </p>
                           </>
@@ -6440,7 +6466,7 @@ function Msme() {
                         </select>
                         {foundersGenderDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {foundersGenderDetailsError}
                             </p>
                           </>
@@ -6470,7 +6496,7 @@ function Msme() {
                         />
                         {foundersAgeDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {foundersAgeDetailsError}
                             </p>
                           </>
@@ -6533,7 +6559,7 @@ function Msme() {
                         />
                         {businessAddressDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {businessAddressDetailsError}
                             </p>
                           </>
@@ -6566,7 +6592,7 @@ function Msme() {
                         />
                         {phoneNumberDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {phoneNumberDetailsError}
                             </p>
                           </>
@@ -6600,7 +6626,7 @@ function Msme() {
                         />
                         {whatsAppNumberDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {whatsAppNumberDetailsError}
                             </p>
                           </>
@@ -6634,7 +6660,7 @@ function Msme() {
                         />
                         {businessEmailDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {businessEmailDetailsError}
                             </p>
                           </>
@@ -6665,7 +6691,7 @@ function Msme() {
                         />
                         {websiteLinkDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {websiteLinkDetailsError}
                             </p>
                           </>
@@ -6696,7 +6722,7 @@ function Msme() {
                         />
                         {twitterLinkDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {twitterLinkDetailsError}
                             </p>
                           </>
@@ -6727,7 +6753,7 @@ function Msme() {
                         />
                         {facebookLinkDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {facebookLinkDetailsError}
                             </p>
                           </>
@@ -6758,7 +6784,7 @@ function Msme() {
                         />
                         {instagramLinkDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {instagramLinkDetailsError}
                             </p>
                           </>
@@ -6789,7 +6815,7 @@ function Msme() {
                         />
                         {linkedInLinkDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {linkedInLinkDetailsError}
                             </p>
                           </>
@@ -6842,7 +6868,7 @@ function Msme() {
                         />
                         {mondayDetailsError && (
                           <>
-                            <p className="error mt-1">{mondayDetailsError}</p>
+                            <p className="error-message">{mondayDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -6870,7 +6896,7 @@ function Msme() {
                         />
                         {tuesdayDetailsError && (
                           <>
-                            <p className="error mt-1">{tuesdayDetailsError}</p>
+                            <p className="error-message">{tuesdayDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -6898,7 +6924,7 @@ function Msme() {
                         />
                         {wednesdayDetailsError && (
                           <>
-                            <p className="error mt-1">
+                            <p className="error-message">
                               {wednesdayDetailsError}
                             </p>
                           </>
@@ -6928,7 +6954,7 @@ function Msme() {
                         />
                         {thursdayDetailsError && (
                           <>
-                            <p className="error mt-1">{thursdayDetailsError}</p>
+                            <p className="error-message">{thursdayDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -6956,7 +6982,7 @@ function Msme() {
                         />
                         {fridayDetailsError && (
                           <>
-                            <p className="error mt-1">{fridayDetailsError}</p>
+                            <p className="error-message">{fridayDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -6984,7 +7010,7 @@ function Msme() {
                         />
                         {saturdayDetailsError && (
                           <>
-                            <p className="error mt-1">{saturdayDetailsError}</p>
+                            <p className="error-message">{saturdayDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -7012,7 +7038,7 @@ function Msme() {
                         />
                         {sundayDetailsError && (
                           <>
-                            <p className="error mt-1">{sundayDetailsError}</p>
+                            <p className="error-message">{sundayDetailsError}</p>
                           </>
                         )}
                       </div>
@@ -7084,7 +7110,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo
                                       ?.businessLogo === businessLogoDetails
-                                      ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/msmes/${businessLogoDetails}`
+                                      ? `http://localhost:4000/msmes/${businessLogoDetails}`
                                       : businessLogoDetails
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7118,7 +7144,7 @@ function Msme() {
                             />
                             {businessLogoDetailsError && (
                               <>
-                                <p className="error mt-1">
+                                <p className="error-message">
                                   {businessLogoDetailsError}
                                 </p>
                               </>
@@ -7173,7 +7199,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image1 ===
                                     image1Details
-                                      ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/msmes/${image1Details}`
+                                      ? `http://localhost:4000/msmes/${image1Details}`
                                       : image1Details
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7207,7 +7233,7 @@ function Msme() {
                             />
                             {image1DetailsError && (
                               <>
-                                <p className="error mt-1">
+                                <p className="error-message">
                                   {image1DetailsError}
                                 </p>
                               </>
@@ -7262,7 +7288,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image2 ===
                                     image2Details
-                                      ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/msmes/${image2Details}`
+                                      ? `http://localhost:4000/msmes/${image2Details}`
                                       : image2Details
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7296,7 +7322,7 @@ function Msme() {
                             />
                             {image2DetailsError && (
                               <>
-                                <p className="error mt-1">
+                                <p className="error-message">
                                   {image2DetailsError}
                                 </p>
                               </>
@@ -7351,7 +7377,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image3 ===
                                     image3Details
-                                      ? `https://api-gw.mtc.com.na/mdt-nipdb/v1/msmes/${image3Details}`
+                                      ? `http://localhost:4000/msmes/${image3Details}`
                                       : image3Details
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7385,7 +7411,7 @@ function Msme() {
                             />
                             {image3DetailsError && (
                               <>
-                                <p className="error mt-1">
+                                <p className="error-message">
                                   {image3DetailsError}
                                 </p>
                               </>
@@ -7474,7 +7500,7 @@ function Msme() {
                               />
                               {notificationTitleError && (
                                 <>
-                                  <p className="error mt-1">
+                                  <p className="error-message">
                                     {notificationTitleError}
                                   </p>
                                 </>
@@ -7506,7 +7532,7 @@ function Msme() {
                               />
                               {notificationDescriptionError && (
                                 <>
-                                  <p className="error mt-1">
+                                  <p className="error-message">
                                     {notificationDescriptionError}
                                   </p>
                                 </>

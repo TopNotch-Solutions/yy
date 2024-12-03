@@ -35,6 +35,7 @@ import { updateToken } from "../redux/reducers/authReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import handleAuthFailure from "../utils/handleAuthFailure";
+import LineChartCard from '../components/LineChartCard';
 
 ChartJS.register(
   CategoryScale,
@@ -79,7 +80,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/monthly/registeration",
+          "http://localhost:4000/msme/admin/monthly/registeration",
           {
             method: "GET",
             headers: {
@@ -118,7 +119,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/totalCount",
+          "http://localhost:4000/msme/admin/totalCount",
           {
             method: "GET",
             headers: {
@@ -162,7 +163,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/pendingCount",
+          "http://localhost:4000/msme/admin/pendingCount",
           {
             method: "GET",
             headers: {
@@ -206,7 +207,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/rejectedCount",
+          "http://localhost:4000/msme/admin/rejectedCount",
           {
             method: "GET",
             headers: {
@@ -250,7 +251,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/approvedCount",
+          "http://localhost:4000/msme/admin/approvedCount",
           {
             method: "GET",
             headers: {
@@ -292,7 +293,7 @@ function Dashboard() {
     const fetchMsmeAllMSME = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/all", {
+        const response = await fetch("http://localhost:4000/msme/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -334,7 +335,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://api-gw.mtc.com.na/mdt-nipdb/v1/msme/admin/top5/categories",
+          "http://localhost:4000/msme/admin/top5/categories",
           {
             method: "GET",
             headers: {
@@ -609,66 +610,10 @@ function Dashboard() {
             alignItems="center"
             justifyContent="center"
           >
-            <div className="col-12 p-4 shadow rounded-2">
-              <div className="d-flex justify-content-between align-items-center border-bottom ">
-                <h6>MSMEs Registration</h6>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="d-flex justify-content-between ">
-                    <div
-                      class="circle "
-                      style={{ backgroundColor: "rgba(21, 78, 138, 1)" }}
-                    ></div>
-                    <p className="small-padding">Current</p>
-                  </div>
-                  <div className="d-flex justify-content-between  padding-right">
-                    <div
-                      class="circle"
-                      style={{ backgroundColor: "rgba(210, 31, 53, 1)" }}
-                    ></div>
-                    <p className="small-padding">Previous</p>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12">
-                  {lineData ? (
-                    <>
-                      <ResponsiveContainer width="100%" height={301}>
-                        <LineChart data={datamy} width="100%">
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="date" />
-                          <YAxis interval={0} />
-                          <Tooltip />
-                          <Legend />
-                          <Line
-                            type="monotone"
-                            dataKey="currentMonth"
-                            stroke="rgba(21, 78, 138, 1)"
-                            activeDot={{ r: 8 }}
-                          />
-                          <Line
-                            type="monotone"
-                            dataKey="previousMonth"
-                            stroke="rgba(210, 31, 53, 1)"
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </>
-                  ) : (
-                    <>
-                      <div
-                        className="d-flex justify-content-center align-items-center"
-                        style={{ height: 301, width: "100%" }}
-                      >
-                        <div style={{ textAlign: "center" }}>
-                          <CircularProgress color="inherit" />
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
+            <LineChartCard 
+              data={datamy} 
+              isLoading={!lineData} 
+            />
           </Box>
           <Box
             marginTop={"10px"}
