@@ -121,7 +121,7 @@ function Notifications() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/user",
+          "https://dt.mtc.com.na:4000/msme/admin/all/user",
           {
             method: "GET",
             headers: {
@@ -164,7 +164,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/single/notifications`,
+          `https://dt.mtc.com.na:4000/notifications/admin/single/notifications`,
           {
             method: "GET",
             headers: {
@@ -207,7 +207,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/all/unread-notification`,
+          `https://dt.mtc.com.na:4000/notifications/admin/all/unread-notification`,
           {
             method: "GET",
             headers: {
@@ -250,7 +250,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/all/sent-by-admin`,
+          `https://dt.mtc.com.na:4000/notifications/admin/all/sent-by-admin`,
           {
             method: "GET",
             headers: {
@@ -293,7 +293,7 @@ function Notifications() {
         dispatch(toggleIsSubmittingTrue());
         setIsSubmitting(true);
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/all/read-notification`,
+          `https://dt.mtc.com.na:4000/notifications/admin/all/read-notification`,
           {
             method: "GET",
             headers: {
@@ -351,7 +351,7 @@ function Notifications() {
           senderId: currentUser.id,
         };
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/create`,
+          `https://dt.mtc.com.na:4000/notifications/admin/create`,
           {
             method: "POST",
             headers: {
@@ -428,7 +428,7 @@ function Notifications() {
           senderId: currentUser.id,
         };
         const response = await fetch(
-          `http://localhost:4000/notifications/admin/create`,
+          `https://dt.mtc.com.na:4000/notifications/admin/create`,
           {
             method: "POST",
             headers: {
@@ -496,7 +496,7 @@ function Notifications() {
       dispatch(toggleIsSubmittingTrue());
       setIsSubmitting(true);
       const response = await fetch(
-        `http://localhost:4000/notifications/admin/single/${id}`,
+        `https://dt.mtc.com.na:4000/notifications/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -549,7 +549,7 @@ function Notifications() {
       dispatch(toggleIsSubmittingTrue());
       setIsSubmitting(true);
       const response = await fetch(
-        `http://localhost:4000/notifications/admin/single/sent-by-admin/${id}`,
+        `https://dt.mtc.com.na:4000/notifications/admin/single/sent-by-admin/${id}`,
         {
           method: "GET",
           headers: {
@@ -612,7 +612,7 @@ function Notifications() {
           setIsSubmitting(true);
           dispatch(toggleIsSubmittingTrue());
           const response = await fetch(
-            `http://localhost:4000/notifications/admin/delete/${id}`,
+            `https://dt.mtc.com.na:4000/notifications/admin/delete/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -671,7 +671,7 @@ function Notifications() {
       setIsSubmitting(true);
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `http://localhost:4000/notifications/admin/delete/${updatedId}`,
+        `https://dt.mtc.com.na:4000/notifications/admin/delete/${updatedId}`,
         {
           method: "DELETE",
           headers: {
