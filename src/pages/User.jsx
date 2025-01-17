@@ -51,7 +51,7 @@ function User() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.user);
-  const serverToken = useSelector((state) => state.server.serverToken);
+  
 
   const [totalSystemUsers, setTotalSystemUsers] = useState("");
   const [totalSuperUser, setTotalSuperUser] = useState("");
@@ -128,12 +128,12 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/system/all/system-users",
+          "http://localhost:4000/system/all/system-users",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -141,15 +141,7 @@ function User() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -171,12 +163,11 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/system/all/super-admin-count",
+          "http://localhost:4000/system/all/super-admin-count",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
               'x-access-token': `${tokenHeader}`
             },
             
@@ -184,15 +175,7 @@ function User() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -214,12 +197,12 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/system/all/admin-count",
+          "http://localhost:4000/system/all/admin-count",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -227,15 +210,7 @@ function User() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -257,12 +232,12 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/system/all/app-user-count",
+          "http://localhost:4000/system/all/app-user-count",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -270,15 +245,7 @@ function User() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -299,12 +266,12 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/system/all/admin/list",
+          "http://localhost:4000/system/all/admin/list",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -312,15 +279,7 @@ function User() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -341,12 +300,12 @@ function User() {
   const handleUpdate = async (email) => {
     try {
       const response = await fetch(
-        "https://dt.mtc.com.na:4000/auth/admin/update/email",
+        "http://localhost:4000/auth/admin/update/email",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${serverToken}`,
+            
             'x-access-token': `${tokenHeader}`
           },
           body: JSON.stringify({
@@ -410,12 +369,12 @@ function User() {
             setIsSubmitting(true);
 
             const response = await fetch(
-              "https://dt.mtc.com.na:4000/auth/admin/delete",
+              "http://localhost:4000/auth/admin/delete",
               {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
-                  Authorization: `${serverToken}`,
+                  
                   'x-access-token': `${tokenHeader}`
                 },
                 
@@ -475,12 +434,12 @@ function User() {
             setIsSubmitting(true);
 
             const response = await fetch(
-              "https://dt.mtc.com.na:4000/auth/admin/delete",
+              "http://localhost:4000/auth/admin/delete",
               {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
-                  Authorization: `${serverToken}`,
+                  
                   'x-access-token': `${tokenHeader}`
                 },
                 
@@ -736,12 +695,12 @@ function User() {
             role: roleDetails,
           };
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/auth/admin/update/user/details/${updatingDetails.id}`,
+            `http://localhost:4000/auth/admin/update/user/details/${updatingDetails.id}`,
             {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `${serverToken}`,
+                
                 'x-access-token': `${tokenHeader}`
               },
               
@@ -817,12 +776,12 @@ function User() {
         };
 
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/auth/admin/signup",
+          "http://localhost:4000/auth/admin/signup",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             

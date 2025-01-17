@@ -97,8 +97,8 @@ function Content() {
   const [updatingImageDetails, setUpdatingImageDetails] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQuery1, setSearchQuery1] = useState("");
-  const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
-  const serverToken = useSelector((state) => state.server.serverToken);
+  const urlRegex = /^(http?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
+  
 
   const handleOpen = () => setOpenModel(true);
   const handleOpen1 = () => setOpenModel1(true);
@@ -139,12 +139,12 @@ function Content() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/opportunities/admin/all`,
+          `http://localhost:4000/opportunities/admin/all`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -152,15 +152,7 @@ function Content() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -181,12 +173,12 @@ function Content() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/admin/mobile-images/all`,
+          `http://localhost:4000/admin/mobile-images/all`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -194,15 +186,7 @@ function Content() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -235,11 +219,11 @@ function Content() {
         formData.append("link", link);
 
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/opportunities/admin/create`,
+          `http://localhost:4000/opportunities/admin/create`,
           {
             method: "POST",
             headers:{
-              Authorization: `${serverToken}`,
+              
             },
             body: formData,
           }
@@ -287,12 +271,12 @@ function Content() {
         formData.append("description", descriptionImage);
         formData.append("mobile-image", fileMobileImage);
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/admin/mobile-images/create`,
+          `http://localhost:4000/admin/mobile-images/create`,
           {
             method: "POST",
             
             headers:{
-              Authorization: `${serverToken}`,
+              
             },
             body: formData,
           }
@@ -340,12 +324,12 @@ function Content() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `https://dt.mtc.com.na:4000/opportunities/admin/single/${id}`,
+        `http://localhost:4000/opportunities/admin/single/${id}`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${serverToken}`,
+            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -393,12 +377,12 @@ function Content() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `https://dt.mtc.com.na:4000/admin/mobile-images/single/${id}`,
+        `http://localhost:4000/admin/mobile-images/single/${id}`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${serverToken}`,
+            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -458,12 +442,12 @@ function Content() {
           setIsSubmitting(true);
           dispatch(toggleIsSubmittingTrue());
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/opportunities/admin/delete/${id}`,
+            `http://localhost:4000/opportunities/admin/delete/${id}`,
             {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `${serverToken}`,
+                
                 'x-access-token': `${tokenHeader}`
               },
               
@@ -531,12 +515,12 @@ function Content() {
           dispatch(toggleIsSubmittingTrue());
 
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/admin/mobile-images/delete/${id}`,
+            `http://localhost:4000/admin/mobile-images/delete/${id}`,
             {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `${serverToken}`,
+                
                 'x-access-token': `${tokenHeader}`
               },
               
@@ -927,12 +911,12 @@ const validateFields1 = () => {
           formData.append("opportunity-image", fileMobileImage);
           formData.append("link", linkDetails);
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/opportunities/admin/update/${updatingDetails.id}`,
+            `http://localhost:4000/opportunities/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
               
               headers:{
-                Authorization: `${serverToken}`,
+                
               },
               body: formData,
             }
@@ -989,12 +973,12 @@ const validateFields1 = () => {
           formData.append("mobile-image", fileMobileImageDetails);
           console.log("yo", descriptionDetails, fileMobileImageDetails);
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/admin/mobile-images/update/${updatingImageDetails.id}`,
+            `http://localhost:4000/admin/mobile-images/update/${updatingImageDetails.id}`,
             {
               method: "PUT",
               
               headers:{
-                Authorization: `${serverToken}`,
+                
               },
               body: formData,
             }
@@ -1055,12 +1039,12 @@ const validateFields1 = () => {
           formData.append("link", linkDetails);
 
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/opportunities/admin/update/${updatingDetails.id}`,
+            `http://localhost:4000/opportunities/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
               
               headers:{
-                Authorization: `${serverToken}`,
+                
               },
               body: formData,
             }
@@ -2005,7 +1989,7 @@ const validateFields1 = () => {
                               <img
                                 src={
                                   updatingDetails.image === imageDetails
-                                    ? `https://dt.mtc.com.na:4000/opportunities/` +
+                                    ? `http://localhost:4000/opportunities/` +
                                       imageDetails
                                     : imageDetails
                                 }
@@ -2147,7 +2131,7 @@ const validateFields1 = () => {
                               <img
                                 src={
                                   updatingDetails.image === imageDetails
-                                    ? `https://dt.mtc.com.na:4000/opportunities/` +
+                                    ? `http://localhost:4000/opportunities/` +
                                       imageDetails
                                     : imageDetails
                                 }
@@ -2307,7 +2291,7 @@ const validateFields1 = () => {
                             src={
                               updatingImageDetails.mobileImage ===
                               imageImageDetails
-                                ? `https://dt.mtc.com.na:4000/mobile-images/${imageImageDetails}`
+                                ? `http://localhost:4000/mobile-images/${imageImageDetails}`
                                 : imageImageDetails
                             }
                             className="img-responsive img-thumbnail"

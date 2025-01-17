@@ -90,17 +90,14 @@ const AdminLogin = () => {
 
       try {
         // Fetch OAuth token
-        const tokenData = await fetchOAuthToken();
-      
-        if (tokenData.access_token) {
           try {
             setIsSubmitting(true);
     
-            const loginResponse = await fetch("https://dt.mtc.com.na:4000/auth/admin/login", {
+            const loginResponse = await fetch("http://localhost:4000/auth/admin/login", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${tokenData.access_token}`,
+                
               },
               body: JSON.stringify({
                 email: email,
@@ -122,17 +119,13 @@ const AdminLogin = () => {
           } catch (error) {
             // Handle network error during login request
             setIsSubmitting(false);
+            console.log(error)
             toast.error(
-              "Network error.",
+              `Network error ${error}.`,
               "Please check your network connection and try again.Please check your network connection and try again"
             );
           }
-        } else {
-          toast.error(
-            "Network error.",
-            "Please check your network connection and try again.Please check your network connection and try again"
-          );
-        }
+       
       } catch (error) {
         // Handle error during token fetch
         console.error("Error fetching OAuth token:", error);
@@ -165,18 +158,15 @@ const AdminLogin = () => {
 
     setTwoFactorDigitsError("");
     if (validateTwoFactor()) {
-      const tokenData = await fetchOAuthToken();
-      
-      if (tokenData.access_token) {
+    
         try {
           setIsSubmitting(true);
           const response = await fetch(
-            "https://dt.mtc.com.na:4000/auth/admin/verify-otp",
+            "http://localhost:4000/auth/admin/verify-otp",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${tokenData.access_token}`,
               },
               //
               body: JSON.stringify({
@@ -197,9 +187,7 @@ const AdminLogin = () => {
                 user: data.currentUser,
               })
             );
-            dispatch(updateServerToken({
-              serverToken: `Bearer ${tokenData.access_token}`
-            }));
+            
             dispatch(updateToken({
               token: `Bearer ${data.currentUser.token}`
             }));
@@ -217,7 +205,7 @@ const AdminLogin = () => {
             "Please check your network connection and try again"
           );
         }
-      }
+
       
     }
   };

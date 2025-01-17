@@ -22,7 +22,7 @@ const Topbar = ({ OpenSidebar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.user);
-  const serverToken = useSelector((state) => state.server.serverToken);
+  
   const updatingState = useSelector((state) => state.submitting.isSubmitting);
   const [isSubmitting, setIsSubmitting] = useState(false);
   let fullName = currentUser?.firstName + currentUser?.lastName;
@@ -34,12 +34,12 @@ const Topbar = ({ OpenSidebar }) => {
     const fetchAllAdminNotificationsCount = async () => {
       try {
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/notifications/admin/totalNotificationCount`,
+          `http://localhost:4000/notifications/admin/totalNotificationCount`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             //
@@ -63,7 +63,7 @@ const Topbar = ({ OpenSidebar }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("https://dt.mtc.com.na:4000/auth/admin/logout", {
+      const response = await fetch("http://localhost:4000/auth/admin/logout", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

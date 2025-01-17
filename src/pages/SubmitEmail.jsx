@@ -11,7 +11,7 @@ function SubmitEmail() {
   const [emailError, setEmailError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const serverToken = useSelector((state) => state.server.serverToken);
+  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,11 +23,11 @@ function SubmitEmail() {
       if (tokenData.access_token) {
         try {
           setIsSubmitting(true);
-          const response = await fetch("https://dt.mtc.com.na:4000/auth/admin/forgot-password", {
+          const response = await fetch("http://localhost:4000/auth/admin/forgot-password", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${tokenData.access_token}`,
+              
             },
             body: JSON.stringify({
               email

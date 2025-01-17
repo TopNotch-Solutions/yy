@@ -21,7 +21,7 @@ function ForgotPassword() {
   const queryParams = new URLSearchParams(location.search);
   const userId = queryParams.get('userId');
   const token = queryParams.get('token');
-  const serverToken = useSelector((state) => state.server.serverToken);
+  
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -74,7 +74,7 @@ function ForgotPassword() {
       if (tokenData.access_token) {
         try {
           setIsSubmitting(true);
-          const response = await fetch("https://dt.mtc.com.na:4000/auth/admin/newPassword", {
+          const response = await fetch("http://localhost:4000/auth/admin/newPassword", {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",

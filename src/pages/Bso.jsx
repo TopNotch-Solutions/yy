@@ -95,11 +95,11 @@ function Bso() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openModel, setOpenModel] = useState(false);
   const [openModelEdit, setOpenModelEdit] = useState(false);
-  const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
+  const urlRegex = /^(http?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
 
-  const serverToken = useSelector((state) => state.server.serverToken);
+  
   const currentUser = useSelector((state) => state.auth.user);
   const tokenHeader = currentUser.token;
   const handleOpen = () => setOpenModel(true);
@@ -128,26 +128,18 @@ function Bso() {
     const fetchTotalCount = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/count", {
+        const response = await fetch("http://localhost:4000/bso/admin/count", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${serverToken}`,
+            
             'x-access-token': `${tokenHeader}`
           },
           
         });
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -168,26 +160,18 @@ function Bso() {
     const fetchApprovedCount = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/all", {
+        const response = await fetch("http://localhost:4000/bso/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${serverToken}`,
+            
             'x-access-token': `${tokenHeader}`
           },
           
         });
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           setBsoList(data.data);
@@ -330,11 +314,11 @@ function Bso() {
         formData.append("description", description);
         formData.append("bso-image", file);
         formData.append("website", website);
-        const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/create", {
+        const response = await fetch("http://localhost:4000/bso/admin/create", {
           method: "POST",
           
           headers:{
-            Authorization: `${serverToken}`,
+            
           
           },
           body: formData,
@@ -453,12 +437,12 @@ function Bso() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `https://dt.mtc.com.na:4000/bso/admin/single/${id}`,
+        `http://localhost:4000/bso/admin/single/${id}`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${serverToken}`,
+            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -519,12 +503,12 @@ function Bso() {
             setIsSubmitting(true);
             dispatch(toggleIsSubmittingTrue());
             const response = await fetch(
-              `https://dt.mtc.com.na:4000/bso/admin/delete/${id}`,
+              `http://localhost:4000/bso/admin/delete/${id}`,
               {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
-                  Authorization: `${serverToken}`,
+                  
                   'x-access-token': `${tokenHeader}`
                 },
                 
@@ -604,12 +588,12 @@ function Bso() {
           formData.append("bso-image", fileUpdate);
           formData.append("website", websiteDetails);
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/bso/admin/update/${updatingDetails.id}`,
+            `http://localhost:4000/bso/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
               
               headers:{
-                Authorization: `${serverToken}`,
+                
               },
               body: formData,
             }
@@ -1357,7 +1341,7 @@ function Bso() {
                           <img
                             src={
                               updatingDetails.logo === logoDetails
-                                ? `https://dt.mtc.com.na:4000/bsos/${logoDetails}`
+                                ? `http://localhost:4000/bsos/${logoDetails}`
                                 : logoDetails
                             }
                             className=" img-responsive img-thumbnail"

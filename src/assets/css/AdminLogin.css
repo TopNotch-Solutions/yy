@@ -206,6 +206,13 @@
   .login-form-section {
     padding: 1rem;
   }
+  .form-field {
+    margin-bottom: 1.0rem;
+  }
+  .auth-subtitle {
+    color: #666;
+    margin-bottom: 1rem;
+  }
 }
 
 /* Add this new class for centered layout */

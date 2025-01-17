@@ -80,12 +80,12 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/monthly/registeration",
+          "http://localhost:4000/msme/admin/monthly/registeration",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             //
@@ -118,12 +118,12 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/totalCount",
+          "http://localhost:4000/msme/admin/totalCount",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
            // 
@@ -131,15 +131,7 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -161,12 +153,12 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/pendingCount",
+          "http://localhost:4000/msme/admin/pendingCount",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             //
@@ -174,15 +166,7 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -204,12 +188,12 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/rejectedCount",
+          "http://localhost:4000/msme/admin/rejectedCount",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             //
@@ -217,15 +201,7 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -247,12 +223,12 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/approvedCount",
+          "http://localhost:4000/msme/admin/approvedCount",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             //
@@ -260,15 +236,7 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -288,26 +256,18 @@ function Dashboard() {
     const fetchMsmeAllMSME = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/msme/admin/all", {
+        const response = await fetch("http://localhost:4000/msme/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${serverToken}`,
+            
             'x-access-token': `${tokenHeader}`
           },
           //
         });
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
@@ -328,12 +288,12 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/top5/categories",
+          "http://localhost:4000/msme/admin/top5/categories",
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${serverToken}`,
+              
               'x-access-token': `${tokenHeader}`
             },
             //
@@ -341,15 +301,7 @@ function Dashboard() {
         );
 
         const data = await response.json();
-        const newTokenHeader = response.headers.get("x-access-token");
-
-        if (newTokenHeader) {
-          dispatch(
-            updateToken({
-              token: newTokenHeader,
-            })
-          );
-        }
+        
 
         if (response.ok) {
           dispatch(toggleIsSubmittingfalse());
