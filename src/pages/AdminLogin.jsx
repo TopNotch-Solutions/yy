@@ -92,19 +92,19 @@ const AdminLogin = () => {
         // Fetch OAuth token
           try {
             setIsSubmitting(true);
-    
-            const loginResponse = await fetch("http://localhost:4000/auth/admin/login", {
+            console.log(`Here is my emails: ${email}. Here is the password ${password}`)
+            const loginResponse = await fetch("https://dt.mtc.com.na:4000/auth/admin/login", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                
               },
+              credentials: "include",
               body: JSON.stringify({
                 email: email,
                 password: password,
               }),
             });
-      
+            console.log(`We have posted the data. Now, we are waiting for a response: ${loginResponse}`)
             const loginData = await loginResponse.json();
       
             if (loginResponse.ok) {
@@ -162,13 +162,13 @@ const AdminLogin = () => {
         try {
           setIsSubmitting(true);
           const response = await fetch(
-            "http://localhost:4000/auth/admin/verify-otp",
+            "https://dt.mtc.com.na:4000/auth/admin/verify-otp",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              //
+              credentials: "include",
               body: JSON.stringify({
                 userId,
                 otp: twoFactorDigits,

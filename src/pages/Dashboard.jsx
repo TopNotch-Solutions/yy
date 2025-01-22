@@ -80,7 +80,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/monthly/registeration",
+          "https://dt.mtc.com.na:4000/msme/admin/monthly/registeration",
           {
             method: "GET",
             headers: {
@@ -118,7 +118,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/totalCount",
+          "https://dt.mtc.com.na:4000/msme/admin/totalCount",
           {
             method: "GET",
             headers: {
@@ -153,7 +153,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/pendingCount",
+          "https://dt.mtc.com.na:4000/msme/admin/pendingCount",
           {
             method: "GET",
             headers: {
@@ -188,7 +188,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/rejectedCount",
+          "https://dt.mtc.com.na:4000/msme/admin/rejectedCount",
           {
             method: "GET",
             headers: {
@@ -223,7 +223,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/approvedCount",
+          "https://dt.mtc.com.na:4000/msme/admin/approvedCount",
           {
             method: "GET",
             headers: {
@@ -256,7 +256,7 @@ function Dashboard() {
     const fetchMsmeAllMSME = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/msme/admin/all", {
+        const response = await fetch("https://dt.mtc.com.na:4000/msme/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -288,7 +288,7 @@ function Dashboard() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/top5/categories",
+          "https://dt.mtc.com.na:4000/msme/admin/top5/categories",
           {
             method: "GET",
             headers: {
