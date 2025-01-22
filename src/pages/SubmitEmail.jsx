@@ -23,14 +23,8 @@ function SubmitEmail() {
 
         try {
           setIsSubmitting(true);
-          const response = await fetch("https://dt.mtc.com.na:4000/auth/admin/forgot-password", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email
-            }),
+          const response = await axios.post("https://dt.mtc.com.na:4000/auth/admin/forgot-password", {
+            email
           });
   
           const data = await response.json();
@@ -47,7 +41,7 @@ function SubmitEmail() {
         } catch (error) {
           setIsSubmitting(false);
           toast.error(
-            "Network error. Please check your network connection and try again",
+            `Network error. Please check your network connection and try again. ${error}`,
             "Please check your network connection and try again"
           );
         }
