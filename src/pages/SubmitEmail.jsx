@@ -19,8 +19,8 @@ function SubmitEmail() {
     setEmailError("");
 
     if (validateForm()) {
-      const tokenData = await fetchOAuthToken();
-      if (tokenData.access_token) {
+      
+
         try {
           setIsSubmitting(true);
           const response = await fetch("https://dt.mtc.com.na:4000/auth/admin/forgot-password", {
@@ -29,6 +29,7 @@ function SubmitEmail() {
               "Content-Type": "application/json",
               
             },
+            credentials: 'include',
             body: JSON.stringify({
               email
             }),
@@ -52,8 +53,6 @@ function SubmitEmail() {
             "Please check your network connection and try again"
           );
         }
-      }
-      
     }
   };
 
