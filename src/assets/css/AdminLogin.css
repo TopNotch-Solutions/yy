@@ -215,7 +215,7 @@
   }
 }
 
-/* Add this new class for centered layout */
+/* Add this new className for centered layout */
 .login-wrapper-centered {
   display: flex;
   justify-content: center;

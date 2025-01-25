@@ -128,7 +128,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/system/all/system-users",
+          "http://localhost:4000/system/all/system-users",
           {
             method: "GET",
             headers: {
@@ -163,7 +163,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/system/all/super-admin-count",
+          "http://localhost:4000/system/all/super-admin-count",
           {
             method: "GET",
             headers: {
@@ -197,7 +197,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/system/all/admin-count",
+          "http://localhost:4000/system/all/admin-count",
           {
             method: "GET",
             headers: {
@@ -232,7 +232,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/system/all/app-user-count",
+          "http://localhost:4000/system/all/app-user-count",
           {
             method: "GET",
             headers: {
@@ -266,7 +266,7 @@ function User() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/system/all/admin/list",
+          "http://localhost:4000/system/all/admin/list",
           {
             method: "GET",
             headers: {
@@ -300,7 +300,7 @@ function User() {
   const handleUpdate = async (email) => {
     try {
       const response = await fetch(
-        "https://dt.mtc.com.na:4000/auth/admin/update/email",
+        "http://localhost:4000/auth/admin/update/email",
         {
           method: "POST",
           headers: {
@@ -369,7 +369,7 @@ function User() {
             setIsSubmitting(true);
 
             const response = await fetch(
-              "https://dt.mtc.com.na:4000/auth/admin/delete",
+              "http://localhost:4000/auth/admin/delete",
               {
                 method: "DELETE",
                 headers: {
@@ -434,7 +434,7 @@ function User() {
             setIsSubmitting(true);
 
             const response = await fetch(
-              "https://dt.mtc.com.na:4000/auth/admin/delete",
+              "http://localhost:4000/auth/admin/delete",
               {
                 method: "DELETE",
                 headers: {
@@ -695,7 +695,7 @@ function User() {
             role: roleDetails,
           };
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/auth/admin/update/user/details/${updatingDetails.id}`,
+            `http://localhost:4000/auth/admin/update/user/details/${updatingDetails.id}`,
             {
               method: "PUT",
               headers: {
@@ -776,7 +776,7 @@ function User() {
         };
 
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/auth/admin/signup",
+          "http://localhost:4000/auth/admin/signup",
           {
             method: "POST",
             headers: {
@@ -1187,7 +1187,7 @@ function User() {
                       Department: <span>*</span>
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       value={department}
                       onChange={(e) => {
                         setDepartmentError("");
@@ -1216,7 +1216,7 @@ function User() {
                       Role: <span>*</span>
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       value={role}
                       onChange={(e) => {
                         setRoleError("");
@@ -1403,7 +1403,7 @@ function User() {
                       Department: <span>*</span>
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       value={departmentDetails}
                       onChange={(e) => {
                         setDepartmentDetailsError("");
@@ -1433,7 +1433,7 @@ function User() {
                       Role: <span>*</span>
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       value={roleDetails}
                       onChange={(e) => {
                         setRoleDetailsError("");

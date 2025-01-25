@@ -126,7 +126,7 @@ function Profile() {
     try {
       setIsSubmitting(true);
       const response = await fetch(
-        `https://dt.mtc.com.na:4000/auth/admin/update/profile-image/${currentUser.id}`,
+        `http://localhost:4000/auth/admin/update/profile-image/${currentUser.id}`,
         {
           method: "PUT",
           headers: {
@@ -201,7 +201,7 @@ function Profile() {
       try {
         setIsSubmitting(true);
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/auth/admin/change-password`,
+          `http://localhost:4000/auth/admin/change-password`,
           {
             method: "PUT",
             headers: {
@@ -289,7 +289,7 @@ function Profile() {
         try {
           setIsSubmitting(true);
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/auth/admin/update/details`,
+            `http://localhost:4000/auth/admin/update/details`,
             {
               method: "PUT",
               headers: {
@@ -586,7 +586,7 @@ function Profile() {
                   Department:
                 </label>
                 <select
-                  class="form-select"
+                  className="form-select"
                   value={department}
                   disabled={!isEditing ? true : false}
                   onChange={(e) => {

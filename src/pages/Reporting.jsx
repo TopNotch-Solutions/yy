@@ -35,7 +35,7 @@ function Reporting() {
     const fetchMsmeAllMSME = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/msme/admin/all/approved", {
+        const response = await fetch("http://localhost:4000/msme/admin/all/approved", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -73,7 +73,7 @@ function Reporting() {
     const fetchMsmeAllMSMEPending = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/msme/admin/all/pending", {
+        const response = await fetch("http://localhost:4000/msme/admin/all/pending", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -111,7 +111,7 @@ function Reporting() {
     const fetchMsmeAllMSMERejected = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/msme/admin/all/rejected", {
+        const response = await fetch("http://localhost:4000/msme/admin/all/rejected", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -149,7 +149,7 @@ function Reporting() {
     const fetchMsmeAllMSMEBlocked = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/msme/admin/all/blocked", {
+        const response = await fetch("http://localhost:4000/msme/admin/all/blocked", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -187,7 +187,7 @@ function Reporting() {
     const fetchMsmeAllBSO = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/all/download", {
+        const response = await fetch("http://localhost:4000/bso/admin/all/download", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -225,7 +225,7 @@ function Reporting() {
     const fetchMsmeAllUsers = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/system/all/admin/list/download", {
+        const response = await fetch("http://localhost:4000/system/all/admin/list/download", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -291,7 +291,7 @@ function Reporting() {
     { field: "saturday", headerName: "Saturday Hours", width: isSmallScreen ? 120 : 180 },
     { field: "sunday", headerName: "Sunday Hours", width: isSmallScreen ? 120 : 180 },
     { field: "numberOfEmployees", headerName: "Number of Employees", width: isSmallScreen ? 120 : 180 },
-    { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellClassName: (params) => {
+    { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellclassName: (params) => {
       switch (params.value) {
         case "Pending":
           return 'status-pending';
@@ -306,7 +306,7 @@ function Reporting() {
       field: "isBlocked",
       headerName: "Blocked",
       width: isSmallScreen ? 100 : 120,
-      cellClassName: (params) => {
+      cellclassName: (params) => {
         switch (params.value) {
           case true:
             return "status-rejected";
@@ -386,7 +386,7 @@ const rowsAll = allMSMEList.map((msme) => ({
     { field: "saturday", headerName: "Saturday Hours", width: isSmallScreen ? 120 : 180 },
     { field: "sunday", headerName: "Sunday Hours", width: isSmallScreen ? 120 : 180 },
     { field: "numberOfEmployees", headerName: "Number of Employees", width: isSmallScreen ? 120 : 180 },
-    { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellClassName: (params) => {
+    { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellclassName: (params) => {
       switch (params.value) {
         case "Pending":
           return 'status-pending';
@@ -401,7 +401,7 @@ const rowsAll = allMSMEList.map((msme) => ({
       field: "isBlocked",
       headerName: "Blocked",
       width: isSmallScreen ? 100 : 120,
-      cellClassName: (params) => {
+      cellclassName: (params) => {
         switch (params.value) {
           case true:
             return "status-rejected";
@@ -479,7 +479,7 @@ const rowsAll = allMSMEList.map((msme) => ({
     { field: "saturday", headerName: "Saturday Hours", width: isSmallScreen ? 120 : 180 },
     { field: "sunday", headerName: "Sunday Hours", width: isSmallScreen ? 120 : 180 },
     { field: "numberOfEmployees", headerName: "Number of Employees", width: isSmallScreen ? 120 : 180 },
-    { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellClassName: (params) => {
+    { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellclassName: (params) => {
       switch (params.value) {
         case "Pending":
           return 'status-pending';
@@ -494,7 +494,7 @@ const rowsAll = allMSMEList.map((msme) => ({
       field: "isBlocked",
       headerName: "Blocked",
       width: isSmallScreen ? 100 : 120,
-      cellClassName: (params) => {
+      cellclassName: (params) => {
         switch (params.value) {
           case true:
             return "status-rejected";
@@ -617,7 +617,7 @@ const rowsAll = allMSMEList.map((msme) => ({
     { field: "saturday", headerName: "Saturday Hours", width: isSmallScreen ? 120 : 180 },
     { field: "sunday", headerName: "Sunday Hours", width: isSmallScreen ? 120 : 180 },
     { field: "numberOfEmployees", headerName: "Number of Employees", width: isSmallScreen ? 120 : 180 },
-    { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellClassName: (params) => {
+    { field: "status", headerName: "Status", width: isSmallScreen ? 120 : 140, cellclassName: (params) => {
       switch (params.value) {
         case "Pending":
           return 'status-pending';
@@ -632,7 +632,7 @@ const rowsAll = allMSMEList.map((msme) => ({
       field: "isBlocked",
       headerName: "Blocked",
       width: isSmallScreen ? 100 : 120,
-      cellClassName: (params) => {
+      cellclassName: (params) => {
         switch (params.value) {
           case true:
             return "status-rejected";

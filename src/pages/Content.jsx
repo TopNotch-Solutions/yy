@@ -97,7 +97,7 @@ function Content() {
   const [updatingImageDetails, setUpdatingImageDetails] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQuery1, setSearchQuery1] = useState("");
-  const urlRegex = /^(http?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
+  const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
   
 
   const handleOpen = () => setOpenModel(true);
@@ -139,7 +139,7 @@ function Content() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/opportunities/admin/all`,
+          `http://localhost:4000/opportunities/admin/all`,
           {
             method: "GET",
             headers: {
@@ -173,7 +173,7 @@ function Content() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/admin/mobile-images/all`,
+          `http://localhost:4000/admin/mobile-images/all`,
           {
             method: "GET",
             headers: {
@@ -219,7 +219,7 @@ function Content() {
         formData.append("link", link);
 
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/opportunities/admin/create`,
+          `http://localhost:4000/opportunities/admin/create`,
           {
             method: "POST",
             headers:{
@@ -271,7 +271,7 @@ function Content() {
         formData.append("description", descriptionImage);
         formData.append("mobile-image", fileMobileImage);
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/admin/mobile-images/create`,
+          `http://localhost:4000/admin/mobile-images/create`,
           {
             method: "POST",
             
@@ -324,7 +324,7 @@ function Content() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `https://dt.mtc.com.na:4000/opportunities/admin/single/${id}`,
+        `http://localhost:4000/opportunities/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -377,7 +377,7 @@ function Content() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `https://dt.mtc.com.na:4000/admin/mobile-images/single/${id}`,
+        `http://localhost:4000/admin/mobile-images/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -442,7 +442,7 @@ function Content() {
           setIsSubmitting(true);
           dispatch(toggleIsSubmittingTrue());
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/opportunities/admin/delete/${id}`,
+            `http://localhost:4000/opportunities/admin/delete/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -515,7 +515,7 @@ function Content() {
           dispatch(toggleIsSubmittingTrue());
 
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/admin/mobile-images/delete/${id}`,
+            `http://localhost:4000/admin/mobile-images/delete/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -911,7 +911,7 @@ const validateFields1 = () => {
           formData.append("opportunity-image", fileMobileImage);
           formData.append("link", linkDetails);
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/opportunities/admin/update/${updatingDetails.id}`,
+            `http://localhost:4000/opportunities/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
               
@@ -973,7 +973,7 @@ const validateFields1 = () => {
           formData.append("mobile-image", fileMobileImageDetails);
           console.log("yo", descriptionDetails, fileMobileImageDetails);
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/admin/mobile-images/update/${updatingImageDetails.id}`,
+            `http://localhost:4000/admin/mobile-images/update/${updatingImageDetails.id}`,
             {
               method: "PUT",
               
@@ -1039,7 +1039,7 @@ const validateFields1 = () => {
           formData.append("link", linkDetails);
 
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/opportunities/admin/update/${updatingDetails.id}`,
+            `http://localhost:4000/opportunities/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
               
@@ -1989,7 +1989,7 @@ const validateFields1 = () => {
                               <img
                                 src={
                                   updatingDetails.image === imageDetails
-                                    ? `https://dt.mtc.com.na:4000/opportunities/` +
+                                    ? `http://localhost:4000/opportunities/` +
                                       imageDetails
                                     : imageDetails
                                 }
@@ -2131,7 +2131,7 @@ const validateFields1 = () => {
                               <img
                                 src={
                                   updatingDetails.image === imageDetails
-                                    ? `https://dt.mtc.com.na:4000/opportunities/` +
+                                    ? `http://localhost:4000/opportunities/` +
                                       imageDetails
                                     : imageDetails
                                 }
@@ -2291,7 +2291,7 @@ const validateFields1 = () => {
                             src={
                               updatingImageDetails.mobileImage ===
                               imageImageDetails
-                                ? `https://dt.mtc.com.na:4000/mobile-images/${imageImageDetails}`
+                                ? `http://localhost:4000/mobile-images/${imageImageDetails}`
                                 : imageImageDetails
                             }
                             className="img-responsive img-thumbnail"

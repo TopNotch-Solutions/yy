@@ -72,7 +72,7 @@ function ForgotPassword() {
     if (validateForm()) {
         try {
           setIsSubmitting(true);
-          const response = await fetch("https://dt.mtc.com.na:4000/auth/admin/newPassword", {
+          const response = await fetch("http://localhost:4000/auth/admin/newPassword", {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",

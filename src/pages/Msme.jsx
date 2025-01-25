@@ -489,7 +489,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/totalCount",
+          "http://localhost:4000/msme/admin/totalCount",
           {
             method: "GET",
             headers: {
@@ -524,7 +524,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/pendingCount",
+          "http://localhost:4000/msme/admin/pendingCount",
           {
             method: "GET",
             headers: {
@@ -559,7 +559,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/rejectedCount",
+          "http://localhost:4000/msme/admin/rejectedCount",
           {
             method: "GET",
             headers: {
@@ -594,7 +594,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/approvedCount",
+          "http://localhost:4000/msme/admin/approvedCount",
           {
             method: "GET",
             headers: {
@@ -628,7 +628,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/incompleteCount",
+          "http://localhost:4000/msme/admin/incompleteCount",
           {
             method: "GET",
             headers: {
@@ -662,7 +662,7 @@ function Msme() {
     const fetchMsmeAllMSME = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/msme/admin/all", {
+        const response = await fetch("http://localhost:4000/msme/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -694,7 +694,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/all/pending",
+          "http://localhost:4000/msme/admin/all/pending",
           {
             method: "GET",
             headers: {
@@ -736,7 +736,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/all/rejected",
+          "http://localhost:4000/msme/admin/all/rejected",
           {
             method: "GET",
             headers: {
@@ -771,7 +771,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/all/approved",
+          "http://localhost:4000/msme/admin/all/approved",
           {
             method: "GET",
             headers: {
@@ -806,7 +806,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/all/incomplete",
+          "http://localhost:4000/msme/admin/all/incomplete",
           {
             method: "GET",
             headers: {
@@ -839,7 +839,7 @@ function Msme() {
     const fetchAllRegions = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/region/admin/all", {
+        const response = await fetch("http://localhost:4000/region/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -871,7 +871,7 @@ function Msme() {
     const fetchAllTowns = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/town/admin/all", {
+        const response = await fetch("http://localhost:4000/town/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -902,7 +902,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/primaryIndustry/admin/all",
+          "http://localhost:4000/primaryIndustry/admin/all",
           {
             method: "GET",
             headers: {
@@ -936,7 +936,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/secondaryIndustry/admin/all",
+          "http://localhost:4000/secondaryIndustry/admin/all",
           {
             method: "GET",
             headers: {
@@ -970,7 +970,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/all/user",
+          "http://localhost:4000/msme/admin/all/user",
           {
             method: "GET",
             headers: {
@@ -1683,7 +1683,7 @@ function Msme() {
         console.log("This is my formdata", formData);
 
         const response = await fetch(
-          "https://dt.mtc.com.na:4000/msme/admin/create",
+          "http://localhost:4000/msme/admin/create",
           {
             method: "POST",
             
@@ -1808,7 +1808,7 @@ function Msme() {
     try {
       setIsSubmitting(true);
       const response = await fetch(
-        `https://dt.mtc.com.na:4000/msme/admin/single/${id}`,
+        `http://localhost:4000/msme/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -1945,7 +1945,7 @@ function Msme() {
       field: "status",
       headerName: "Status",
       width: isSmallScreen ? 100 : 120,
-      cellClassName: (params) => {
+      cellclassName: (params) => {
         switch (params.value) {
           case "Pending":
             return "status-pending";
@@ -1962,7 +1962,7 @@ function Msme() {
       field: "isBlocked",
       headerName: "Blocked",
       width: isSmallScreen ? 100 : 120,
-      cellClassName: (params) => {
+      cellclassName: (params) => {
         switch (params.value) {
           case true:
             return "status-rejected";
@@ -2231,7 +2231,7 @@ function Msme() {
             try {
               setIsSubmitting(true);
               const response = await fetch(
-                `https://dt.mtc.com.na:4000/msme/admin/status/${updatingDetails.id}`,
+                `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
                 {
                   method: "PUT",
                   headers: {
@@ -2389,7 +2389,7 @@ function Msme() {
           formData.append("removeImage3", removeImage3);
         }
         const response = await fetch(
-          `https://dt.mtc.com.na:4000/msme/admin/update/${updatingDetails.id}`,
+          `http://localhost:4000/msme/admin/update/${updatingDetails.id}`,
           {
             method: "PUT",
             
@@ -2410,7 +2410,7 @@ function Msme() {
             try {
               setIsSubmitting(true);
               const response = await fetch(
-                `https://dt.mtc.com.na:4000/msme/admin/status/${updatingDetails.id}`,
+                `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
                 {
                   method: "PUT",
                   headers: {
@@ -2548,7 +2548,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `https://dt.mtc.com.na:4000/msme/admin/status/${updatingDetails.id}`,
+              `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2637,7 +2637,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `https://dt.mtc.com.na:4000/msme/admin/block/${updatingDetails.id}`,
+              `http://localhost:4000/msme/admin/block/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2725,7 +2725,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `https://dt.mtc.com.na:4000/msme/admin/block/${updatingDetails.id}`,
+              `http://localhost:4000/msme/admin/block/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2806,7 +2806,7 @@ function Msme() {
         try {
           setsendingNotification(true);
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/notifications/admin/create/single/${updatingDetails.id}`,
+            `http://localhost:4000/notifications/admin/create/single/${updatingDetails.id}`,
             {
               method: "POST",
               headers: {
@@ -4027,7 +4027,7 @@ function Msme() {
                           Type of Business: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={typeOfBusiness}
                           onChange={(e) => {
                             setTypeOfBusinessError("");
@@ -4248,7 +4248,7 @@ function Msme() {
                           Region: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={region}
                           onChange={(e) => {
                             setRegionError("");
@@ -4280,7 +4280,7 @@ function Msme() {
                             Town: <span>*</span>
                           </label>
                           <select
-                            class="form-select"
+                            className="form-select"
                             value={town}
                             onChange={(e) => {
                               setTownError("");
@@ -4310,7 +4310,7 @@ function Msme() {
                           Primary Industry: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={primaryIndustry}
                           onChange={(e) => {
                             setPrimaryIndustryError("");
@@ -4339,7 +4339,7 @@ function Msme() {
                           Secondary Industry:
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={secondaryIndustry}
                           onChange={(e) => {
                             setSecondaryIndustryError("");
@@ -4398,7 +4398,7 @@ function Msme() {
                           Annual Turnover: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={annualTurnover}
                           onChange={(e) => {
                             setAnnualTurnoverError("");
@@ -4465,7 +4465,7 @@ function Msme() {
                           Founder's Gender:<span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={foundersGender}
                           onChange={(e) => {
                             setFoundersGenderError("");
@@ -5379,7 +5379,7 @@ function Msme() {
                           Number of Employees: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={numberOfEmployees}
                           onChange={(e) => {
                             setNumberOfEmployeesError("");
@@ -5848,7 +5848,7 @@ function Msme() {
                           Type of Business: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={typeOfBusinessDetails}
                           onChange={(e) => {
                             setUpdate(true);
@@ -6036,7 +6036,7 @@ function Msme() {
                           Region: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={regionDetails}
                           onChange={(e) => {
                             setUpdate(true);
@@ -6071,7 +6071,7 @@ function Msme() {
                           Town: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={townDetails}
                           onChange={(e) => {
                             setUpdate(true);
@@ -6105,7 +6105,7 @@ function Msme() {
                           Primary Industry: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={primaryIndustryDetails}
                           onChange={(e) => {
                             setUpdate(true);
@@ -6140,7 +6140,7 @@ function Msme() {
                           Secondary Industry:
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={secondaryIndustryDetails}
                           onChange={(e) => {
                             setUpdate(true);
@@ -6207,7 +6207,7 @@ function Msme() {
                           Annual Turnover: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={annualTurnoverDetails}
                           onChange={(e) => {
                             setUpdate(true);
@@ -6239,7 +6239,7 @@ function Msme() {
                           Number of Employees: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={numberOfEmployeesDetails}
                           onChange={(e) => {
                             setUpdate(true);
@@ -6269,10 +6269,7 @@ function Msme() {
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
                         onClick={() => {
-                          console.log(
-                            "Registration number msme-information: ",
-                            businessRegistrationNumberDetails
-                          );
+                          
                           handleStep1Review();
                         }}
                       >
@@ -6321,7 +6318,7 @@ function Msme() {
                           Founder's Gender: <span>*</span>
                         </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           value={foundersGenderDetails}
                           onChange={(e) => {
                             setUpdate(true);
@@ -6984,7 +6981,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo
                                       ?.businessLogo === businessLogoDetails
-                                      ? `https://dt.mtc.com.na:4000/msmes/${businessLogoDetails}`
+                                      ? `http://localhost:4000/msmes/${businessLogoDetails}`
                                       : businessLogoDetails
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7073,7 +7070,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image1 ===
                                     image1Details
-                                      ? `https://dt.mtc.com.na:4000/msmes/${image1Details}`
+                                      ? `http://localhost:4000/msmes/${image1Details}`
                                       : image1Details
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7162,7 +7159,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image2 ===
                                     image2Details
-                                      ? `https://dt.mtc.com.na:4000/msmes/${image2Details}`
+                                      ? `http://localhost:4000/msmes/${image2Details}`
                                       : image2Details
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7251,7 +7248,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image3 ===
                                     image3Details
-                                      ? `https://dt.mtc.com.na:4000/msmes/${image3Details}`
+                                      ? `http://localhost:4000/msmes/${image3Details}`
                                       : image3Details
                                   }
                                   className=" img-responsive img-thumbnail"

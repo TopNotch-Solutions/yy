@@ -95,7 +95,7 @@ function Bso() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openModel, setOpenModel] = useState(false);
   const [openModelEdit, setOpenModelEdit] = useState(false);
-  const urlRegex = /^(http?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
+  const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
 
@@ -128,7 +128,7 @@ function Bso() {
     const fetchTotalCount = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/count", {
+        const response = await fetch("http://localhost:4000/bso/admin/count", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -160,7 +160,7 @@ function Bso() {
     const fetchApprovedCount = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/all", {
+        const response = await fetch("http://localhost:4000/bso/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -314,7 +314,7 @@ function Bso() {
         formData.append("description", description);
         formData.append("bso-image", file);
         formData.append("website", website);
-        const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/create", {
+        const response = await fetch("http://localhost:4000/bso/admin/create", {
           method: "POST",
           
           headers:{
@@ -437,7 +437,7 @@ function Bso() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `https://dt.mtc.com.na:4000/bso/admin/single/${id}`,
+        `http://localhost:4000/bso/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -503,7 +503,7 @@ function Bso() {
             setIsSubmitting(true);
             dispatch(toggleIsSubmittingTrue());
             const response = await fetch(
-              `https://dt.mtc.com.na:4000/bso/admin/delete/${id}`,
+              `http://localhost:4000/bso/admin/delete/${id}`,
               {
                 method: "DELETE",
                 headers: {
@@ -588,7 +588,7 @@ function Bso() {
           formData.append("bso-image", fileUpdate);
           formData.append("website", websiteDetails);
           const response = await fetch(
-            `https://dt.mtc.com.na:4000/bso/admin/update/${updatingDetails.id}`,
+            `http://localhost:4000/bso/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
               
@@ -808,13 +808,14 @@ function Bso() {
                   <p className="list-groupp">BSO List</p>
                   {totalBsos ? (
                     <>
-                      <Box sx={{ height: 500, width: "100%" }}>
+                      <Box sx={{ height: 500, width: "100%",}}>
                         <DataGrid
                           rows={filteredRows}
                           columns={columns}
                           sx={{
                             "& .MuiDataGrid-root": {
                               fontFamily: "Montserrat, sans-serif",
+                              border: "none"
                             },
                             "& .status-pending": {
                               color: "rgb(234, 156, 0)",
@@ -1341,7 +1342,7 @@ function Bso() {
                           <img
                             src={
                               updatingDetails.logo === logoDetails
-                                ? `https://dt.mtc.com.na:4000/bsos/${logoDetails}`
+                                ? `http://localhost:4000/bsos/${logoDetails}`
                                 : logoDetails
                             }
                             className=" img-responsive img-thumbnail"
