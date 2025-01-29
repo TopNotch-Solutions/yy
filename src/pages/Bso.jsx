@@ -128,7 +128,7 @@ function Bso() {
     const fetchTotalCount = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/bso/admin/count", {
+        const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/count", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -160,7 +160,7 @@ function Bso() {
     const fetchApprovedCount = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/bso/admin/all", {
+        const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -314,7 +314,7 @@ function Bso() {
         formData.append("description", description);
         formData.append("bso-image", file);
         formData.append("website", website);
-        const response = await fetch("http://localhost:4000/bso/admin/create", {
+        const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/create", {
           method: "POST",
           
           headers:{
@@ -437,7 +437,7 @@ function Bso() {
     try {
       dispatch(toggleIsSubmittingTrue());
       const response = await fetch(
-        `http://localhost:4000/bso/admin/single/${id}`,
+        `https://dt.mtc.com.na:4000/bso/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -503,7 +503,7 @@ function Bso() {
             setIsSubmitting(true);
             dispatch(toggleIsSubmittingTrue());
             const response = await fetch(
-              `http://localhost:4000/bso/admin/delete/${id}`,
+              `https://dt.mtc.com.na:4000/bso/admin/delete/${id}`,
               {
                 method: "DELETE",
                 headers: {
@@ -588,7 +588,7 @@ function Bso() {
           formData.append("bso-image", fileUpdate);
           formData.append("website", websiteDetails);
           const response = await fetch(
-            `http://localhost:4000/bso/admin/update/${updatingDetails.id}`,
+            `https://dt.mtc.com.na:4000/bso/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
               
@@ -1342,7 +1342,7 @@ function Bso() {
                           <img
                             src={
                               updatingDetails.logo === logoDetails
-                                ? `http://localhost:4000/bsos/${logoDetails}`
+                                ? `https://dt.mtc.com.na:4000/bsos/${logoDetails}`
                                 : logoDetails
                             }
                             className=" img-responsive img-thumbnail"

@@ -126,7 +126,7 @@ function Profile() {
     try {
       setIsSubmitting(true);
       const response = await fetch(
-        `http://localhost:4000/auth/admin/update/profile-image/${currentUser.id}`,
+        `https://dt.mtc.com.na:4000/auth/admin/update/profile-image/${currentUser.id}`,
         {
           method: "PUT",
           headers: {
@@ -201,7 +201,7 @@ function Profile() {
       try {
         setIsSubmitting(true);
         const response = await fetch(
-          `http://localhost:4000/auth/admin/change-password`,
+          `https://dt.mtc.com.na:4000/auth/admin/change-password`,
           {
             method: "PUT",
             headers: {
@@ -289,7 +289,7 @@ function Profile() {
         try {
           setIsSubmitting(true);
           const response = await fetch(
-            `http://localhost:4000/auth/admin/update/details`,
+            `https://dt.mtc.com.na:4000/auth/admin/update/details`,
             {
               method: "PUT",
               headers: {

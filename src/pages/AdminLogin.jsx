@@ -93,7 +93,7 @@ const AdminLogin = () => {
           try {
             setIsSubmitting(true);
             console.log(`Here is my emails: ${email}. Here is the password ${password}`)
-            const loginResponse = await fetch("http://localhost:4000/auth/admin/login", {
+            const loginResponse = await fetch("https://dt.mtc.com.na:4000/auth/admin/login", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -161,7 +161,7 @@ const AdminLogin = () => {
         try {
           setIsSubmitting(true);
           const response = await fetch(
-            "http://localhost:4000/auth/admin/verify-otp",
+            "https://dt.mtc.com.na:4000/auth/admin/verify-otp",
             {
               method: "POST",
               headers: {

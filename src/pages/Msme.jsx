@@ -489,7 +489,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/totalCount",
+          "https://dt.mtc.com.na:4000/msme/admin/totalCount",
           {
             method: "GET",
             headers: {
@@ -524,7 +524,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/pendingCount",
+          "https://dt.mtc.com.na:4000/msme/admin/pendingCount",
           {
             method: "GET",
             headers: {
@@ -559,7 +559,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/rejectedCount",
+          "https://dt.mtc.com.na:4000/msme/admin/rejectedCount",
           {
             method: "GET",
             headers: {
@@ -594,7 +594,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/approvedCount",
+          "https://dt.mtc.com.na:4000/msme/admin/approvedCount",
           {
             method: "GET",
             headers: {
@@ -628,7 +628,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/incompleteCount",
+          "https://dt.mtc.com.na:4000/msme/admin/incompleteCount",
           {
             method: "GET",
             headers: {
@@ -662,7 +662,7 @@ function Msme() {
     const fetchMsmeAllMSME = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/msme/admin/all", {
+        const response = await fetch("https://dt.mtc.com.na:4000/msme/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -694,7 +694,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/pending",
+          "https://dt.mtc.com.na:4000/msme/admin/all/pending",
           {
             method: "GET",
             headers: {
@@ -736,7 +736,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/rejected",
+          "https://dt.mtc.com.na:4000/msme/admin/all/rejected",
           {
             method: "GET",
             headers: {
@@ -771,7 +771,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/approved",
+          "https://dt.mtc.com.na:4000/msme/admin/all/approved",
           {
             method: "GET",
             headers: {
@@ -806,7 +806,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/incomplete",
+          "https://dt.mtc.com.na:4000/msme/admin/all/incomplete",
           {
             method: "GET",
             headers: {
@@ -839,7 +839,7 @@ function Msme() {
     const fetchAllRegions = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/region/admin/all", {
+        const response = await fetch("https://dt.mtc.com.na:4000/region/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -871,7 +871,7 @@ function Msme() {
     const fetchAllTowns = async () => {
       try {
         dispatch(toggleIsSubmittingTrue());
-        const response = await fetch("http://localhost:4000/town/admin/all", {
+        const response = await fetch("https://dt.mtc.com.na:4000/town/admin/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -902,7 +902,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/primaryIndustry/admin/all",
+          "https://dt.mtc.com.na:4000/primaryIndustry/admin/all",
           {
             method: "GET",
             headers: {
@@ -936,7 +936,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/secondaryIndustry/admin/all",
+          "https://dt.mtc.com.na:4000/secondaryIndustry/admin/all",
           {
             method: "GET",
             headers: {
@@ -970,7 +970,7 @@ function Msme() {
       try {
         dispatch(toggleIsSubmittingTrue());
         const response = await fetch(
-          "http://localhost:4000/msme/admin/all/user",
+          "https://dt.mtc.com.na:4000/msme/admin/all/user",
           {
             method: "GET",
             headers: {
@@ -1683,7 +1683,7 @@ function Msme() {
         console.log("This is my formdata", formData);
 
         const response = await fetch(
-          "http://localhost:4000/msme/admin/create",
+          "https://dt.mtc.com.na:4000/msme/admin/create",
           {
             method: "POST",
             
@@ -1808,7 +1808,7 @@ function Msme() {
     try {
       setIsSubmitting(true);
       const response = await fetch(
-        `http://localhost:4000/msme/admin/single/${id}`,
+        `https://dt.mtc.com.na:4000/msme/admin/single/${id}`,
         {
           method: "GET",
           headers: {
@@ -2231,7 +2231,7 @@ function Msme() {
             try {
               setIsSubmitting(true);
               const response = await fetch(
-                `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
+                `https://dt.mtc.com.na:4000/msme/admin/status/${updatingDetails.id}`,
                 {
                   method: "PUT",
                   headers: {
@@ -2389,7 +2389,7 @@ function Msme() {
           formData.append("removeImage3", removeImage3);
         }
         const response = await fetch(
-          `http://localhost:4000/msme/admin/update/${updatingDetails.id}`,
+          `https://dt.mtc.com.na:4000/msme/admin/update/${updatingDetails.id}`,
           {
             method: "PUT",
             
@@ -2410,7 +2410,7 @@ function Msme() {
             try {
               setIsSubmitting(true);
               const response = await fetch(
-                `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
+                `https://dt.mtc.com.na:4000/msme/admin/status/${updatingDetails.id}`,
                 {
                   method: "PUT",
                   headers: {
@@ -2548,7 +2548,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `http://localhost:4000/msme/admin/status/${updatingDetails.id}`,
+              `https://dt.mtc.com.na:4000/msme/admin/status/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2637,7 +2637,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `http://localhost:4000/msme/admin/block/${updatingDetails.id}`,
+              `https://dt.mtc.com.na:4000/msme/admin/block/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2725,7 +2725,7 @@ function Msme() {
           try {
             setIsSubmitting(true);
             const response = await fetch(
-              `http://localhost:4000/msme/admin/block/${updatingDetails.id}`,
+              `https://dt.mtc.com.na:4000/msme/admin/block/${updatingDetails.id}`,
               {
                 method: "PUT",
                 headers: {
@@ -2806,7 +2806,7 @@ function Msme() {
         try {
           setsendingNotification(true);
           const response = await fetch(
-            `http://localhost:4000/notifications/admin/create/single/${updatingDetails.id}`,
+            `https://dt.mtc.com.na:4000/notifications/admin/create/single/${updatingDetails.id}`,
             {
               method: "POST",
               headers: {
@@ -6388,10 +6388,6 @@ function Msme() {
                       <button
                         className="btn btn-success m-1 p-2 modelButton text-boldd"
                         onClick={() => {
-                          console.log(
-                            "registration number after founder information: ",
-                            businessRegistrationNumberDetails
-                          );
                           handleStep2Review();
                         }}
                       >
@@ -6981,7 +6977,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo
                                       ?.businessLogo === businessLogoDetails
-                                      ? `http://localhost:4000/msmes/${businessLogoDetails}`
+                                      ? `https://dt.mtc.com.na:4000/msmes/${businessLogoDetails}`
                                       : businessLogoDetails
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7070,7 +7066,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image1 ===
                                     image1Details
-                                      ? `http://localhost:4000/msmes/${image1Details}`
+                                      ? `https://dt.mtc.com.na:4000/msmes/${image1Details}`
                                       : image1Details
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7159,7 +7155,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image2 ===
                                     image2Details
-                                      ? `http://localhost:4000/msmes/${image2Details}`
+                                      ? `https://dt.mtc.com.na:4000/msmes/${image2Details}`
                                       : image2Details
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7248,7 +7244,7 @@ function Msme() {
                                   src={
                                     updatingDetails?.additionalInfo?.image3 ===
                                     image3Details
-                                      ? `http://localhost:4000/msmes/${image3Details}`
+                                      ? `https://dt.mtc.com.na:4000/msmes/${image3Details}`
                                       : image3Details
                                   }
                                   className=" img-responsive img-thumbnail"
@@ -7480,10 +7476,6 @@ function Msme() {
                                 <button
                                   className="btn btn-success m-1 p-2 modelButton text-boldd"
                                   onClick={() => {
-                                    console.log(
-                                      "registration number before sending: ",
-                                      businessRegistrationNumberDetails
-                                    );
                                     approve();
                                   }}
                                 >
