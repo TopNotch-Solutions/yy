@@ -92,7 +92,6 @@ const AdminLogin = () => {
         // Fetch OAuth token
           try {
             setIsSubmitting(true);
-            console.log(`Here is my emails: ${email}. Here is the password ${password}`)
             const loginResponse = await fetch("https://dt.mtc.com.na:4000/auth/admin/login", {
               method: "POST",
               headers: {
@@ -103,7 +102,7 @@ const AdminLogin = () => {
                 password: password,
               }),
             });
-            console.log(`We have posted the data. Now, we are waiting for a response: ${loginResponse}`)
+
             const loginData = await loginResponse.json();
       
             if (loginResponse.ok) {
@@ -113,22 +112,19 @@ const AdminLogin = () => {
               dispatch(toggleAuthenticationTrue());
             } else {
               setIsSubmitting(false);
-              toast.error(`Invalid credentails. Verify & try again!`);
+              toast.error("Oops! That didn’t work. Please double-check your credentials and try again.");
             }
           } catch (error) {
-            // Handle network error during login request
+            
             setIsSubmitting(false);
             console.log(error)
             toast.error(
-              `Network error ${error}.`,
-              "Please check your network connection and try again.Please check your network connection and try again"
+              "Please check your network connection and try again. Please check your network connection and try again"
             );
           }
        
       } catch (error) {
-        // Handle error during token fetch
-        console.error("Error fetching OAuth token:", error);
-        toast.error("Unableto fetch token. Please check your network and try again.");
+        toast.error("Please check your network connection and try again. Please check your network connection and try again");
       }
       
       
@@ -199,8 +195,7 @@ const AdminLogin = () => {
         } catch (error) {
           setIsSubmitting(false);
           toast.error(
-            "Network error. Please check your network connection and try again",
-            "Please check your network connection and try again"
+            "Network error. Please check your network connection and try again"
           );
         }
 

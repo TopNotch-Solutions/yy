@@ -369,10 +369,6 @@ a > .sidebar-list-item {
   }
 }
 
-* {
-  transition: all 0.3s ease;
-}
-
 /* Main sidebar container */
 .sidebar-container {
   min-height: 100vh;

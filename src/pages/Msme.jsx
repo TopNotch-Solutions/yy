@@ -42,41 +42,6 @@ import { RemoveWhiteSpaces } from "../utils/removeWhiteSpaces";
 import { convert24To12Hour } from "../utils/timeConvertion";
 import { validateTimeRangeOrClosed } from "../utils/validateTime";
 
-// const mobileStyle = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: {
-//     xs: '95%',
-//     sm: '80%', 
-//     md: '70%'
-//   },
-//   height: "80%",
-//   overflowY: "scroll",
-//   bgcolor: "background.paper",
-//   border: "2px solid #fff",
-//   boxShadow: 24,
-//   p: 4,
-// };
-
-// const largeStyle = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: {
-//     xs: '95%',
-//     sm: '80%', 
-//     md: '70%'
-//   },
-//   height: "80%",
-//   overflowY: "auto",
-//   bgcolor: "background.paper",
-//   border: "2px solid #fff",
-//   boxShadow: 24,
-//   p: 4,
-// };
 const modalStyle = {
   position: 'absolute',
   top: '50%',
@@ -364,7 +329,7 @@ function Msme() {
     useState("");
   const [textCounter, setTextCounter] = useState(0);
   const [textCounterDetails, setTextCounterDetails] = useState(0);
-  const urlRegex = /^(http?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
+  const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const namibiaPhoneRegex = /^(?:\+264|0)(\s?\d{2})\s?\d{3}\s?\d{4}$/;
 
@@ -494,7 +459,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -529,7 +493,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -564,7 +527,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -599,7 +561,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -633,7 +594,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -666,7 +626,6 @@ function Msme() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -699,7 +658,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -741,7 +699,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -776,7 +733,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -811,7 +767,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -843,7 +798,6 @@ function Msme() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -875,7 +829,6 @@ function Msme() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -907,7 +860,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -941,7 +893,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -975,7 +926,6 @@ function Msme() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -1686,9 +1636,8 @@ function Msme() {
           "https://dt.mtc.com.na:4000/msme/admin/create",
           {
             method: "POST",
-            
-            headers:{
-              
+            headers: {
+              'x-access-token': `${tokenHeader}`,
             },
             body: formData,
           }
@@ -1813,7 +1762,6 @@ function Msme() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -2236,7 +2184,6 @@ function Msme() {
                   method: "PUT",
                   headers: {
                     "Content-Type": "application/json",
-                    
                     'x-access-token': `${tokenHeader}`
                   },
                   
@@ -2392,9 +2339,8 @@ function Msme() {
           `https://dt.mtc.com.na:4000/msme/admin/update/${updatingDetails.id}`,
           {
             method: "PUT",
-            
-            headers:{
-              
+            headers: {
+              'x-access-token': `${tokenHeader}`,
             },
             body: formData,
           }
@@ -2415,7 +2361,6 @@ function Msme() {
                   method: "PUT",
                   headers: {
                     "Content-Type": "application/json",
-                    
                     'x-access-token': `${tokenHeader}`
                   },
                   
@@ -2553,7 +2498,6 @@ function Msme() {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
-                  
                   'x-access-token': `${tokenHeader}`
                 },
                 
@@ -2642,7 +2586,6 @@ function Msme() {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
-                  
                   'x-access-token': `${tokenHeader}`
                 },
                 
@@ -2730,7 +2673,6 @@ function Msme() {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
-                  
                   'x-access-token': `${tokenHeader}`
                 },
                 
@@ -2811,7 +2753,6 @@ function Msme() {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                
                 'x-access-token': `${tokenHeader}`
               },
               
@@ -3189,30 +3130,6 @@ function Msme() {
               gridAutoRows="140px"
               gap={isSmallScreen ? "0px" : "10px"}
             >
-              {/* <Box
-                marginTop={"10px"}
-                gridColumn={isSmallScreen ? "span 12" : "span 3"}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <div className="col-12 p-4 shadow rounded-2">
-                  <div className="d-flex justify-content-between">
-                    <Tooltip title="Registered MSMEs" className="pointer">
-                      <p className="text">Registered MSMEs</p>
-                    </Tooltip>
-                    <ArrowForwardIosIcon />
-                  </div>
-                  <div className="d-flex justify-content-start">
-                    <div className="p-1 border rounded-2 ml-2">
-                      <StickyNote2Icon sx={{ color: "rgba(21, 78, 138, 1)" }} />
-                    </div>
-                    <Tooltip title={totalRegisteration}>
-                      <p className="digit text pointer">{totalRegisteration}</p>
-                    </Tooltip>
-                  </div>
-                </div>
-              </Box> */}
 
               <Box
                 marginTop={"10px"}

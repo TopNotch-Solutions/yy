@@ -144,7 +144,6 @@ function Content() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -178,8 +177,7 @@ function Content() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
-              'x-access-token': `${tokenHeader}`
+               'x-access-token': `${tokenHeader}`
             },
             
           }
@@ -222,8 +220,8 @@ function Content() {
           `https://dt.mtc.com.na:4000/opportunities/admin/create`,
           {
             method: "POST",
-            headers:{
-              
+            headers: {
+              'x-access-token': `${tokenHeader}`,
             },
             body: formData,
           }
@@ -274,9 +272,8 @@ function Content() {
           `https://dt.mtc.com.na:4000/admin/mobile-images/create`,
           {
             method: "POST",
-            
-            headers:{
-              
+            headers: {
+              'x-access-token': `${tokenHeader}`,
             },
             body: formData,
           }
@@ -329,7 +326,6 @@ function Content() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -382,7 +378,6 @@ function Content() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -447,7 +442,6 @@ function Content() {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                
                 'x-access-token': `${tokenHeader}`
               },
               
@@ -520,7 +514,6 @@ function Content() {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                
                 'x-access-token': `${tokenHeader}`
               },
               
@@ -914,9 +907,8 @@ const validateFields1 = () => {
             `https://dt.mtc.com.na:4000/opportunities/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
-              
-              headers:{
-                
+              headers: {
+                'x-access-token': `${tokenHeader}`,
               },
               body: formData,
             }
@@ -976,9 +968,8 @@ const validateFields1 = () => {
             `https://dt.mtc.com.na:4000/admin/mobile-images/update/${updatingImageDetails.id}`,
             {
               method: "PUT",
-              
-              headers:{
-                
+              headers: {
+                'x-access-token': `${tokenHeader}`,
               },
               body: formData,
             }
@@ -1042,9 +1033,8 @@ const validateFields1 = () => {
             `https://dt.mtc.com.na:4000/opportunities/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
-              
-              headers:{
-                
+              headers: {
+                'x-access-token': `${tokenHeader}`,
               },
               body: formData,
             }

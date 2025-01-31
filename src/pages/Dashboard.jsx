@@ -85,7 +85,6 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             //
@@ -123,7 +122,6 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
            // 
@@ -158,7 +156,6 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             //
@@ -193,7 +190,6 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             //
@@ -228,7 +224,6 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             //
@@ -260,7 +255,6 @@ function Dashboard() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           //
@@ -293,7 +287,6 @@ function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             //

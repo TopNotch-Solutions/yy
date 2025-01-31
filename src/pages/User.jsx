@@ -133,7 +133,6 @@ function User() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -202,7 +201,6 @@ function User() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -237,7 +235,6 @@ function User() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -271,7 +268,6 @@ function User() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -305,7 +301,6 @@ function User() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           body: JSON.stringify({
@@ -374,7 +369,6 @@ function User() {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
-                  
                   'x-access-token': `${tokenHeader}`
                 },
                 
@@ -439,7 +433,6 @@ function User() {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
-                  
                   'x-access-token': `${tokenHeader}`
                 },
                 
@@ -700,7 +693,6 @@ function User() {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                
                 'x-access-token': `${tokenHeader}`
               },
               
@@ -781,7 +773,6 @@ function User() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             

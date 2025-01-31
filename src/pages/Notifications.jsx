@@ -126,7 +126,6 @@ function Notifications() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -161,7 +160,6 @@ function Notifications() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -196,7 +194,6 @@ function Notifications() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -231,7 +228,6 @@ function Notifications() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -266,7 +262,6 @@ function Notifications() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -316,7 +311,6 @@ function Notifications() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -393,7 +387,6 @@ function Notifications() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -461,7 +454,6 @@ function Notifications() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -514,7 +506,6 @@ function Notifications() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -577,7 +568,6 @@ function Notifications() {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                
                 'x-access-token': `${tokenHeader}`
               },
               
@@ -636,7 +626,6 @@ function Notifications() {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           

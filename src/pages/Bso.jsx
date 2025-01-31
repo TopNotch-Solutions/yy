@@ -132,7 +132,6 @@ function Bso() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -164,7 +163,6 @@ function Bso() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -314,15 +312,15 @@ function Bso() {
         formData.append("description", description);
         formData.append("bso-image", file);
         formData.append("website", website);
+
         const response = await fetch("https://dt.mtc.com.na:4000/bso/admin/create", {
           method: "POST",
-          
-          headers:{
-            
-          
+          headers: {
+            'x-access-token': `${tokenHeader}`,
           },
           body: formData,
         });
+        
         const data = await response.json();
         
         if (response.ok) {
@@ -442,8 +440,7 @@ function Bso() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
-            'x-access-token': `${tokenHeader}`
+            'x-access-token': `${tokenHeader}`,
           },
           
         }
@@ -508,7 +505,6 @@ function Bso() {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
-                  
                   'x-access-token': `${tokenHeader}`
                 },
                 
@@ -591,9 +587,8 @@ function Bso() {
             `https://dt.mtc.com.na:4000/bso/admin/update/${updatingDetails.id}`,
             {
               method: "PUT",
-              
-              headers:{
-                
+              headers: {
+                'x-access-token': `${tokenHeader}`,
               },
               body: formData,
             }

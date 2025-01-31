@@ -27,7 +27,6 @@ function SubmitEmail() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              
             },
             body: JSON.stringify({
               email
@@ -40,17 +39,13 @@ function SubmitEmail() {
               setIsSubmitting(false);
               setEmail("");
               toast.success(data.message);
-              
           } else {
             setIsSubmitting(false);
-            toast.error("Username not found in our database. Verify username and try again!");
+            toast.error("Oops! That username doesn’t exist. Try again or sign up if you're new.");
           }
         } catch (error) {
           setIsSubmitting(false);
-          toast.error(
-            "Network error. Please check your network connection and try again",
-            "Please check your network connection and try again"
-          );
+          toast.error("Please check your network connection and try again. Please check your network connection and try again");
         }
     }
   };

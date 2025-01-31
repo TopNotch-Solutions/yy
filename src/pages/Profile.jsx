@@ -131,7 +131,6 @@ function Profile() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            
             'x-access-token': `${tokenHeader}`
           },
           
@@ -206,7 +205,6 @@ function Profile() {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              
               'x-access-token': `${tokenHeader}`
             },
             
@@ -294,7 +292,6 @@ function Profile() {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                
                 'x-access-token': `${tokenHeader}`
               },
               
